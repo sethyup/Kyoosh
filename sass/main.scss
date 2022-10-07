@@ -1,0 +1,26 @@
+//custom colors
+$primary:       #F55B29;
+$secondary:     #F5B27C;
+$success:       #57C9A5;
+$info:          #6FA4C1;
+$warning:       #FADF63;
+$danger:        #ff3d05;
+$light:         #DFEEF5;
+$dark:          #405559;
+
+//customer buttons
+$btn-hover-bg-shade-amount:       25%;
+$btn-hover-bg-tint-amount:        20%;
+$btn-hover-border-shade-amount:   20%;
+$btn-hover-border-tint-amount:    10%;
+$btn-active-bg-shade-amount:      20%;
+$btn-active-bg-tint-amount:       20%;
+$btn-active-border-shade-amount:  25%;
+$btn-active-border-tint-amount:   10%;
+
+$btn-border-radius:           1.5rem;
+$btn-border-radius-sm:        1rem;
+$btn-border-radius-lg:        2rem;
+
+//import
+@import '../node_modules/bootstrap/scss/bootstrap';

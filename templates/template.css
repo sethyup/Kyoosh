@@ -1,0 +1,8 @@
+button.btn-main {
+    font-weight: 600;
+}
+
+button.btn-main:hover{
+    background-color: #cb481c;
+    border: #cb481c solid 1px;
+}
