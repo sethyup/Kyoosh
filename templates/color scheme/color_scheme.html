@@ -14,6 +14,7 @@
     <title>WAD Travels Project</title>
 </head>
 <body>
+    <!-- main title -->
     <div class="container-fluid bg-light">
         <div class="row">
             <h1 class="text-center my-3"><span class="text-primary">Wanderlog</span> Ripoff Style Guide</h1>
@@ -21,23 +22,28 @@
         <hr class="border-top border-bold border-2">
     </div>
 
+    <!-- colors -->
     <div class="container-fluid bg-light py-4">
         <h2>Colors!</h2>
         <p>Try to use the main background colors (especially bg-light) with light touches of orange (primary) on most cases</p>
 
-        <div class="text-center row d-flex justify-content-center mt-3">
+        <div class="text-center row d-flex mt-4 gx-3 justify-content-evenly">
             <h4>Main Background Colors</h4>
             <div class="col-sm-2 py-2 bg-light border border-dark border-2"><p>bg-light</p></div>
             <div class="col-sm-2 py-2 bg-mild"><p>bg-mild</p></div>
+            <div class="col-sm-2 py-2 bg-mild2"><p>bg-mild2</p></div>
             <div class="col-sm-2 py-2 bg-bold text-light"><p>bg-bold<br><i>(w text-light)</i></p></div>
             <div class="col-sm-2 py-2 bg-dark text-light"><p>bg-dark<br><i>(w text-light)</i></p></div>
         </div>
-        <div class="text-center row d-flex justify-content-center mt-3">
+        <div class="text-center row d-flex mt-4 justify-content-evenly">
             <h4>Main Accent Colors</h4>
+            <div class="col-sm-2 py-2"></div>
             <div class="col-sm-2 py-2 bg-primary"><p>bg-primary</p></div>
             <div class="col-sm-2 py-2 bg-secondary"><p>bg-secondary</p></div>
+            <div class="col-sm-2 py-2"></div>
+
         </div>
-        <div class="text-center row mt-3 d-flex justify-content-center mt-3">
+        <div class="text-center row mt-3 d-flex mt-4 justify-content-evenly">
             <h4>Other Colors</h4>
             <div class="col-sm-2 py-2 bg-info"><p>bg-info</p></div>
             <div class="col-sm-2 py-2 bg-success"><p>bg-success</p></div>
@@ -48,14 +54,29 @@
         <hr class="mt-5">
     </div>
 
+    <!-- buttons -->
     <div class="container-fluid bg-light pb-4">
         <h2>Buttons</h2>
-        <p>Use "btn-primary btn-main" for most buttons</p>
+        <p>Visual hierarchy:<br>1) btn-main<br>2) btn-main-bold & btn-main-mild<br>3) btn-fade</p>
 
         <div class="row">
             <h4 class="text-center">Main buttons</h4>
             <div class="col-sm-4 d-flex justify-content-center">
-                <button class="btn btn-primary m-3 btn-main">btn-primary btn-main</button>
+                <button class="btn m-3 btn-main">btn-main</button>
+            </div>
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button class="btn btn-main-bold m-3">btn-main-bold</button>
+            </div>
+            <div class="col-sm-4 bg-dark d-flex justify-content-center">
+                <button class="btn btn-main-mild m-3">btn-main-mild</button>
+            </div>
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button class="btn btn-fade m-3">btn-fade</button>
+            </div>
+            
+            <h4 class="text-center my-4">Other buttons</h4>
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button class="btn btn-primary m-3">btn-primary</button>
             </div>
             <div class="col-sm-4 d-flex justify-content-center">
                 <button class="btn btn-bold m-3">btn-bold</button>
@@ -63,16 +84,14 @@
             <div class="col-sm-4 bg-dark d-flex justify-content-center">
                 <button class="btn btn-mild m-3">btn-mild</button>
             </div>
-
-            <h4 class="text-center my-4">Other buttons</h4>
-            <div class="col-sm-4 d-flex justify-content-center">
-                <button class="btn btn-primary m-3">btn-primary</button>
-            </div>
             <div class="col-sm-4 d-flex justify-content-center">
                 <button class="btn btn-secondary m-3">btn-secondary</button>
             </div>
             <div class="col-sm-4 d-flex justify-content-center">
                 <button class="btn btn-dark m-3">btn-dark</button>
+            </div>
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button class="btn btn-mild2 m-3">btn-mild2</button>
             </div>
             <div class="col-sm-4 d-flex justify-content-center">
                 <button class="btn btn-success m-3">btn-success</button>
