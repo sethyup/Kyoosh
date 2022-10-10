@@ -1,8 +1,20 @@
-button.btn-main {
+/* buttons ---------------------------------------------------*/
+button.btn {
+    transition: all .3s ease-in-out;
     font-weight: 600;
+}
+
+button.btn:hover {
+    padding-left: calc(.75vw + 15px);
+    padding-right: calc(.75vw + 15px);
+}
+
+button.btn-main {
+    color: #FFFFFF;
 }
 
 button.btn-main:hover{
     background-color: #cb481c;
     border: #cb481c solid 1px;
+    color: #FFFFFF;
 }

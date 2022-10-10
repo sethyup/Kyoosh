@@ -1,11 +1,11 @@
 //custom colors
 $primary:       #F55B29;
-$secondary:     #F5B27C;
-$success:       #57C9A5;
-$info:          #6FA4C1;
-$warning:       #FADF63;
-$danger:        #ff3d05;
-$light:         #DFEEF5;
+$secondary:     #F2C57C;
+$success:       #37b9a1;
+$info:          #9ACFE6;
+$warning:       #dfc939;
+$danger:        #9D2D08;
+$light:         #FFFFFF;
 $dark:          #405559;
 
 //customer buttons
@@ -21,6 +21,19 @@ $btn-active-border-tint-amount:   10%;
 $btn-border-radius:           1.5rem;
 $btn-border-radius-sm:        1rem;
 $btn-border-radius-lg:        2rem;
+
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+// Create your own map
+$custom-colors: (
+  "mild": #DFEEF5,
+  "bold": #58788C
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 //import
 @import '../node_modules/bootstrap/scss/bootstrap';
