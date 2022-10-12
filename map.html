@@ -55,12 +55,18 @@
             });
             // Create an array of alphabetical characters used to label the markers.
             const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            // marker options
+            let markerOptions = {
+                // position: new google.maps.LatLng(latitude, longitde)
+                icon: './image/adam_ugly_ass_head.svg',
+            }
             // Add some markers to the map.
             const markers = locations.map((position, i) => {
                 const label = labels[i % labels.length];
                 const marker = new google.maps.Marker({
                 position,
                 label,
+                markerOptions // customize marker
                 });
 
                 // markers can only be keyboard focusable when they have click listeners
