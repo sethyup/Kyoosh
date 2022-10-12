@@ -11,7 +11,7 @@
         * that contains the map. 
         */
         #map {
-        height: 100%;
+        height: 80%;
         }
 
         /* 
@@ -19,8 +19,8 @@
         */
         html,
         body {
-        height: 100%;
-        margin: 0;
+        height: 80%;
+        margin: 100px;
         padding: 0;
         }
     </style>
@@ -35,6 +35,12 @@
     <script type="module" src="./index.js"></script>
   </head>
   <body>
+    <div>
+        <h1>Map testing with Adam's face</h1>
+        <h3 id="latlong">Try clicking on one of adam's face!</h3>
+        <hr>
+        <h3>Alternatively, you can also create a marker by clicking anywhere on the map!</h3>
+    </div>
     <div id="map"></div>
 
     <!-- 
@@ -55,32 +61,50 @@
             });
             // Create an array of alphabetical characters used to label the markers.
             const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            // marker options
-            let markerOptions = {
-                // position: new google.maps.LatLng(latitude, longitde)
-                icon: './image/adam_ugly_ass_head.svg',
-            }
             // Add some markers to the map.
             const markers = locations.map((position, i) => {
                 const label = labels[i % labels.length];
                 const marker = new google.maps.Marker({
                 position,
-                label,
-                markerOptions // customize marker
+                label
                 });
 
                 // markers can only be keyboard focusable when they have click listeners
+                marker.setIcon('./image/adam_ugly_ass_head.svg');
                 // open info window when marker is clicked
-                marker.addListener("click", () => {
+                marker.addListener("click", (googleMapsEvent) => {
                 infoWindow.setContent(label);
                 infoWindow.open(map, marker);
+                document.getElementById('latlong').innerText = 'latitude: ' + googleMapsEvent.latLng.lat() + ' longitude: ' + googleMapsEvent.latLng.lng();
                 });
                 return marker;
             });
 
             // Add a marker clusterer to manage the markers.
             const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+            map.addListener("click", (e) => {
+                placeMarkerAndPanTo(e.latLng, map);
+            });
             }
+
+            // create marker a.k.a adam's face on click
+            function placeMarkerAndPanTo(latLng, map) {
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    icon: './image/adam_ugly_ass_head.svg'
+                });
+                const infoWindow = new google.maps.InfoWindow({
+                    content: "",
+                    disableAutoPan: true,
+                    });
+                var label = 'Swiny cat meow meow meow';
+                marker.addListener("click", (googleMapsEvent) => {
+                    infoWindow.setContent(label);
+                    infoWindow.open(map, marker);});
+
+                map.panTo(latLng);
+                }
 
             const locations = [
             { lat: -31.56391, lng: 147.154312 },
