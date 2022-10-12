@@ -40,6 +40,8 @@
         <h3 id="latlong">Try clicking on one of adam's face!</h3>
         <hr>
         <h3>Alternatively, you can also create a marker by clicking anywhere on the map!</h3>
+        <hr>
+        <input type="button" value="Delete All Created Markers" onclick="DeleteMarkers()" />
     </div>
     <div id="map"></div>
 
@@ -98,13 +100,39 @@
                     content: "",
                     disableAutoPan: true,
                     });
+                // Set unique id
+                marker.id = uniqueId;
+                uniqueId++;
+                // set infoWindow
                 var label = 'Swiny cat meow meow meow';
+                // 'tag' the new marker
+                label += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
                 marker.addListener("click", (googleMapsEvent) => {
                     infoWindow.setContent(label);
                     infoWindow.open(map, marker);});
-
+                //Add marker to the array.
+                markers.push(marker);
+                // pan to marker
                 map.panTo(latLng);
                 }
+
+            function DeleteMarker(id) {
+                //Find and remove the marker from the Array
+                for (var i = 0; i < markers.length; i++) {
+                    if (markers[i].id == id) {
+                        //Remove the marker from Map                  
+                        markers[i].setMap(null);
+        
+                        //Remove the marker from array.
+                        markers.splice(i, 1);
+                        return;
+                    }
+                }
+            };
+            
+            // separate list for newly created markers
+            var markers = [];
+            var uniqueId = 1;
 
             const locations = [
             { lat: -31.56391, lng: 147.154312 },
