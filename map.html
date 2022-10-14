@@ -123,32 +123,32 @@
                 map.panTo(latLng);
             };
 
-            // create marker a.k.a adam's face on click
-            function placeMarkerAndPanTo2(latLng, map) {
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    icon: './image/adam_ugly_ass_head.svg'
-                });
-                const infoWindow = new google.maps.InfoWindow({
-                    content: "",
-                    disableAutoPan: true,
-                    });
-                // Set unique id
-                marker.id = uniqueId;
-                uniqueId++;
-                // set infoWindow
-                var label = 'Swiny cat meow meow meow';
-                // 'tag' the new marker
-                label += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
-                marker.addListener("click", (googleMapsEvent) => {
-                    infoWindow.setContent(label);
-                    infoWindow.open(map, marker);});
-                //Add marker to the array.
-                markers.push(marker);
-                // pan to marker
-                map.panTo(latLng);
-                }
+            // create marker a.k.a adam's face on click - was problematic but idky....
+            // function placeMarkerAndPanTo2(latLng, map) {
+            //     var marker = new google.maps.Marker({
+            //         position: latLng,
+            //         map: map,
+            //         icon: './image/adam_ugly_ass_head.svg'
+            //     });
+            //     const infoWindow = new google.maps.InfoWindow({
+            //         content: "",
+            //         disableAutoPan: true,
+            //         });
+            //     // Set unique id
+            //     marker.id = uniqueId;
+            //     uniqueId++;
+            //     // set infoWindow
+            //     var label = 'Swiny cat meow meow meow';
+            //     // 'tag' the new marker
+            //     label += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
+            //     marker.addListener("click", (googleMapsEvent) => {
+            //         infoWindow.setContent(label);
+            //         infoWindow.open(map, marker);});
+            //     //Add marker to the array.
+            //     markers.push(marker);
+            //     // pan to marker
+            //     map.panTo(latLng);
+            //     }
 
             function DeleteMarker(id) {
                 //Find and remove the marker from the Array
