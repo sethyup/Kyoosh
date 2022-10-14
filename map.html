@@ -84,13 +84,47 @@
 
             // Add a marker clusterer to manage the markers.
             const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+
+            // add marker on click
             map.addListener("click", (e) => {
                 placeMarkerAndPanTo(e.latLng, map);
             });
             }
 
-            // create marker a.k.a adam's face on click
             function placeMarkerAndPanTo(latLng, map) {
+                const icon = {
+                    url: "./image/adam_ugly_ass_head.svg", // url
+                    scaledSize: new google.maps.Size(50, 50), // scaled size
+                    // origin: new google.maps.Point(0,0), // origin
+                    // anchor: new google.maps.Point(0, 0) // anchor
+                };
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    icon: icon
+                });
+                const infoWindow = new google.maps.InfoWindow({
+                    content: "",
+                    disableAutoPan: true,
+                    });
+                // Set unique id
+                marker.id = uniqueId;
+                uniqueId++;
+                // set infoWindow
+                var label = 'Swiny cat meow meow meow';
+                // 'tag' the new marker
+                label += "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
+                marker.addListener("click", (googleMapsEvent) => {
+                    infoWindow.setContent(label);
+                    infoWindow.open(map, marker);});
+                //Add marker to the array.
+                markers.push(marker);
+                // pan to marker
+                map.panTo(latLng);
+            };
+
+            // create marker a.k.a adam's face on click
+            function placeMarkerAndPanTo2(latLng, map) {
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
