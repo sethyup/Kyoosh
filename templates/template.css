@@ -9,34 +9,37 @@ button.btn-expand:hover, button.btn-main:hover, button.btn-main-bold:hover, butt
     padding-right: calc(.75vw + 15px);
 }
 
-button.btn-main {
+button.btn-main, button.btn-main-fixed {
     background-color: #F55B29;
     color: #FFFFFF;
 }
 
-button.btn-main:active:focus, button.btn-main:active, button.btn-main:hover {
+button.btn-main:active:focus, button.btn-main:active, button.btn-main:hover,
+button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-main-fixed:hover {
     background-color: #cb481c !important;
     border: #cb481c solid 1px !important;
     color: #FFFFFF !important;
 }
 
-button.btn-main-bold {
+button.btn-main-bold, button.btn-main-bold-fixed {
     background-color: #58788C;
     color: #FFFFFF;
 }
 
-button.btn-main-bold:active:focus, button.btn-main-bold:active, button.btn-main-bold:hover {
+button.btn-main-bold:active:focus, button.btn-main-bold:active, button.btn-main-bold:hover,
+button.btn-main-bold-fixed:active:focus, button.btn-main-bold-fixed:active, button.btn-main-bold-fixed:hover {
     background-color: #405559 !important;
     border: #405559 solid 1px !important;
     color: #FFFFFF !important;
 }
 
-button.btn-main-mild {
+button.btn-main-mild, button.btn-main-mild-fixed {
     background-color: #DFEEF5;
     color: #405559;
 }
 
-button.btn-main-mild:active:focus, button.btn-main-mild:active, button.btn-main-mild:hover {
+button.btn-main-mild:active:focus, button.btn-main-mild:active, button.btn-main-mild:hover,
+button.btn-main-mild-fixed:active:focus, button.btn-main-mild-fixed:active, button.btn-main-mild-fixed:hover {
     background-color: #c7dbe4 !important;
     border: #c7dbe4 solid 1px !important;
     color: #405559 !important;
