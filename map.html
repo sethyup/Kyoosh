@@ -48,6 +48,8 @@
         <hr>
         <h3>Alternatively, you can also create a marker by clicking anywhere on the map!</h3>
         <hr>
+        Search using a location name instead: <input type="text" id="location">
+        <hr>
         <input type="button" value="Delete All Created Markers" onclick="DeleteMarkers()" />
     </div>
     <div id="map"></div>
@@ -79,7 +81,7 @@
                 });
 
                 // markers can only be keyboard focusable when they have click listeners
-                marker.setIcon('./image/adam_ugly_ass_head.svg');
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
                 // open info window when marker is clicked
                 marker.addListener("click", (googleMapsEvent) => {
                 infoWindow.setContent(label);
@@ -100,7 +102,7 @@
 
             function placeMarkerAndPanTo(latLng, map) {
                 const icon = {
-                    url: "./image/adam_ugly_ass_head.svg", // url
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
                     scaledSize: new google.maps.Size(50, 50), // scaled size
                     // origin: new google.maps.Point(0,0), // origin
                     // anchor: new google.maps.Point(0, 0) // anchor

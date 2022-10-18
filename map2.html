@@ -1,0 +1,89 @@
+<!-- AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places autocomplete</title>
+    <!-- Axios -->
+    <script src='https://unpkg.com/axios/dist/axios.js'></script>
+    
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="autocomplete" placeholder="Enter a place" style="width: 80%;" value="Singapore Zoo, Singapore">
+        <h1 id="place_name"></h1>
+        <h1 id="place_id"></h1>
+        <h1 id="place_geometry">
+            <h2 id="latitude"></h2>
+            <h2 id="longitude"></h2>
+        </h1>
+    </div>
+     
+    <script>
+        let API = 'AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU';
+        let autocomplete;
+        // init Autocomplete and setting boundaries
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                    componentRestrictions: {'country':['US', 'AU', 'KR', 'SG']},
+                    fields: ['place_id','name']
+                }
+            );
+            autocomplete.addListener('place_changed', onPlaceChanged);
+        }
+        
+        // return name, place_id & latlng (can be whatever information you need as well)
+        function onPlaceChanged() {
+            var place = autocomplete.getPlace();
+                      
+
+            if (!place.name) {
+                // user did not select a prediction
+                document.getElementById('autocomplete').placeholder = 'Enter a place';
+            } else {
+                // display details
+                document.getElementById('place_name').innerHTML = place.name;
+                document.getElementById('place_id').innerHTML = place.place_id;
+                
+                var p_id = place.place_id;
+                
+               axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                    params: {
+                        place_id:  p_id,
+                        key: 'AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU'
+                    }
+                })
+                    .then(response => {
+                        // console.log(response.data.results[0]);
+                        var place_details = response.data.results[0]
+                        // console.log(place_details.geometry.location)
+                        var location = place_details.geometry.location
+                        var latt = location.lat
+                        var longg = location.lng
+                        document.getElementById('latitude').innerHTML = latt
+                        document.getElementById('longitude').innerHTML = longg
+                    })
+                    .catch( error => {
+                        console.log(error.message);
+                    });
+                
+                
+            }
+        }
+
+        function geocodePlaceId(p_id) {
+            
+            }
+        
+    </script>
+
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&libraries=places&callback=initAutocomplete">
+    </script>
+    
+</body>
+</html>
