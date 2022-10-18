@@ -53,11 +53,9 @@
     <hr>
     <!-- flight conversion test -->
     <div class="container" id="datetime_app">
-        <div @load="set_curr_datetime()"></div>
-
         <div class="row mb-5">
             <div class="col-6">
-                Departure: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model="depart_datetime" @change="update_datetimes($event)">
+                Departure: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
             </div>
             <div class="col-6">
                 Timezone: <input type="text" v-model="depart_tz" datetime_obj="depart-dt-flight" @change="update_datetimes($event)">
@@ -88,35 +86,17 @@
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- AXIOS import -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <!-- local js import -->
-    <script src="date_time.js"></script>
     
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
-
+    
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-
+    
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <!-- Flatpickr Config JS (Must come after Flatpickr JS import statement) -->
-    <script>
-        // datetime
-        flatpickr("input[type=datetime-local]", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            altInput: true,
-            altFormat: "J F y (h:i K)",
-            disableMobile: "true"
-        });
-
-        // date only
-        flatpickr("input[type=date]", {
-            altInput: true,
-            altFormat: "J F Y"
-        })
-    </script>
+    <!-- local js import -->
+    <script src="date_time.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 //     console.log(error.message)
 // })
 
+// VUE APP ------------------------------------------------------------------------------
 var datetime_app = Vue.createApp({
     data() {
         return {
@@ -82,10 +83,18 @@ var datetime_app = Vue.createApp({
                     console.log("setting depart datetime")
                     this.depart_datetime = this.curr_user_datetime
                     console.log(this.depart_datetime)
+
+                    let temp_fp_obj = flatpickr("#departure_datetime_i9w2", datetime_config)
+
+                    temp_fp_obj.setDate(this.curr_user_datetime)
                 }
                 
                 if (this.depart_tz == "") {
                     this.depart_tz = this.user_timezone
+                }
+
+                if (this.arrive_tz == "") {
+                    this.arrive_tz = this.user_timezone
                 }
 
                 // initialize variables ----------------------------------------------------
@@ -134,3 +143,24 @@ function get_val() {
 function get_date() {
     console.log(document.getElementById("date_test").value)
 }
+
+// FLATPICKR CONFIG SETTINGS -----------------------------------------------------------------
+let datetime_config = {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    altInput: true,
+    altFormat: "J F y (h:i K)",
+    disableMobile: "true",
+}
+
+let date_config = {
+    altInput: true,
+    altFormat: "J F Y",
+    disableMobile: "true"
+}
+
+// datetime
+let datetime_fp_obj = flatpickr("input[type=datetime-local]", datetime_config);
+
+// date only
+let date_fp_obj = flatpickr("input[type=date]", date_config)
