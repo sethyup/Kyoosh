@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- local css -->
+    <link rel="stylesheet" href="../template.css">
+
+    <!-- bootstrap css -->
+    <link href="../../css/main.min.css" rel="stylesheet">
+
+    <!-- Flatpickr CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Vue js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <!-- datetime input format -->
+    <div class="container-fluid my-5">
+        <div class="row text-center">
+            <h4>DateTime & Date Picker:</h4>
+            <p>Uses Flatpickr to display (Remember to import Flatpickr CSS and JS & paste config settings)</p>
+            <p><a href="https://flatpickr.js.org/getting-started/#:~:text=Non%2Dmodule%20environments" target="_blank" style="font-weight: bold;">Click Here</a> to copy import statements</p>
+        </div>
+
+        <div class="row justify-content-evenly my-3">
+            <div class="col-sm-4">
+                <!-- DATE & TIME SELECTOR ------------------------------------------------------------ -->
+                <input type="datetime-local" placeholder="Select Date & Time" id="datetime_test">
+            </div>
+            <div class="col-sm-4">
+                <!-- DATE ONLY SELECTOR -------------------------------------------------------------- -->
+                <input type="date" placeholder="Select Date" id="date_test">
+            </div>
+        </div>    
+        
+        <div class="row justify-content-evenly">
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button onclick="get_val()" class="btn btn-main-bold">Click Me to console.log the DateTime</button>
+            </div>
+            <div class="col-sm-4 d-flex justify-content-center">
+                <button onclick="get_date()" class="btn btn-main-bold">Click Me to console.log the Date</button>
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+    <!-- flight conversion test -->
+    <div class="container" id="datetime_app">
+        <div class="row mb-5">
+            <div class="col-6">
+                Departure: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+            </div>
+            <div class="col-6">
+                Timezone: <input type="text" v-model="depart_tz" datetime_obj="depart-dt-flight" @change="update_datetimes($event)">
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            Duration:<br>
+            Hours<input type="number" v-model="duration_hours" datetime_obj="duration-flight" @change="update_datetimes($event); verify_hour()" min="0">
+            Minutes<input type="number" v-model="duration_minutes" datetime_obj="duration-flight" @change="update_datetimes($event); verify_minite()" min="0" max="59">
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-6">
+                Arrival: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="arrive-dt-flight" v-model="arrive_datetime" @change="update_datetimes($event)">
+            </div>
+            <div class="col-6">
+                Timezone: <input type="text" v-model="arrive_tz" datetime_obj="arrive-dt-flight" @change="update_datetimes($event)">
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <button class="btn btn-main" @click="log_everything($event)" datetime_obj="HELLOIDHERE">Click Here</button>
+        </div>
+    </div>
+
+
+    <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- AXIOS import -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+    
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- local js import -->
+    <script src="date_time.js"></script>
+</body>
+</html>
