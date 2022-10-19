@@ -166,14 +166,20 @@
                 icon: icon
             });
 
-            // // get place ID (the long way)
-            // let p_id = getPID(latLng)
-            // // get place details  
-            // let place = p_id.then(value => {
-            //     // console.log(value)
-            //     get_place_details(value)
-            // })
-            // console.log(place)    
+            // get location details from latLng NEED FIXING
+            const geocoder = new google.maps.Geocoder();
+            geocoder
+                .geocode({ location: latLng })
+                .then((response) => {
+                if (response.results[0]) {
+                    console.log(response.results[0])
+                    
+                } else {
+                    window.alert("No results found");
+                }
+                })
+                .catch((e) => window.alert("Geocoder failed due to: " + e));
+            
             
             // identify the marker
             marker.id = uniqueId;
