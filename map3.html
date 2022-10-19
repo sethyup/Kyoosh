@@ -33,6 +33,9 @@
 <body>
     <div class="container">
         <input type="text" id="autocomplete" placeholder="Enter a place" style="width: 80%;">
+        
+        <hr>
+        <input type="button" value="Delete All Created Markers" onclick="DeleteMarkers()" />
         <h1 id="place_name"></h1>
         <h1 id="place_id"></h1>
         <h1 id="place_geometry">
@@ -53,12 +56,105 @@
             }
             );
             map.addListener("click", (e) => {
-                placeMarkerAndPanTo(e.latLng,map);
+                create_marker_by_click(e.latLng,map);
             });
+
+            // Init Autocomplete
+            var input = document.getElementById('autocomplete');
+            const options = {
+                componentRestrictions: {'country':['US', 'AU', 'KR', 'SG']},
+                fields: ['place_id','name','geometry','formatted_address']
+            };
+            const autocomplete = new google.maps.places.Autocomplete(input, options);
+            // autocomplete connected to map viewport
+            autocomplete.bindTo('bounds',map);
+
+            // create marker for searched location, go to location, save into marker list
+            autocomplete.addListener('place_changed', () => {
+
+                const infowindow = new google.maps.InfoWindow();
+                const icon = {
+                    url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                    scaledSize: new google.maps.Size(30,30),
+                    };
+                const marker = new google.maps.Marker({
+                    map: map,
+                    icon: icon
+                });
+                
+                infowindow.close()
+                marker.setVisible(false);
+
+                const place = autocomplete.getPlace();
+                
+                if (!place.geometry || !place.geometry.location) {
+                window.alert(`No details available for the place: "${place.name}"`
+                );
+                return;
+                }
+                if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+                } else {
+                map.setCenter(place.geometry.location);
+                }
+
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+
+                marker.id = uniqueId;
+                uniqueId++;
+                
+                const contentString = 
+                `
+                <div id="content">
+                <div id="siteNotice"></div>
+
+                <div class="container">
+                
+                <div class="row">
+                    <div class = "col-8">
+                    <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                    <h3>${place.name}</h3>
+                    <p class="address">${place.formatted_address}<p>
+                    <hr>
+                    <h6>$100/person</h6>
+                    <p class="description">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                    </div>
+
+                    <div class="col-4" style:"position:relative">
+                    <p class="pt-3">Current Votes: </p>
+                        <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="voting_buttons pt-3">
+                        <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
+                        <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button">Edit</button>
+
+                            <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+                        </div>
+                        
+                    </div>
+
+                </div>  
+                </div>
+            </div>
+            </div>
+                `
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+            markers.push(marker)
+            marker.addListener("click", (googleMapsEvent) => {
+                infowindow.open(map, marker);})
+            })
         }
         
         // create markers on click
-        function placeMarkerAndPanTo(latLng, map) {
+        function create_marker_by_click(latLng, map) {
             
             const icon = {
                url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
@@ -70,15 +166,19 @@
                 icon: icon
             });
 
-            // get place ID (the long way)
-            let p_id = getPID(latLng)
-            // get place details  
-            let place = p_id.then(value => {
-                // console.log(value)
-                get_place_details(value)
-            })
+            // // get place ID (the long way)
+            // let p_id = getPID(latLng)
+            // // get place details  
+            // let place = p_id.then(value => {
+            //     // console.log(value)
+            //     get_place_details(value)
+            // })
             // console.log(place)    
             
+            // identify the marker
+            marker.id = uniqueId;
+            uniqueId++;
+
             // customized InfoWindow
             const contentString = 
                 `
@@ -108,7 +208,12 @@
                         <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
                         <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
                         </div>
-                        <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                        <div>
+                            <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button">Edit</button>
+
+                            <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+                        </div>
+                        
                     </div>
 
                 </div>  
@@ -121,9 +226,7 @@
                 content: contentString,
                 disableAutoPan: true,
             });
-            // identify the marker
-            marker.id = uniqueId;
-            uniqueId++;
+            
             // allow marker to be deleted
             var label = "<br /><input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker(" + marker.id + ");' value = 'Delete' />";
             // open infoWindow :click
@@ -134,50 +237,50 @@
             markers.push(marker)
         }
 
-        // get place ID 2
-        function getPID(latLng) {
-                var geocoder = new google.maps.Geocoder;
-                if (latLng !== "") {
-                    return new Promise(function(resolve, reject) {
-                        geocoder.geocode({'location': latLng}, function(results, status) {
-                            if (status === google.maps.GeocoderStatus.OK) {
-                                if (results[1]) {
-                                    // console.log(results[1].place_id);
-                                    resolve(results[1].place_id)
-                                } else {
-                                    window.alert('No results found');
-                                }
-                                } else {
-                                window.alert('Geocoder failed due to: ' + status);
-                                }
-                        });
-                    })
-                }
-            }
+        // get place ID v1
+        // function getPID(latLng) {
+        //         var geocoder = new google.maps.Geocoder;
+        //         if (latLng !== "") {
+        //             return new Promise(function(resolve, reject) {
+        //                 geocoder.geocode({'location': latLng}, function(results, status) {
+        //                     if (status === google.maps.GeocoderStatus.OK) {
+        //                         if (results[1]) {
+        //                             // console.log(results[1].place_id);
+        //                             resolve(results[1].place_id)
+        //                         } else {
+        //                             window.alert('No results found');
+        //                         }
+        //                         } else {
+        //                         window.alert('Geocoder failed due to: ' + status);
+        //                         }
+        //                 });
+        //             })
+        //         }
+        //     }
 
-        // get place ID
-        function get_place_id(marker,latLng) {
-                var geocoder = new google.maps.Geocoder;
+        // // get place ID v1
+        // function get_place_id(marker,latLng) {
+        //         var geocoder = new google.maps.Geocoder;
 
-                latitude=marker.getPosition().lat();               
-                longitude=marker.getPosition().lng();
-                var latlng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+        //         latitude=marker.getPosition().lat();               
+        //         longitude=marker.getPosition().lng();
+        //         var latlng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
                 
-                geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        // console.log(results[1].place_id);
-                        var p_id = results[1].place_id;
-                        // console.log(p_id)
-                        return p_id
-                    } else {
-                        window.alert('No results found');
-                    }
-                } else {
-                window.alert('Geocoder failed due to: ' + status);
-                    }
-                });
-                }
+        //         geocoder.geocode({'location': latlng}, function(results, status) {
+        //         if (status === google.maps.GeocoderStatus.OK) {
+        //             if (results[1]) {
+        //                 // console.log(results[1].place_id);
+        //                 var p_id = results[1].place_id;
+        //                 // console.log(p_id)
+        //                 return p_id
+        //             } else {
+        //                 window.alert('No results found');
+        //             }
+        //         } else {
+        //         window.alert('Geocoder failed due to: ' + status);
+        //             }
+        //         });
+        //         }
 
         // get place details from place ID
         function get_place_details(p_id) {
@@ -196,15 +299,43 @@
                         console.log(error.message);
                     });
         }
+
+        // delete marker
+        function DeleteMarker(id) {
+                //Find and remove the marker from the Array
+                for (var i = 0; i < markers.length; i++) {
+                    if (markers[i].id == id) {
+                        //Remove the marker from Map                  
+                        markers[i].setMap(null);
+        
+                        //Remove the marker from array.
+                        markers.splice(i, 1);
+                        return;
+                    }
+                }
+            };
+            
+        // delete all created markers
+        function DeleteMarkers() {
+            for (var i = 0; i < (markers.length)+1; i++) {
+                //Remove the marker from Map                  
+                markers[i].setMap(null);
+            }
+            markers = []
+            uniqueId = 1
+        }
+
+
         // cached variables
         var markers = [];
         var uniqueId = 1;
+
         window.initMap = initMap;
     </script>
 
     <!-- import scripts -->
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&callback=initMap&libraries=places&v=weekly"
       defer
     ></script>
     <!-- <script async
