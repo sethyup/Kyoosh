@@ -12,10 +12,11 @@
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <!-- CSS  -->
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../template.css">
     </head>
 
     <body>
-        <div class="container border border-5">
+        <div class="container text-dark">
             <h3 class="heading">Edit Activity</h3>
             <form>
                 <!-- PLACE  -->
@@ -115,8 +116,8 @@
 
                 <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
                 <div class="buttons">
-                    <button type="button" class="btn del_button btn-primary" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
-                    <button class="btn edit_button btn-primary">Edit</button>
+                    <button type="button" class="btn del_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
+                    <button class="btn save_button btn-main-fixed">Save</button>
                     
                     
   
@@ -132,8 +133,8 @@
                             Are you sure you want to delete activity?
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Confirm</button>
+                            <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-main-fixed">Confirm</button>
                             </div>
                         </div>
                         </div>
