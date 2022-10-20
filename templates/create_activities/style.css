@@ -1,0 +1,31 @@
+.container{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.heading{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+.buttons{
+    /* text-align: center; */
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+}
+.back_button{
+    margin-right: 10px;
+}
+.create_button{
+    margin-left: 10px;
+}
+
+/* .form_select{
+    height: 100px;
+} */

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Create Activities</title>
+        <!-- BOOTSTRAP -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <!-- ICONS LIBRARY -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <!-- VUE -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <!-- CSS  -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container border border-5">
+            <h3 class="heading">Edit Activity</h3>
+            <form>
+                <!-- PLACE  -->
+                <div class="row">
+                    <div class="col-7">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="input_place" placeholder="Add a Place">
+                            <label for="input_place">Add a Place</label>
+                        </div>
+                    </div>
+                <!-- TAG -->
+                    <div class="col-5">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">#</span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag">
+                                <label for="input_tag">Add a Tag</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- DESCRIPTION -->
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px"></textarea>
+                    <label for="input_description">Add a Description</label>
+                </div>
+
+                <!-- Currency converter -->
+                <div id="main">
+                        <!--  ENTER COST   -->
+                    <div class="row">
+                        <div class="col-5">
+                        <div class="row g-0">
+                            <div class="col-8">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                                    <label for="input_place">Enter the Cost/person</label>
+                                </div>
+                            </div>    
+
+
+                            <!-- DEFAULT FROM SGD -->
+                            <div class="col-4">
+                                <div class="drop-list form-floating">
+                                    <div class="from">
+                                    <!-- <p>From</p> -->
+                                        <div class="select-box">
+                                            <!-- <img src="https://flagcdn.com/48x36/sg.png" alt="flag"> -->
+                                            <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                            <!-- <label for="floatingSelect">From</label> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- CONVERTER ICON -->
+                    <div class="col-2">
+                        <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                    </div>
+
+                        <!-- AUTOFILLED BY API -->
+                    <div class="col-5">
+                        <div class="row g-0">
+                            <div class="col-8">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="converted_amount" @change="calculate_from_to()">
+                                    <label for="input_place">Enter the Cost/person</label>
+                                </div>   
+                            </div> 
+                                <!-- DEFAULT TO KRW -->
+                            <div class="col-4">
+                                <div class="drop-list form-floating">
+                                    <div class="to">
+                                        <!-- <p>To</p> -->
+                                        <div class="select-box">
+                                            <!-- <img src="https://flagcdn.com/48x36/kr.png" alt="flag"> -->
+                                        <select class="form-select" id="floatingSelect" v-model="to" @change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                </div>
+
+                <!-- ATTACHMENTS  -->
+                <div class="form-floating mb-5">
+                <p>Add attachments:</p>
+                <input type="file" id="myfile" name="myfile" multiple>
+                </div>
+
+                <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
+                <div class="buttons">
+                    <button type="button" class="btn del_button btn-primary" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
+                    <button class="btn edit_button btn-primary">Edit</button>
+                    
+                    
+  
+                    <!-- Back Button Modal -->
+                    <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalLabel">Delete Activity</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Are you sure you want to delete activity?
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+        <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+        <script src="country-list.js"></script>
+        <script src="script.js"></script>
+        <script src="main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        
+    </body>
+</html>
