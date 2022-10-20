@@ -1,3 +1,4 @@
+// use vue + api to autofill currency exchange amount
 const main = Vue.createApp({
     data(){
       return{

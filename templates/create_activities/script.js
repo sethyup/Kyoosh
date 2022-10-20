@@ -1,3 +1,5 @@
+// To generate drop down list for country currency
+
 const dropList = document.querySelectorAll("form select");
 // fromCurrency = document.querySelector(".from select"),
 // toCurrency = document.querySelector(".to select"),
