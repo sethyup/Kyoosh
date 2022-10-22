@@ -110,8 +110,10 @@
 
                 <!-- ATTACHMENTS  -->
                 <div class="form-floating mb-5">
-                <p>Add attachments:</p>
-                <input type="file" id="myfile" name="myfile" multiple>
+                    <div class="input-group mb-3" style="width: 50%;">
+                        <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
+                        <input type="file" class="form-control" id="inputGroupFile01">
+                    </div>
                 </div>
 
                 <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
@@ -121,7 +123,7 @@
                     
                     
   
-                    <!-- Back Button Modal -->
+                    <!-- Delete Button Modal -->
                     <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
                         <div class="modal-dialog">
                         <div class="modal-content">
