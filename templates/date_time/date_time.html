@@ -50,51 +50,188 @@
     </div>
 
 
-    <hr>
-    <!-- flight conversion test -->
-    <div class="container" id="datetime_app">
-        <form action="" method="">
-            <div class="row mb-5">
-                <div class="col-5">
-                    Departure: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
-                </div>
-                <div class="col-4">
-                    <!-- Country/ City: <input type="text" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)"> -->
-
-                    Country/ City: <input list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)">
-                </div>
-                <div class="col-3">Timezone:<br>{{depart_tz}}</div>
+    <hr class="mt-5">
+    <!-- flight add form -->
+    <div class="container text-dark bg-mild rounded-4 py-3" id="datetime_app">
+        <form action="#">
+            <!-- flight title -->
+            <div class="row justify-content-center text-center">
+                <h2>Flight 1</h2>
             </div>
 
-            <div class="row mb-5">
-                Duration:<br>
-                Hours<input type="number" v-model="duration_hours" datetime_obj="duration-flight" @change="verify_hour(); update_datetimes($event)" min="0">
-                Minutes<input type="number" v-model="duration_minutes" datetime_obj="duration-flight" @change="verify_minite(); update_datetimes($event)" min="0" max="59">
+            <!-- from country to country -->
+            <div class="row justify-content-center mt-4">
+                <!-- 1. Departure country -->
+                <div class="col-md-5 mb-3 col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="flight_depart_country" placeholder="input departure country" list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)" id="flight_depart_country">
+                        <label for="flight_depart_country"><i class="fa-solid fa-plane-departure"></i> Departure Country</label>
+                    </div>
+                </div>
+
+                <!-- flight icon -->
+                <div class="col-1 text-center mt-3 d-md-block d-none">
+                    <i class="fa-solid fa-arrow-right fa-2xl"></i>
+                </div>
+
+                <!-- 2. Arrival country -->
+                <div class="col-md-5 mb-3 col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="flight_arrival_country" placeholder="input arrival country" list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)" id="flight_arrival_country">
+                        <label for="flight_arrival_country"><i class="fa-solid fa-plane-arrival"></i> Arrival Country</label>
+                    </div>
+                </div>
+
+                <!-- list of countries (for dropdowns) -->
+                <datalist id="list_all_countries">
+                    <option v-for="e_country of all_countries" :value="e_country"></option>
+                </datalist>
             </div>
 
-            <div class="row mb-5">
-                <div class="col-5">
-                    Arrival: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+            <!-- departure info -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-1 text-center col-2 mt-2">
+                    <h3 class="fw-bold">DEP</h3>
                 </div>
-                <div class="col-4">
-                    <!-- Country/ City: <input type="text" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)"> -->
 
-                    Country/ City: <input list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)">
+                <div class="col-md-6 col-10">
+                    <!-- 3. Departure time -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+                        <label for="departure_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Departure Date & Time</label>
+                    </div>
                 </div>
-                <div class="col-3">
-                    Timezone:<br>{{arrive_tz}}
+
+                <div class="col-md-4 text-md-start text-end">
+                    <p>{{depart_tz}}</p>
                 </div>
             </div>
 
-            <div class="row mb-5">
-                <button class="btn btn-main" @click="log_everything($event)" datetime_obj="HELLOIDHERE">Click Here</button>
+            <!-- arrival info -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-1 text-center col-2 mt-2">
+                    <h3 class="fw-bold">ARR</h3>
+                </div>
+
+                <div class="col-md-6 col-10">
+                    <!-- 4. Arrival time -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" placeholder="Select Arrival Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+                        <label for="arrival_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Arrival Date & Time</label>
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-md-start text-end">
+                    <p>{{arrive_tz}}</p>
+                </div>
             </div>
 
-            <datalist id="list_all_countries">
-                <option v-for="e_country of all_countries" :value="e_country"></option>
-            </datalist>
+            <!-- duration and price -->
+            <div class="row mt-4 justify-content-center">
+                <!-- flight duration -->
+                <div class="col-md-2 pt-md-3 col-2 d-flex d-md-block">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <i class="fa-solid fa-hourglass-half fa-lg d-inline"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <p class="d-inline">{{duration_hours}}hr {{duration_minutes}}min</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Cost -->
+                <div class="col-md-6 col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                        <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
+                    </div>
+                </div>
+
+                <!-- 6. Cost Currency -->
+                <div class="col-md-3 col-3">
+                    <div class="drop-list form-floating">
+                        <div class="from">
+                        <!-- <p>From</p> -->
+                            <div class="select-box">
+                                <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="input-group">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Cost per pax" aria-label="cost_per_pax" id="ABC123">
+                        <label for="ABC123">TEST HEADER</label>
+                    </div>
+                    <select name="currency" id="" class="form-select">
+                        <option value="AAA">AAA</option>
+                        <option value="BBB">BBB</option>
+                        <option value="CCC">CCC</option>
+                    </select>
+                </div> -->
+            
+            </div>
+
+            <!-- collapsable -->
+            <button class="btn btn-mild2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown()">
+                <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+            </button>
+
+            <div class="collapse" id="flightX_dropdown">
+                <hr class="bg-dark">
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airline -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder="input the airine">
+                            <label for="flightX_airline">Airline</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- flight no -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number">
+                            <label for="flightX_number">Flight No</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airport -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport">
+                            <label for="flightX_airport">Airport</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- terminal -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal">
+                            <label for="flightX_terminal">Terminal</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- gate number -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate">
+                            <label for="flightX_gate">Gate</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- attachments -->
+                        <div class="form-floating mb-5">
+                            <p>Add attachments:</p>
+                            <input type="file" id="myfile" name="myfile" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </form>
     </div>
+
+    <hr class="mt-5">
 
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
@@ -112,5 +249,8 @@
 
     <!-- local js import -->
     <script src="date_time.js"></script>
+
+    <script src="country-list.js"></script> <!-- List of currencies -->
+    <script src="script.js"></script>
 </body>
 </html>

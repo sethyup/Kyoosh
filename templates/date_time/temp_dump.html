@@ -1,0 +1,44 @@
+<!-- flight conversion test -->
+<div class="container" id="datetime_app">
+    <form action="" method="">
+        <div class="row mb-5">
+            <div class="col-5">
+                Departure: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+            </div>
+            <div class="col-4">
+                <!-- Country/ City: <input type="text" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)"> -->
+
+                Country/ City: <input list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)">
+            </div>
+            <div class="col-3">Timezone:<br>{{depart_tz}}</div>
+        </div>
+
+        <div class="row mb-5">
+            Duration:<br>
+            Hours<input type="number" v-model="duration_hours" datetime_obj="duration-flight" @change="verify_hour(); update_datetimes($event)" min="0">
+            Minutes<input type="number" v-model="duration_minutes" datetime_obj="duration-flight" @change="verify_minite(); update_datetimes($event)" min="0" max="59">
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-5">
+                Arrival: <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+            </div>
+            <div class="col-4">
+                <!-- Country/ City: <input type="text" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)"> -->
+
+                Country/ City: <input list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)">
+            </div>
+            <div class="col-3">
+                Timezone:<br>{{arrive_tz}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <button class="btn btn-main" @click="log_everything($event)" datetime_obj="HELLOIDHERE">Click Here</button>
+        </div>
+
+        <datalist id="list_all_countries">
+            <option v-for="e_country of all_countries" :value="e_country"></option>
+        </datalist>
+    </form>
+</div>

@@ -1,3 +1,19 @@
+// const options = {
+//     method: 'GET',
+//     url: 'https://airport-info.p.rapidapi.com/airport',
+//     params: {iata: 'ICN'},
+//     headers: {
+//         'X-RapidAPI-Key': '2fdc59c26emsh514b42b5ad07ad9p12ae1ejsnd3ecee539782',
+//         'X-RapidAPI-Host': 'airport-info.p.rapidapi.com'
+//     }
+// };
+
+// axios.request(options).then(function (response) {
+//     console.log(response.data);
+// }).catch(function (error) {
+//     console.error(error);
+// });
+
 const AbstractAPI_Key = "ffc998ad9ddc4166a4fcbbdb7da17aa3"
 
 async function convert_timezone(base_local, target_local, base_datetime, API_key) {
@@ -41,17 +57,26 @@ function convert_datetime_str_to_date_obj(datetime_str) {
     return new_date_obj
 }
 
+// functions for buttons ------------------------------------------------------
+function get_val() {
+    console.log(document.getElementById("datetime_test").value)
+}
+
+function get_date() {
+    console.log(document.getElementById("date_test").value)
+}
+
 // VUE APP ------------------------------------------------------------------------------
 var datetime_app = Vue.createApp({
     data() {
         return {
             depart_datetime: "",
             depart_country: "",
-            depart_tz: "",
+            depart_tz: "Singapore Standard Time",
 
             arrive_datetime: "",
             arrive_country: "",
-            arrive_tz: "",
+            arrive_tz: "Singapore Standard Time",
 
             duration_hours: 0,
             duration_minutes: 0,
@@ -59,9 +84,20 @@ var datetime_app = Vue.createApp({
             user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             curr_user_datetime: "",
 
+            //dropdown of countries
             all_countries:[
                 "Afghanistan", "Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"
-            ]
+            ],
+
+            //Animations
+            dropdown_open: false,
+
+            //Currency conversion
+            amount: "", 
+            from: "SGD", 
+            to: "KRW", 
+            converted_amount: "",
+            api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
         }
     },
 
@@ -105,6 +141,10 @@ var datetime_app = Vue.createApp({
             } else if (this.duration_minutes >= 60) {
                 this.duration_minutes = 59
             }
+        },
+
+        toggle_dropdown() {
+            this.dropdown_open = !this.dropdown_open
         },
 
         async update_arrival_time() {
@@ -209,18 +249,65 @@ var datetime_app = Vue.createApp({
         },
 
         update_datetimes(caller_event) {
+            console.log("update_datetimes called -------------")
+            this.log_everything()
+
+
             let elem_calling = caller_event.path[0].getAttribute("datetime_obj")
             console.log(elem_calling)
 
-            if (elem_calling == "duration-flight") {
-                this.update_arrival_time()
-            } else if (["depart-country-flight", "depart-dt-flight"].includes(elem_calling) && (this.duration_hours + this.duration_minutes) > 0) {
-                this.update_arrival_time()
-            } else if (elem_calling == "arrive-country-flight") {
-                this.update_arrival_time()
-            } else if (elem_calling == "arrive-dt-flight") {
+            // if (elem_calling == "duration-flight") {
+            //     this.update_arrival_time()
+            // } else if (["depart-country-flight", "depart-dt-flight"].includes(elem_calling) && (this.duration_hours + this.duration_minutes) > 0) {
+            //     this.update_arrival_time()
+            // } else if (elem_calling == "arrive-country-flight") {
+            //     this.update_arrival_time()
+            // } else if (elem_calling == "arrive-dt-flight") {
+            //     this.update_flight_duration()
+            // }
+
+            if (this.depart_datetime!="" && this.depart_country!="" && this.arrive_datetime!="" && this.arrive_country!="") {
+                console.log("UPDATING")
                 this.update_flight_duration()
+            } else {
+                console.log("CANNOT UPDATE :(")
+                this.duration_hours = 0
+                this.duration_minutes = 0
             }
+        },
+
+        //currency methods
+        calculate_to_from() {
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
+            // 250 times per month 
+            
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.converted_amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+        },
+
+        calculate_from_to() {
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.from}&from=${this.to}&amount=${this.converted_amount}&apikey=${this.api_key}`
+            
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
         }
     },
 
@@ -239,28 +326,18 @@ var datetime_app = Vue.createApp({
 
 datetime_app.mount('#datetime_app')
 
-
-// functions for buttons ------------------------------------------------------
-function get_val() {
-    console.log(document.getElementById("datetime_test").value)
-}
-
-function get_date() {
-    console.log(document.getElementById("date_test").value)
-}
-
 // FLATPICKR CONFIG SETTINGS -----------------------------------------------------------------
 let datetime_config = {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
     altInput: true,
-    altFormat: "J F y (h:i K)",
+    altFormat: "J M y (h:i K)",
     disableMobile: "true",
 }
 
 let date_config = {
     altInput: true,
-    altFormat: "J F Y",
+    altFormat: "J M y",
     disableMobile: "true"
 }
 
