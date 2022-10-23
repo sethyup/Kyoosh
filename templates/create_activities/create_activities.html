@@ -29,12 +29,28 @@
                     </div>
                 <!-- TAG -->
                     <div class="col-5">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag">
-                                <label for="input_tag">Add a Tag</label>
+
+                        <!-- vue for tag -->
+                        <div id="main2" class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" v-model="tag" @input="check_tag()">
+                                    <label for="input_tag">Add a Tag</label>
+                                </div>
                             </div>
+                            <!-- IF NTH IS TYPED -->
+                            <div style="font-style: italic; font-size: small;" v-if="tag.length == 0">
+                                Suggested Tags: Shopping, Museum, Food, Attraction, Sports, Theme Park, Camping, Hiking, Aquarium, Zoo, Tour, Cruise
+                            </div>
+                            <div style="font-style: italic; font-size: small;" v-else-if="result.length > 0">
+                                Suggested Tags: {{ result }}
+                            </div>
+                            <div style="font-style: italic; font-size: small;" v-else>
+                                Create a new tag!
+                            </div>
+
+                        
                         </div>
                     </div>
                 </div>

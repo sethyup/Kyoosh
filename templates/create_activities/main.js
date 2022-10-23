@@ -1,4 +1,5 @@
 // use vue + api to autofill currency exchange amount
+
 const main = Vue.createApp({
     data(){
       return{
@@ -44,5 +45,42 @@ const main = Vue.createApp({
 
     }
   })
-
 main.mount("#main")
+
+
+// use vue to autofill and create new tags
+const main2 = Vue.createApp({
+    data(){
+      return{
+        tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
+        result: "",
+        tag: "",
+
+      }
+    },
+    methods:{
+        check_tag(){
+            console.log("LOGGING---")
+            console.log(this.tag)
+            console.log("END LOG")
+            
+            this.result = "";
+            let sub_result = [];
+            for(item of this.tags){
+                if(item.toLowerCase().includes(this.tag.toLowerCase())){
+                    sub_result.push(item)
+                }
+            }
+            this.result = sub_result.join(", ")
+            
+        },
+
+        test_log() {
+            console.log("curr tag: ", this.tag)
+        }
+
+        
+
+    }
+  })
+main2.mount("#main2")
