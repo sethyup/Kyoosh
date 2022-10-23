@@ -1,19 +1,3 @@
-// const options = {
-//     method: 'GET',
-//     url: 'https://airport-info.p.rapidapi.com/airport',
-//     params: {iata: 'ICN'},
-//     headers: {
-//         'X-RapidAPI-Key': '2fdc59c26emsh514b42b5ad07ad9p12ae1ejsnd3ecee539782',
-//         'X-RapidAPI-Host': 'airport-info.p.rapidapi.com'
-//     }
-// };
-
-// axios.request(options).then(function (response) {
-//     console.log(response.data);
-// }).catch(function (error) {
-//     console.error(error);
-// });
-
 const AbstractAPI_Key = "ffc998ad9ddc4166a4fcbbdb7da17aa3"
 
 async function convert_timezone(base_local, target_local, base_datetime, API_key) {
@@ -70,25 +54,25 @@ function get_date() {
 var datetime_app = Vue.createApp({
     data() {
         return {
-            depart_datetime: "2022-10-19 12:00",
-            depart_country: "Singapore",
-            depart_tz: "Singapor estandard time",
+            depart_datetime: "",
+            depart_country: "",
+            depart_tz: "",
 
-            arrive_datetime: "2022-10-19 19:00",
-            arrive_country: "Korea",
-            arrive_tz: "whatde standard time",
+            arrive_datetime: "",
+            arrive_country: "",
+            arrive_tz: "",
 
             duration_hours: 0,
             duration_minutes: 0,
 
-            price: "200",
-            currency: "SGD",
-            
-            airline: "airline",
-            flight_no: "flight_no",
-            airport: "airport",
-            terminal: "terminal",
-            gate: "gate no",
+            price: "",
+            currency: "",
+
+            airline: "",
+            flight_no: "",
+            airport: "",
+            terminal: "",
+            gate: "",
 
             user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             curr_user_datetime: "",
@@ -100,6 +84,55 @@ var datetime_app = Vue.createApp({
 
             //Animations
             dropdown_open: false,
+
+            //List of flight objects
+            flight_obj_arr: [
+                {
+                    ID: 1,
+                    depart_datetime: "2022-12-01 08:00",
+                    depart_country: "Singapore",
+                    depart_tz: "Singapore Standard Time",
+                    arrive_datetime: "2022-12-01 15:25",
+                    arrive_country: "South Korea",
+                    arrive_tz: "Korean Standard Time",
+                    duration_hours: 6,
+                    duration_minutes: 25,
+                    price: "200",
+                    currency: "SGD",
+                    airline: "Bamboo Airways",
+                    flight_no: "KO405",
+                    airport: "Singapore Changi Airport",
+                    terminal: "3",
+                    gate: "A1",
+                    edit_mode: false
+                },
+                {
+                    ID: 2,
+                    depart_datetime: "2022-12-10 14:00",
+                    depart_country: "South Korea",
+                    depart_tz: "Korean Standard Time",
+                    arrive_datetime: "2022-12-10 19:10",
+                    arrive_country: "Singapore",
+                    arrive_tz: "Singapore Standard Time",
+                    duration_hours: 6,
+                    duration_minutes: 10,
+                    price: "220",
+                    currency: "SGD",
+                    airline: "Panda Airways",
+                    flight_no: "SG142",
+                    airport: "Incheon International Airport",
+                    terminal: "1",
+                    gate: "B2",
+                    edit_mode: false
+                }
+            ],
+
+            //Currency conversion
+            amount: "", 
+            from: "SGD", 
+            to: "KRW", 
+            converted_amount: "",
+            api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
         }
     },
 
@@ -114,8 +147,6 @@ var datetime_app = Vue.createApp({
             console.log("arrive_country:", this.arrive_country)
             console.log("duration_hours:", this.duration_hours)
             console.log("duration_minutes:", this.duration_minutes)
-            console.log("price:", this.price)
-            console.log("currency:", this.currency)
 
             console.log("LOGGED EVERYTHING----------------")
             console.log("")
@@ -280,11 +311,39 @@ var datetime_app = Vue.createApp({
             }
         },
 
-        convert_datetime_readable(datetime_str) {
-            let date_obj = convert_datetime_str_to_date_obj(datetime_str)
-
-            return flatpickr.formatDate(date_obj, "J M y (h:i K)")
+        //currency methods
+        calculate_to_from() {
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
+            // 250 times per month 
+            
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.converted_amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
         },
+
+        calculate_from_to() {
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.from}&from=${this.to}&amount=${this.converted_amount}&apikey=${this.api_key}`
+            
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+        }
     },
 
     created() {
