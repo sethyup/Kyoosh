@@ -19,7 +19,7 @@
 
     <title>Document</title>
 </head>
-<body>
+<body id="datetime_app">
     <!-- datetime input format -->
     <div class="container-fluid my-5">
         <div class="row text-center">
@@ -49,10 +49,9 @@
         </div>
     </div>
 
-
     <hr class="mt-5">
     <!-- flight add form -->
-    <div class="container-md text-dark bg-mild rounded-4 py-3 position-relative" id="datetime_app">
+    <div class="container-md text-dark bg-mild rounded-4 py-3 position-relative">
         <form action="#">
             <!-- flight title -->
             <div class="row justify-content-center text-center">
@@ -143,7 +142,7 @@
                 <!-- 5. Cost -->
                 <div class="col-md-6 col-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
                         <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
                     </div>
                 </div>
@@ -154,23 +153,11 @@
                         <div class="from">
                         <!-- <p>From</p> -->
                             <div class="select-box">
-                                <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                <select class="form-select" id="floatingSelect" v-model="currency" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="input-group">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" placeholder="Cost per pax" aria-label="cost_per_pax" id="ABC123">
-                        <label for="ABC123">TEST HEADER</label>
-                    </div>
-                    <select name="currency" id="" class="form-select">
-                        <option value="AAA">AAA</option>
-                        <option value="BBB">BBB</option>
-                        <option value="CCC">CCC</option>
-                    </select>
-                </div> -->
             
             </div>
             
@@ -181,13 +168,6 @@
                 </button>
             </div>
 
-            <!-- <div class="row justify-content-center">
-
-                <div class="col-3 d-flex justify-content-center align-items-center bg-dark">
-                    <button class="btn btn-main">Save</button>
-                </div>
-            </div> -->
-
             
             <!-- collapsable -->
             <div class="collapse mx-md-5 pb-5" id="flightX_dropdown">
@@ -196,35 +176,35 @@
                     <div class="col-md-4 col-sm-6">
                         <!-- airline -->
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder="input the airine">
+                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder="input the airine" v-model="airline">
                             <label for="flightX_airline">Airline</label>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- flight no -->
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number">
+                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number" v-model="flight_no">
                             <label for="flightX_number">Flight No</label>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- airport -->
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport">
+                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport" v-model="airport">
                             <label for="flightX_airport">Airport</label>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- terminal -->
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal">
+                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal" v-model="terminal">
                             <label for="flightX_terminal">Terminal</label>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- gate number -->
                         <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate">
+                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate" v-model="gate">
                             <label for="flightX_gate">Gate</label>
                         </div>
                     </div>
@@ -247,10 +227,144 @@
                 <button type="button" class="btn btn-main-fixed">Save</button>
             </div>
 
+            <button type="button" @click="log_everything()">Log Everything</button>
+
         </form>
     </div>
 
     <hr class="mt-5">
+
+    <!-- flight static form -->
+    <div class="container-md text-dark bg-mild rounded-4 py-3 position-relative" id="datetime_app">
+        <form action="#">
+            <!-- flight title & departure & arrival country -->
+            <div class="row justify-content-center align-items-center mt-3 mb-5">
+                <div class="col-md-4 text-md-start text-center">
+                    <h2 class="ms-md-5">Flight 1</h2>
+                </div>
+
+                <!-- 1&2. Departure and Arrival country -->
+                <div class="col-md-8">
+                    <div class="row align-items-center">
+                        <div class="col-5">
+                            <h4 class="my-auto text-end">Departure Country</h4>
+                        </div>
+        
+                        <!-- flight icon -->
+                        <div class="col-2 text-center">
+                            <i class="fa-solid fa-arrow-right fa-2xl d-md-block d-none"></i>
+                            <i class="fa-solid fa-arrow-right d-md-none d-md-block"></i>
+                        </div>
+        
+                        <!-- 2. Arrival country -->
+                        <div class="col-5">
+                            <h4 class="my-auto">Arrival Country</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- departure & arrival info -->
+            <div class="row mb-3 justify-content-center">
+                <div class="col-3">
+                    <p><i class="fa-solid fa-hourglass-half fa-lg"></i>
+                    &nbsp;{{duration_hours}}hr {{duration_minutes}}min
+
+                    <i class="fa-solid fa-money-bill fa-lg ms-3"></i>&nbsp;{{price}}{{currency}}</p>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-evenly">
+                        <div class="d-inline-block">
+                            <h4 class="fw-bold my-auto">DEP</h4>
+                        </div>
+                        <!-- 3. Departure time -->
+                        <div class="d-inline-block">
+                            <p class="my-auto"><span class="fw-semibold">{{convert_datetime_readable(depart_datetime)}}</span><br><span class="fst-italic">{{depart_tz}}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="d-flex justify-content-evenly">
+                        <div class="d-inline-block">
+                            <h4 class="fw-bold my-auto">ARR</h4>
+                        </div>
+                        <!-- 4. Arrival time -->
+                        <div class="d-inline-block">
+                            <p class="my-auto"><span class="fw-semibold">{{convert_datetime_readable(arrive_datetime)}}</span><br><span class="fst-italic">{{arrive_tz}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-3">
+                <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown()">
+                    <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                    <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                </button>
+            </div>
+
+            
+            <!-- collapsable -->
+            <div class="collapse mx-md-5 pb-5" id="flightX_dropdown">
+                <hr class="bg-dark">
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airline -->
+                        <p>{{airline}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- flight no -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number" v-model="flight_no">
+                            <label for="flightX_number">Flight No</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airport -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport" v-model="airport">
+                            <label for="flightX_airport">Airport</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- terminal -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal" v-model="terminal">
+                            <label for="flightX_terminal">Terminal</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- gate number -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate" v-model="gate">
+                            <label for="flightX_gate">Gate</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <!-- attachments -->
+                        <div class="form-floating">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text text-light bg-bold fw-semibold" for="inputGroupFile01">Add Attachment</label>
+                                <input type="file" class="form-control" id="inputGroupFile01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="save-btn-div-flight-page">
+                <button type="button" class="btn btn-fade me-3">Delete</button>
+                <button type="button" class="btn btn-main-fixed">Save</button>
+            </div>
+
+            <button type="button" @click="log_everything()">Log Everything</button>
+
+        </form>
+    </div>
 
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->

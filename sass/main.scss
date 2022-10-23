@@ -33,6 +33,14 @@ $custom-colors: (
   "bold": #58788C
 );
 
+$position-values: (
+  0: 0,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
