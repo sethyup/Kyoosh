@@ -263,7 +263,10 @@
                         </div>
                         <!-- BACK & CREATE ACTIVITY BUTTON  -->
                         <div class="buttons">
-                            
+                            <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
+                            <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
+                            <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false,map_width='90%'">Create</button>
+
                             <!-- Back Button Modal -->
                             <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -287,8 +290,7 @@
                         </div>
         
                     </form>
-                    <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
-                    <button class="btn create_button btn-main-fixed" @click="create_true=false,map_width='90%'">Create</button>
+                    
                 </div>
             </div>
             <!-- pop up if edit activity -->
@@ -481,7 +483,7 @@
         // create your map
         function initMap() {
             const map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 5,
+                zoom: 12,
                 center: {lat: 37.5665, lng:126.9780},
             }
             );
@@ -489,6 +491,9 @@
             // map.addListener("click", (e) => {
             //     create_marker_by_click(e.latLng,map);
             // });
+            for (place of locations) {
+                create_marker(place, map)
+            }
             initAutocomplete();
             
         }
@@ -782,11 +787,109 @@
             uniqueId = 1
         }
 
+         // create existing marker
+         function create_marker(place,map) {
+            const icon = {
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
+                    scaledSize: new google.maps.Size(50, 50), // scaled size
+                    // origin: new google.maps.Point(0,0), // origin
+                    // anchor: new google.maps.Point(0, 0) // anchor
+                };
+                var marker = new google.maps.Marker({
+                    position: place.latlng,
+                    map: map,
+                    icon: icon
+                });
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "",
+                    disableAutoPan: true,
+                    });
+                // Set unique id
+                marker.id = uniqueId;
+                uniqueId++;
+
+                // set infoWindow
+                var contentString = 
+                    `
+                    <div id="content">
+                    <div id="siteNotice"></div>
+
+                    <div class="container">
+                    
+                    <div class="row">
+                        <div class = "col-8">
+                        <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                        <h3>${place.name}</h3>
+                        <p class="address">${place.address}<p>
+                        <hr>
+                        <h6>SGD ${place.price.sgd} / KRW ${place.price.krw} per person</h6>
+                        <p class="description">Top picks that the fam wants to visit while in Korea</p>
+                        </div>
+                        
+
+                        <div class="col-4" style:"position:relative">
+                        <p class="pt-3">Current Votes: </p>
+                            <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="voting_buttons pt-3">
+                            <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
+                            <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
+                            </div>
+                            
+                        </div>
+
+                    </div>  
+                    </div>
+                </div>
+                </div>
+                    `
+                // delete button removed from contentString
+                // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+                marker.addListener("click", (googleMapsEvent) => {
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, marker);});
+                
+        }
+
 
         // cached variables
         var markers = [];
         var uniqueId = 1;
 
+        var locations = [
+            {
+                name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                latlng: { lat: 37.5444, lng: 127.0374 },
+                price: {sgd: 0, krw: 0}
+            },
+            {
+                name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                latlng: { lat: 37.5512, lng: 126.9882 },
+                price: {sgd: 12, krw: 12000}
+            },
+            {
+                name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
+                address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
+                latlng: { lat: 37.5561, lng: 126.9719 },
+                price: {sgd: 3, krw: 3000}
+            },
+            {
+                name: 'Hongdae Shopping Street',
+                address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
+                latlng: { lat: 37.5532, lng: 126.9219 },
+                price: {sgd: 25, krw: 25244.25}
+            },
+                ];
+        
+    
         window.initMap = initMap;
     </script>
 
