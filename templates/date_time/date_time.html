@@ -235,7 +235,7 @@
     <hr class="mt-5">
 
     <!-- flight static form -->
-    <div class="container-md text-dark bg-mild rounded-4 py-3 position-relative" id="datetime_app">
+    <div class="container-md text-dark bg-mild rounded-4 py-3 position-relative mb-5">
         <form action="#">
             <!-- flight title & departure & arrival country -->
             <div class="row justify-content-center align-items-center mt-3 mb-5">
@@ -312,57 +312,30 @@
                 <div class="row g-3 mt-2">
                     <div class="col-md-4 col-sm-6">
                         <!-- airline -->
-                        <p>{{airline}}</p>
+                        <p class="d-inline ms-2 fs-5"><span class="fw-semibold">Airline:</span> {{airline}}</p>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- flight no -->
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number" v-model="flight_no">
-                            <label for="flightX_number">Flight No</label>
-                        </div>
+                        <p class="d-inline ms-2 fs-5"><span class="fw-semibold">Flight No:</span> {{flight_no}}</p>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- airport -->
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport" v-model="airport">
-                            <label for="flightX_airport">Airport</label>
-                        </div>
+                        <p class="d-inline ms-2 fs-5"><span class="fw-semibold">Airport:</span> {{airport}}</p>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- terminal -->
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal" v-model="terminal">
-                            <label for="flightX_terminal">Terminal</label>
-                        </div>
+                        <p class="d-inline ms-2 fs-5"><span class="fw-semibold">Terminal:</span> {{terminal}}</p>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <!-- gate number -->
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate" v-model="gate">
-                            <label for="flightX_gate">Gate</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-lg-6">
-                        <!-- attachments -->
-                        <div class="form-floating">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text text-light bg-bold fw-semibold" for="inputGroupFile01">Add Attachment</label>
-                                <input type="file" class="form-control" id="inputGroupFile01">
-                            </div>
-                        </div>
+                        <p class="d-inline ms-2 fs-5"><span class="fw-semibold">Gate:</span> {{gate}}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="save-btn-div-flight-page">
-                <button type="button" class="btn btn-fade me-3">Delete</button>
-                <button type="button" class="btn btn-main-fixed">Save</button>
+            <div class="save-btn-div-flight-page justify-content-end">
+                <button type="button" class="btn btn-main-bold-fixed">Edit</button>
             </div>
-
-            <button type="button" @click="log_everything()">Log Everything</button>
-
         </form>
     </div>
 

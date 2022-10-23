@@ -51,7 +51,7 @@ function get_date() {
 }
 
 // VUE APP ------------------------------------------------------------------------------
-var datetime_app = Vue.createApp({
+var flight_app = Vue.createApp({
     data() {
         return {
             depart_datetime: "",
@@ -126,13 +126,6 @@ var datetime_app = Vue.createApp({
                     edit_mode: false
                 }
             ],
-
-            //Currency conversion
-            amount: "", 
-            from: "SGD", 
-            to: "KRW", 
-            converted_amount: "",
-            api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
         }
     },
 
@@ -311,6 +304,16 @@ var datetime_app = Vue.createApp({
             }
         },
 
+        convert_datetime_readable(datetime_str) {
+            if (datetime_str!="") {
+                let date_obj = convert_datetime_str_to_date_obj(datetime_str)
+
+                return flatpickr.formatDate(date_obj, "J M y (h:i K)")
+            } else {
+                return ""
+            }
+        },
+
         //currency methods
         calculate_to_from() {
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
@@ -343,7 +346,7 @@ var datetime_app = Vue.createApp({
             .catch(error => {
                 console.log(error.message)
             })
-        }
+        },
     },
 
     created() {
@@ -359,7 +362,7 @@ var datetime_app = Vue.createApp({
     }
 })
 
-datetime_app.mount('#datetime_app')
+flight_app.mount('#flight_app')
 
 // FLATPICKR CONFIG SETTINGS -----------------------------------------------------------------
 let datetime_config = {
