@@ -29,13 +29,22 @@
                     </div>
                 <!-- TAG -->
                     <div class="col-5">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">#</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag">
-                                <label for="input_tag">Add a Tag</label>
-                            </div>
-                        </div>
+
+                        <!-- vue for tag -->
+                        <div id="main2" class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">#</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                    <label for="input">Add a Tag</label>
+                                </div>
+                            </div> 
+
+                            <!-- LIST OF CURRENT TAGS -->
+                            <datalist id="list_all_tags">
+                                <option v-for="tag of tags" :value="tag"></option>
+
+                            </datalist>
                     </div>
                 </div>
                 <!-- DESCRIPTION -->

@@ -47,3 +47,20 @@ const main = Vue.createApp({
   })
 
 main.mount("#main")
+
+// use vue to autofill and create new tags
+const main2 = Vue.createApp({
+    data(){
+      return{
+        tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
+        tag_input: "",
+
+      }
+    },
+    methods:{
+        
+        
+
+    }
+  })
+main2.mount("#main2")

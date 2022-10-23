@@ -8,11 +8,16 @@ const main = Vue.createApp({
         to: "KRW", 
         converted_amount: "",
         api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
+        home_country: "SGD",
 
       }
     },
     methods:{
         calculate_to_from() {
+            if (this.from != "SGD"){
+                this.to = "SGD"
+            }
+
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
             // 250 times per month 
             axios.get(api_endpoint_url)
@@ -53,32 +58,12 @@ const main2 = Vue.createApp({
     data(){
       return{
         tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
-        result: "",
-        tag: "",
+        tag_input: "",
 
       }
     },
     methods:{
-        check_tag(){
-            console.log("LOGGING---")
-            console.log(this.tag)
-            console.log("END LOG")
-            
-            this.result = "";
-            let sub_result = [];
-            for(item of this.tags){
-                if(item.toLowerCase().includes(this.tag.toLowerCase())){
-                    sub_result.push(item)
-                }
-            }
-            this.result = sub_result.join(", ")
-            
-        },
-
-        test_log() {
-            console.log("curr tag: ", this.tag)
-        }
-
+        
         
 
     }
