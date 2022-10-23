@@ -68,10 +68,10 @@
     <div class="container-fluid" id="app">
         <div class="row flex-nowrap">
             <!-- sidebar -->
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
                     <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-8 d-none d-sm-inline fw-bold">The JAWKS-7</span>
+                        <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
@@ -115,25 +115,10 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> 
-                                        <span class="d-none d-sm-inline">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-                                            </svg>
-                                          Lodging
-                                        </span>
-                                    </a>
-                                </li>
+                                
                             </ul>
             
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
-                                    <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z"/>
-                                  </svg>
-                                  <span class="fs-5 ms-1 d-none d-sm-inline">Budget</span></a>
-                        </li>
+                        
                     </ul>
                     <hr>
                     <div>
@@ -169,20 +154,32 @@
                         <div class="row">
                             <div class="col-7">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="autocomplete" placeholder="Add a Place">
-                                    <label for="input_place">Add a Place</label>
+                                    <input type="text" class="form-control" id="autocomplete" placeholder="Start by typing a location here...">
+                                    <label for="input_place">Start by typing a location here...</label>
                                 </div>
                             </div>
                         <!-- TAG -->
-                            <div class="col-5">
-                                <div class="input-group mb-3">
+                        <div class="col-5">
+
+                            <!-- vue for tag -->
+                            <div id="main2" class="mb-3">
+                                <div class="input-group">
                                     <span class="input-group-text">#</span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag">
-                                        <label for="input_tag">Add a Tag</label>
+                                        <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                        <label for="input">Add a Tag</label>
                                     </div>
-                                </div>
+                                </div> 
+    
+                                <!-- LIST OF CURRENT TAGS -->
+                                <datalist id="list_all_tags">
+                                    <option v-for="tag of tags" :value="tag"></option>
+    
+                                </datalist>
+    
+                            
                             </div>
+                        </div>
                         </div>
                         <!-- DESCRIPTION -->
                         <div class="form-floating mb-3">
@@ -265,6 +262,7 @@
                         <div class="buttons">
                             <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
                             <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
+                            <!-- should write data to db and update InfoWindow -->
                             <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false,map_width='90%'">Create</button>
 
                             <!-- Back Button Modal -->
@@ -298,6 +296,7 @@
                 <div class="container text-dark">
                     <h3 class="heading">Edit Activity</h3>
                     <form>
+                        <!-- should read data from db -->
                         <!-- PLACE  -->
                         <div class="row">
                             <div class="col-7">
@@ -306,14 +305,24 @@
                                     <label for="input_place">Add a Place</label>
                                 </div>
                             </div>
-                        <!-- TAG -->
+                            <!-- TAG -->
                             <div class="col-5">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">#</span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag">
-                                        <label for="input_tag">Add a Tag</label>
-                                    </div>
+                                <!-- vue for tag -->
+                                <div id="main2" class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#</span>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                            <label for="input">Add a Tag</label>
+                                        </div>
+                                    </div> 
+        
+                                    <!-- LIST OF CURRENT TAGS -->
+                                    <datalist id="list_all_tags">
+                                        <option v-for="tag of tags" :value="tag"></option>
+        
+                                    </datalist>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -397,7 +406,10 @@
         
                         <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
                         <div class="buttons">                         
-                            
+                            <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" @click="edit_true=false,map_width='90%', delete_marker(marker_id)">Delete</button>
+                            <!-- should write data to db and update infoWindow -->
+                            <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,map_width='90%'">Save</button>
+
                             <!-- Back Button Modal -->
                             <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -422,15 +434,13 @@
                         
                     </form>
                     
-                    <!-- <button type="button" class="btn del_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal" @click="edit_true=false,map_width='90%', delete_marker(marker_id)">Delete</button> -->
-                    <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" @click="edit_true=false,map_width='90%', delete_marker(marker_id)">Delete</button>
-                    <button class="btn save_button btn-main-fixed" @click="edit_true=false,map_width='90%'">Save</button>
                 </div>
             </div>
             <!-- map interface -->
             <div class="col col-md-9 py-3">
                 <!-- map details -->
                 <div :style="{width:map_width}" id="map"></div><button style="position: absolute; bottom: 0px; right: 70px;" class="btn btn-main-fixed" @click="create_true=true,edit_true=false,map_width='65%'">Create Activity</button>
+                
             </div>
         </div>
         
@@ -516,7 +526,7 @@
                 const infowindow = new google.maps.InfoWindow();
                 const icon = {
                     url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                    scaledSize: new google.maps.Size(30,30),
+                    scaledSize: new google.maps.Size(40,40),
                     };
                 const marker = new google.maps.Marker({
                     map: map,
@@ -543,11 +553,13 @@
                 marker.setVisible(true);
 
                 marker.id = uniqueId;
+                vm.$data.marker_id = uniqueId
                 uniqueId++;
+                
                 
                 const contentString = 
                 `
-                <div id="content">
+                <div id="content" name="${marker.id}">
                 <div id="siteNotice"></div>
 
                 <div class="container">
@@ -576,8 +588,6 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
-
-                            <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
                         </div>
                         
                     </div>
@@ -587,6 +597,8 @@
             </div>
             </div>
                 `
+            // line for deleting marker by clicking in InfoWindow
+            // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
             markers.push(marker)
@@ -791,7 +803,7 @@
          function create_marker(place,map) {
             const icon = {
                     url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
-                    scaledSize: new google.maps.Size(50, 50), // scaled size
+                    scaledSize: new google.maps.Size(40, 40), // scaled size
                     // origin: new google.maps.Point(0,0), // origin
                     // anchor: new google.maps.Point(0, 0) // anchor
                 };
@@ -806,12 +818,14 @@
                     });
                 // Set unique id
                 marker.id = uniqueId;
+                vm.$data.marker_id = uniqueId
                 uniqueId++;
+                
 
                 // set infoWindow
                 var contentString = 
                     `
-                    <div id="content">
+                    <div id="content" name="${marker.id}>
                     <div id="siteNotice"></div>
 
                     <div class="container">
@@ -908,5 +922,7 @@
 
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    
 </body>
 </html>
