@@ -66,13 +66,16 @@ var flight_app = Vue.createApp({
             duration_minutes: 0,
 
             price: "",
-            currency: "",
+            currency: "SGD",
 
             airline: "",
             flight_no: "",
             airport: "",
             terminal: "",
             gate: "",
+
+            create_new_flight: false,
+            edit_existing_flight: false,
 
             user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             curr_user_datetime: "",
@@ -104,7 +107,8 @@ var flight_app = Vue.createApp({
                     airport: "Singapore Changi Airport",
                     terminal: "3",
                     gate: "A1",
-                    edit_mode: false
+                    edit_mode: false,
+                    dropdown_open: false
                 },
                 {
                     ID: 2,
@@ -123,8 +127,9 @@ var flight_app = Vue.createApp({
                     airport: "Incheon International Airport",
                     terminal: "1",
                     gate: "B2",
-                    edit_mode: false
-                }
+                    edit_mode: false,
+                    dropdown_open: false
+                },
             ],
         }
     },
@@ -171,8 +176,12 @@ var flight_app = Vue.createApp({
             }
         },
 
-        toggle_dropdown() {
-            this.dropdown_open = !this.dropdown_open
+        toggle_dropdown(flight_obj_ID) {
+            if (flight_obj_ID == -1) {
+                this.dropdown_open = !this.dropdown_open
+            } else {
+                this.flight_obj_arr[flight_obj_ID-1].dropdown_open = !this.flight_obj_arr[flight_obj_ID-1].dropdown_open
+            }
         },
 
         async update_arrival_time() {
@@ -314,6 +323,37 @@ var flight_app = Vue.createApp({
             }
         },
 
+        initialize_create_flight() {
+            this.create_new_flight = true
+            this.edit_existing_flight = false
+        },
+
+        initialize_edit_flight(flight_obj) {
+            this.edit_existing_flight = true
+            this.create_new_flight = false
+
+            //update all main variables
+            this.depart_datetime= flight_obj.depart_datetime
+            this.depart_country= flight_obj.depart_country
+            this.depart_tz= flight_obj.depart_tz
+
+            this.arrive_datetime= flight_obj.arrive_datetime
+            this.arrive_country= flight_obj.arrive_country
+            this.arrive_tz= flight_obj.arrive_tz
+
+            this.duration_hours= flight_obj.duration_hours
+            this.duration_minutes= flight_obj.duration_minutes
+
+            this.price= flight_obj.price
+            this.currency= flight_obj.currency
+
+            this.airline= flight_obj.airline
+            this.flight_no= flight_obj.flight_no
+            this.airport= flight_obj.airport
+            this.terminal= flight_obj.terminal
+            this.gate= flight_obj.gate
+        },
+
         //currency methods
         calculate_to_from() {
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
@@ -347,6 +387,30 @@ var flight_app = Vue.createApp({
                 console.log(error.message)
             })
         },
+
+        update_currency_dropdown() {
+            console.log("UPDATING CURRENCY DROPDOWN NOW")
+            const dropList = document.querySelectorAll("form select");
+
+            for (let i = 0; i < dropList.length; i++) {
+                for(let currency_code in country_list){
+                    // selecting USD by default as FROM currency and NPR as TO currency
+                    let selected = i == 0 ? currency_code == "SGD" ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
+                    // creating option tag with passing currency code as a text and value
+                    let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
+                    // inserting options tag inside select tag
+                    dropList[i].insertAdjacentHTML("beforeend", optionTag);
+                }
+            }
+        }
+    },
+
+    updated() {
+        this.update_currency_dropdown()
+
+        //updating calendars
+        let departure_fp_obj = flatpickr("#departure_datetime_i9w2", datetime_config)
+        let arrival_fp_obj = flatpickr("#arrival_datetime_i9w2", datetime_config)
     },
 
     created() {
@@ -358,6 +422,7 @@ var flight_app = Vue.createApp({
 
         this.curr_user_datetime = curr_datetime_temp
         console.log(this.curr_user_datetime)
+
         console.log("DONE CREATING ----------------------")
     }
 })
