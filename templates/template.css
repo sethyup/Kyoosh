@@ -4,11 +4,13 @@ button.btn {
     font-weight: 600;
 }
 
+/* expand margin adding */
 button.btn-expand:hover, button.btn-main:hover, button.btn-main-bold:hover, button.btn-main-mild:hover {
     padding-left: calc(.75vw + 15px);
     padding-right: calc(.75vw + 15px);
 }
 
+/* btn main */
 button.btn-main, button.btn-main-fixed {
     background-color: #F55B29;
     color: #FFFFFF;
@@ -21,6 +23,12 @@ button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-mai
     color: #FFFFFF !important;
 }
 
+button.btn-main:disabled, button.btn-main-fixed:disabled {
+    background-color: #eda289;
+    color: #FFFFFF;
+}
+
+/* btn main bold */
 button.btn-main-bold, button.btn-main-bold-fixed {
     background-color: #58788C;
     color: #FFFFFF;
@@ -33,6 +41,12 @@ button.btn-main-bold-fixed:active:focus, button.btn-main-bold-fixed:active, butt
     color: #FFFFFF !important;
 }
 
+button.btn-main-bold:disabled, button.btn-main-bold-fixed:disabled {
+    background-color: #6b8799;
+    color: #FFFFFF;
+}
+
+/* btn main mild */
 button.btn-main-mild, button.btn-main-mild-fixed {
     background-color: #DFEEF5;
     color: #405559;
@@ -45,6 +59,13 @@ button.btn-main-mild-fixed:active:focus, button.btn-main-mild-fixed:active, butt
     color: #405559 !important;
 }
 
+button.btn-main-mild:disabled, button.btn-main-mild-fixed:disabled {
+    background-color: #DFEEF5;
+    color: #82a0a6;
+    border: #DFEEF5 solid 1px;
+}
+
+/* btn fade */
 button.btn-fade {
     background-color: #DFEEF5;
     color: #71888c;
@@ -56,6 +77,7 @@ button.btn-fade:focus, button.btn-fade:active, button.btn-fade:hover {
     color: #405559 !important;
 }
 
+/* save button on flight page */
 .save-btn-div-flight-page{
     position: absolute;
     bottom: 20px;
