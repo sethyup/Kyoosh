@@ -86,3 +86,11 @@ button.btn-fade:focus, button.btn-fade:active, button.btn-fade:hover {
     display: flex;
     justify-content: center;
 }
+
+.delete-btn-div-flight-page{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 10vw;
+    text-align: end;
+}

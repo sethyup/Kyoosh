@@ -120,6 +120,7 @@
                 <div class="row justify-content-end mb-3">
                     <div class="col-md-3 col-lg-2 d-flex justify-content-center">
                         <button type="button" class="btn btn-main" @click="initialize_create_flight()" :disabled="create_new_flight || edit_existing_flight">Create New</button>
+                        <!-- <button type="button" class="btn btn-main-bold" @click="log_everything()">LOG EVERYTHING</button> -->
                     </div>
                 </div>
 
@@ -234,11 +235,19 @@
                         
                         </div>
                         
-                        <div class="col-3">
-                            <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
-                                <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                                <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
-                            </button>
+                        <div class="row justify-content-center">
+                            <div class="col-2">
+                                <button class="btn btn-mild2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
+                                    <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                                    <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-9 mb-5">
+                                <div class="alert alert-danger text-center" role="alert" v-if="error_message.trim()!=''">
+                                    {{error_message}}
+                                  </div>
+                            </div>
                         </div>
             
                         
@@ -296,14 +305,15 @@
                         </div>
             
                         <div class="save-btn-div-flight-page">
-                            <button type="button" class="btn btn-fade me-3">Delete</button>
-                            <button type="button" class="btn btn-main-fixed">Save</button>
-                        </div>            
+                            <button type="button" class="btn btn-fade me-3" @click="reset_flight_form()">Cancel</button>
+                            <button type="button" class="btn btn-main-fixed" @click="save_new_flight()">Save</button>
+                        </div>
                     </form>
                 </div>
 
-                <!-- EACH STATIC FLIGHT ITEM -->
+                <!-- EACH LOADED FLIGHT -->
                 <div v-for="e_flightObj of flight_obj_arr">
+                    <!-- EACH STATIC FLIGHT ITEM -->
                     <div v-if="!e_flightObj.edit_mode" class="container-md text-dark bg-mild rounded-4 py-1 position-relative mb-3">
                         <form action="#">
                             <!-- flight title & departure & arrival country -->
@@ -407,7 +417,7 @@
                             </div>
                 
                             <div class="save-btn-div-flight-page justify-content-end">
-                                <button type="button" class="btn btn-main-bold-fixed">Edit</button>
+                                <button type="button" class="btn btn-main-bold-fixed" @click="enable_edit_flight(e_flightObj.ID)"  :disabled="create_new_flight || edit_existing_flight">Edit</button>
                             </div>
                         </form>
                     </div>
@@ -417,7 +427,7 @@
                         <form action="#">
                             <!-- flight title -->
                             <div class="row justify-content-center text-center">
-                                <h2>New Flight</h2>
+                                <h2>Edit Flight {{e_flightObj.ID}}</h2>
                             </div>
                 
                             <!-- from country to country -->
@@ -523,11 +533,26 @@
                             
                             </div>
                             
-                            <div class="col-3">
-                                <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
-                                    <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                                    <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                            <!-- <div class="col-3">
+                                <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(e_flightObj.ID)">
+                                    <i v-if="!e_flightObj.dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                                    <i v-if="e_flightObj.dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
                                 </button>
+                            </div> -->
+
+                            <div class="row justify-content-center">
+                                <div class="col-2">
+                                    <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(e_flightObj.ID)">
+                                        <i v-if="!e_flightObj.dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                                        <i v-if="e_flightObj.dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                                    </button>
+                                </div>
+    
+                                <div class="col-9 mb-5">
+                                    <div class="alert alert-danger text-center" role="alert" v-if="error_message.trim()!=''">
+                                        {{error_message}}
+                                      </div>
+                                </div>
                             </div>
                 
                             
@@ -585,9 +610,15 @@
                             </div>
                 
                             <div class="save-btn-div-flight-page">
-                                <button type="button" class="btn btn-fade me-3">Delete</button>
-                                <button type="button" class="btn btn-main-fixed">Save</button>
-                            </div>            
+                                <button type="button" class="btn btn-fade me-3" @click="reset_flight_form(e_flightObj.ID)">Cancel</button>
+                                <button type="button" class="btn btn-main-fixed" @click="save_edit_existing_flight(e_flightObj.ID)">Save</button>
+                            </div>
+                            
+                            <div class="delete-btn-div-flight-page">
+                                <button class="btn btn-fade" @click="delete_flight(e_flightObj.ID)">
+                                    <i class="fa-solid fa-trash-can fa-lg"></i>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
