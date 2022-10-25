@@ -66,13 +66,18 @@ var flight_app = Vue.createApp({
             duration_minutes: 0,
 
             price: "",
-            currency: "",
+            currency: "SGD",
 
             airline: "",
             flight_no: "",
             airport: "",
             terminal: "",
             gate: "",
+
+            create_new_flight: false,
+            edit_existing_flight: false,
+            updating_calendars: false,
+            error_message: "",
 
             user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             curr_user_datetime: "",
@@ -104,7 +109,8 @@ var flight_app = Vue.createApp({
                     airport: "Singapore Changi Airport",
                     terminal: "3",
                     gate: "A1",
-                    edit_mode: false
+                    edit_mode: false,
+                    dropdown_open: false
                 },
                 {
                     ID: 2,
@@ -123,8 +129,9 @@ var flight_app = Vue.createApp({
                     airport: "Incheon International Airport",
                     terminal: "1",
                     gate: "B2",
-                    edit_mode: false
-                }
+                    edit_mode: false,
+                    dropdown_open: false
+                },
             ],
         }
     },
@@ -145,6 +152,7 @@ var flight_app = Vue.createApp({
             console.log("")
         },
 
+        //dealing with datetimes
         verify_hour() {
             if (this.duration_hours == "") {
                 this.duration_hours = 0
@@ -169,10 +177,6 @@ var flight_app = Vue.createApp({
             } else if (this.duration_minutes >= 60) {
                 this.duration_minutes = 59
             }
-        },
-
-        toggle_dropdown() {
-            this.dropdown_open = !this.dropdown_open
         },
 
         async update_arrival_time() {
@@ -314,6 +318,242 @@ var flight_app = Vue.createApp({
             }
         },
 
+
+        //dropdown toggle
+        toggle_dropdown(flight_obj_ID) {
+            if (flight_obj_ID == -1) {
+                this.dropdown_open = !this.dropdown_open
+            } else {
+                this.flight_obj_arr[flight_obj_ID-1].dropdown_open = !this.flight_obj_arr[flight_obj_ID-1].dropdown_open
+            }
+        },
+
+
+        //create & edit flight methods
+        initialize_create_flight() {
+            console.log("=== initialize_create_flight() ===")
+
+            this.create_new_flight = true
+            this.edit_existing_flight = false
+            this.updating_calendars = true
+
+            console.log("=== END initialize_create_flight() ===")
+        },
+
+        reset_flight_form(flight_ID) {
+            console.log(`=== reset_flight_form(${flight_ID}) ===`)
+
+            this.depart_datetime = ""
+            this.depart_country = ""
+            this.depart_tz = ""
+
+            this.arrive_datetime = ""
+            this.arrive_country = ""
+            this.arrive_tz = ""
+
+            this.duration_hours = 0
+            this.duration_minutes = 0
+
+            this.price = ""
+            this.currency = "SGD"
+
+            this.airline = ""
+            this.flight_no = ""
+            this.airport = ""
+            this.terminal = ""
+            this.gate = ""
+
+            this.create_new_flight = false
+            this.edit_existing_flight = false
+            this.error_message = ""
+            this.dropdown_open = false
+
+            if (flight_ID) {
+                console.log("RESETING edit and dropdown")
+                this.flight_obj_arr[flight_ID-1].edit_mode = false
+                this.flight_obj_arr[flight_ID-1].dropdown_open = false
+            }
+
+            console.log(`=== END reset_flight_form(${flight_ID}) ===`)
+        },
+
+        check_for_errors() {
+            console.log(`=== check_for_errors() ===`)
+
+            this.error_message = ""
+
+            if (this.depart_country.trim()=="") {
+                this.error_message = "Please fill in Departure Country"
+            } else if (this.arrive_country.trim()=="") {
+                this.error_message = "Please fill in Arrival Country"
+            } else if (this.depart_datetime.trim() == "") {
+                this.error_message = "Please fill in Departure Date & Time"
+            } else if (this.arrive_datetime.trim()=="") {
+                this.error_message = "Please fill in Arrival Date & Time"
+            } else if (this.price=="") {
+                this.error_message = "Please fill in Cost"
+            }
+
+            console.log(`=== END check_for_errors() ===`)
+        },
+
+        push_flight_obj() {
+            console.log(`=== push_flight_obj() ===`)
+
+            let new_flight_obj = {
+                ID:                 this.flight_obj_arr.length + 1,
+                depart_datetime:    this.depart_datetime,
+                depart_country:     this.depart_country,
+                depart_tz:          this.depart_tz,
+                arrive_datetime:    this.arrive_datetime,
+                arrive_country:     this.arrive_country,
+                arrive_tz:          this.arrive_tz,
+                duration_hours:     this.duration_hours,
+                duration_minutes:   this.duration_minutes,
+                price:              this.price,
+                currency:           this.currency,
+                airline:            this.airline,
+                flight_no:          this.flight_no,
+                airport:            this.airport,
+                terminal:           this.terminal,
+                gate:               this.gate,
+                edit_mode:          false,
+                dropdown_open:      false
+            }
+
+            this.flight_obj_arr.push(new_flight_obj)
+
+            this.reset_flight_form()
+
+            console.log(`=== END push_flight_obj() ===`)
+        },
+
+        save_new_flight() {
+            console.log(`=== save_new_flight() ===`)
+
+            this.check_for_errors()
+
+            //update based on whether there are errors
+            if (this.error_message.trim() == "") {
+                this.push_flight_obj()
+            }
+
+            console.log(`=== END save_new_flight() ===`)
+        },
+
+        load_flight_obj_to_form(flight_ID) {
+            console.log(`=== load_flight_obj_to_form(${flight_ID}) ===`)
+
+            let curr_flight_obj = this.flight_obj_arr[flight_ID]
+
+            this.depart_datetime =  curr_flight_obj.depart_datetime
+            this.depart_country =  curr_flight_obj.depart_country
+            this.depart_tz =  curr_flight_obj.depart_tz
+            
+            this.arrive_datetime =  curr_flight_obj.arrive_datetime
+            this.arrive_country =  curr_flight_obj.arrive_country
+            this.arrive_tz =  curr_flight_obj.arrive_tz
+            
+            this.duration_hours =  curr_flight_obj.duration_hours
+            this.duration_minutes =  curr_flight_obj.duration_minutes
+            
+            this.price =  curr_flight_obj.price
+            this.currency = curr_flight_obj.currency
+            
+            this.airline =  curr_flight_obj.airline
+            this.flight_no =  curr_flight_obj.flight_no
+            this.airport =  curr_flight_obj.airport
+            this.terminal =  curr_flight_obj.terminal
+            this.gate =  curr_flight_obj.gate
+
+            console.log(`=== END load_flight_obj_to_form(${flight_ID}) ===`)
+        },
+        
+        enable_edit_flight(flight_ID) {
+            console.log(`=== enable_edit_flight(${flight_ID}) ===`)
+
+            flight_ID = flight_ID-1
+
+            this.flight_obj_arr[flight_ID].edit_mode = true
+            this.edit_existing_flight = true
+            this.create_new_flight = false
+            this.updating_calendars = true
+            this.flight_obj_arr[flight_ID].dropdown_open = false
+
+            this.load_flight_obj_to_form(flight_ID)
+
+            console.log(`=== END enable_edit_flight(${flight_ID}) ===`)
+        },
+
+        save_edit_existing_flight(flight_ID) {
+            console.log(`=== save_edit_existing_flight(${flight_ID}) ===`)
+
+            this.check_for_errors()
+
+            console.log("ERROR MESSAGE: ", this.error_message)
+
+            if (this.error_message.trim() == "") {
+                this.push_to_existing_flight(flight_ID)
+                this.reset_flight_form(flight_ID)
+            }
+
+            console.log(`=== END save_edit_existing_flight(${flight_ID}) ===`)
+        },
+
+        push_to_existing_flight(flight_ID) {
+            console.log(`=== push_to_existing_flight(${flight_ID}) ===`)
+
+            let new_flight_obj = {
+                ID:                 flight_ID,
+                depart_datetime:    this.depart_datetime,
+                depart_country:     this.depart_country,
+                depart_tz:          this.depart_tz,
+                arrive_datetime:    this.arrive_datetime,
+                arrive_country:     this.arrive_country,
+                arrive_tz:          this.arrive_tz,
+                duration_hours:     this.duration_hours,
+                duration_minutes:   this.duration_minutes,
+                price:              this.price,
+                currency:           this.currency,
+                airline:            this.airline,
+                flight_no:          this.flight_no,
+                airport:            this.airport,
+                terminal:           this.terminal,
+                gate:               this.gate,
+                edit_mode:          false,
+                dropdown_open:      false
+            }
+
+            this.flight_obj_arr[flight_ID-1] = new_flight_obj
+
+            console.log(`=== END push_to_existing_flight(${flight_ID}) ===`)
+        },
+
+        update_flight_IDs() {
+            console.log(`=== update_flight_IDs() ===`)
+
+            //changes flight ids to be from 1 - N
+            let curr_id = 1
+
+            for (e_flight_obj of this.flight_obj_arr) {
+                e_flight_obj.ID = curr_id
+                curr_id++
+            }
+
+            console.log(`=== END update_flight_IDs() ===`)
+        },
+
+        delete_flight(flight_ID) {
+            console.log(`=== delete_flight(${flight_ID}) ===`)
+
+            this.flight_obj_arr.splice(flight_ID-1,1)
+
+            this.reset_flight_form()
+            this.update_flight_IDs()
+
+            console.log(`=== END delete_flight(${flight_ID}) ===`)
+        },
+
         //currency methods
         calculate_to_from() {
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
@@ -347,18 +587,47 @@ var flight_app = Vue.createApp({
                 console.log(error.message)
             })
         },
+
+        update_currency_dropdown() {
+            console.log("UPDATING CURRENCY DROPDOWN NOW")
+            const dropList = document.querySelectorAll("form select");
+
+            for (let i = 0; i < dropList.length; i++) {
+                for(let currency_code in country_list){
+                    // selecting USD by default as FROM currency and NPR as TO currency
+                    let selected = i == 0 ? currency_code == "SGD" ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
+                    // creating option tag with passing currency code as a text and value
+                    let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
+                    // inserting options tag inside select tag
+                    dropList[i].insertAdjacentHTML("beforeend", optionTag);
+                }
+            }
+        }
+    },
+
+    updated() {
+        if (this.updating_calendars) {
+            this.update_currency_dropdown()
+
+            //updating calendars
+            let departure_fp_obj = flatpickr("#departure_datetime_i9w2", datetime_config)
+            let arrival_fp_obj = flatpickr("#arrival_datetime_i9w2", datetime_config)
+
+            this.updating_calendars = false
+        }
     },
 
     created() {
-        console.log("CREATING ---------------------------")
+        // console.log("CREATING ---------------------------")
         const time_elapsed = Date.now()
         let current_date = new Date(time_elapsed)
 
         let curr_datetime_temp = convert_date_obj_to_str(current_date)
 
         this.curr_user_datetime = curr_datetime_temp
-        console.log(this.curr_user_datetime)
-        console.log("DONE CREATING ----------------------")
+        // console.log(this.curr_user_datetime)
+
+        // console.log("DONE CREATING ----------------------")
     }
 })
 

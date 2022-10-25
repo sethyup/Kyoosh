@@ -1,7 +1,4 @@
 const dropList = document.querySelectorAll("form select");
-// fromCurrency = document.querySelector(".from select"),
-// toCurrency = document.querySelector(".to select"),
-// getButton = document.querySelector("form button");
 
 for (let i = 0; i < dropList.length; i++) {
     for(let currency_code in country_list){
@@ -12,9 +9,9 @@ for (let i = 0; i < dropList.length; i++) {
         // inserting options tag inside select tag
         dropList[i].insertAdjacentHTML("beforeend", optionTag);
     }
-    dropList[i].addEventListener("change", e =>{
-        loadFlag(e.target); // calling loadFlag with passing target element as an argument
-    });
+    // dropList[i].addEventListener("change", e =>{
+    //     loadFlag(e.target); // calling loadFlag with passing target element as an argument
+    // });
 }
 
 function loadFlag(element){
