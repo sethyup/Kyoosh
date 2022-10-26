@@ -1,3 +1,18 @@
+// Google Maps API autocomplete
+// init Autocomplete and setting boundaries
+function initAutocomplete() {
+    let autocomplete;
+
+    autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById('autocomplete'),
+        {
+            componentRestrictions: {'country':['US', 'AU', 'KR', 'SG']},
+            fields: ['place_id','name']
+        }
+    )
+}
+// -----------------------------------------------------
+
 function convert_date_obj_to_str(date_obj) {
     console.log("")
     console.log("CALLING convert_date_obj_to_str() ---------------")
@@ -23,13 +38,15 @@ var accommodation_app = Vue.createApp({
         return {
             accom_name: "",
             accom_local: "",
+            checkin_datetime: "",
+            checkout_datetime: "",
 
             price: "",
             currency: "SGD",
 
             create_new_flight: false,
             edit_existing_flight: false,
-            updating_calendars: false,
+            updating_calendars: true,
             error_message: "",
 
             user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -221,6 +238,9 @@ var accommodation_app = Vue.createApp({
                     dropdown_open: false
                 },
             ],
+
+            //Google Maps
+            map: ""
         }
     },
 
@@ -362,19 +382,46 @@ var accommodation_app = Vue.createApp({
 
     updated() {
         if (this.updating_calendars) {
+            console.log("Updating calendar and currency dropdown")
             this.update_currency_dropdown()
 
             //updating calendars
-            let departure_fp_obj = flatpickr("#departure_datetime_i9w2", datetime_config)
-            let arrival_fp_obj = flatpickr("#arrival_datetime_i9w2", datetime_config)
+            let checkin_fp_obj = flatpickr("#checkin_datetime_i9w2", datetime_config)
+            let checkout_fp_obj = flatpickr("#checkout_datetime_i9w2", datetime_config)
 
             this.updating_calendars = false
         }
     },
 
-    created() {
-
-    }
+    mounted() {
+        this.update_currency_dropdown()
+    },
 })
 
 accommodation_app.mount('#accommodation_app')
+
+
+// FLATPICKR CONFIG SETTINGS -----------------------------------------------------------------
+let datetime_config = {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    altInput: true,
+    altFormat: "J M y (h:i K)",
+    disableMobile: "true",
+}
+
+let date_config = {
+    altInput: true,
+    altFormat: "J M y",
+    disableMobile: "true"
+}
+
+// FLatpickr objects ----------------------------------------------------------------------
+let checkin_fp_obj = flatpickr("#checkin_datetime_i9w2", datetime_config)
+let checkout_fp_obj = flatpickr("#checkout_datetime_i9w2", datetime_config)
+
+// datetime
+let datetime_fp_obj = flatpickr("input[type=datetime-local]", datetime_config);
+
+// date only
+let date_fp_obj = flatpickr("input[type=date]", date_config)

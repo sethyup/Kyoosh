@@ -17,10 +17,13 @@
     <!-- Vue js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+    <!-- polyfill -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
     <title>Accommodations</title>
 </head>
 <body id="accommodation_app">
-    
+
     <!-- CREATE NEW FLIGHT FORM -->
     <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative">
         <form action="#">
@@ -30,77 +33,57 @@
             </div>
     
             <!-- accom name & local -->
-            <div class="row justify-content-center mt-4">
+            <div class="row justify-content-center my-4">
     
                 <!-- accom name -->
-                <div class="col-md-6 mb-3">
+                <div class="col-sm-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_name">
                         <label for="accom_name"><i class="fa-solid fa-hotel"></i> Accommodation Name</label>
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <!-- accom local -->
+                <div class="col-sm-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_local">
+                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_local" id="autocomplete">
                         <label for="accom_local"><i class="fa-solid fa-location-dot"></i> Location</label>
                     </div>
                 </div>
             </div>
-    
-            <!-- departure info -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-md-1 text-center col-2 mt-2">
-                    <h3 class="fw-bold">DEP</h3>
+
+            <!-- Check In & Check Out -->
+            <div class="row justify-content-center my-5">
+                <!-- check in text -->
+                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                    <h4 class="fw-bold">Check In</h4>
                 </div>
-    
-                <div class="col-md-6 col-10">
-                    <!-- 3. Departure time -->
-                    <div class="form-floating mb-3">
-                        <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
-                        <label for="departure_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Departure Date & Time</label>
+
+                <!-- check in input -->
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="datetime-local" placeholder=" " v-model.lazy="checkin_datetime" id="checkin_datetime_i9w2">
+                        <label for="checkin_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check In Date & Time</label>
                     </div>
                 </div>
-    
-                <div class="col-md-4 text-md-start text-end">
-                    <p>{{depart_tz}}</p>
+
+                <!-- check out text -->
+                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                    <h4 class="fw-bold">Check Out</h4>
+                </div>
+
+                <!-- check out input -->
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <input type="datetime-local" placeholder=" " v-model.lazy="checkout_datetime" id="checkout_datetime_i9w2">
+                        <label for="checkout_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check Out Date & Time</label>
+                    </div>
                 </div>
             </div>
     
-            <!-- arrival info -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-md-1 text-center col-2 mt-2">
-                    <h3 class="fw-bold">ARR</h3>
-                </div>
-    
-                <div class="col-md-6 col-10">
-                    <!-- 4. Arrival time -->
-                    <div class="form-floating mb-3">
-                        <input type="datetime-local" placeholder="Select Arrival Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
-                        <label for="arrival_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Arrival Date & Time</label>
-                    </div>
-                </div>
-    
-                <div class="col-md-4 text-md-start text-end">
-                    <p>{{arrive_tz}}</p>
-                </div>
-            </div>
-    
-            <!-- duration and price -->
-            <div class="row mt-4 justify-content-center">
-                <!-- flight duration -->
-                <div class="col-md-2 pt-md-3 col-2 d-flex d-md-block">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <i class="fa-solid fa-hourglass-half fa-lg d-inline"></i>
-                        </div>
-                        <div class="col-md-9 text-center">
-                            <p class="d-inline">{{duration_hours}}hr {{duration_minutes}}min</p>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- 5. Cost -->
+            <!-- price (& maybe duration) -->
+            <div class="row mt-4">
+                <!-- Cost -->
                 <div class="col-md-6 col-6">
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
@@ -108,7 +91,7 @@
                     </div>
                 </div>
     
-                <!-- 6. Cost Currency -->
+                <!-- Currency -->
                 <div class="col-md-3 col-3">
                     <div class="drop-list form-floating">
                         <div class="from">
@@ -152,6 +135,11 @@
     
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Google Maps -->
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&libraries=places&callback=initAutocomplete">
+    </script>
 
     <!-- local js import -->
     <script src="../lodging.js"></script>
