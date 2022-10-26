@@ -237,9 +237,9 @@
                         
                         <div class="row justify-content-center">
                             <div class="col-2">
-                                <button class="btn btn-mild2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
-                                    <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                                    <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                                <button class="btn btn-mild2 my-2 dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown">
+                                    <i class="fa-solid fa-chevron-down fa-sm"></i>
+                                    <i class="fa-solid fa-chevron-up fa-sm"></i>
                                 </button>
                             </div>
 
@@ -382,9 +382,9 @@
                             
                             <!-- dropdown arrow icon toggle -->
                             <div class="col-3">
-                                <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" :data-bs-target="`#flight_dropdown`+e_flightObj.ID" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(e_flightObj.ID)">
-                                    <i v-if="!e_flightObj.dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                                    <i v-if="e_flightObj.dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                                <button class="btn btn-mild2 my-2 ms-md-5 dropdown" type="button" data-bs-toggle="collapse" :data-bs-target="`#flight_dropdown`+e_flightObj.ID" aria-expanded="false" aria-controls="flightX_dropdown">
+                                    <i class="fa-solid fa-chevron-down fa-sm"></i>
+                                    <i class="fa-solid fa-chevron-up fa-sm"></i>
                                 </button>
                             </div>
                 
@@ -535,9 +535,9 @@
 
                             <div class="row justify-content-center">
                                 <div class="col-2">
-                                    <button class="btn btn-mild2 my-2 ms-md-5" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(e_flightObj.ID)">
-                                        <i v-if="!e_flightObj.dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                                        <i v-if="e_flightObj.dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                                    <button class="btn btn-mild2 my-2 ms-md-5 dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown">
+                                        <i class="fa-solid fa-chevron-down fa-sm"></i>
+                                        <i class="fa-solid fa-chevron-up fa-sm"></i>
                                     </button>
                                 </div>
     

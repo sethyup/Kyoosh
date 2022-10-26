@@ -44,7 +44,7 @@
                 </div>
 
                 <!-- accom local -->
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-3 mt-sm-0">
                     <div class="form-floating">
                         <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_local" id="autocomplete">
                         <label for="accom_local"><i class="fa-solid fa-location-dot"></i> Location</label>
@@ -53,7 +53,7 @@
             </div>
 
             <!-- Check In & Check Out -->
-            <div class="row justify-content-center my-5">
+            <div class="row justify-content-center mb-4 mt-md-5 mt-4">
                 <!-- check in text -->
                 <div class="col-md-2 d-flex justify-content-center align-items-center">
                     <h4 class="fw-bold">Check In</h4>
@@ -68,7 +68,7 @@
                 </div>
 
                 <!-- check out text -->
-                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                <div class="col-md-2 d-flex justify-content-center align-items-center mt-3 mt-md-0">
                     <h4 class="fw-bold">Check Out</h4>
                 </div>
 
@@ -84,15 +84,15 @@
             <!-- price (& maybe duration) -->
             <div class="row mt-4">
                 <!-- Cost -->
-                <div class="col-md-6 col-6">
+                <div class="col-md-3 col-sm-4 col-7">
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
+                        <input type="number" class="form-control" id="input_place" placeholder=" " v-model="price">
                         <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
                     </div>
                 </div>
     
                 <!-- Currency -->
-                <div class="col-md-3 col-3">
+                <div class="col-md-3 col-sm-4 col-5">
                     <div class="drop-list form-floating">
                         <div class="from">
                         <!-- <p>From</p> -->
@@ -105,11 +105,12 @@
             
             </div>
             
+            <!-- dropdown button & error message -->
             <div class="row justify-content-center">
                 <div class="col-2">
-                    <button class="btn btn-mild2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
-                        <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
-                        <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                    <button class="btn btn-mild2 my-2 dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#accomX_dropdown" aria-expanded="false" aria-controls="accomX_dropdown" @click="toggle_dropdown(-1)">
+                        <i class="fa-solid fa-chevron-down fa-sm"></i>
+                        <i class="fa-solid fa-chevron-up fa-sm"></i>
                     </button>
                 </div>
     
@@ -117,6 +118,59 @@
                     <div class="alert alert-danger text-center" role="alert" v-if="error_message.trim()!=''">
                         {{error_message}}
                         </div>
+                </div>
+            </div>
+
+            <!-- collapsable -->
+            <div class="collapse mx-md-5 pb-5" id="accomX_dropdown">
+                <hr class="bg-dark">
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airline -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder=" " v-model="airline">
+                            <label for="flightX_airline">Airline</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- flight no -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder=" " v-model="flight_no">
+                            <label for="flightX_number">Flight No</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- airport -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder=" " v-model="airport">
+                            <label for="flightX_airport">Airport</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- terminal -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder=" " v-model="terminal">
+                            <label for="flightX_terminal">Terminal</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!-- gate number -->
+                        <div class="form-floating">
+                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder=" " v-model="gate">
+                            <label for="flightX_gate">Gate</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <!-- attachments -->
+                        <div class="form-floating">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text text-light bg-bold fw-semibold" for="inputGroupFile01">Add Attachment</label>
+                                <input type="file" class="form-control" id="inputGroupFile01">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

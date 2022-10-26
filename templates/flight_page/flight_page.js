@@ -250,9 +250,6 @@ var flight_app = Vue.createApp({
                 "ZWD" : "ZW"
             },
 
-            //Animations
-            dropdown_open: false,
-
             //List of flight objects
             flight_obj_arr: [
                 {
@@ -272,8 +269,7 @@ var flight_app = Vue.createApp({
                     airport: "Singapore Changi Airport",
                     terminal: "3",
                     gate: "A1",
-                    edit_mode: false,
-                    dropdown_open: false
+                    edit_mode: false
                 },
                 {
                     ID: 2,
@@ -292,8 +288,7 @@ var flight_app = Vue.createApp({
                     airport: "Incheon International Airport",
                     terminal: "1",
                     gate: "B2",
-                    edit_mode: false,
-                    dropdown_open: false
+                    edit_mode: false
                 },
             ],
         }
@@ -482,16 +477,6 @@ var flight_app = Vue.createApp({
         },
 
 
-        //dropdown toggle
-        toggle_dropdown(flight_obj_ID) {
-            if (flight_obj_ID == -1) {
-                this.dropdown_open = !this.dropdown_open
-            } else {
-                this.flight_obj_arr[flight_obj_ID-1].dropdown_open = !this.flight_obj_arr[flight_obj_ID-1].dropdown_open
-            }
-        },
-
-
         //create & edit flight methods
         initialize_create_flight() {
             console.log("=== initialize_create_flight() ===")
@@ -529,12 +514,10 @@ var flight_app = Vue.createApp({
             this.create_new_flight = false
             this.edit_existing_flight = false
             this.error_message = ""
-            this.dropdown_open = false
 
             if (flight_ID) {
-                console.log("RESETING edit and dropdown")
+                console.log("RESETING edit")
                 this.flight_obj_arr[flight_ID-1].edit_mode = false
-                this.flight_obj_arr[flight_ID-1].dropdown_open = false
             }
 
             console.log(`=== END reset_flight_form(${flight_ID}) ===`)
@@ -580,8 +563,7 @@ var flight_app = Vue.createApp({
                 airport:            this.airport,
                 terminal:           this.terminal,
                 gate:               this.gate,
-                edit_mode:          false,
-                dropdown_open:      false
+                edit_mode:          false
             }
 
             this.flight_obj_arr.push(new_flight_obj)
@@ -641,7 +623,6 @@ var flight_app = Vue.createApp({
             this.edit_existing_flight = true
             this.create_new_flight = false
             this.updating_calendars = true
-            this.flight_obj_arr[flight_ID].dropdown_open = false
 
             this.load_flight_obj_to_form(flight_ID)
 
@@ -683,8 +664,7 @@ var flight_app = Vue.createApp({
                 airport:            this.airport,
                 terminal:           this.terminal,
                 gate:               this.gate,
-                edit_mode:          false,
-                dropdown_open:      false
+                edit_mode:          false
             }
 
             this.flight_obj_arr[flight_ID-1] = new_flight_obj

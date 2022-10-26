@@ -94,3 +94,12 @@ button.btn-fade:focus, button.btn-fade:active, button.btn-fade:hover {
     width: 10vw;
     text-align: end;
 }
+
+/* dropdown css */
+button.dropdown[aria-expanded = true] .fa-chevron-down{
+    display: none;
+}
+
+button.dropdown[aria-expanded = false] .fa-chevron-up{
+    display: none;
+}
