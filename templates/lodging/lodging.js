@@ -40,22 +40,15 @@ var accommodation_app = Vue.createApp({
             accom_local: "",
             checkin_datetime: "",
             checkout_datetime: "",
+            max_occupancy: "",
 
             price: "",
             currency: "SGD",
 
-            create_new_flight: false,
-            edit_existing_flight: false,
-            updating_calendars: true,
+            create_new_accom: false,
+            edit_existing_accom: false,
+            updating_calendars: false,
             error_message: "",
-
-            user_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            curr_user_datetime: "",
-
-            //dropdown of countries
-            all_countries:[
-                "Afghanistan", "Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"
-            ],
 
             //dropdown of currencies
             country_list: {
@@ -220,9 +213,6 @@ var accommodation_app = Vue.createApp({
                 "ZWD" : "ZW"
             },
 
-            //Animations
-            dropdown_open: false,
-
             //List of flight objects
             accom_obj_arr: [
                 {
@@ -238,9 +228,6 @@ var accommodation_app = Vue.createApp({
                     dropdown_open: false
                 },
             ],
-
-            //Google Maps
-            map: ""
         }
     },
 
@@ -249,15 +236,24 @@ var accommodation_app = Vue.createApp({
             console.log("")
             console.log("LOGGING EVERTHING ---------------")
 
-            console.log("depart_datetime:", this.depart_datetime)
-            console.log("depart_country:", this.depart_country)
-            console.log("arrive_datetime:", this.arrive_datetime)
-            console.log("arrive_country:", this.arrive_country)
-            console.log("duration_hours:", this.duration_hours)
-            console.log("duration_minutes:", this.duration_minutes)
+            console.log(document.getElementById("autocomplete").value)
+            console.log("accom_name: ", this.accom_name)
+            console.log("accom_local: ", this.accom_local)
+            console.log("checkin_datetime: ", this.checkin_datetime)
+            console.log("checkout_datetime: ", this.checkout_datetime)
+            console.log("max_occupancy: ", this.max_occupancy)
+            console.log("price: ", this.price)
+            console.log("currency: ", this.currency)
 
             console.log("LOGGED EVERYTHING----------------")
             console.log("")
+        },
+
+        // KENGBOONHELPP
+        //update v-model for location
+        update_local_vmodel() {
+            console.log("=== update_local_vmodel() ===")
+            this.accom_local = document.getElementById("autocomplete").value
         },
 
         //dealing with datetimes
@@ -381,6 +377,7 @@ var accommodation_app = Vue.createApp({
     },
 
     updated() {
+        console.log("=== updated() ===")
         if (this.updating_calendars) {
             console.log("Updating calendar and currency dropdown")
             this.update_currency_dropdown()

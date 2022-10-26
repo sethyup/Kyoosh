@@ -95,7 +95,7 @@ button.btn-fade:focus, button.btn-fade:active, button.btn-fade:hover {
     text-align: end;
 }
 
-/* dropdown css */
+/* dropdown chevron icon toggle */
 button.dropdown[aria-expanded = true] .fa-chevron-down{
     display: none;
 }
