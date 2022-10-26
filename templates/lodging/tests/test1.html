@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- local css -->
+    <link rel="stylesheet" href="../../template.css">
+
+    <!-- bootstrap css -->
+    <link href="../../../css/main.min.css" rel="stylesheet">
+
+    <!-- Flatpickr CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Vue js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <title>Accommodations</title>
+</head>
+<body id="accommodation_app">
+    
+    <!-- CREATE NEW FLIGHT FORM -->
+    <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative">
+        <form action="#">
+            <!-- flight title -->
+            <div class="row justify-content-center text-center">
+                <h2>New Accommodation</h2>
+            </div>
+    
+            <!-- accom name & local -->
+            <div class="row justify-content-center mt-4">
+    
+                <!-- accom name -->
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_name">
+                        <label for="accom_name"><i class="fa-solid fa-hotel"></i> Accommodation Name</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_local">
+                        <label for="accom_local"><i class="fa-solid fa-location-dot"></i> Location</label>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- departure info -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-1 text-center col-2 mt-2">
+                    <h3 class="fw-bold">DEP</h3>
+                </div>
+    
+                <div class="col-md-6 col-10">
+                    <!-- 3. Departure time -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+                        <label for="departure_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Departure Date & Time</label>
+                    </div>
+                </div>
+    
+                <div class="col-md-4 text-md-start text-end">
+                    <p>{{depart_tz}}</p>
+                </div>
+            </div>
+    
+            <!-- arrival info -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-1 text-center col-2 mt-2">
+                    <h3 class="fw-bold">ARR</h3>
+                </div>
+    
+                <div class="col-md-6 col-10">
+                    <!-- 4. Arrival time -->
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" placeholder="Select Arrival Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+                        <label for="arrival_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Arrival Date & Time</label>
+                    </div>
+                </div>
+    
+                <div class="col-md-4 text-md-start text-end">
+                    <p>{{arrive_tz}}</p>
+                </div>
+            </div>
+    
+            <!-- duration and price -->
+            <div class="row mt-4 justify-content-center">
+                <!-- flight duration -->
+                <div class="col-md-2 pt-md-3 col-2 d-flex d-md-block">
+                    <div class="row">
+                        <div class="col-md-2 text-center">
+                            <i class="fa-solid fa-hourglass-half fa-lg d-inline"></i>
+                        </div>
+                        <div class="col-md-9 text-center">
+                            <p class="d-inline">{{duration_hours}}hr {{duration_minutes}}min</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- 5. Cost -->
+                <div class="col-md-6 col-6">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
+                        <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
+                    </div>
+                </div>
+    
+                <!-- 6. Cost Currency -->
+                <div class="col-md-3 col-3">
+                    <div class="drop-list form-floating">
+                        <div class="from">
+                        <!-- <p>From</p> -->
+                            <div class="select-box">
+                                <select class="form-select" id="floatingSelect" v-model="currency" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-mild2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown" @click="toggle_dropdown(-1)">
+                        <i v-if="!dropdown_open" class="fa-solid fa-chevron-down fa-sm"></i>
+                        <i v-if="dropdown_open" class="fa-solid fa-chevron-up fa-sm"></i>
+                    </button>
+                </div>
+    
+                <div class="col-9 mb-5">
+                    <div class="alert alert-danger text-center" role="alert" v-if="error_message.trim()!=''">
+                        {{error_message}}
+                        </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- AXIOS import -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+    
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- local js import -->
+    <script src="../lodging.js"></script>
+</body>
+</html>

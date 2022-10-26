@@ -137,7 +137,7 @@
                             <!-- 1. Departure country -->
                             <div class="col-md-5 mb-3 col-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" name="flight_depart_country" placeholder="input departure country" list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)" id="flight_depart_country">
+                                    <input type="text" class="form-control" name="flight_depart_country" placeholder=" " list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)" id="flight_depart_country">
                                     <label for="flight_depart_country"><i class="fa-solid fa-plane-departure"></i> Departure Country</label>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                             <!-- 2. Arrival country -->
                             <div class="col-md-5 mb-3 col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="flight_arrival_country" placeholder="input arrival country" list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)" id="flight_arrival_country">
+                                    <input type="text" class="form-control" name="flight_arrival_country" placeholder=" " list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)" id="flight_arrival_country">
                                     <label for="flight_arrival_country"><i class="fa-solid fa-plane-arrival"></i> Arrival Country</label>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                             <div class="col-md-6 col-10">
                                 <!-- 3. Departure time -->
                                 <div class="form-floating mb-3">
-                                    <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+                                    <input type="datetime-local" placeholder=" " datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
                                     <label for="departure_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Departure Date & Time</label>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@
                             <div class="col-md-6 col-10">
                                 <!-- 4. Arrival time -->
                                 <div class="form-floating mb-3">
-                                    <input type="datetime-local" placeholder="Select Arrival Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+                                    <input type="datetime-local" placeholder=" " datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
                                     <label for="arrival_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Arrival Date & Time</label>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                             <!-- 5. Cost -->
                             <div class="col-md-6 col-6">
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
+                                    <input type="number" class="form-control" id="input_place" placeholder=" " v-model="price">
                                     <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
                                 </div>
                             </div>
@@ -258,35 +258,35 @@
                                 <div class="col-md-4 col-sm-6">
                                     <!-- airline -->
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder="input the airine" v-model="airline">
+                                        <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder=" " v-model="airline">
                                         <label for="flightX_airline">Airline</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-6">
                                     <!-- flight no -->
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number" v-model="flight_no">
+                                        <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder=" " v-model="flight_no">
                                         <label for="flightX_number">Flight No</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-6">
                                     <!-- airport -->
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport" v-model="airport">
+                                        <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder=" " v-model="airport">
                                         <label for="flightX_airport">Airport</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-6">
                                     <!-- terminal -->
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal" v-model="terminal">
+                                        <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder=" " v-model="terminal">
                                         <label for="flightX_terminal">Terminal</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-6">
                                     <!-- gate number -->
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate" v-model="gate">
+                                        <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder=" " v-model="gate">
                                         <label for="flightX_gate">Gate</label>
                                     </div>
                                 </div>
@@ -422,7 +422,7 @@
                         </form>
                     </div>
 
-                    <!-- CREATE NEW FLIGHT FORM -->
+                    <!-- EDIT EXISTING FLIGHT FORM -->
                     <div v-else class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative">
                         <form action="#">
                             <!-- flight title -->
@@ -435,7 +435,7 @@
                                 <!-- 1. Departure country -->
                                 <div class="col-md-5 mb-3 col-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="flight_depart_country" placeholder="input departure country" list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)" id="flight_depart_country">
+                                        <input type="text" class="form-control" name="flight_depart_country" placeholder=" " list="list_all_countries" v-model="depart_country" datetime_obj="depart-country-flight" @change="update_datetimes($event)" id="flight_depart_country">
                                         <label for="flight_depart_country"><i class="fa-solid fa-plane-departure"></i> Departure Country</label>
                                     </div>
                                 </div>
@@ -448,7 +448,7 @@
                                 <!-- 2. Arrival country -->
                                 <div class="col-md-5 mb-3 col-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" name="flight_arrival_country" placeholder="input arrival country" list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)" id="flight_arrival_country">
+                                        <input type="text" class="form-control" name="flight_arrival_country" placeholder=" " list="list_all_countries" v-model="arrive_country" datetime_obj="arrive-country-flight" @change="update_datetimes($event)" id="flight_arrival_country">
                                         <label for="flight_arrival_country"><i class="fa-solid fa-plane-arrival"></i> Arrival Country</label>
                                     </div>
                                 </div>
@@ -468,7 +468,7 @@
                                 <div class="col-md-6 col-10">
                                     <!-- 3. Departure time -->
                                     <div class="form-floating mb-3">
-                                        <input type="datetime-local" placeholder="Select Date & Time" datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
+                                        <input type="datetime-local" placeholder=" " datetime_obj="depart-dt-flight" v-model.lazy="depart_datetime" @change="update_datetimes($event)" id="departure_datetime_i9w2">
                                         <label for="departure_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Departure Date & Time</label>
                                     </div>
                                 </div>
@@ -487,7 +487,7 @@
                                 <div class="col-md-6 col-10">
                                     <!-- 4. Arrival time -->
                                     <div class="form-floating mb-3">
-                                        <input type="datetime-local" placeholder="Select Arrival Time" datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
+                                        <input type="datetime-local" placeholder=" " datetime_obj="arrive-dt-flight" v-model.lazy="arrive_datetime" @change="update_datetimes($event)" id="arrival_datetime_i9w2">
                                         <label for="arrival_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Arrival Date & Time</label>
                                     </div>
                                 </div>
@@ -514,7 +514,7 @@
                                 <!-- 5. Cost -->
                                 <div class="col-md-6 col-6">
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="price">
+                                        <input type="number" class="form-control" id="input_place" placeholder=" " v-model="price">
                                         <label for="input_place"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
                                     </div>
                                 </div>
@@ -556,35 +556,35 @@
                                     <div class="col-md-4 col-sm-6">
                                         <!-- airline -->
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder="input the airine" v-model="airline">
+                                            <input type="text" class="form-control" name="flightX_airline" id="flightX_airline" placeholder=" " v-model="airline">
                                             <label for="flightX_airline">Airline</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6">
                                         <!-- flight no -->
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder="input the flight number" v-model="flight_no">
+                                            <input type="text" class="form-control" name="flightX_number" id="flightX_number" placeholder=" " v-model="flight_no">
                                             <label for="flightX_number">Flight No</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6">
                                         <!-- airport -->
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder="input the airport" v-model="airport">
+                                            <input type="text" class="form-control" name="flightX_airport" id="flightX_airport" placeholder=" " v-model="airport">
                                             <label for="flightX_airport">Airport</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6">
                                         <!-- terminal -->
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder="input the terminal" v-model="terminal">
+                                            <input type="text" class="form-control" name="flightX_terminal" id="flightX_terminal" placeholder=" " v-model="terminal">
                                             <label for="flightX_terminal">Terminal</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6">
                                         <!-- gate number -->
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder="input the gate" v-model="gate">
+                                            <input type="text" class="form-control" name="flightX_gate" id="flightX_gate" placeholder=" " v-model="gate">
                                             <label for="flightX_gate">Gate</label>
                                         </div>
                                     </div>
