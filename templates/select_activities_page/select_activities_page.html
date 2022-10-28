@@ -79,7 +79,7 @@
                     </ul>
                     <hr>
                     <div>
-                        <button class="btn btn-secondary d-none d-sm-inline" href="#">Confirm Activities</button>
+                        <button class="btn btn-secondary d-none d-sm-inline" href="#">Back</button>
                     </div>
                     <hr>
 
@@ -124,7 +124,7 @@
                                     
                                     <th scope="col">Activity</th>
                                     <th scope="col" style="text-align: center;">#Tag</th>
-                                    <th scope="col" style="text-align: center;">Votes</th>
+                                    <th scope="col" style="text-align: center;">Voted Yes</th>
                                     <th scope="col" style="text-align: center;">Cost/person</th>
                                 </tr>
                             </thead>
@@ -133,7 +133,7 @@
                                 <template v-for="location in locations">
                                     <tr scope="row">
                                         <th scope="row">
-                                        <input type="checkbox" name="atv"/>
+                                        <input type="checkbox" name="atv" :value="location.price.sgd" v-model="total_price_list" @change="calculate_spending()" />
                                         </th>
                                         <td>
                                             {{ location.name }}
@@ -156,6 +156,11 @@
                           </tbody>
                         </table>
                       </div>
+
+                      <div>
+                        <h3>Total Spending: {{ spending }} SGD</h3>
+                      </div>
+
                     </div>
                 </div>
             </div>

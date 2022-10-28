@@ -2,7 +2,8 @@ content {
     padding: 7rem 0; }
   
   h2 {
-    font-size: 20px; }
+    font-size: 20px; 
+  }
   
   .custom-table {
     min-width: 900px; }
@@ -11,13 +12,15 @@ content {
       border-bottom: none !important; }
     .custom-table tbody th, .custom-table tbody td {
       color: #777;
-      font-weight: 400;
+      /* font-weight: 400; */
       padding-bottom: 20px;
       padding-top: 20px;
-      font-weight: 300; }
+      /* font-weight: 300;  */
+    }
       .custom-table tbody th small, .custom-table tbody td small {
         color: #b3b3b3;
-        font-weight: 300; }
+        /* font-weight: 300;  */
+      }
     .custom-table tbody tr:not(.spacer) {
       border-radius: 7px;
       overflow: hidden;

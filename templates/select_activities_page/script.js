@@ -44,6 +44,8 @@ const main = Vue.createApp({
                     votes_num: {yes: 5, no: 0, yet_to_vote:0},
                 },
                     ],
+            total_price_list: [],
+            spending: 0,
 
         }
     },
@@ -71,7 +73,15 @@ const main = Vue.createApp({
             }
             
 
+        },
+        calculate_spending(){
+            console.log("==== START FUNCTION +++++")
+            this.spending = 0
+            for (let i=0; i< this.total_price_list.length; i++) {
+                this.spending += Number(this.total_price_list[i])
+            };
         }
+
 
     }
 })
