@@ -385,6 +385,48 @@ var accommodation_app = Vue.createApp({
             this.currency = curr_accom_obj.currency
         },
 
+        push_to_existing_accom(accom_id) {
+            let new_accom_obj = {
+                ID:                 accom_id,
+                accom_name:         this.accom_name,
+                accom_address:      this.accom_address,
+                checkin_datetime:   this.checkin_datetime,
+                checkout_datetime:  this.checkout_datetime,
+                max_occupancy:      this.max_occupancy,
+                price:              this.price,
+                currency:           this.currency,
+                edit_mode:          false,
+            }
+
+            this.accom_obj_arr[accom_id-1] = new_accom_obj
+        },
+
+        save_edit_existing_accom(accom_id) {
+            this.check_for_errors()
+
+            if (this.error_message.trim() == "") {
+                this.update_local_vmodel()
+                this.push_to_existing_accom(accom_id)
+                this.clear_form(accom_id)
+            }
+        },
+
+        update_accom_IDs() {
+            let curr_id = 1
+
+            for (e_accom_obj of this.accom_obj_arr) {
+                e_accom_obj.ID = curr_id
+                curr_id++
+            }
+        },
+
+        delete_accom(accom_id) {
+            this.accom_obj_arr.splice(accom_id-1, 1)
+
+            this.clear_form()
+            this.update_accom_IDs()
+        },
+
         //currency methods
         calculate_to_from() {
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
