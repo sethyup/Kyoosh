@@ -412,6 +412,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- error message -->
+                            <div class="row mb-5 justify-content-center" v-if="error_message.trim()!=''">
+                                <div class="alert alert-danger text-center" role="alert">
+                                    {{error_message}}
+                                </div>
+                            </div>
     
                             <!-- save and cancel buttons -->
                             <div class="save-btn-div-flight-page">
