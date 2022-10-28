@@ -1,6 +1,7 @@
 // signup code
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -13,7 +14,7 @@ const WADTravel = initializeApp({
     measurementId: "G-3XQT4098KL"
 })
 const auth = getAuth(WADTravel)
-// const db = getDatabase(WADTravel)
+const db = getDatabase(WADTravel)
 
 const root = Vue.createApp({
     data() {
@@ -40,6 +41,27 @@ const root = Vue.createApp({
                     // Signed Up 
 
                     // save user account details to database
+                    set(ref(db, "users/" + this.username), {
+                        email: this.email,
+                        fullname: this.first_name + " " + this.last_name,
+                        trips: []
+                      })
+                    .then(
+                        function write_success() {
+                            // display "Success" message
+                            alert("Write Operation Successful")
+                            console.log("Entry Created")
+                    })
+                    .catch((error) => {
+                        // for us to debug, tells us what error there is,
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+        
+                        // display "Error" message
+                        var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                        alert(failed_message)
+                        console.log(failed_message);
+                    })
 
                     // display "Success" message
                     alert("Sign Up Successful")

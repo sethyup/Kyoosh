@@ -10,7 +10,7 @@
 // Importing Firebase API
 // DO NOT EDIT
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
