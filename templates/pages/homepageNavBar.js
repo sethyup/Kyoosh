@@ -15,10 +15,12 @@ main.component('homepage-navbar', {
 
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <button class="d-sm-none nav-link btn btn-main-fixed" style="width: 150px;" href="#">+ Plan New Trip</button>
+                            <a href="create-trip.html">
+                            <button class="d-sm-none nav-link btn btn-main-fixed" style="width: 150px;">+ Plan New Trip</button>
+                            </a>                        
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
+                            <a class="nav-link active" href="trips-homepage.html" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Friends</a>
@@ -57,7 +59,7 @@ main.component('createtrip-navbar', {
         
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
+                            <a class="nav-link active" href="trips-homepage.html" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Friends</a>
