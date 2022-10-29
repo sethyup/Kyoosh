@@ -15,45 +15,16 @@
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
      <!-- Vue js -->
-     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <title>WAD Travels Project</title>
 
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom border-secondary sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#"><b>The JAWKS-7</b></a>
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-
-            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Friends</a>
-                </li>
-                <li class="nav-item">
-                    <a class="d-sm-none nav-link" href="#">Account</a>
-                </li> 
-            </ul>
-
-            
-            <!-- <a class="d-none d-sm-block" href="#">
-                <img width="40px" src="https://img.icons8.com/ios-filled/100/000000/user-male-circle.png"/>
-            </a> -->
-
-            <a class="d-none d-sm-block" href="#">
-                <i class="fa-solid fa-circle-user fa-2xl text-dark"></i>
-            </a>
-
-        </div>
-    </nav>
+    
+    <div id="nav">
+        <createtrip-navbar></createtrip-navbar>
+    </div>
 
         <!-- new trip form -->
     <div class="container-md text-dark py-3 position-relative" id="datetime_app">
@@ -134,7 +105,10 @@
 
     <!-- local js import -->
     <script src="../date_time/date_time.js"></script>
-   
+
+    <!-- Refer to my own external JS -->
+    <script src="homepageNavBar.js"></script>
+
 </body>
 </html>
 
