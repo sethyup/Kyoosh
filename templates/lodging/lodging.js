@@ -37,7 +37,7 @@ var accommodation_app = Vue.createApp({
     data() {
         return {
             accom_name: "",
-            accom_local: "",
+            accom_address: "",
             checkin_datetime: "",
             checkout_datetime: "",
             max_occupancy: "",
@@ -217,15 +217,27 @@ var accommodation_app = Vue.createApp({
             accom_obj_arr: [
                 {
                     ID: 1,
-                    // other details
+                    accom_name: "Hotel California",
+                    accom_address: "Hotel California, East Palm Canyon Drive, Palm Springs, CA, USA",
+                    checkin_datetime: "2022-12-02 12:00",
+                    checkout_datetime: "2022-12-05 08:15",
+                    max_occupancy: "5",
+                    price: "54",
+                    currency: "SGD",
+
                     edit_mode: false,
-                    dropdown_open: false
                 },
                 {
                     ID: 2,
-                    //other details
+                    accom_name: "Hotel Edison",
+                    accom_address: "Hotel Edison, West 47th Street, New York, NY, USA",
+                    checkin_datetime: "2022-12-05 17:00",
+                    checkout_datetime: "2022-12-10 13:30",
+                    max_occupancy: "4",
+                    price: "80",
+                    currency: "SGD",
+
                     edit_mode: false,
-                    dropdown_open: false
                 },
             ],
         }
@@ -238,7 +250,7 @@ var accommodation_app = Vue.createApp({
 
             console.log(document.getElementById("autocomplete").value)
             console.log("accom_name: ", this.accom_name)
-            console.log("accom_local: ", this.accom_local)
+            console.log("accom_address: ", this.accom_address)
             console.log("checkin_datetime: ", this.checkin_datetime)
             console.log("checkout_datetime: ", this.checkout_datetime)
             console.log("max_occupancy: ", this.max_occupancy)
@@ -249,40 +261,15 @@ var accommodation_app = Vue.createApp({
             console.log("")
         },
 
-        // KENGBOONHELPP
         //update v-model for location
         update_local_vmodel() {
-            console.log("=== update_local_vmodel() ===")
-            this.accom_local = document.getElementById("autocomplete").value
+            if (this.edit_existing_accom || this.create_new_accom) {
+                console.log("=== update_local_vmodel() ===")
+                this.accom_address = document.getElementById("autocomplete").value
+            }
         },
 
         //dealing with datetimes
-        verify_hour() {
-            if (this.duration_hours == "") {
-                this.duration_hours = 0
-            } else {
-                this.duration_hours = this.duration_hours.toFixed()
-            }
-
-            if (this.duration_hours < 0) {
-                this.duration_hours = 0
-            }
-        },
-
-        verify_minite() {
-            if (this.duration_minutes == "") {
-                this.duration_minutes = 0
-            } else {
-                this.duration_minutes = this.duration_minutes.toFixed()
-            }
-
-            if (this.duration_minutes < 0) {
-                this.duration_minutes = 0
-            } else if (this.duration_minutes >= 60) {
-                this.duration_minutes = 59
-            }
-        },
-
         convert_datetime_readable(datetime_str) {
             if (datetime_str!="") {
                 let date_obj = convert_datetime_str_to_date_obj(datetime_str)
@@ -293,36 +280,151 @@ var accommodation_app = Vue.createApp({
             }
         },
 
-
-        //dropdown toggle
-        toggle_dropdown(flight_obj_ID) {
-            if (flight_obj_ID == -1) {
-                this.dropdown_open = !this.dropdown_open
-            } else {
-                this.flight_obj_arr[flight_obj_ID-1].dropdown_open = !this.flight_obj_arr[flight_obj_ID-1].dropdown_open
-            }
-        },
-
-
         //create & edit flight methods
         check_for_errors() {
             console.log(`=== check_for_errors() ===`)
 
             this.error_message = ""
 
-            if (this.depart_country.trim()=="") {
-                this.error_message = "Please fill in Departure Country"
-            } else if (this.arrive_country.trim()=="") {
-                this.error_message = "Please fill in Arrival Country"
-            } else if (this.depart_datetime.trim() == "") {
-                this.error_message = "Please fill in Departure Date & Time"
-            } else if (this.arrive_datetime.trim()=="") {
-                this.error_message = "Please fill in Arrival Date & Time"
+            if (this.accom_name.trim()=="") {
+                this.error_message = "Please fill in Accommodation Name"
+            } else if (this.accom_address.trim()=="") {
+                this.error_message = "Please fill in Address"
+            } else if (this.checkin_datetime.trim() == "") {
+                this.error_message = "Please fill in Check In Date & Time"
+            } else if (this.checkout_datetime.trim()=="") {
+                this.error_message = "Please fill in Check Out Date & Time"
             } else if (this.price=="") {
                 this.error_message = "Please fill in Cost"
+            } else if (this.max_occupancy=="") {
+                this.error_message = "Please fill in Occupancy"
             }
 
             console.log(`=== END check_for_errors() ===`)
+        },
+
+        clear_form(accom_id) {
+            this.accom_name = ""
+            this.accom_address = ""
+            this.checkin_datetime = ""
+            this.checkout_datetime = ""
+            this.max_occupancy = ""
+            this.price = ""
+            this.currency = "SGD"
+
+            this.error_message = ""
+
+            this.create_new_accom = false
+            this.edit_existing_accom = false
+            this.error_message = ""
+            
+            if (accom_id) {
+                this.accom_obj_arr[accom_id-1].edit_mode = false
+            }
+        },
+
+        enable_create_mode() {
+            this.create_new_accom = true
+            this.updating_calendars = true
+        },
+
+        enable_edit_mode(accom_id) {
+            this.accom_obj_arr[accom_id-1].edit_mode = true
+            this.updating_calendars = true
+            this.create_new_accom = false
+            this.edit_existing_accom = true
+
+            this.load_accom_obj_to_form(accom_id)
+        },
+
+        push_accom_obj() {
+            console.log("=== push_accom_obj() ===")
+
+            let new_accom_obj = {
+                ID:                 this.accom_obj_arr.length + 1,
+                accom_name:         this.accom_name,
+                accom_address:      this.accom_address,
+                checkin_datetime:   this.checkin_datetime,
+                checkout_datetime:  this.checkout_datetime,
+                max_occupancy:      this.max_occupancy,
+                price:              this.price,
+                currency:           this.currency,
+                edit_mode:          false,
+            }
+
+            this.accom_obj_arr.push(new_accom_obj)
+
+            this.clear_form()
+        },
+
+        save_new_accom() {
+            console.log("=== save_new_accom() ===")
+
+            this.update_local_vmodel()
+
+            this.check_for_errors()
+
+            if (this.error_message.trim() == "") {
+                this.push_accom_obj()
+            }
+
+            console.log("=== END save_new_accom() ===")
+        },
+
+        load_accom_obj_to_form(accom_id) {
+            console.log(`=== load_accom_obj_to_form(${accom_id}) ===`)
+
+            let curr_accom_obj = this.accom_obj_arr[accom_id-1]
+
+            this.accom_name = curr_accom_obj.accom_name
+            this.accom_address = curr_accom_obj.accom_address
+            this.checkin_datetime = curr_accom_obj.checkin_datetime
+            this.checkout_datetime = curr_accom_obj.checkout_datetime
+            this.max_occupancy = curr_accom_obj.max_occupancy
+            this.price = curr_accom_obj.price
+            this.currency = curr_accom_obj.currency
+        },
+
+        push_to_existing_accom(accom_id) {
+            let new_accom_obj = {
+                ID:                 accom_id,
+                accom_name:         this.accom_name,
+                accom_address:      this.accom_address,
+                checkin_datetime:   this.checkin_datetime,
+                checkout_datetime:  this.checkout_datetime,
+                max_occupancy:      this.max_occupancy,
+                price:              this.price,
+                currency:           this.currency,
+                edit_mode:          false,
+            }
+
+            this.accom_obj_arr[accom_id-1] = new_accom_obj
+        },
+
+        save_edit_existing_accom(accom_id) {
+            this.check_for_errors()
+
+            if (this.error_message.trim() == "") {
+                this.update_local_vmodel()
+                this.push_to_existing_accom(accom_id)
+                this.clear_form(accom_id)
+            }
+        },
+
+        update_accom_IDs() {
+            let curr_id = 1
+
+            for (e_accom_obj of this.accom_obj_arr) {
+                e_accom_obj.ID = curr_id
+                curr_id++
+            }
+        },
+
+        delete_accom(accom_id) {
+            this.accom_obj_arr.splice(accom_id-1, 1)
+
+            this.clear_form()
+            this.update_accom_IDs()
         },
 
         //currency methods
@@ -387,16 +489,14 @@ var accommodation_app = Vue.createApp({
             let checkout_fp_obj = flatpickr("#checkout_datetime_i9w2", datetime_config)
 
             this.updating_calendars = false
-        }
-    },
 
-    mounted() {
-        this.update_currency_dropdown()
+            initAutocomplete()
+        }
+        console.log("=== DONE updated() ===")
     },
 })
 
 accommodation_app.mount('#accommodation_app')
-
 
 // FLATPICKR CONFIG SETTINGS -----------------------------------------------------------------
 let datetime_config = {

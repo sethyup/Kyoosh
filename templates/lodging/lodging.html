@@ -16,116 +16,360 @@
 
     <!-- Vue js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- polyfill -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <title>Accomodations</title>
 </head>
 <body>
-    
-    <div class="row flex-nowrap">
-        <!-- SIDEBAR -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
-                <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+    <div id="nav">
+    <div class="container-fluid" id="accommodation_app">
+        <div class="row flex-nowrap" @click="update_local_vmodel()" @keydown="update_local_vmodel()">
+            <!-- SIDEBAR -->
+            <sidebar-general></sidebar-general>
+
+            <!-- ALL OTHER CONTENT -->
+            <div class="col py-3">
+                <!-- CREATE NEW ACCOMMODATION BUTTON -->
+                <div class="row justify-content-end mb-3">
+                    <div class="col-md-3 col-lg-2 d-flex justify-content-center">
+                        <button type="button" class="btn btn-main" @click="enable_create_mode()" :disabled="create_new_accom || edit_existing_accom">Create New</button>
+                    </div>
+                </div>
+
+                <!-- CREATE NEW ACCOM FORM -->
+                <div class="container-md text-dark bg-mild rounded-4 py-3 px-5 mb-3 position-relative" v-if="create_new_accom">
+                    <form action="#">
+                        <!-- title -->
+                        <div class="row justify-content-center text-center">
+                            <h2><i class="fa-solid fa-hotel"></i> New Accommodation</h2>
+                        </div>
+                
+                        <!-- accom name & local -->
+                        <div class="row justify-content-center my-4">
+                
+                            <!-- accom name -->
+                            <div class="col-sm-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_name">
+                                    <label for="accom_name"><i class="fa-solid fa-hotel"></i> Accommodation Name</label>
+                                </div>
+                            </div>
+
+                            <!-- KENGBOONHELPP -->
+                            <!-- accom local -->
+                            <div class="col-sm-6 mt-3 mt-sm-0">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_address" id="autocomplete" @click="this.update_local=true">
+                                    <label for="accom_address"><i class="fa-solid fa-location-dot"></i> Address</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Check In & Check Out -->
+                        <div class="row justify-content-center mb-5 my-md-5 mt-4">
+                            <!-- check in text -->
+                            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                <h4 class="fw-bold">Check In</h4>
+                            </div>
+
+                            <!-- check in input -->
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="datetime-local" placeholder=" " v-model.lazy="checkin_datetime" id="checkin_datetime_i9w2">
+                                    <label for="checkin_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check In Date & Time</label>
+                                </div>
+                            </div>
+
+                            <!-- check out text -->
+                            <div class="col-md-2 d-flex justify-content-center align-items-center mt-3 mt-md-0">
+                                <h4 class="fw-bold">Check Out</h4>
+                            </div>
+
+                            <!-- check out input -->
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="datetime-local" placeholder=" " v-model.lazy="checkout_datetime" id="checkout_datetime_i9w2">
+                                    <label for="checkout_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check Out Date & Time</label>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- price & occupancy -->
+                        <div class="row my-4">
+                            <!-- Cost -->
+                            <div class="col-md-4 col-sm-4 col-7">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="currency" placeholder=" " v-model="price">
+                                    <label for="currency"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
+                                </div>
+                            </div>
+                
+                            <!-- Currency -->
+                            <div class="col-md-3 col-sm-4 col-5">
+                                <div class="drop-list form-floating">
+                                    <div class="from">
+                                    <!-- <p>From</p> -->
+                                        <div class="select-box">
+                                            <select class="form-select" id="floatingSelect" v-model="currency" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Max occupancy -->
+                            <div class="col-md-5 col-sm-4">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="max_occupancy" placeholder=" " v-model="max_occupancy">
+                                    <label for="max_occupancy"><i class="fa-solid fa-people-group"></i> Max Occupancy</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- attachments -->
+                        <div class="row mb-4 mt-5 mt-md-4 mb-5 mb-md-0">
+                            <div class="col-lg-6 col-md-8">
+                                <!-- attachments -->
+                                <div class="form-floating">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text text-light bg-bold fw-semibold" for="inputGroupFile01">Add Attachment</label>
+                                        <input type="file" class="form-control" id="inputGroupFile01">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5 justify-content-center" v-if="error_message.trim()!=''">
+                            <div class="alert alert-danger text-center" role="alert">
+                                {{error_message}}
+                            </div>
+                        </div>
+
+                        <!-- save and cancel buttons -->
+                        <div class="save-btn-div-flight-page">
+                            <button type="button" class="btn btn-fade me-3" @click="clear_form()">Cancel</button>
+                            <button type="button" class="btn btn-main-fixed" @click="save_new_accom()">Save</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- EACH LOADED ACCOM -->
+                <div v-for="e_accom_obj of accom_obj_arr">
+                    <!-- DISPLAY STATIC -->
+                    <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative" v-if="!e_accom_obj.edit_mode">
+                        <form action="#">
+                            <!-- title & address + check in & out -->
+                            <div class="row justify-content-center">
+                                <!-- accom name and local -->
+                                <div class="col-md-5 text-center text-md-start">
+                                    <!-- accom title -->
+                                    <div class="row">
+                                        <h2>{{e_accom_obj.accom_name}}</h2>
+                                    </div>
+                                    
+                                    <!-- accom name & local -->
+                                    <div class="row">
+                                        <p><i class="fa-solid fa-location-dot"></i> {{e_accom_obj.accom_address}}</p>
+                                    </div>
+                                </div>
+                
+                                <!-- check in & out -->
+                                <div class="col-md-6">
+                                    <!-- check in -->
+                                    <div class="row justify-content-center">
+                                        <!-- check in text -->
+                                        <div class="col-5 text-end">
+                                            <h4 class="fw-bold my-auto">Check In</h4>
+                                        </div>
+                
+                                        <!-- check in datetime -->
+                                        <div class="col-7">
+                                            <p class="my-auto">{{convert_datetime_readable(e_accom_obj.checkin_datetime)}}</p>
+                                        </div>
+                                    </div>
+                
+                                    <!-- check out -->
+                                    <div class="row justify-content-center mt-3">
+                                        <!-- check in text -->
+                                        <div class="col-5 text-end">
+                                            <h4 class="fw-bold my-auto">Check Out</h4>
+                                        </div>
+                
+                                        <!-- check in datetime -->
+                                        <div class="col-7">
+                                            <p class="my-auto">{{convert_datetime_readable(e_accom_obj.checkout_datetime)}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="row justify-content-center mt-5 mt-md-4">
+                                <div class="col-md-11 text-center text-md-start">
+                                    <p>
+                                        <i class="fa-solid fa-people-group"></i>
+                                        &nbsp;{{e_accom_obj.max_occupancy}} pax
                     
-                    <!--Home-->
-                    <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                            </svg>
-                            <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
-                        </a>
-                    </li>
+                                        <i class="fa-solid fa-money-bill fa-lg ms-3"></i>&nbsp;{{e_accom_obj.price}} {{e_accom_obj.currency}}
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                
+                                </div>
+                            </div>
+                
+                            <div class="save-btn-div-flight-page justify-content-end">
+                                <button type="button" class="btn btn-main-bold-fixed" @click="enable_edit_mode(e_accom_obj.ID)"  :disabled="create_new_accom || edit_existing_accom">Edit</button>
+                            </div>
+                        </form>
+                    </div>
 
-                    <!--Activities-->
-                    <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-universal-access" viewBox="0 0 16 16">
-                                <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9V5.5Z"/>
-                            </svg>
-                               <span class="fs-5 ms-1 d-none d-sm-inline">Activities</span>
-                            </a>
+                    <!-- DISPLAY EDIT ACCOM -->
+                    <div class="container-md text-dark bg-mild rounded-4 py-3 px-5 mb-3 position-relative" v-else>
+                        <form action="#">
+                            <!-- title -->
+                            <div class="row justify-content-center text-center">
+                                <h2><i class="fa-solid fa-hotel"></i> {{accom_name}}</h2>
+                            </div>
+                    
+                            <!-- accom name & local -->
+                            <div class="row justify-content-center my-4">
+                    
+                                <!-- accom name -->
+                                <div class="col-sm-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_name">
+                                        <label for="accom_name"><i class="fa-solid fa-hotel"></i> Accommodation Name</label>
+                                    </div>
+                                </div>
+    
+                                <!-- accom local -->
+                                <div class="col-sm-6 mt-3 mt-sm-0">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" name="accom_name" placeholder=" " v-model="accom_address" id="autocomplete" @click="this.update_local=true">
+                                        <label for="accom_address"><i class="fa-solid fa-location-dot"></i> Address</label>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Check In & Check Out -->
+                            <div class="row justify-content-center mb-5 my-md-5 mt-4">
+                                <!-- check in text -->
+                                <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                    <h4 class="fw-bold">Check In</h4>
+                                </div>
+    
+                                <!-- check in input -->
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="datetime-local" placeholder=" " v-model.lazy="checkin_datetime" id="checkin_datetime_i9w2">
+                                        <label for="checkin_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check In Date & Time</label>
+                                    </div>
+                                </div>
+    
+                                <!-- check out text -->
+                                <div class="col-md-2 d-flex justify-content-center align-items-center mt-3 mt-md-0">
+                                    <h4 class="fw-bold">Check Out</h4>
+                                </div>
+    
+                                <!-- check out input -->
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="datetime-local" placeholder=" " v-model.lazy="checkout_datetime" id="checkout_datetime_i9w2">
+                                        <label for="checkout_datetime_i9w2"><i class="fa-regular fa-calendar"></i> Check Out Date & Time</label>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- price & occupancy -->
+                            <div class="row my-4">
+                                <!-- Cost -->
+                                <div class="col-md-4 col-sm-4 col-7">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" id="currency" placeholder=" " v-model="price">
+                                        <label for="currency"><i class="fa-solid fa-dollar-sign"></i> Enter the Cost/person</label>
+                                    </div>
+                                </div>
+                    
+                                <!-- Currency -->
+                                <div class="col-md-3 col-sm-4 col-5">
+                                    <div class="drop-list form-floating">
+                                        <div class="from">
+                                        <!-- <p>From</p> -->
+                                            <div class="select-box">
+                                                <select class="form-select" id="floatingSelect" v-model="currency" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Max occupancy -->
+                                <div class="col-md-5 col-sm-4">
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" id="max_occupancy" placeholder=" " v-model="max_occupancy">
+                                        <label for="max_occupancy"><i class="fa-solid fa-people-group"></i> Max Occupancy</label>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- attachments -->
+                            <div class="row mb-4 mt-5 mt-md-4">
+                                <div class="col-lg-6 col-md-8">
+                                    <!-- attachments -->
+                                    <div class="form-floating">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text text-light bg-bold fw-semibold" for="inputGroupFile01">Add Attachment</label>
+                                            <input type="file" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> 
-                                    <span class="d-none d-sm-inline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-                                        </svg>
-                                      Map
-                                    </span></a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> 
-                                    <span class="d-none d-sm-inline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-                                        </svg>
-                                      List
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> 
-                                    <span class="d-none d-sm-inline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-                                        </svg>
-                                      Lodging
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-        
-                    <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
-                                <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z"/>
-                              </svg>
-                              <span class="fs-5 ms-1 d-none d-sm-inline">Budget</span></a>
-                    </li>
-                </ul>
-                <hr>
-                <div>
-                    <a class="btn btn-danger d-none d-sm-inline" href="#" role="button">Confirm Activities</a>
-                </div>
-                <hr>
+                            <!-- error message -->
+                            <div class="row mb-5 justify-content-center" v-if="error_message.trim()!=''">
+                                <div class="alert alert-danger text-center" role="alert">
+                                    {{error_message}}
+                                </div>
+                            </div>
+    
+                            <!-- save and cancel buttons -->
+                            <div class="save-btn-div-flight-page">
+                                <button type="button" class="btn btn-fade me-3" @click="clear_form(e_accom_obj.ID)">Cancel</button>
+                                <button type="button" class="btn btn-main-fixed" @click="save_edit_existing_accom(e_accom_obj.ID)">Save</button>
+                            </div>
 
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">Bean</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">My Trips</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
+                            <!-- thrash icon (delete button) -->
+                            <div class="delete-btn-div-flight-page">
+                                <button type="button" class="btn btn-fade" data-bs-toggle="modal" data-bs-target="#del_button_modal">
+                                    <i class="fa-solid fa-trash-can fa-lg"></i>
+                                </button>
+                            </div>
+
+
+                            <!-- Delete Button Modal -->
+                            <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="ModalLabel">Delete Flight</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Are you sure you want to delete <span class="fw-bold">{{e_accom_obj.accom_name}}</span>?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="delete_accom(e_accom_obj.ID)">Confirm</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- ALL OTHER CONTENT -->
-        <div class="col py-3" id="accommodation_app">
-            <!-- CREATE NEW ACCOMMODATION BUTTON -->
-            <div class="row justify-content-end mb-3">
-                <div class="col-md-3 col-lg-2 d-flex justify-content-center">
-                    <button type="button" class="btn btn-main" @click="initialize_create_flight()" :disabled="create_new_flight || edit_existing_flight">Create New</button>
-                </div>
-            </div>
-
-            <!-- CREATE NEW FLIGHT FORM -->
-
-        </div>
+    </div>
     </div>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
@@ -141,7 +385,13 @@
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU"></script>
+
     <!-- local js import -->
     <script src="lodging.js"></script>
+
+    <!-- Refer to sidebar JS -->
+    <script src="../pages/sidebars.js"></script>
 </body>
 </html>
