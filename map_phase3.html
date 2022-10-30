@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map interface testing for website</title>
+    <!-- Axios -->
+    <script src='https://unpkg.com/axios/dist/axios.js'></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- BOOTSTRAP -->
+    <link href="./css/main.min.css" rel="stylesheet">
+    <!-- ICONS LIBRARY -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!-- Vue 3 -->
+    <script src='https://cdn.jsdelivr.net/npm/vue@next'></script>
+    <!-- <link rel="stylesheet" href="./templates/"> -->
+    <link rel="stylesheet" href="./templates/template.css">
+    <!-- access firebase -->
+    <script type="module" src="./map_CRUD_database.js"></script>
+    <style>
+        /* 
+        * Always set the map height explicitly to define the size of the div element
+        * that contains the map. 
+        */
+        #map {
+        height: 95%;
+        width: 65%;
+        }
+
+        /* 
+        * Optional: Makes the sample page fill the window. 
+        */
+        html,
+        body {
+        height: 100%;
+        padding: 0;
+        }
+        .address{
+            font-style: italic;
+            }
+            .description{
+            text-align: justify;
+            }
+            .progress{
+            height: 25px; 
+            border-radius: 25px;
+            border: 2px solid black;
+            box-shadow: 0px 0px 10px lightskyblue;
+            }
+            .voting_buttons{
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            }
+            .reject_btn{
+            margin-right: 5px;
+            }
+            .vote_btn{
+            margin-left: 5px;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row sidebar-parent flex-nowrap">
+            <div id="nav" class="col-2 sidebar-css">
+                 <!-- SIDEBAR  -->
+                <sidebar-phase3></sidebar-phase3>
+            </div>
+
+            <!-- whole site -->
+            <!-- ALL OTHER CONTENT ACTIVITY COL-->
+            <div class="col py-4" id="app">
+                <div class="row">
+                    <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
+                    <div class="col">
+                        <h1>Card Sample</h1>
+                        <!-- COPY FROM HERE -->
+
+                        <div class="card">
+                            <!-- LOCATION/PLACE -->
+                            <div class="card-header">
+                                <span class="fs-3 fw-semibold">
+                                Hongdae Shopping Street
+                                </span>
+                                <span class="badge rounded-pill text-bg-warning ms-1" >#Shopping</span>
+                            </div>
+
+                            <!-- BADGE & DESCRIPTION -->
+                            <div class="card-body">
+                                <div class="container p-0">
+                                <div class="row">
+                                    <div class = "col-8">
+                                        <p style="font-style: italic"> 365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea</p>
+                                        <h6>100 SGD/100976.93 KRW per person</h6>
+                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                    </div>
+                                    
+                                    <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                    <div class="col-4" id="main">
+                                        <p class="pt-3">Current Votes: </p>
+                                        
+                                            <div class="progress">
+                                                    <!-- VOTED YES -->
+                                                <div id="progress_yes" class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: voted_yes_percentage + '%' }" v-bind:aria-valuenow="voted_yes_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="voted_yes_people"></div>
+
+                                                    <!-- VOTED NO -->
+                                                <div id="progress_no" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: voted_no_percentage + '%' }" v-bind:aria-valuenow="voted_no_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="voted_no_people"> </div>
+                                                
+
+                                                    <!--  VOTED MAYBE   -->
+                                                <div id="progress_maybe" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: yet_to_vote_percentage + '%' }" v-bind:aria-valuenow="yet_to_vote_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="yet_to_vote_people"></div>
+
+                                                
+                                            </div>
+
+                                        <div class="pt-3" style="display: flex; justify-content: center;">
+                                        <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject()">Reject</button>
+                                        <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept()"> Vote </button>
+                                        </div>
+                                        
+                                        
+                                        <!-- Voted NO: {{ voted_no_people }}
+                                        <br>
+                                        Voted: YES: {{ voted_yes_people }}
+                                        <br>
+                                        YET TO VOTE: {{ yet_to_vote_people }} -->
+                                    </div>
+                                </div> 
+                            
+                                <!-- EDIT BUTTON -->
+                                <div class="row">
+                                    <div class="col-11"></div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-sm rounded btn-main text-white float-end" style="position:absolute;bottom:25px; right:15px;" data-bs-toggle="button">Edit</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- map interface MAP COL -->
+                    <div class="col" style="width: 90vw; height: 90vh" :style="{display: toggle_map()}">
+                        <!-- map details -->
+                        <div id="map"></div><button style="position: absolute; bottom: 0px; right: 70px;" class="btn btn-main-fixed" @click="create_true=true,edit_true=false">Create Activity</button>
+                    </div>
+
+                    <!-- collapsible card MAP COL -->
+                    <div class="col" :style="{display: toggle_collapse()}">
+                        <h4 class="m-5">Card Sample 2</h4>
+                            <!--  FIRST ITEM (SAMPLE 2)   -->
+                            <div class="container mb-3">
+                                <div class="accordion" id="accordionPanelsStayOpenExample">
+                                    <div class="accordion-item">
+
+                                        <h6 class="accordion-header position-relative" id="panelsStayOpen-headingOne">
+                                            <!-- CHECKBOX -->
+                                            <input class="form-check-input input-checkbox" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
+                                            <!-- PLACE + TAG -->
+                                            <button class="accordion-button ps-5 fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                                Hongdae Shopping Street 
+                                                <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#Shopping</span>
+                                            </button>
+                                        </h6>
+
+                                                            <!-- ACCORDION BODY -->
+                                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                                            <div class="accordion-body">
+                                                <div class="container p-0">
+                                                    <div class="row">
+                                                        <div class = "col-8">
+                                                            <h6>100 SGD/per person</h6>
+                                                            <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                                        </div>
+                                                
+                                                <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                                        <div class="col-4" >
+                                                            <p class="pt-3">Current Votes: </p>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                        <!-- DO NOT NEED VOTING BUTTONS IN PHASE 3 -->
+                                                    <!-- <div class="pt-3" style="display: flex; justify-content: center;">
+                                                    <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;">Reject</button>
+                                                    <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;"> Vote </button>
+                                                    </div> -->
+                                                    
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <!-- SECOND ITEM (SAMPLE 2)  -->
+                            <div class="accordion-item">
+
+                                <h6 class="accordion-header position-relative" id="panelsStayOpen-headingTwo">
+                                    <!-- CHECKBOX -->
+                                    <input class="form-check-input input-checkbox" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
+                                    <!-- PLACE + TAG -->
+                                    <button class="accordion-button ps-5 fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                                        Hongdae Shopping Street 
+                                        <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#Shopping</span>
+                                    </button>
+                                </h6>
+
+                                        <!-- ACCORDION BODY -->
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                                    <div class="accordion-body">
+                                        <div class="container p-0">
+                                            <div class="row">
+                                                <div class = "col-8">
+                                                    <h6>100 SGD/per person</h6>
+                                                    <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                                </div>
+                                        
+                                        <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                                <div class="col-4" >
+                                                    <p class="pt-3">Current Votes: </p>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                <!-- DO NOT NEED VOTING BUTTONS IN PHASE 3 -->
+                                            <!-- <div class="pt-3" style="display: flex; justify-content: center;">
+                                            <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;">Reject</button>
+                                            <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;"> Vote </button>
+                                            </div> -->
+                                            
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- toggle for map view; only MAP or collapse will show -->
+                    <div class='col'>
+                        <input type="checkbox" id="mapview_toggle" @click="change_map_view()"> Map View
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- functions -->
+    <script>
+        // vue app
+        const app = Vue.createApp({ 
+            data() { 
+                return { 
+                    map_view: false,
+                    map: "",
+                    marker_id: uniqueId,
+                    amount: "", 
+                    
+                };
+            }, // data
+            // computed: { 
+            //     derivedProperty() {
+            //         return false;
+            //     }  
+            // }, // computed
+            // created() { 
+            // },
+            // mounted() { 
+                
+            // },
+            methods: {
+                d_create() {
+                    if (this.create_true == false) {
+                        return "none"
+                    } else if (this.create_true == true) {
+                        return ""
+                    }
+                },
+                
+                d_edit() {
+                    if (this.edit_true == false) {
+                        return "none"
+                    } else if (this.edit_true == true) {
+                        return ""
+                    }
+                },
+                
+                delete_marker(id) {
+                    DeleteMarker(id);
+                },
+                
+                toggle_map() {
+                    if (this.map_view == false) {
+                        return "none"
+                    } else if (this.map_view == true) {
+                        return ""
+                    }
+                },
+
+                toggle_collapse() {
+                    if (this.map_view == true) {
+                        return "none"
+                    } else if (this.map_view == false) {
+                        return ""
+                    }
+                },
+
+                change_map_view() {
+                    if (this.map_view == false) {
+                        this.map_view = true;
+                    } else if (this.map_view == true) {
+                        this.map_view = false;
+                    }
+                }
+                
+            } // methods
+            // , updated() {
+            //     alert('updated')
+            // }
+        });
+        const vm = app.mount('#app'); 
+
+        // create your map
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: 37.5665, lng:126.9780},
+            }
+            );
+            this.map = map;
+            // map.addListener("click", (e) => {
+            //     create_marker_by_click(e.latLng,map);
+            // });
+            // create marker for each stored location
+            for (place in location_coded) {
+                // console.log(place)
+                // console.log(location_coded[place])
+                create_marker(location_coded[place], map)
+            }
+            
+
+        }
+        
+        function DeleteMarker(id) {
+                //Find and remove the marker from the Array
+                for (var i = 0; i < markers.length; i++) {
+                    if (markers[i].id == id) {
+                        //Remove the marker from Map                  
+                        markers[i].setMap(null);
+        
+                        //Remove the marker from array.
+                        markers.splice(i, 1);
+                        return;
+                    }
+                }
+            };
+            
+        // delete all created markers
+        function DeleteMarkers() {
+            for (var i = 0; i < (markers.length)+1; i++) {
+                //Remove the marker from Map                  
+                markers[i].setMap(null);
+            }
+            markers = []
+            uniqueId = 1
+        }
+
+         // create existing marker
+         function create_marker(place,map) {
+            // console.log(place)
+            const icon = {
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
+                    scaledSize: new google.maps.Size(40, 40), // scaled size
+                    // origin: new google.maps.Point(0,0), // origin
+                    // anchor: new google.maps.Point(0, 0) // anchor
+                };
+                var marker = new google.maps.Marker({
+                    position: place.latlng,
+                    map: map,
+                    icon: icon
+                });
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "",
+                    disableAutoPan: true,
+                    });
+                // Set unique id
+                marker.id = uniqueId;
+                vm.$data.marker_id = uniqueId
+                uniqueId++;
+                
+
+                // set infoWindow
+                var contentString = 
+                    `
+                    <div id="content" name="${marker.id}>
+                    <div id="siteNotice"></div>
+
+                    <div class="container">
+                    
+                    <div class="row">
+                        <div class = "col-8">
+                        <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                        <h3>${place.name}</h3>
+                        <p class="address">${place.address}<p>
+                        <hr>
+                        <h6>SGD ${place.price.sgd} / KRW ${place.price.krw} per person</h6>
+                        <p class="description">Top picks that the fam wants to visit while in Korea</p>
+                        </div>
+                        
+
+                        <div class="col-4" style:"position:relative">
+                        <p class="pt-3">Current Votes: </p>
+                            <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            
+                        </div>
+
+                    </div>  
+                    </div>
+                </div>
+                </div>
+                    `
+                // delete button removed from contentString
+                // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+                marker.addListener("click", (googleMapsEvent) => {
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, marker);});
+                
+        }
+
+
+        // cached variables
+        var markers = [];
+        var uniqueId = 1;
+
+        var location_coded = 
+            { 
+                "1": {
+                    "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5444,
+                    "lng": 127.0374
+                    },
+                    "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 0,
+                    "sgd": 0
+                    },
+                    "tag": "Attraction",
+                    "votes_num": {
+                    "no": 1,
+                    "yes": 3,
+                    "yet_to_vote": 1
+                    },
+                    "votes_percentage": {
+                    "no": 20,
+                    "yes": 60,
+                    "yet_to_vote": 20
+                    }
+                },
+                "2":{
+                    "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5512,
+                    "lng": 126.9882
+                    },
+                    "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 12000,
+                    "sgd": 12
+                    },
+                    "tag": "Attraction",
+                    "votes_num": {
+                    "no": 1,
+                    "yes": 1,
+                    "yet_to_vote": 3
+                    },
+                    "votes_percentage": {
+                    "no": 20,
+                    "yes": 20,
+                    "yet_to_vote": 60
+                    }
+                },
+                "3":{
+                    "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5561,
+                    "lng": 126.9719
+                    },
+                    "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 3000,
+                    "sgd": 3
+                    },
+                    "tag": "Food",
+                    "votes_num": {
+                    "no": 0,
+                    "yes": 4,
+                    "yet_to_vote": 1
+                    },
+                    "votes_percentage": {
+                    "no": 0,
+                    "yes": 80,
+                    "yet_to_vote": 20
+                    }
+                },
+                "4":{
+                    "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5532,
+                    "lng": 126.9219
+                    },
+                    "name": "Hongdae Shopping Street",
+                    "price": {
+                    "krw": 25244.25,
+                    "sgd": 25
+                    },
+                    "tag": "Shopping",
+                    "votes_num": {
+                    "no": 0,
+                    "yes": 5,
+                    "yet_to_vote": 0
+                    },
+                    "votes_percentage": {
+                    "no": 0,
+                    "yes": 100,
+                    "yet_to_vote": 0
+                    }
+                }
+            }
+                ;
+        
+    
+        window.initMap = initMap;
+    </script>
+
+    <!-- import scripts -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&callback=initMap&libraries=places&v=weekly"
+      defer
+    ></script>
+    <!-- <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw6a6E_r_udr7CXLmLZ-6HspypPd9qvMU&libraries=places&callback=initAutocomplete">
+    </script> -->
+
+    <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+    <!-- sidebar js -->
+    <script src="./templates/pages/sidebars.js"></script>
+
+    <!-- listview js -->
+    <script src="./templates/activity_card_listview/script.js"></script>
+</body>
+</html>
