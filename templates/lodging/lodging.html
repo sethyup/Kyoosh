@@ -23,11 +23,12 @@
     <title>Accomodations</title>
 </head>
 <body>
-    <div id="nav">
     <div class="container-fluid" id="accommodation_app">
-        <div class="row flex-nowrap" @click="update_local_vmodel()" @keydown="update_local_vmodel()">
-            <!-- SIDEBAR -->
-            <sidebar-general></sidebar-general>
+        <div class="row sidebar-parent flex-nowrap" @click="update_local_vmodel()" @keydown="update_local_vmodel()">
+            <div id="nav" class="col-3 sidebar-css">
+                <!-- SIDEBAR -->
+                <sidebar-general></sidebar-general>
+            </div>
 
             <!-- ALL OTHER CONTENT -->
             <div class="col py-3">
@@ -369,7 +370,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
