@@ -67,17 +67,18 @@
         
     <!-- whole site -->
     <div class="container-fluid" id="app">
-        <div class="row flex-nowrap">
+        <div class="row flex-nowrap" id="nav">
             <!-- sidebar -->
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
+            <sidebar-phase2></sidebar-phase2>
+            <!-- <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
                     <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                         <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        
+                         -->
                         <!--Home-->
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link align-middle px-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -85,10 +86,10 @@
                                 </svg>
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
                             </a>
-                        </li>
+                        </li> -->
 
                         <!--Activities-->
-                        <li>
+                        <!-- <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-universal-access" viewBox="0 0 16 16">
                                     <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9V5.5Z"/>
@@ -121,8 +122,8 @@
             
                         
                     </ul>
-        <hr>
-                    <div>
+        <hr> -->
+                    <!-- <div>
                         <a class="btn btn-danger d-none d-sm-inline" href="#" role="button">Confirm Activities</a>
     </div>
                     <hr>
@@ -143,7 +144,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- pop up if create activity -->
             <div :style="{display: d_create()}" class="col col-md-5 py-3">
                 <!-- create activity -->
@@ -1158,7 +1159,7 @@
                 price: {sgd: 25, krw: 25244.25}
             },
                 ];
-        read_existing_data()
+        
     
         window.initMap = initMap;
     </script>
@@ -1178,6 +1179,6 @@
 
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    
+    <script src="./templates/pages/sidebars.js"></script>
 </body>
 </html>
