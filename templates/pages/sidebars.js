@@ -146,10 +146,8 @@ sidebar.component('sidebar-phase2', {
                                         </span>
                                     </a>
                                 </li>
-                                
                             </ul>
-            
-                        
+                        </li>
                     </ul>
                     <hr>
                     <div>
@@ -258,7 +256,7 @@ sidebar.component('sidebar-phase2', {
                                         </a>
                                     </li>
                                 </ul>
-                
+                            </li>
                             <li>
                                 <a href="#" class="nav-link px-0 align-middle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-airplane" viewBox="0 0 16 16">
