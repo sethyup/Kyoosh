@@ -12,11 +12,12 @@
     <link href="./css/main.min.css" rel="stylesheet">
     <!-- ICONS LIBRARY -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-    <!-- VUE -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue 3 -->
+    <script src='https://cdn.jsdelivr.net/npm/vue@next'></script>
     <!-- <link rel="stylesheet" href="./templates/"> -->
     <link rel="stylesheet" href="./templates/template.css">
-
+    <!-- access firebase -->
+    <script type="module" src="./map_CRUD_database.js"></script>
     <style>
         /* 
         * Always set the map height explicitly to define the size of the div element
@@ -444,10 +445,11 @@
                 <div :style="{width:map_width}" id="map"></div><button style="position: absolute; bottom: 0px; right: 70px;" class="btn btn-main-fixed" @click="create_true=true,edit_true=false,map_width='65%'">Create Activity</button>
                 
             </div>
-            
+            <div id="my_map"></div>
         </div>
         
     </div>
+    
 
     <!-- functions -->
     <script>
@@ -470,6 +472,7 @@
                     // main2 stuff
                     tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
                     tag_input: "",
+                    existing: ""
                 };
             }, // data
             // computed: { 
@@ -480,6 +483,7 @@
             // created() { 
             // },
             // mounted() { 
+                
             // },
             methods: {
                 d_create() {
@@ -489,6 +493,7 @@
                         return ""
                     }
                 },
+                
                 d_edit() {
                     if (this.edit_true == false) {
                         return "none"
@@ -496,9 +501,11 @@
                         return ""
                     }
                 },
+                
                 delete_marker(id) {
                     DeleteMarker(id);
                 },
+                
                 calculate_to_from() {
                     if (this.from != "SGD"){
                         this.to = "SGD"
@@ -518,6 +525,7 @@
                         console.log(error.message)
                     })
                 },
+                
                 calculate_from_to() {
                     let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.from}&from=${this.to}&amount=${this.converted_amount}&apikey=${this.api_key}`
                     
@@ -532,7 +540,8 @@
                     .catch(error => {
                         console.log(error.message)
                     })
-                }
+                },
+                
             } // methods
             // , updated() {
             //     alert('updated')
@@ -710,6 +719,7 @@
         // toCurrency = document.querySelector(".to select"),
         // getButton = document.querySelector("form button");
 
+        // dropdown list for activities
         for (let i = 0; i < dropList.length; i++) {
             for(let currency_code in country_list){
                 // selecting USD by default as FROM currency and NPR as TO currency
@@ -724,6 +734,7 @@
             });
         }
 
+        // loading Flag - activities
         function loadFlag(element){
             for(let code in country_list){
                 if(code == element.value){ // if currency code of country list is equal to option value
@@ -745,13 +756,14 @@
             // map.addListener("click", (e) => {
             //     create_marker_by_click(e.latLng,map);
             // });
-            for (place of locations) {
+            for (place of location_coded) {
                 create_marker(place, map)
             }
             initAutocomplete();
 
         }
         
+        // enable Autocomplete
         function initAutocomplete() {
             let map = this.map
             // Init Autocomplete
@@ -1120,7 +1132,7 @@
         var markers = [];
         var uniqueId = 1;
 
-        var locations = [
+        var location_coded = [
             {
                 name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
                 address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
@@ -1146,7 +1158,7 @@
                 price: {sgd: 25, krw: 25244.25}
             },
                 ];
-        
+        read_existing_data()
     
         window.initMap = initMap;
     </script>
@@ -1166,6 +1178,6 @@
 
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-
+    
 </body>
 </html>
