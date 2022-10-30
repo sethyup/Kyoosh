@@ -1,10 +1,9 @@
 const sidebar = Vue.createApp({
-    
 });
 
 sidebar.component('sidebar-general', {
-    template: 
-            `<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
+    template:
+            `<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary w-100">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
                     <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                         <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
@@ -175,7 +174,7 @@ sidebar.component('sidebar-phase2', {
             `
     })
 
-    sidebar.component('sidebar-phase3', {
+sidebar.component('sidebar-phase3', {
         template: 
                 ` <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 border-end border-secondary">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
@@ -295,5 +294,6 @@ sidebar.component('sidebar-phase2', {
                     </div>
                 </div>
                 `
-        })
+    })
+
 sidebar.mount('#nav')
