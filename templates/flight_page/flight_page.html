@@ -20,11 +20,12 @@
     <title>Flights</title>
 </head>
 <body>
-    <div id="nav">
     <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <!-- SIDEBAR -->
-            <sidebar-general></sidebar-general>
+        <div class="row sidebar-parent flex-nowrap">
+            <div id="nav" class="col-2 sidebar-css">
+                 <!-- SIDEBAR  -->
+                <sidebar-general></sidebar-general>
+            </div>
 
             <!-- ALL OTHER CONTENT -->
             <div class="col py-3" id="flight_app">
@@ -549,7 +550,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
