@@ -33,21 +33,21 @@ sidebar.component('sidebar-general', {
 
                             <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> 
+                                    <a href="../../map.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                                             </svg>
-                                        Map
+                                        Map View
                                         </span></a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link px-0"> 
+                                    <a href="../activity_card_listview/activity_card.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                                             </svg>
-                                        List
+                                        List View
                                         </span>
                                     </a>
                                 </li>
@@ -83,7 +83,7 @@ sidebar.component('sidebar-general', {
                             <span class="d-none d-sm-inline mx-1">Bean</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="#">My Trips</a></li>
+                            <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
@@ -128,21 +128,21 @@ sidebar.component('sidebar-phase2', {
 
                             <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> 
+                                    <a href="../../map.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                                             </svg>
-                                        Map
+                                        Map View
                                         </span></a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link px-0"> 
+                                    <a href="../activity_card_listview/activity_card.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
                                             </svg>
-                                        List
+                                        List View
                                         </span>
                                     </a>
                                 </li>
@@ -161,7 +161,7 @@ sidebar.component('sidebar-phase2', {
                             <span class="d-none d-sm-inline mx-1">Bean</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="#">My Trips</a></li>
+                            <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
@@ -283,7 +283,7 @@ sidebar.component('sidebar-phase2', {
                                 <span class="d-none d-sm-inline mx-1">Bean</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="#">My Trips</a></li>
+                                <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
