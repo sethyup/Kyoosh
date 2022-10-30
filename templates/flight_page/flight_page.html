@@ -20,12 +20,13 @@
     <title>Flights</title>
 </head>
 <body>
-    <div id="nav">
     <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <!-- SIDEBAR -->
-            <sidebar-general></sidebar-general>
-
+        <div class="row sidebar-parent flex-nowrap">
+            <div id="nav" class="col-3 sidebar-css">
+                <!-- SIDEBAR -->
+                <sidebar-general></sidebar-general>
+            </div>
+            
             <!-- ALL OTHER CONTENT -->
             <div class="col py-3" id="flight_app">
                 <!-- CREATE NEW FLIGHT BUTTON -->
@@ -35,7 +36,7 @@
                         <!-- <button type="button" class="btn btn-main-bold" @click="log_everything()">LOG EVERYTHING</button> -->
                     </div>
                 </div>
-
+    
                 <!-- CREATE NEW FLIGHT FORM -->
                 <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative" v-if="create_new_flight">
                     <form action="#">
@@ -154,7 +155,7 @@
                                     <i class="fa-solid fa-chevron-up fa-sm"></i>
                                 </button>
                             </div>
-
+    
                             <div class="col-9 mb-5">
                                 <div class="alert alert-danger text-center" role="alert" v-if="error_message.trim()!=''">
                                     {{error_message}}
@@ -222,7 +223,7 @@
                         </div>
                     </form>
                 </div>
-
+    
                 <!-- EACH LOADED FLIGHT -->
                 <div v-for="e_flightObj of flight_obj_arr">
                     <!-- EACH STATIC FLIGHT ITEM -->
@@ -333,7 +334,7 @@
                             </div>
                         </form>
                     </div>
-
+    
                     <!-- EDIT EXISTING FLIGHT FORM -->
                     <div v-else class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative">
                         <form action="#">
@@ -444,7 +445,7 @@
                                 </div>
                             
                             </div>
-
+    
                             <div class="row justify-content-center">
                                 <div class="col-2">
                                     <button class="btn btn-mild2 my-2 ms-md-5 dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#flightX_dropdown" aria-expanded="false" aria-controls="flightX_dropdown">
@@ -524,8 +525,8 @@
                                     <i class="fa-solid fa-trash-can fa-lg"></i>
                                 </button>
                             </div>
-
-
+    
+    
                             <!-- Delete Button Modal -->
                             <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -549,7 +550,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->

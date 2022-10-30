@@ -103,3 +103,8 @@ button.dropdown[aria-expanded = true] .fa-chevron-down{
 button.dropdown[aria-expanded = false] .fa-chevron-up{
     display: none;
 }
+
+/* sidebar */
+.sidebar-parent .col-3{
+    width: 18vw;
+}
