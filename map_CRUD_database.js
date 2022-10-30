@@ -9,6 +9,7 @@
 
 // Importing Firebase API
 // DO NOT EDIT
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -120,7 +121,7 @@ const root = Vue.createApp({
             }
 },
 created() {
-    this.read_existing_data()
+    // this.read_existing_data()
 }
 })
 
