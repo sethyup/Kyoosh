@@ -15,9 +15,7 @@ main.component('homepage-navbar', {
 
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a href="create-trip.html">
-                            <button class="d-sm-none nav-link btn btn-main-fixed" style="width: 150px;">+ Plan New Trip</button>
-                            </a>                        
+                            <button type="button" class="d-sm-none nav-link btn btn-main-fixed" style="width: 150px;" onclick="location.href='create-trip.html' ">+ Plan New Trip</button>                       
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="trips-homepage.html" aria-current="page">Trips <span class="visually-hidden">(current)</span></a>
@@ -31,7 +29,7 @@ main.component('homepage-navbar', {
                     </ul>
 
                     <div style="width: calc(8vw + 150px)" class="d-flex justify-content-center">
-                        <button type="button" class="d-none d-sm-block btn btn-main mx-3">+ Plan New Trip</button>
+                        <button type="button" class="d-none d-sm-block btn btn-main mx-3" onclick="location.href='create-trip.html'">+ Plan New Trip</button>
                     </div>
                     
                     <!-- <a class="d-none d-sm-block" href="#">
