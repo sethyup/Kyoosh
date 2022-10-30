@@ -66,17 +66,17 @@
 <body>
     <div class="container-fluid">
         <div class="row sidebar-parent flex-nowrap">
-            <div id="nav" class="col-3 sidebar-css">
+            <div id="nav" class="col-2 sidebar-css">
                  <!-- SIDEBAR  -->
                 <sidebar-phase2></sidebar-phase2>
             </div>
 
             <!-- whole site -->
             <!-- ALL OTHER CONTENT ACTIVITY COL-->
-            <div class="col py-3" id="app">
+            <div class="col py-4" id="app">
                 <div class="row">
                     <!-- pop up if create activity -->
-                    <div :style="{display: d_create()}" class="col bg-primary col py-3">
+                    <div :style="{display: d_create()}" class="col py-3">
                         <!-- create activity -->
                         <div class="container text-dark">
                             <h3 class="heading">Create an Activity</h3>
@@ -224,7 +224,7 @@
                         </div>
                     </div>
                     <!-- pop up if edit activity -->
-                    <div :style="{display: d_edit()}" class="col bg-primar col py-3">
+                    <div :style="{display: d_edit()}" class="col py-3">
                         <div class="container text-dark">
                             <h3 class="heading">Edit Activity</h3>
                             <form>
@@ -372,7 +372,7 @@
                 
     
                     <!-- map interface MAP COL -->
-                    <div class="col" id="app" style="width: 80vw; height: 80vh">
+                    <div class="col" id="app" style="width: 90vw; height: 90vh">
                         <!-- map details -->
                         <div id="map"></div><button style="position: absolute; bottom: 0px; right: 70px;" class="btn btn-main-fixed" @click="create_true=true,edit_true=false">Create Activity</button>
                     </div>    
