@@ -1,4 +1,6 @@
 // signup code
+console.log("this page is linked to signup_login.js")
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
@@ -32,6 +34,9 @@ const root = Vue.createApp({
     },
     
     methods: {
+        test() {
+            console.log("this function works")
+        },
         sign_up() {
             var email = this.email
             var password = this.password
@@ -41,6 +46,8 @@ const root = Vue.createApp({
                     // Signed Up 
 
                     // save user account details to database
+                    console.log("starting to write user data...")
+                    console.log(userCredential)
                     set(ref(db, "users/" + this.username), {
                         email: this.email,
                         fullname: this.first_name + " " + this.last_name,
@@ -62,12 +69,14 @@ const root = Vue.createApp({
                         alert(failed_message)
                         console.log(failed_message);
                     })
-
                     // display "Success" message
                     alert("Sign Up Successful")
                     console.log("user created")
+
+
                     // redirects to Log In page
-                    location.replace("http://localhost/WAD2%20STUFF/PROJECT_TEST_SITE/login.html")
+                    // find a way to use await and wait for the update to database, if not this will cancel the update
+                    // location.replace("/*http://localhost/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html*/")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
