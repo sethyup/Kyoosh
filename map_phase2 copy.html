@@ -425,8 +425,21 @@
             // },
             methods: {
                 delete_marker(id) {
-                    console.log('deleting marker')
-                    deleteMarker(id);
+                    // deleteMarker(id);
+                    console.log(this.markers)
+                    for (var i = 0; i < this.markers.length; i++) {
+                        
+                        if (this.markers[i].id == id) {
+                            //Remove the marker from Map
+                                
+                            this.markers[i].setMap(null);
+                            
+                            //Remove the marker from array.
+                            this.markers.splice(i, 1);
+                            
+                            return;
+                        }
+                    }
                 },
 
                 d_create() {
@@ -497,7 +510,7 @@
                         this.create_marker(this.existing_locations[place], map)
                     }
                     this.initAutocomplete();
-                    console.log(this.markers)
+                    
                 },
 
                 // enable Autocomplete
@@ -512,7 +525,7 @@
                     const autocomplete = new google.maps.places.Autocomplete(input, options);
                     // autocomplete connected to map viewport
                     autocomplete.bindTo('bounds',map);
-
+                    
                     // create marker for searched location, go to location, save into marker list
                     autocomplete.addListener('place_changed', () => {
 
@@ -545,6 +558,7 @@
                         marker.setPosition(place.geometry.location);
                         marker.setVisible(true);              
                         
+                        marker.id = this.uniqueId;
                         const contentString = 
                         `
                         <div id="content" name="${this.uniqueId}">
@@ -576,7 +590,7 @@
                                 <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="this.set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${this.uniqueId}</div></button>
+                                    <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${this.uniqueId}</div></button>
                                 </div>
                                 
                             </div>
@@ -590,14 +604,17 @@
                     infowindow.setContent(contentString);
                     infowindow.open(map, marker);
                     this.markers.push(marker)
+                    
                     marker.addListener("click", (googleMapsEvent) => {
                         infowindow.open(map, marker);})
+                    
                     })
                     this.uniqueId++;
                     this.autocomplete = autocomplete;
                     // autocomplete.addListener("", () => {
                     //     autocomplete.set("place", null)
                     // })
+                    
                 },
 
                 // create existing marker
@@ -666,6 +683,7 @@
                             infoWindow.setContent(contentString);
                             infoWindow.open(map, marker);});
                         // Set unique id
+                        marker.id = this.uniqueId;
                         this.uniqueId++;
                         this.markers.push(marker)
                         
@@ -1008,19 +1026,20 @@
         
         // delete marker
         
-        function deleteMarker(id) {
-                //Find and remove the marker from the Array
-                for (var i = 0; i < vm.$data.markers.length; i++) {
-                    if (vm.$data.markers[i].id == id) {
-                        //Remove the marker from Map                  
-                        vm.$data.markers[i].setMap(null);
+        // function deleteMarker(id) {
+        //         //Find and remove the marker from the Array
+        //         for (var i = 0; i < vm.$data.markers.length; i++) {
+        //             if (vm.$data.markers[i].id == id) {
+        //                 //Remove the marker from Map                  
+        //                 vm.$data.markers[i].setMap(null);
+        //                 console.log('found the marker')
         
-                        //Remove the marker from array.
-                        vm.$data.markers.splice(i, 1);
-                        return;
-                    }
-                }
-            };
+        //                 //Remove the marker from array.
+        //                 vm.$data.markers.splice(i, 1);
+        //                 return;
+        //             }
+        //         }
+        //     };
 
 
         // var location_coded = 
