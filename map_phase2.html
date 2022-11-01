@@ -195,7 +195,7 @@
                                     <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
                                     <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
                                     <!-- should write data to db and update InfoWindow -->
-                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false">Create</button>
+                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false ">Create</button>
     
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false,map_width='90%', delete_marker(marker_id)">Confirm</button>
+                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(marker_id), autocomplete.set('place', null);">Confirm</button>
                                             </div>
                                         </div>
                                         </div>
@@ -685,8 +685,9 @@
             // map.addListener("click", (e) => {
             //     create_marker_by_click(e.latLng,map);
             // });
-            for (place of location_coded) {
-                create_marker(place, map)
+            for (place in location_coded) {
+                // create_marker(place, map)
+                create_marker(location_coded[place], map)
             }
             initAutocomplete();
 
@@ -790,6 +791,10 @@
             marker.addListener("click", (googleMapsEvent) => {
                 infowindow.open(map, marker);})
             })
+            window.autocomplete = autocomplete
+            // autocomplete.addListener("", () => {
+            //     autocomplete.set("place", null)
+            // })
         }
         
         // changes vue.js values for editing pop up
@@ -1061,32 +1066,134 @@
         var markers = [];
         var uniqueId = 1;
 
-        var location_coded = [
-            {
-                name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-                address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-                latlng: { lat: 37.5444, lng: 127.0374 },
-                price: {sgd: 0, krw: 0}
-            },
-            {
-                name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-                address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-                latlng: { lat: 37.5512, lng: 126.9882 },
-                price: {sgd: 12, krw: 12000}
-            },
-            {
-                name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
-                address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
-                latlng: { lat: 37.5561, lng: 126.9719 },
-                price: {sgd: 3, krw: 3000}
-            },
-            {
-                name: 'Hongdae Shopping Street',
-                address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
-                latlng: { lat: 37.5532, lng: 126.9219 },
-                price: {sgd: 25, krw: 25244.25}
-            },
-                ];
+        // var location_coded = [
+        //     {
+        //         name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+        //         address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+        //         latlng: { lat: 37.5444, lng: 127.0374 },
+        //         price: {sgd: 0, krw: 0}
+        //     },
+        //     {
+        //         name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+        //         address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+        //         latlng: { lat: 37.5512, lng: 126.9882 },
+        //         price: {sgd: 12, krw: 12000}
+        //     },
+        //     {
+        //         name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
+        //         address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
+        //         latlng: { lat: 37.5561, lng: 126.9719 },
+        //         price: {sgd: 3, krw: 3000}
+        //     },
+        //     {
+        //         name: 'Hongdae Shopping Street',
+        //         address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
+        //         latlng: { lat: 37.5532, lng: 126.9219 },
+        //         price: {sgd: 25, krw: 25244.25}
+        //     },
+        //         ];
+
+        var location_coded = 
+            { 
+                "1": {
+                    "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5444,
+                    "lng": 127.0374
+                    },
+                    "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 0,
+                    "sgd": 0
+                    },
+                    "tag": "Attraction",
+                    "votes_num": {
+                    "no": 1,
+                    "yes": 3,
+                    "yet_to_vote": 1
+                    },
+                    "votes_percentage": {
+                    "no": 20,
+                    "yes": 60,
+                    "yet_to_vote": 20
+                    }
+                },
+                "2":{
+                    "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5512,
+                    "lng": 126.9882
+                    },
+                    "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 12000,
+                    "sgd": 12
+                    },
+                    "tag": "Attraction",
+                    "votes_num": {
+                    "no": 1,
+                    "yes": 1,
+                    "yet_to_vote": 3
+                    },
+                    "votes_percentage": {
+                    "no": 20,
+                    "yes": 20,
+                    "yet_to_vote": 60
+                    }
+                },
+                "3":{
+                    "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5561,
+                    "lng": 126.9719
+                    },
+                    "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+                    "price": {
+                    "krw": 3000,
+                    "sgd": 3
+                    },
+                    "tag": "Food",
+                    "votes_num": {
+                    "no": 0,
+                    "yes": 4,
+                    "yet_to_vote": 1
+                    },
+                    "votes_percentage": {
+                    "no": 0,
+                    "yes": 80,
+                    "yet_to_vote": 20
+                    }
+                },
+                "4":{
+                    "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+                    "description": "",
+                    "latlng": {
+                    "lat": 37.5532,
+                    "lng": 126.9219
+                    },
+                    "name": "Hongdae Shopping Street",
+                    "price": {
+                    "krw": 25244.25,
+                    "sgd": 25
+                    },
+                    "tag": "Shopping",
+                    "votes_num": {
+                    "no": 0,
+                    "yes": 5,
+                    "yet_to_vote": 0
+                    },
+                    "votes_percentage": {
+                    "no": 0,
+                    "yes": 100,
+                    "yet_to_vote": 0
+                    }
+                }
+            }
+                ;
+        
         
     
         window.initMap = initMap;
