@@ -41,6 +41,7 @@ const root = Vue.createApp({
             // activity: "hong deh street"
 
             // ...
+            location: ""
         }
     },
 
@@ -111,18 +112,26 @@ const root = Vue.createApp({
 
         },
 
-        read_existing_data() {
+        async read_existing_data() {
             const data_to_be_read = ref(db, "locations");
-            onValue(data_to_be_read, (snapshot) => {
+            await onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
-                console.log(data);
-                });
+                return data
+                })   
             }
-},
-created() {
-    this.read_existing_data()
-}
+    }
 })
 
 // Mount your HTML document
 root.mount("#my_map")
+
+
+function read_existing_data() {
+    const data_to_be_read = ref(db, "locations");
+    onValue(data_to_be_read, (snapshot) => {
+        const data = snapshot.val();
+        return data
+        })   
+    }
+
+export { read_existing_data };
