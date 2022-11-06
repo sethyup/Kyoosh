@@ -13,91 +13,109 @@
     <!-- VUE -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-
-
 </head>
 <!-- ACTIVITY CARD -->
 <body>
-    <h1>Card Sample</h1>
-    <!-- COPY FROM HERE -->
+    <div class="container-fluid">
+        <div class="row sidebar-parent flex-nowrap">
+            <div id="nav" class="col-2 sidebar-css">
+                 <!-- SIDEBAR  -->
+                <sidebar-phase2></sidebar-phase2>
+            </div>
 
-    <div class="container text-dark">
-    <div class="card">
-        <!-- LOCATION/PLACE -->
-        <div class="card-header">
-            <span class="fs-3 fw-semibold">
-            Hongdae Shopping Street
-            </span>
-            <span class="badge rounded-pill text-bg-warning ms-1" >#Shopping</span>
-        </div>
+            <!-- rest of site -->
+            <div class="col p-4">
+                <div class="row">
+                    <div class="col">
+                        <h1>Card Sample</h1>
+                        <!-- COPY FROM HERE -->
 
-        <!-- BADGE & DESCRIPTION -->
-        <div class="card-body">
-            <div class="container p-0">
-            <div class="row">
-                <div class = "col-8">
-                    <p style="font-style: italic"> 365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea</p>
-                    <h6>100 SGD/100976.93 KRW per person</h6>
-                    <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
-                </div>
-                
-                <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                <div class="col-4" id="main">
-                    <p class="pt-3">Current Votes: </p>
-                    
-                        <div class="progress">
-                                <!-- VOTED YES -->
-                            <div id="progress_yes" class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: voted_yes_percentage + '%' }" v-bind:aria-valuenow="voted_yes_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="voted_yes_people"></div>
+                        <div class="card">
+                            <!-- LOCATION/PLACE -->
+                            <div class="card-header">
+                                <span class="fs-3 fw-semibold">
+                                Hongdae Shopping Street
+                                </span>
+                                <span class="badge rounded-pill text-bg-warning ms-1" >#Shopping</span>
+                            </div>
 
-                                <!-- VOTED NO -->
-                            <div id="progress_no" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: voted_no_percentage + '%' }" v-bind:aria-valuenow="voted_no_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="voted_no_people"> </div>
+                            <!-- BADGE & DESCRIPTION -->
+                            <div class="card-body">
+                                <div class="container p-0">
+                                <div class="row">
+                                    <div class = "col-8">
+                                        <p style="font-style: italic"> 365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea</p>
+                                        <h6>100 SGD/100976.93 KRW per person</h6>
+                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                    </div>
+                                    
+                                    <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                    <div class="col-4" id="main">
+                                        <p class="pt-3">Current Votes: </p>
+                                        
+                                            <div class="progress">
+                                                    <!-- VOTED YES -->
+                                                <div id="progress_yes" class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: voted_yes_percentage + '%' }" v-bind:aria-valuenow="voted_yes_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="voted_yes_people"></div>
+
+                                                    <!-- VOTED NO -->
+                                                <div id="progress_no" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: voted_no_percentage + '%' }" v-bind:aria-valuenow="voted_no_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="voted_no_people"> </div>
+                                                
+
+                                                    <!--  VOTED MAYBE   -->
+                                                <div id="progress_maybe" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: yet_to_vote_percentage + '%' }" v-bind:aria-valuenow="yet_to_vote_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="yet_to_vote_people"></div>
+
+                                                
+                                            </div>
+
+                                        <div class="pt-3" style="display: flex; justify-content: center;">
+                                        <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject()">Reject</button>
+                                        <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept()"> Vote </button>
+                                        </div>
+                                        
+                                        
+                                        <!-- Voted NO: {{ voted_no_people }}
+                                        <br>
+                                        Voted: YES: {{ voted_yes_people }}
+                                        <br>
+                                        YET TO VOTE: {{ yet_to_vote_people }} -->
+                                    </div>
+                                </div> 
                             
-
-                                <!--  VOTED MAYBE   -->
-                            <div id="progress_maybe" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: yet_to_vote_percentage + '%' }" v-bind:aria-valuenow="yet_to_vote_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="yet_to_vote_people"></div>
-
-                            
+                                <!-- EDIT BUTTON -->
+                                <div class="row">
+                                    <div class="col-11"></div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-sm rounded btn-main text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
-
-                    <div class="pt-3" style="display: flex; justify-content: center;">
-                      <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject()">Reject</button>
-                      <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept()"> Vote </button>
                     </div>
                     
-                    
-                    <!-- Voted NO: {{ voted_no_people }}
-                    <br>
-                    Voted: YES: {{ voted_yes_people }}
-                    <br>
-                    YET TO VOTE: {{ yet_to_vote_people }} -->
-                </div>
-        
-            </div> 
-            
-            <!-- EDIT BUTTON -->
-            <div class="row">
-                <div class="col-11"></div>
-                <div class="col-1">
-                    <button type="button" class="btn btn-sm rounded btn-main text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                <!-- ADD MAP DIV UNDER A COL HERE -->
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
-        </div>
-
     </div>
-    </div>
-
-    <!-- END HERE -->
-
-<div class="m-5"></div>
-
-
-      
-    
+            
 
     <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 
+    <!-- sidebar js -->
+    <script src="../pages/sidebars.js"></script>
 </body>
 </html>
