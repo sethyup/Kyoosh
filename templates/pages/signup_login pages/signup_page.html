@@ -12,7 +12,7 @@
     <link href="../../../css/main.min.css" rel="stylesheet">
    
     <!-- external js file -->
-    <script type="module" src="signup_login.js"></script>
+    <script type="module" src="signup_login.js"></script>   
     
     <!-- vue script -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -94,19 +94,7 @@
                 <br>
                 <!-- Submit button -->
                 <div class="d-grid">
-                    <button @click="sign_up()" class="btn btn-primary mb-4">Sign Up</button>
-                </div>
-
-                <!-- fb/google buttons can delete if dw-->
-                <div class="text-center">
-                    <p>or sign up with:</p>
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fa fa-facebook"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fa fa-google"></i>
-                    </button>
+                    <button type="button" @click="sign_up()" class="btn btn-primary mb-4">Sign Up</button>
                 </div>
             </form>
         </div>
