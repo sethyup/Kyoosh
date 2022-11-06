@@ -2,7 +2,7 @@
 console.log("this page is linked to signup_login.js")
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, confirmPasswordReset } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const WADTravel = initializeApp({
@@ -74,7 +74,7 @@ const root = Vue.createApp({
 
                     // redirects to Log In page
                     // find a way to use await and wait for the update to database, if not this will cancel the update
-                    location.replace("../trips-homepage.html")
+                    location.replace("./login_page.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -106,7 +106,7 @@ const root = Vue.createApp({
                     alert("Login Successful")
                     console.log("user login successful")
                     // redirects to home page
-                    // location.replace("")
+                    location.replace("../trips-homepage.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -175,6 +175,14 @@ const root = Vue.createApp({
                 
                 console.log(errorCode + ': ' + errorMessage)
             });
+        },
+
+        send_reset_email() {
+            sendPasswordResetEmail(auth, this.email)
+            .then(
+                alert("email sent   ")
+                // location.replace("")
+            )
         },
 
         sign_out() {
