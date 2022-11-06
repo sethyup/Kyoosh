@@ -1,6 +1,9 @@
 // signup code
+console.log("this page is linked to signup_login.js")
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -13,7 +16,8 @@ const WADTravel = initializeApp({
     measurementId: "G-3XQT4098KL"
 })
 const auth = getAuth(WADTravel)
-// const db = getDatabase(WADTravel)
+const db = getDatabase(WADTravel)
+const google_provider = new GoogleAuthProvider()
 
 const root = Vue.createApp({
     data() {
@@ -40,12 +44,37 @@ const root = Vue.createApp({
                     // Signed Up 
 
                     // save user account details to database
-
+                    console.log("starting to write user data...")
+                    console.log(userCredential)
+                    set(ref(db, "users/" + this.username), {
+                        email: this.email,
+                        fullname: this.first_name + " " + this.last_name,
+                        trips: []
+                      })
+                    .then(
+                        function write_success() {
+                            // display "Success" message
+                            alert("Write Operation Successful")
+                            console.log("Entry Created")
+                    })
+                    .catch((error) => {
+                        // for us to debug, tells us what error there is,
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+        
+                        // display "Error" message
+                        var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                        alert(failed_message)
+                        console.log(failed_message);
+                    })
                     // display "Success" message
                     alert("Sign Up Successful")
                     console.log("user created")
+
+
                     // redirects to Log In page
-                    location.replace("http://localhost/WAD2%20STUFF/PROJECT_TEST_SITE/login.html")
+                    // find a way to use await and wait for the update to database, if not this will cancel the update
+                    location.replace("../trips-homepage.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -95,6 +124,59 @@ const root = Vue.createApp({
                 })
         },
 
+        login_with_google() {
+            console.log(`Logging in using Google API`)
+            signInWithPopup(auth, google_provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+
+                // Adding the user to the database
+
+                console.log(user.displayName)
+                console.log(user.email)
+
+                set(ref(db, "users/" + user.displayName), {
+                    email: user.email,
+                    fullname: user.displayName,
+                    trips: []
+                  })
+                .then(
+                    function write_success() {
+                        // display "Success" message
+                        alert("Write Operation Successful")
+                        console.log("Entry Created")
+                })
+                .catch((error) => {
+                    // for us to debug, tells us what error there is,
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+    
+                    // display "Error" message
+                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                    alert(failed_message)
+                    console.log(failed_message);
+                })
+
+                console.log(`Log In Successful`)                
+                alert(`Login Successful`)
+
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // // The email of the user's account used.
+                // const email = error.customData.email;
+                // // The AuthCredential type that was used.
+                // const credential = GoogleAuthProvider.credentialFromError(error);
+                
+                console.log(errorCode + ': ' + errorMessage)
+            });
+        },
+
         sign_out() {
             console.log("starting to log out user...")
             signOut(auth).then(
@@ -107,7 +189,10 @@ const root = Vue.createApp({
                 console.log("sign out failed")
             }
             )
-        }
+        },
+        
+        reset_password() {
+        },
     }
 
 })

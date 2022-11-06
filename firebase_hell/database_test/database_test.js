@@ -113,14 +113,15 @@ const root = Vue.createApp({
         write_data() {
             console.log("writing data into database...")
             
-            set(ref(db, 'users/' + this.username), {
-                // email: this.email,
-                // full_name: this.first_name + " " + this.last_name
-
-                // add in entries here
-                // e.g.
-                // email: this.email
-                // ...
+            set(ref(db, 'locations/Seoul Forest Park'), {
+                name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                latlng: { lat: 37.5444, lng: 127.0374 },
+                tag: 'Attraction',
+                description: '',
+                price: {sgd: 0, krw: 0},
+                votes_percentage: {yes: 60, no: 20, yet_to_vote: 20}, 
+                votes_num: {yes: 3, no: 1, yet_to_vote:1},
               })
             .then(
                 function write_success() {

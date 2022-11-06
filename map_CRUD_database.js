@@ -112,26 +112,14 @@ const root = Vue.createApp({
 
         },
 
-        async read_existing_data() {
-            const data_to_be_read = ref(db, "locations");
-            await onValue(data_to_be_read, (snapshot) => {
+        read_existing_data() {
+            const data_to_be_read = ref(db, "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app/locations");
+            onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
-                return data
-                })   
+                console.log(data);
+                });
             }
-    }
-})
+}})
 
 // Mount your HTML document
 root.mount("#my_map")
-
-
-function read_existing_data() {
-    const data_to_be_read = ref(db, "locations");
-    onValue(data_to_be_read, (snapshot) => {
-        const data = snapshot.val();
-        return data
-        })   
-    }
-
-export { read_existing_data };
