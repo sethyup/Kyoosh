@@ -44,6 +44,13 @@ content {
       height: 10px;
       border-radius: 0 !important;
       background: transparent !important; }
+    .footer {
+      /* position: -webkit-sticky; */
+      position: fixed;
+      bottom: 0px;
+      width: 90%;
+      /* align-self: flex-end; */
+    }
   
   /* Custom Checkbox */
   /* .control {
