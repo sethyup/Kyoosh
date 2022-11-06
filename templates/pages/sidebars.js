@@ -99,8 +99,8 @@ sidebar.component('sidebar-general', {
 
 sidebar.component('sidebar-phase2', {
     template: 
-            `<div class="col-auto border-end border-secondary">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
+            `<div class="col-auto border-end border-secondary sticky-top">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                         <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
                     </a>
@@ -177,8 +177,8 @@ sidebar.component('sidebar-phase2', {
 
     sidebar.component('sidebar-phase3', {
         template: 
-                ` <div class="col-auto border-end border-secondary">
-                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top">
+                ` <div class="col-auto border-end border-secondary sticky-top">
+                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="../../map_phase3.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                             <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
                         </a>
