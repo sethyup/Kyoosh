@@ -34,9 +34,6 @@ const root = Vue.createApp({
     },
     
     methods: {
-        test() {
-            console.log("this function works")
-        },
         sign_up() {
             var email = this.email
             var password = this.password
@@ -138,7 +135,10 @@ const root = Vue.createApp({
                 console.log("sign out failed")
             }
             )
-        }
+        },
+        
+        reset_password() {
+        },
     }
 
 })
