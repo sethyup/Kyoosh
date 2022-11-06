@@ -5,15 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Create Activities</title>
         <!-- BOOTSTRAP -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link href="../../css/main.min.css" rel="stylesheet">
+        
 
         <!-- LOCAL CSS  -->
         <link rel="stylesheet" href="../template.css">
-    </head>
 
+        <!-- VUE -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
     <body>
-        <h3 class="m-5">Collapsible card used in Phase 3, drag and drop section</h3>
-        <h4 class="m-5">Must change the id of each accordion item accordingly - One, Two, Three etc. </h4>
+
         
         <!-- MUST CHANGE THE ID OF THESE 3 LINES: ONE-->
             <!-- <h6 class="accordion-header position-relative" id="panelsStayOpen-headingOne"></h6>
@@ -23,51 +25,62 @@
 
         
         
-        <h4 class="m-5">Card Sample 1</h4>
+        <h4 class="m-5">Card Sample</h4>
 
         <!-- FIRST ITEM (SAMPLE 1) -->
         <!-- COPY FROM HERE -->
-        <div class="container mb-3">
+        <div id="main">
+
+        <div class="container mb-3" v-for="(location, index) of locations">
+        <!-- </div> -->
             <div class="accordion" id="accordionFlushExample">
-                <div class="accordion-item">
+                <div class="accordion-item" >
 
                     <!-- ACCORDION TITLE -->
                         <!-- NEED TO CHANGE ACCORD. -->
-                    <h6 class="accordion-header position-relative" id="flush-headingOne">
+                    <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
                         <!-- CHECKBOX -->
-                        <input class="form-check-input input-checkbox collapsed" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
+                        <input class="form-check-input input-checkbox collapsed" type="checkbox" name="flexRadioDefault" :id="'flexRadioDefault' + index" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
                         <!-- PLACE + TAG -->
                             <!-- NEED TO CHANGE ACCORD. -->
-                        <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Hongdae Shopping Street 
-                            <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#Shopping</span>
+                        <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">
+                            {{ location.name}}
+                            <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
                         </button>
                     </h6>
 
                     <!-- ACCORDION BODY -->
                         <!-- NEED TO CHANGE ACCORD. -->
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div class="container p-0">
                                 <div class="row">
                                     <div class = "col-8">
-                                        <h6>100 SGD/per person</h6>
-                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                        <h6>{{ location.price.sgd }} SGD/per person</h6>
+                                        <p class="description" style="text-align: justify;">
+                                            Description included by user. 
+                                            {{ location.description }}
+                                        </p>
                                     </div>
                                     
                                     <!-- PROGRESS BAR AND VOTING BUTTONS -->
                                     <div class="col-4" >
                                         <p class="pt-3">Current Votes: </p>
                                             <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <!-- VOTED YES -->
+                                                <div :id="'progress_yes' + index" class="progress-bar bg-success" role="progressbar" :aria-label=" 'voted_yes_percentage' + index" :style="{width: location.votes_percentage.yes + '%' }" v-bind:aria-valuenow="location.votes_percentage.yes" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="location.votes_num.yes" data-container="body"></div>
+
+                                                <!-- VOTED NO -->
+                                                <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" :aria-label=" 'voted_no_percentage' + index" :style="{width: location.votes_percentage.no + '%' }" v-bind:aria-valuenow="location.votes_percentage.no" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.no" data-container="body"></div>
+                        
+                                                <!--  VOTED MAYBE   -->
+                                                <div :id="'progress_maybe' + index" class="progress-bar bg-secondary" role="progressbar" :aria-label=" 'yet_to_vote_percentage' + index" :style="{width: location.votes_percentage.yet_to_vote + '%' }" v-bind:aria-valuenow="location.votes_percentage.yet_to_vote" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.yet_to_vote" data-container="body"></div>
+
+                                                <!-- <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
                                                 <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div> -->
                                             </div>
-                                            <!-- DO NOT NEED VOTING BUTTONS IN PHASE 3 -->
-                                        <!-- <div class="pt-3" style="display: flex; justify-content: center;">
-                                        <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;">Reject</button>
-                                        <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;"> Vote </button>
-                                        </div> -->
+
                                         
                                     </div>
                                 </div> 
@@ -77,7 +90,15 @@
                 </div>
                 </div>
         </div>
+    </div>
         <!-- END HERE -->
+
+        <!-- <div class="tooltip bs-tooltip-top" role="tooltip">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-inner">
+              Some tooltip text!
+            </div>
+          </div> -->
 
         <!-- SECOND ITEM (SAMPLE 1) -->
         <div class="container mb-3">
@@ -104,7 +125,6 @@
                                         <h6>100 SGD/per person</h6>
                                         <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
                                     </div>
-                                    
                                     <!-- PROGRESS BAR AND VOTING BUTTONS -->
                                     <div class="col-4" >
                                         <p class="pt-3">Current Votes: </p>
@@ -125,130 +145,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-        <h4 class="m-5">Card Sample 2</h4>
-        <!--  FIRST ITEM (SAMPLE 2)   -->
-        <div class="container mb-3">
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-                <div class="accordion-item">
-
-                    <h6 class="accordion-header position-relative" id="panelsStayOpen-headingOne">
-                        <!-- CHECKBOX -->
-                        <input class="form-check-input input-checkbox" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
-                        <!-- PLACE + TAG -->
-                        <button class="accordion-button ps-5 fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                            Hongdae Shopping Street 
-                            <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#Shopping</span>
-                        </button>
-                    </h6>
-
-                                        <!-- ACCORDION BODY -->
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
-                            <div class="container p-0">
-                                <div class="row">
-                                    <div class = "col-8">
-                                        <h6>100 SGD/per person</h6>
-                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
-                                    </div>
-                            
-                            <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                    <div class="col-4" >
-                                        <p class="pt-3">Current Votes: </p>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                    <!-- DO NOT NEED VOTING BUTTONS IN PHASE 3 -->
-                                <!-- <div class="pt-3" style="display: flex; justify-content: center;">
-                                <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;">Reject</button>
-                                <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;"> Vote </button>
-                                </div> -->
-                                
-                                    </div>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- SECOND ITEM (SAMPLE 2)  -->
-                <div class="accordion-item">
-
-                    <h6 class="accordion-header position-relative" id="panelsStayOpen-headingTwo">
-                        <!-- CHECKBOX -->
-                        <input class="form-check-input input-checkbox" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
-                        <!-- PLACE + TAG -->
-                        <button class="accordion-button ps-5 fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                            Hongdae Shopping Street 
-                            <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#Shopping</span>
-                        </button>
-                    </h6>
-
-                            <!-- ACCORDION BODY -->
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div class="container p-0">
-                                <div class="row">
-                                    <div class = "col-8">
-                                        <h6>100 SGD/per person</h6>
-                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
-                                    </div>
-                            
-                            <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                    <div class="col-4" >
-                                        <p class="pt-3">Current Votes: </p>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                    <!-- DO NOT NEED VOTING BUTTONS IN PHASE 3 -->
-                                <!-- <div class="pt-3" style="display: flex; justify-content: center;">
-                                <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;">Reject</button>
-                                <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;"> Vote </button>
-                                </div> -->
-                                
-                                    </div>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
-
-        <div class="m-5"></div>
-
-
-
-        
-
-
-
-        
-
-                            <!-- BUTTON CHECKBOX -->
-                        <!-- <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
-                        <label class="btn btn-primary" for="btn-check">Single toggle</label> -->
-
-                        <!-- CHECKBOX -->
-                        <!-- <div>
-                            <input class="form-check-input" type="checkbox" id="check" value="" aria-label="..." onchange="func1(e)">
-                        </div> -->
-
-                        <!-- BUTTON -->
-                        <!-- <button type="button" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                        +
-                        </button> -->
-
-
         <!-- BOOTSTRAP JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
     </body>
 </html>
