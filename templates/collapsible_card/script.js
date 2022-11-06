@@ -1,7 +1,6 @@
 const main = Vue.createApp({
     data(){
         return{
-            selected_all: false,
             locations: [
                 {
                     name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
@@ -84,53 +83,27 @@ const main = Vue.createApp({
                     votes_num: {yes: 5, no: 0, yet_to_vote:0},
                 },
                     ],
-            total_price_list: [],
-            spending: 0,
 
-        }
+    }
     },
     methods:{
-        select_all(){
-            // haven't select all
-            console.log("====START selectall ===")
-            if(this.selected_all == false){
-                var items = document.getElementsByName('atv');
-
-                this.total_price_list = []
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i].type == 'checkbox')
-                        items[i].checked = true;
-                        this.total_price_list.push(items[i].value)
-                }
-                this.selected_all = true;
-                return this.calculate_spending()
-            }
-
-            // selected all 
-            else if (this.selected_all){
-                var items = document.getElementsByName('atv');
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i].type == 'checkbox')
-                        items[i].checked = false;
-                }
-                this.selected_all = false;
-                this.total_price_list = []
-                return this.calculate_spending()
-            }
-            
-
-        },
-        calculate_spending(){
-            console.log("==== START FUNCTION +++++")
-            this.spending = 0
-            for (let i=0; i< this.total_price_list.length; i++) {
-                this.spending += Number(this.total_price_list[i])
-            };
-        }
-        
-
 
     }
 })
 
 main.mount("#main")
+
+// SCRIPT TO ALLOW TOOLTIP TO WORK
+// const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+// const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+// var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+// var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+//   return new bootstrap.Tooltip(tooltipTriggerEl)
+// })
+
+// const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+// const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))

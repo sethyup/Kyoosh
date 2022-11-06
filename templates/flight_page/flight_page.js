@@ -31,24 +31,38 @@ function convert_date_obj_to_str(date_obj) {
 }
 
 function convert_datetime_str_to_date_obj(datetime_str) {
+    console.log(`=== [START] convert_datetime_str_to_date_obj() ===`)
+    
+    
     // format: 2022-10-05 12:00
     let arr_depart_datetime = datetime_str.split(" ")
     let datetime_date_arr = arr_depart_datetime[0].split("-")
     let datetime_h_min_arr = arr_depart_datetime[1].split(":")
-
+    
     let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2], datetime_h_min_arr[0], datetime_h_min_arr[1])
-
+    
+    console.log(`=== [END] convert_datetime_str_to_date_obj() ===`)
     return new_date_obj
 }
 
-// functions for buttons ------------------------------------------------------
-function get_val() {
-    console.log(document.getElementById("datetime_test").value)
-}
+// DATABASE STUFF
+// Importing Firebase API
+// DO NOT EDIT
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
-function get_date() {
-    console.log(document.getElementById("date_test").value)
-}
+// Our Firebase Project Configuration
+const WADTravel = initializeApp({
+    apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+    authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+    databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "wad-brothers-travel-ltd",
+    storageBucket: "wad-brothers-travel-ltd.appspot.com",
+    messagingSenderId: "305280551700",
+    appId: "1:305280551700:web:434cc190d57eabe14d1001",
+    measurementId: "G-3XQT4098KL"
+})
+const db = getDatabase(WADTravel)
 
 // VUE APP ------------------------------------------------------------------------------
 var flight_app = Vue.createApp({
@@ -251,46 +265,10 @@ var flight_app = Vue.createApp({
             },
 
             //List of flight objects
-            flight_obj_arr: [
-                {
-                    ID: 1,
-                    depart_datetime: "2022-12-01 08:00",
-                    depart_country: "Singapore",
-                    depart_tz: "Singapore Standard Time",
-                    arrive_datetime: "2022-12-01 15:25",
-                    arrive_country: "South Korea",
-                    arrive_tz: "Korean Standard Time",
-                    duration_hours: 6,
-                    duration_minutes: 25,
-                    price: "200",
-                    currency: "SGD",
-                    airline: "Bamboo Airways",
-                    flight_no: "KO405",
-                    airport: "Singapore Changi Airport",
-                    terminal: "3",
-                    gate: "A1",
-                    edit_mode: false
-                },
-                {
-                    ID: 2,
-                    depart_datetime: "2022-12-10 14:00",
-                    depart_country: "South Korea",
-                    depart_tz: "Korean Standard Time",
-                    arrive_datetime: "2022-12-10 19:10",
-                    arrive_country: "Singapore",
-                    arrive_tz: "Singapore Standard Time",
-                    duration_hours: 6,
-                    duration_minutes: 10,
-                    price: "220",
-                    currency: "SGD",
-                    airline: "Panda Airways",
-                    flight_no: "SG142",
-                    airport: "Incheon International Airport",
-                    terminal: "1",
-                    gate: "B2",
-                    edit_mode: false
-                },
-            ],
+            flight_obj_arr: [],
+
+            //DATABASE
+            trip_id: "grad trip_adambft"
         }
     },
 
@@ -678,7 +656,7 @@ var flight_app = Vue.createApp({
             //changes flight ids to be from 1 - N
             let curr_id = 1
 
-            for (e_flight_obj of this.flight_obj_arr) {
+            for(var e_flight_obj of this.flight_obj_arr) {
                 e_flight_obj.ID = curr_id
                 curr_id++
             }
@@ -745,6 +723,85 @@ var flight_app = Vue.createApp({
                     dropList[i].insertAdjacentHTML("beforeend", optionTag);
                 }
             }
+        },
+
+        //DATABASE methods
+        create_update_data() {
+            console.log("Writing data into database...")
+            // the console can be open, 
+
+            // Database path must be set by you
+            // e.g. users/junsui/friends
+
+            // EDIT HERE
+            set(ref(db, /* PATH GOES HERE */), {
+                // DATA YOU WANT TO WRITE GOES HERE,
+
+                // example
+                // email: this.email
+                // ...
+
+              })
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                alert(failed_message)
+                console.log(failed_message);
+            })
+        },
+
+        read_data(path) {
+            const data_to_be_read = ref(db, path);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+
+                console.log(data)
+
+                this.data_to_update = data
+            });
+        },
+
+        read_flights_n_set_flight_data() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/flights`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+
+                this.flight_obj_arr = data
+            });
+        },
+
+        delete_data() {
+            remove(/* path location goes here*/)
+            .then(
+                function delete_success() {
+                    alert("Delete operation is a success!")
+                    console.log("Delete operation is a success!")
+                }
+            )
+            .catch((error) => {
+                // for admin, tells you what error there is
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+                console.log(errorCode)
+
+                // display "Error" message
+                // stays on the same page
+                var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
+                alert(failed_message)
+                console.log("Delete Unsuccessful");
+            })
+
         }
     },
 
@@ -758,19 +815,22 @@ var flight_app = Vue.createApp({
 
             this.updating_calendars = false
         }
+
+        console.log("FLIGHT OBJ ARR: ",this.flight_obj_arr)
     },
 
     created() {
-        // console.log("CREATING ---------------------------")
+        console.log("CREATING ---------------------------")
         const time_elapsed = Date.now()
         let current_date = new Date(time_elapsed)
 
         let curr_datetime_temp = convert_date_obj_to_str(current_date)
 
         this.curr_user_datetime = curr_datetime_temp
-        // console.log(this.curr_user_datetime)
 
-        // console.log("DONE CREATING ----------------------")
+        this.read_flights_n_set_flight_data()
+
+        console.log("DONE CREATING ----------------------")
     }
 })
 
