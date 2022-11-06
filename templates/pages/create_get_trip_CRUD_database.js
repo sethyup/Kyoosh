@@ -14,7 +14,6 @@ const WADTravel = initializeApp({
     appId: "1:305280551700:web:434cc190d57eabe14d1001",
     measurementId: "G-3XQT4098KL"
 })
-const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
 
 // EDIT HERE
