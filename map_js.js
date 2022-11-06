@@ -257,17 +257,7 @@ const app = Vue.createApp({
             tag_input: "",
             
         };
-    }, // data
-    // computed: { 
-    //     derivedProperty() {
-    //         return false;
-    //     }  
-    // }, // computed
-    // created() { 
-    // },
-    // mounted() { 
-        
-    // },
+    }, 
     methods: {
         delete_marker(id) {
             DeleteMarker(id);
@@ -333,7 +323,7 @@ const app = Vue.createApp({
                 
                 window.initMap = initMap(this.existing_locations);
                 })   
-            }
+            },
         
     },
     async created() {
