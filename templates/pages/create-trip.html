@@ -17,6 +17,9 @@
      <!-- Vue js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+    <!-- access firebase -->
+    <script type="module" src="create_get_trip_CRUD_database.js"></script>
+
     <title>WAD Travels Project</title>
 
 </head>
@@ -27,51 +30,61 @@
     </div>
 
         <!-- new trip form -->
-    <div class="container-md text-dark py-3 position-relative" id="datetime_app">
-        <form action="#">
-            <!-- title -->
-            <div class="row text-center">
-                <h1 class="fw-bold text-primary p-2">Plan a new trip</h1>
-            </div>
-
-            <!-- where to? -->
-            <div class="row justify-content-center mt-4">
-                <div class="form-floating">
-                    <input type="text" class="form-control" name="destination_country" placeholder="country" list="list_all_countries">
-                    <label for="destination_country"><i class="fa-solid fa-plane-departure text-primary mx-2"></i><span style="color: rgb(34, 152, 152); font-weight: bold;"> Where to?</span></label>
+    <div id="create_get_trip">
+        <div class="container-md text-dark py-3 position-relative" id="datetime_app" >
+            <form action="#">
+                <!-- title -->
+                <div class="row text-center">
+                    <h1 class="fw-bold text-primary p-2">Plan a new trip</h1>
                 </div>
-            </div>
 
-            <!-- list of countries (for dropdowns) -->
-            <datalist id="list_all_countries">
-                <option v-for="e_country of all_countries" :value="e_country"></option>
-            </datalist>
-        
-            <!-- trip-from date -->         
-            <div class="row justify-content-center">       
-                <div class="form-floating my-3 col">
-                    <input type="date" name="start_date" placeholder="Select Date" id="date_test">
-                    <label for="start_date"><i class="fa-regular fa-calendar mx-2"></i> <span style="color: rgb(34, 152, 152);"> Start Date</span></label>
+                <!-- Trip Name -->
+                <div class="row justify-content-center mt-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" v-model="trip_name" name="trip_name"  placeholder="Trip Name">
+                        <label for="trip_name"><i class="fa-solid fa-suitcase-rolling text-primary mx-2"></i><span style="color: rgb(34, 152, 152); font-weight: bold;"> Trip Name</span></label>
+                    </div>
+                </div>
+
+                <!-- where to? -->
+                <div class="row justify-content-center mt-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" v-model="destination" name="destination_country"  placeholder="country" list="list_all_countries">
+                        <label for="destination_country"><i class="fa-solid fa-plane-departure text-primary mx-2"></i><span style="color: rgb(34, 152, 152); font-weight: bold;"> Where to?</span></label>
+                    </div>
+                </div>
+
+                <!-- list of countries (for dropdowns) -->
+                <datalist id="list_all_countries">
+                    <option v-for="e_country of all_countries" :value="e_country"></option>
+                </datalist>
+            
+                <!-- trip-from date -->         
+                <div class="row justify-content-center">       
+                    <div class="form-floating my-3 col">
+                        <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" id="date_test">
+                        <label for="start_date"><i class="fa-regular fa-calendar mx-2"></i> <span style="color: rgb(34, 152, 152);"> Start Date</span></label>
+                    </div>
+                
+                    <!-- trip-to date -->                
+                    <div class="form-floating my-3 col">
+                        <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" id="date_test">
+                        <label for="end_date"><i class="fa-regular fa-calendar mx-2"></i><span style="color: rgb(34, 152, 152);"> End Date</span></label>
+                    </div>
                 </div>
             
-                <!-- trip-to date -->                
-                <div class="form-floating my-3 col">
-                    <input type="date" name="end_date" placeholder="Select Date" id="date_test">
-                    <label for="end_date"><i class="fa-regular fa-calendar mx-2"></i><span style="color: rgb(34, 152, 152);"> End Date</span></label>
+                <!-- collab & submit -->
+                <div class="row justify-content-center">
+                    <div>
+                        <button type="button" class="btn btn-fade">+ Add Collaborators</button>
+                    </div>
+                    <div class="p-1 mt-3" style="max-width: 130px;">
+                        <button type="button" @click="create_new_trip()" class="btn btn-primary text-light">Start Planning</button>
+                    </div>
                 </div>
-            </div>
-        
-            <!-- collab & submit -->
-            <div class="row justify-content-center">
-                <div>
-                    <button type="button" class="btn btn-fade">+ Add Collaborators</button>
-                </div>
-                <div class="p-1 mt-3" style="max-width: 130px;">
-                    <button type="button" class="btn btn-primary text-light">Start Planning</button>
-                </div>
-            </div>
-        
-        </form>
+            
+            </form>
+        </div>
     </div>
 
     <!--progress bar-->

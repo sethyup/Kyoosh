@@ -2,7 +2,7 @@
 console.log("this page is linked to signup_login.js")
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, confirmPasswordReset } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const WADTravel = initializeApp({
@@ -175,6 +175,14 @@ const root = Vue.createApp({
                 
                 console.log(errorCode + ': ' + errorMessage)
             });
+        },
+
+        send_reset_email() {
+            sendPasswordResetEmail(auth, this.email)
+            .then(
+                alert("email sent   ")
+                // location.replace("")
+            )
         },
 
         sign_out() {

@@ -17,6 +17,224 @@ const WADTravel = initializeApp({
 // const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
 
+
+// cached variables
+var markers = [];
+var uniqueId = 1;
+
+// create your map
+function initMap(location) {
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: {lat: 37.5665, lng:126.9780},
+    }
+    );
+    vm.$data.map = map;
+    // map.addListener("click", (e) => {
+    //     create_marker_by_click(e.latLng,map);
+    // });
+    for (var place in location) {
+        // create_marker(place, map)
+        create_marker(location[place], map)
+    }
+    
+    initAutocomplete();
+
+}
+
+// enable Autocomplete
+function initAutocomplete() {
+    let map = vm.$data.map
+    // Init Autocomplete
+    var input = document.getElementById('autocomplete');
+    const options = {
+        componentRestrictions: {'country':['US', 'CH', 'KR', 'SG']},
+        fields: ['place_id','name','geometry','formatted_address']
+    };
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
+    // autocomplete connected to map viewport
+    autocomplete.bindTo('bounds',map);
+
+    // create marker for searched location, go to location, save into marker list
+    autocomplete.addListener('place_changed', () => {
+
+        const infowindow = new google.maps.InfoWindow();
+        const icon = {
+            url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+            scaledSize: new google.maps.Size(40,40),
+            };
+        const marker = new google.maps.Marker({
+            map: map,
+            icon: icon
+        });
+        
+        infowindow.close()
+        marker.setVisible(false);
+
+        const place = autocomplete.getPlace();
+        
+        if (!place.geometry || !place.geometry.location) {
+        window.alert(`No details available for the place: "${place.name}"`
+        );
+        return;
+        }
+        if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+        } else {
+        map.setCenter(place.geometry.location);
+        }
+
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+
+        marker.id = uniqueId;
+        // vm.$data.marker_id = uniqueId
+        uniqueId++;
+        
+        
+        const contentString = 
+        `
+        <div id="content" name="${marker.id}">
+        <div id="siteNotice"></div>
+
+        <div class="container">
+        
+        <div class="row">
+            <div class = "col-8">
+            <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+            <h3>${place.name}</h3>
+            <p class="address">${place.formatted_address}<p>
+            <hr>
+            <h6>$100/person</h6>
+            <p class="description">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+            </div>
+
+
+            <div class="col-4" style:"position:relative">
+            <p class="pt-3">Current Votes: </p>
+                <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="voting_buttons pt-3">
+                <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
+                <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
+                </div>
+                
+            </div>
+
+        </div>  
+        </div>
+    </div>
+    </div>
+        `
+    // line for deleting marker by clicking in InfoWindow
+    // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+    infowindow.setContent(contentString);
+    infowindow.open(map, marker);
+    markers.push(marker)
+    marker.addListener("click", (googleMapsEvent) => {
+        infowindow.open(map, marker);})
+    })
+    window.autocomplete = autocomplete
+    // autocomplete.addListener("", () => {
+    //     autocomplete.set("place", null)
+    // })
+}
+
+// create existing marker
+function create_marker(place, map) {
+    const icon = {
+            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            // origin: new google.maps.Point(0,0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+        };
+        var marker = new google.maps.Marker({
+            position: place.latlng,
+            map: map,
+            icon: icon
+        });
+        var infoWindow = new google.maps.InfoWindow({
+            content: "",
+            disableAutoPan: true,
+            });
+        // Set unique id
+        marker.id = uniqueId;
+        // vm.$data.marker_id = uniqueId
+        uniqueId++;
+        
+
+        // set infoWindow
+        var contentString = 
+            `
+            <div id="content" name="${marker.id}>
+            <div id="siteNotice"></div>
+
+            <div class="container">
+            
+            <div class="row">
+                <div class = "col-8">
+                <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                <h3>${place.name}</h3>
+                <p class="address">${place.address}<p>
+                <hr>
+                <h6>SGD ${place.price.sgd} / KRW ${place.price.krw} per person</h6>
+                <p class="description">Top picks that the fam wants to visit while in Korea</p>
+                </div>
+                
+
+                <div class="col-4" style:"position:relative">
+                <p class="pt-3">Current Votes: </p>
+                    <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="voting_buttons pt-3">
+                    <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
+                    <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
+                    </div>
+                    
+                </div>
+
+            </div>  
+            </div>
+        </div>
+        </div>
+            `
+        // delete button removed from contentString
+        // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
+        marker.addListener("click", (googleMapsEvent) => {
+            infoWindow.setContent(contentString);
+            infoWindow.open(map, marker);});
+        markers.push(marker)
+}
+
+// delete markers
+function DeleteMarker(id) {
+    //Find and remove the marker from the Array
+    
+    for (var i = 0; i < markers.length; i++) {
+        if (markers[i].id == id) {
+            //Remove the marker from Map                  
+            markers[i].setMap(null);
+
+            //Remove the marker from array.
+            markers.splice(i, 1);
+            return;
+        }
+    }
+};
+
+
 // vue app
 const app = Vue.createApp({ 
     data() { 
@@ -26,12 +244,7 @@ const app = Vue.createApp({
             edit_true: false,
             // map stuff
             map_width: '90%',
-            map: "",
-            uniqueId: 1,
-            markers: [],
-            marker_id: "",
             existing_locations: "",
-            autocomplete: "",
             // main stuff
             amount: "", 
             from: "SGD", 
@@ -44,33 +257,10 @@ const app = Vue.createApp({
             tag_input: "",
             
         };
-    }, // data
-    // computed: { 
-    //     derivedProperty() {
-    //         return false;
-    //     }  
-    // }, // computed
-    // created() { 
-    // },
-    // mounted() { 
-        
-    // },
+    }, 
     methods: {
         delete_marker(id) {
-            // deleteMarker(id);
-            
-            for (var i = 0; i < this.markers.length; i++) {
-                
-                if (this.markers[i].id == id) {
-                    //Remove the marker from Map
-                    this.markers[i].setMap(null);
-                    this.markers[i] = null;
-                    //Remove the marker from array.
-                    this.markers.splice(i, 1);
-                    
-                    return;
-                }
-            }
+            DeleteMarker(id);
         },
 
         d_create() {
@@ -124,204 +314,6 @@ const app = Vue.createApp({
                 console.log(error.message)
             })
         },
-        
-        // create your map
-        initMap() {
-            const map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: {lat: 37.5665, lng:126.9780},
-            }
-            );
-            this.map = map;
-            // map.addListener("click", (e) => {
-            //     create_marker_by_click(e.latLng,map);
-            // });
-            for (var place in this.existing_locations) {
-                // create_marker(place, map)
-                this.create_marker(this.existing_locations[place], this.map)
-            }
-            this.initAutocomplete();
-        },
-
-        // enable Autocomplete
-        initAutocomplete() {
-            let map = this.map
-            // Init Autocomplete
-            var input = document.getElementById('autocomplete');
-            const options = {
-                componentRestrictions: {'country':['US', 'CH', 'KR', 'SG']},
-                fields: ['place_id','name','geometry','formatted_address']
-            };
-            const autocomplete = new google.maps.places.Autocomplete(input, options);
-            // autocomplete connected to map viewport
-            autocomplete.bindTo('bounds',map);
-            
-            // create marker for searched location, go to location, save into marker list
-            autocomplete.addListener('place_changed', () => {
-
-                const infowindow = new google.maps.InfoWindow();
-                const icon = {
-                    url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                    scaledSize: new google.maps.Size(40,40),
-                    };
-                const marker = new google.maps.Marker({
-                    map: map,
-                    icon: icon
-                });
-                
-                infowindow.close()
-                marker.setVisible(false);
-
-                const place = autocomplete.getPlace();
-                
-                if (!place.geometry || !place.geometry.location) {
-                window.alert(`No details available for the place: "${place.name}"`
-                );
-                return;
-                }
-                if (place.geometry.viewport) {
-                map.fitBounds(place.geometry.viewport);
-                } else {
-                map.setCenter(place.geometry.location);
-                }
-
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);              
-                
-                marker.id = this.uniqueId;
-                const contentString = 
-                `
-                <div id="content" name="${this.uniqueId}">
-                ${this.uniqueId}
-                <div id="siteNotice"></div>
-
-                <div class="container">
-                
-                <div class="row">
-                    <div class = "col-8">
-                    <span class="badge rounded-pill text-bg-warning">#Shopping</span>
-                    <h3>${place.name}</h3>
-                    <p class="address">${place.formatted_address}<p>
-                    <hr>
-                    <h6>$100/person</h6>
-                    <p class="description">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
-                    </div>
-
-
-                    <div class="col-4" style:"position:relative">
-                    <p class="pt-3">Current Votes: </p>
-                        <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                        <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                        <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="voting_buttons pt-3">
-                        <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
-                        <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${this.uniqueId}</div></button>
-                        </div>
-                        
-                    </div>
-
-                </div>  
-                </div>
-            </div>
-            </div>
-                `
-            
-            infowindow.setContent(contentString);
-            infowindow.open(map, marker);
-            this.markers.push(marker)
-            
-            marker.addListener("click", (googleMapsEvent) => {
-                infowindow.open(map, marker);})
-            marker.addListener("dblclick", (googleMapsEvent) => {
-                infowindow.close(map, marker);})
-            })
-            
-            this.uniqueId++;
-            this.autocomplete = autocomplete;
-            // autocomplete.addListener("", () => {
-            //     autocomplete.set("place", null)
-            // })
-            
-        },
-
-        // create existing marker
-        create_marker(place,map) {
-            const icon = {
-                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
-                    scaledSize: new google.maps.Size(40, 40), // scaled size
-                    // origin: new google.maps.Point(0,0), // origin
-                    // anchor: new google.maps.Point(0, 0) // anchor
-                };
-                var marker = new google.maps.Marker({
-                    position: place.latlng,
-                    map: map,
-                    icon: icon
-                });
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "",
-                    disableAutoPan: true,
-                    });
-                            
-                // set infoWindow
-                var contentString = 
-                    `
-                    <div id="content" name="${this.uniqueId}>
-                    ${this.uniqueId}
-                    <div id="siteNotice"></div>
-
-                    <div class="container">
-                    
-                    <div class="row">
-                        <div class = "col-8">
-                        <span class="badge rounded-pill text-bg-warning">#Shopping</span>
-                        <h3>${place.name}</h3>
-                        <p class="address">${place.address}<p>
-                        <hr>
-                        <h6>SGD ${place.price.sgd} / KRW ${place.price.krw} per person</h6>
-                        <p class="description">Top picks that the fam wants to visit while in Korea</p>
-                        </div>
-                        
-
-                        <div class="col-4" style:"position:relative">
-                        <p class="pt-3">Current Votes: </p>
-                            <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="voting_buttons pt-3">
-                            <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
-                            <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${this.uniqueId}</div></button>
-                            </div>
-                            
-                        </div>
-
-                    </div>  
-                    </div>
-                </div>
-                </div>
-                    `
-                // delete button removed from contentString
-                // <input type = 'button' va;ue = 'Delete' onclick = 'deleteMarker( ${marker.id});' value = 'Delete Activity' />
-                marker.addListener("click", (googleMapsEvent) => {
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(map, marker);});
-                marker.addListener("dblclick", (googleMapsEvent) => {
-                    infoWindow.close(map, marker);});
-                // Set unique id
-                marker.id = this.uniqueId;
-                this.uniqueId++;
-                this.markers.push(marker)
-                
-        },
 
         async write_to_existing() {
             const data_to_be_read = ref(db, "locations");
@@ -329,14 +321,10 @@ const app = Vue.createApp({
                 const data = snapshot.val();
                 this.existing_locations = data
                 
-                window.initMap = this.initMap();
+                window.initMap = initMap(this.existing_locations);
                 })   
-            }
+            },
         
-        // get_existing_info() {
-        //     import(read_existing_data)
-        //     read_existing_data()
-        // }
     },
     async created() {
         // get recommended locations from database
@@ -542,6 +530,7 @@ function loadFlag(element){
         }
     }
 }
+
 
        
 export {vm}
