@@ -74,7 +74,7 @@ const root = Vue.createApp({
 
                     // redirects to Log In page
                     // find a way to use await and wait for the update to database, if not this will cancel the update
-                    location.replace("../trips-homepage.html")
+                    location.replace("login_page.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -106,7 +106,7 @@ const root = Vue.createApp({
                     alert("Login Successful")
                     console.log("user login successful")
                     // redirects to home page
-                    // location.replace("")
+                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
