@@ -1,3 +1,23 @@
+// DATABASE STUFF
+// Importing Firebase API
+// DO NOT EDIT
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+// Our Firebase Project Configuration
+const WADTravel = initializeApp({
+    apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+    authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+    databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "wad-brothers-travel-ltd",
+    storageBucket: "wad-brothers-travel-ltd.appspot.com",
+    messagingSenderId: "305280551700",
+    appId: "1:305280551700:web:434cc190d57eabe14d1001",
+    measurementId: "G-3XQT4098KL"
+})
+const db = getDatabase(WADTravel)
+
+
 // Google Maps API autocomplete
 // init Autocomplete and setting boundaries
 function initAutocomplete() {
@@ -213,33 +233,11 @@ var accommodation_app = Vue.createApp({
                 "ZWD" : "ZW"
             },
 
-            //List of flight objects
-            accom_obj_arr: [
-                {
-                    ID: 1,
-                    accom_name: "Hotel California",
-                    accom_address: "Hotel California, East Palm Canyon Drive, Palm Springs, CA, USA",
-                    checkin_datetime: "2022-12-02 12:00",
-                    checkout_datetime: "2022-12-05 08:15",
-                    max_occupancy: "5",
-                    price: "54",
-                    currency: "SGD",
+            //List of accomodation objects
+            accom_obj_arr: [],
 
-                    edit_mode: false,
-                },
-                {
-                    ID: 2,
-                    accom_name: "Hotel Edison",
-                    accom_address: "Hotel Edison, West 47th Street, New York, NY, USA",
-                    checkin_datetime: "2022-12-05 17:00",
-                    checkout_datetime: "2022-12-10 13:30",
-                    max_occupancy: "4",
-                    price: "80",
-                    currency: "SGD",
-
-                    edit_mode: false,
-                },
-            ],
+            //DATABASE HARDCODING
+            trip_id: "grad trip_adambft"
         }
     },
 
@@ -366,7 +364,10 @@ var accommodation_app = Vue.createApp({
 
             if (this.error_message.trim() == "") {
                 this.push_accom_obj()
+                
+                this.write_flight_obj_to_database()
             }
+
 
             console.log("=== END save_new_accom() ===")
         },
@@ -408,13 +409,15 @@ var accommodation_app = Vue.createApp({
                 this.update_local_vmodel()
                 this.push_to_existing_accom(accom_id)
                 this.clear_form(accom_id)
+
+                this.write_flight_obj_to_database()
             }
         },
 
         update_accom_IDs() {
             let curr_id = 1
 
-            for (e_accom_obj of this.accom_obj_arr) {
+            for (var e_accom_obj of this.accom_obj_arr) {
                 e_accom_obj.ID = curr_id
                 curr_id++
             }
@@ -425,6 +428,8 @@ var accommodation_app = Vue.createApp({
 
             this.clear_form()
             this.update_accom_IDs()
+
+            this.write_flight_obj_to_database()
         },
 
         //currency methods
@@ -468,14 +473,122 @@ var accommodation_app = Vue.createApp({
             for (let i = 0; i < dropList.length; i++) {
                 for(let currency_code in this.country_list){
                     // selecting USD by default as FROM currency and NPR as TO currency
-                    let selected = i == 0 ? currency_code == "SGD" ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
+                    let selected = i == 0 ? currency_code == this.currency ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
                     // creating option tag with passing currency code as a text and value
                     let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
                     // inserting options tag inside select tag
                     dropList[i].insertAdjacentHTML("beforeend", optionTag);
                 }
             }
-        }
+        },
+
+        //DATABASE methods
+        create_update_data() {
+            console.log("Writing data into database...")
+            // the console can be open, 
+
+            // Database path must be set by you
+            // e.g. users/junsui/friends
+
+            // EDIT HERE
+            set(ref(db, /* PATH GOES HERE */), {
+                // DATA YOU WANT TO WRITE GOES HERE,
+
+                // example
+                // email: this.email
+                // ...
+
+                })
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                alert(failed_message)
+                console.log(failed_message);
+            })
+        },
+
+        read_data(path) {
+            const data_to_be_read = ref(db, path);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+
+                console.log(data)
+
+                this.data_to_update = data
+            });
+        },
+
+        delete_data() {
+            remove(/* path location goes here*/)
+            .then(
+                function delete_success() {
+                    alert("Delete operation is a success!")
+                    console.log("Delete operation is a success!")
+                }
+            )
+            .catch((error) => {
+                // for admin, tells you what error there is
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+                console.log(errorCode)
+
+                // display "Error" message
+                // stays on the same page
+                var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
+                alert(failed_message)
+                console.log("Delete Unsuccessful");
+            })
+
+        },
+
+        //CUSTOM DATABASE METHODS
+        write_flight_obj_to_database() {
+            console.log("Writing data into database...")
+            // the console can be open, 
+
+            // Database path must be set by you
+            // e.g. users/junsui/friends
+
+            // EDIT HERE
+            set(ref(db, `trips/${this.trip_id}`), {
+                // DATA YOU WANT TO WRITE GOES HERE,
+                lodging: this.accom_obj_arr
+              })
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
+        },
+
+        read_accom_n_set_accom_data() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/lodging`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+
+                this.accom_obj_arr = data
+            });
+        },
     },
 
     updated() {
@@ -494,6 +607,10 @@ var accommodation_app = Vue.createApp({
         }
         console.log("=== DONE updated() ===")
     },
+
+    created() {
+        this.read_accom_n_set_accom_data()
+    }
 })
 
 accommodation_app.mount('#accommodation_app')

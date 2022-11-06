@@ -267,7 +267,7 @@ var flight_app = Vue.createApp({
             //List of flight objects
             flight_obj_arr: [],
 
-            //DATABASE
+            //DATABASE HARDCODING
             trip_id: "grad trip_adambft"
         }
     },
@@ -559,7 +559,10 @@ var flight_app = Vue.createApp({
             //update based on whether there are errors
             if (this.error_message.trim() == "") {
                 this.push_flight_obj()
+            
+                this.write_flight_obj_to_database()
             }
+
 
             console.log(`=== END save_new_flight() ===`)
         },
@@ -617,7 +620,10 @@ var flight_app = Vue.createApp({
             if (this.error_message.trim() == "") {
                 this.push_to_existing_flight(flight_ID)
                 this.reset_flight_form(flight_ID)
+                
+                this.write_flight_obj_to_database()
             }
+
 
             console.log(`=== END save_edit_existing_flight(${flight_ID}) ===`)
         },
@@ -672,6 +678,8 @@ var flight_app = Vue.createApp({
             this.reset_flight_form()
             this.update_flight_IDs()
 
+            this.write_flight_obj_to_database()
+
             console.log(`=== END delete_flight(${flight_ID}) ===`)
         },
 
@@ -716,7 +724,7 @@ var flight_app = Vue.createApp({
             for (let i = 0; i < dropList.length; i++) {
                 for(let currency_code in this.country_list){
                     // selecting USD by default as FROM currency and NPR as TO currency
-                    let selected = i == 0 ? currency_code == "SGD" ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
+                    let selected = i == 0 ? currency_code == this.currency ? "selected" : "" : currency_code == "KRW" ? "selected" : "";
                     // creating option tag with passing currency code as a text and value
                     let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
                     // inserting options tag inside select tag
@@ -771,15 +779,6 @@ var flight_app = Vue.createApp({
             });
         },
 
-        read_flights_n_set_flight_data() {
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/flights`);
-            onValue(data_to_be_read, (snapshot) => {
-                const data = snapshot.val();
-
-                this.flight_obj_arr = data
-            });
-        },
-
         delete_data() {
             remove(/* path location goes here*/)
             .then(
@@ -802,7 +801,45 @@ var flight_app = Vue.createApp({
                 console.log("Delete Unsuccessful");
             })
 
-        }
+        },
+
+        //DATABASE CUSTOM METHODS
+        write_flight_obj_to_database() {
+            console.log("Writing data into database...")
+            // the console can be open, 
+
+            // Database path must be set by you
+            // e.g. users/junsui/friends
+
+            // EDIT HERE
+            set(ref(db, `trips/${this.trip_id}`), {
+                // DATA YOU WANT TO WRITE GOES HERE,
+                flights: this.flight_obj_arr
+              })
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
+        },
+
+        read_flights_n_set_flight_data() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/flights`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+
+                this.flight_obj_arr = data
+            });
+        },
     },
 
     updated() {
