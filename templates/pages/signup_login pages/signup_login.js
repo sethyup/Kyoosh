@@ -2,7 +2,7 @@
 console.log("this page is linked to signup_login.js")
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 const WADTravel = initializeApp({
@@ -17,6 +17,7 @@ const WADTravel = initializeApp({
 })
 const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
+const google_provider = new GoogleAuthProvider()
 
 const root = Vue.createApp({
     data() {
@@ -121,6 +122,59 @@ const root = Vue.createApp({
                     alert(failed_message)
                     console.log("user not created")
                 })
+        },
+
+        login_with_google() {
+            console.log(`Logging in using Google API`)
+            signInWithPopup(auth, google_provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+
+                // Adding the user to the database
+
+                console.log(user.displayName)
+                console.log(user.email)
+
+                set(ref(db, "users/" + user.displayName), {
+                    email: user.email,
+                    fullname: user.displayName,
+                    trips: []
+                  })
+                .then(
+                    function write_success() {
+                        // display "Success" message
+                        alert("Write Operation Successful")
+                        console.log("Entry Created")
+                })
+                .catch((error) => {
+                    // for us to debug, tells us what error there is,
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+    
+                    // display "Error" message
+                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                    alert(failed_message)
+                    console.log(failed_message);
+                })
+
+                console.log(`Log In Successful`)                
+                alert(`Login Successful`)
+
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // // The email of the user's account used.
+                // const email = error.customData.email;
+                // // The AuthCredential type that was used.
+                // const credential = GoogleAuthProvider.credentialFromError(error);
+                
+                console.log(errorCode + ': ' + errorMessage)
+            });
         },
 
         sign_out() {
