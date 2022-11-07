@@ -24,18 +24,18 @@
     <div id="main">
     <div class="container-fluid">
         <div class="row flex-nowrap" >
-            <div id="nav" class="col-auto sidebar-css">
+            <div id="nav" class="col-auto sidebar-css p-0">
                 <!-- SIDEBAR  -->
                <select-activity-sidebar></select-activity-sidebar>
            </div>
 
             <!-- rest of site -->
-            <div class="col p-4">
+            <div class="col bg-mild" >
                 <div class="row">
-                    <div class="col">
+                    <!-- <div class="col"> -->
 
                     <!-- HEADER -->
-                    <div class="col ps-5 pt-5 bg-mild">
+                    <div class="pt-5">
                         <h1> Trip to Seoul, Korea </h1>
                         <h5 style="font-style:italic;"> 1 December 2022 - 10 December 2022</h5>
                         <p>Trip leader, please select the activities </p>
@@ -91,28 +91,23 @@
                                         </table>
                                     </div>
 
-                            <div class="m-5">
-                            </div>
 
-                                <div class="row footer bg-mild py-3">
-                                    <div class="col-4">
-                                        <h3>Total Spending: {{ spending }} SGD</h3>
-                                    </div>
-                                    <div class="col-7"></div>
 
-                                    <!-- need firebase function CREATE -->
-                                    <div class="col-1">
-                                        <button type="button" class="btn btn-main-fixed">Confirm</button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
 
                     </div>
-
-
-                    </div>
                 </div>
+                
+                <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3" >
+
+                        <h3>Total Spending: {{ spending }} SGD</h3>
+ 
+                        <button type="button" class="btn btn-main-fixed">Confirm</button>
+
+                </footer>
+            </div>
             </div>
         </div>
     </div>
