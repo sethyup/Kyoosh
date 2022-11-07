@@ -72,6 +72,7 @@ const root = Vue.createApp({
                     // display "Success" message
                     alert("Write Operation Successful")
                     console.log("Entry Created")
+
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
@@ -83,6 +84,8 @@ const root = Vue.createApp({
                 alert(failed_message)
                 console.log(failed_message);
             })
+            alert("Create Trip Successful")
+            location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
         },
 
         get_my_trips(username) {
