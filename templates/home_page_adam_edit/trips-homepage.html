@@ -15,55 +15,53 @@
 </head>
 <body>
 
-    <div id="nav">
-        <homepage-navbar></homepage-navbar>
-    </div>
-
-    <div class="row home_page_main_img position-relative">
-      <img src="../../images/home_page/main_images/main_page_bg_1.jpg" alt="travel image" class="img-fluid">
-
-      <div class="position-absolute main-pg-faded-bg">
-
+    <div class="container-fluid">
+      <div id="nav">
+          <homepage-navbar></homepage-navbar>
       </div>
-    </div>
-
-    <div class="p-3 row d-flex flex-wrap justify-content-center">
-        
+  
+      <div class="row position-relative">
+        <img src="../../images/home_page/main_images/main_page_bg_5.jpg" class="homepage-main-img px-0">
+        <div class="text-center mt-3 position-absolute text-light" id="animated-text">Plan a trip</div>
+      </div>
+  
+      <div class="p-3 row d-flex flex-wrap justify-content-center">
+  
         <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="../../images/home_page/trips_imgs/seoul.jpg" class="card-img-top" height="200px">
-            <div class="card-body">
-              <h5 class="card-title">Dec22 Seoul Trip!</h5>
-              <button href="#" class="btn btn-main-bold">Edit Trip</a>
-            </div>
-            <div class="card-footer text-muted">
-              Last edited: 2 days ago
-            </div>
+          <img src="../../images/home_page/trips_imgs/seoul.jpg" class="card-img-top" height="200px">
+          <div class="card-body">
+            <h5 class="card-title">Dec22 Seoul Trip!</h5>
+            <button href="#" class="btn btn-main-bold">Edit Trip</a>
           </div>
-
-          <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="../../images/home_page/trips_imgs/NYC.jpg" class="card-img-top" height="200px">
-            <div class="card-body">
-              <h5 class="card-title">June23 New York City</h5>
-              <button href="#" class="btn btn-main-bold">Edit Trip</a>
-            </div>
-            <div class="card-footer text-muted">
-                Last edited: 3 weeks ago
-            </div>
+          <div class="card-footer text-muted">
+            Last edited: 2 days ago
           </div>
-
-          <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="../../images/home_page/trips_imgs/interlaken.jpg" class="card-img-top" height="200px">
-            <div class="card-body">
-              <h5 class="card-title">June19 Interlaken</h5>
-              <button href="#" class="btn btn-fade">View Trip</a>
-            </div>
-            <div class="card-footer text-muted">
-                Last edited: 3 years ago
-            </div>
-          </div>
-
-        
         </div>
+  
+        <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
+          <img src="../../images/home_page/trips_imgs/NYC.jpg" class="card-img-top" height="200px">
+          <div class="card-body">
+            <h5 class="card-title">June23 New York City</h5>
+            <button href="#" class="btn btn-main-bold">Edit Trip</a>
+          </div>
+          <div class="card-footer text-muted">
+              Last edited: 3 weeks ago
+          </div>
+        </div>
+  
+        <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
+          <img src="../../images/home_page/trips_imgs/interlaken.jpg" class="card-img-top" height="200px">
+          <div class="card-body">
+            <h5 class="card-title">June19 Interlaken</h5>
+            <button href="#" class="btn btn-fade">View Trip</a>
+          </div>
+          <div class="card-footer text-muted">
+              Last edited: 3 years ago
+          </div>
+        </div>
+  
+  
+      </div>
     </div>
 
 
@@ -80,5 +78,8 @@
 
     <!-- Refer to my own external JS -->
     <script src="../pages/homepageNavBar.js"></script>
+
+    <!-- js import -->
+    <script src="./trips-homepage.js"></script>
 </body>
 </html>

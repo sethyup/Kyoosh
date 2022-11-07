@@ -106,25 +106,15 @@ button.dropdown[aria-expanded = false] .fa-chevron-up{
 
 
 /* Homepage elements */
-.home_page_main_img img{
+img.homepage-main-img{
     object-fit: cover ;
-    object-position: bottom;
+    object-position: center;
     width: 100%;
-    max-height: 90vh;
+    max-height: 20vh;
+    filter: brightness(40%);
 }
 
-div.main-pg-faded-bg {
-    background-color: rgba(255, 255, 255, 0.7);
-    -webkit-backdrop-filter: blur(100px);
-    backdrop-filter: blur(5px);
-
-    border-radius: 3em;
-    
-    height: 75%;
-    width: 50vw;
-
-    top: 12%;
-    left: 10%;
-
-    z-index: 2;
+div#animated-text{
+    font-size: 3rem;
+    font-weight: 500;
 }
