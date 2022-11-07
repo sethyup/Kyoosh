@@ -42,9 +42,9 @@ const root = Vue.createApp({
 
             sDate: "",
 
-            eDate: ""
-            
+            eDate: "",
 
+            nameList: [],
         }
     },
 

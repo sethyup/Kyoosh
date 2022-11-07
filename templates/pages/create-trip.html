@@ -31,7 +31,7 @@
 
         <!-- new trip form -->
     <div id="create_get_trip">
-        <div class="container-md text-dark py-3 position-relative" id="datetime_app" >
+        <div class="container-md text-dark py-3 position-relative">
             <form action="#">
                 <!-- title -->
                 <div class="row text-center">
@@ -75,10 +75,7 @@
             
                 <!-- collab & submit -->
                 <div class="row justify-content-center">
-                    <div id="collaborators">
-                        <!-- -------------------------------------- -->
-                        
-                        <!-- -------------------------------------- -->
+                    <div>
                         <button type="button" class="btn btn-fade" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add Collaborators</button>
                         
                         <p class="text-muted" v-if="nameList.length>0">You have added {{nameList}} </p>
@@ -151,7 +148,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-info" @click="showNames()" data-bs-dismiss="modal">Add</button>
+                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Add</button>
                                 </div>
                             </div>
                             </div>
@@ -186,32 +183,6 @@
 
 
 
-
-
-<script>
-    const vm = Vue.createApp({ 
-        data() {
-            return {
-                nameList: [],
-            }
-        },
-        
-    }).mount('#collaborators')
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- AXIOS import -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -225,8 +196,16 @@
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <!-- local js import -->
-    <script src="../date_time/date_time.js"></script>
+    <script>
+         let date_config = {
+            altInput: true,
+            altFormat: "J M y",
+            disableMobile: "true"
+        }
+
+        // date only
+        let date_fp_obj = flatpickr("input[type=date]", date_config)
+    </script>
 
     <!-- Refer to my own external JS -->
     <script src="homepageNavBar.js"></script>
