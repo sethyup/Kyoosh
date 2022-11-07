@@ -83,13 +83,13 @@ sidebar.component('sidebar-general', {
                             <span class="d-none d-sm-inline mx-1">Bean</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -161,13 +161,13 @@ sidebar.component('sidebar-phase2', {
                             <span class="d-none d-sm-inline mx-1">Bean</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -229,7 +229,7 @@ sidebar.component('sidebar-phase2', {
                         </ul>
                         <hr>
                         <div>
-                            <button class="btn btn-outline-secondary d-none d-sm-inline" href="#">< Back</button>
+                            <button class="btn btn-outline-secondary d-none d-sm-inline" href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html">< Back</button>
                         </div>
                         <hr>
     
@@ -239,13 +239,13 @@ sidebar.component('sidebar-phase2', {
                                 <span class="d-none d-sm-inline mx-1">Bean</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -361,13 +361,13 @@ sidebar.component('sidebar-phase2', {
                                 <span class="d-none d-sm-inline mx-1">Bean</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="trips-homepage.html">My Trips</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
