@@ -219,6 +219,7 @@ const app = Vue.createApp({
             //     },
             //         ],
             existing_locations: "",
+            trip_id: "grad trip_adambft"
         };
     }, //data
     methods: {
@@ -266,13 +267,28 @@ const app = Vue.createApp({
             }
         },
 
-        async write_to_existing() {
-            const data_to_be_read = ref(db, "locations");
-            await onValue(data_to_be_read, (snapshot) => {
+        write_to_existing() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
-                this.existing_locations = data
-                
-                window.initMap = initMap(this.existing_locations);
+                // check if there is existing data on db
+                if (data) {
+                    this.existing_locations = data
+                    console.log(data)
+                    window.initMap = initMap(this.existing_locations);
+                }
+                // retrieve recommended places for new trips
+                else {
+                    const data_to_be_read = ref(db, `locations`);
+                    onValue(data_to_be_read, (snapshot) => {
+                        const data2 = snapshot.val();
+                        if (data2) {
+                            this.existing_locations = data2
+                            console.log(data2)
+                            window.initMap = initMap(this.existing_locations);
+                        }
+                    })
+                }
                 })   
             },
         

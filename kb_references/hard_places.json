@@ -1,5 +1,5 @@
  { "locations" : { 
-  "1": {
+  "0": {
     "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
     "description": "",
     "latlng": {
@@ -23,7 +23,7 @@
       "yet_to_vote": 20
     }
   },
-  "2":{
+  "1":{
     "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
     "description": "",
     "latlng": {
@@ -47,7 +47,7 @@
       "yet_to_vote": 60
     }
   },
-  "3":{
+  "2":{
     "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
     "description": "",
     "latlng": {
@@ -71,7 +71,7 @@
       "yet_to_vote": 20
     }
   },
-  "4":{
+  "3":{
     "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
     "description": "",
     "latlng": {
