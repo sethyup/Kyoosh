@@ -106,7 +106,7 @@ const root = Vue.createApp({
                     alert("Login Successful")
                     console.log("user login successful")
                     // redirects to home page
-                    location.replace("../trips-homepage.html")
+                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
