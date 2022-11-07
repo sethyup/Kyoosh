@@ -455,15 +455,27 @@ var flight_app = Vue.createApp({
         },
 
 
-        //create & edit flight methods
-        initialize_create_flight() {
-            console.log("=== initialize_create_flight() ===")
+        //CREATE AND EDIT FLIGHTS
+            
+            //MISC
+        check_for_errors() {
+            console.log(`=== check_for_errors() ===`)
 
-            this.create_new_flight = true
-            this.edit_existing_flight = false
-            this.updating_calendars = true
+            this.error_message = ""
 
-            console.log("=== END initialize_create_flight() ===")
+            if (this.depart_country.trim()=="") {
+                this.error_message = "Please fill in Departure Country"
+            } else if (this.arrive_country.trim()=="") {
+                this.error_message = "Please fill in Arrival Country"
+            } else if (this.depart_datetime.trim() == "") {
+                this.error_message = "Please fill in Departure Date & Time"
+            } else if (this.arrive_datetime.trim()=="") {
+                this.error_message = "Please fill in Arrival Date & Time"
+            } else if (this.price=="") {
+                this.error_message = "Please fill in Cost"
+            }
+
+            console.log(`=== END check_for_errors() ===`)
         },
 
         reset_flight_form(flight_ID) {
@@ -501,24 +513,56 @@ var flight_app = Vue.createApp({
             console.log(`=== END reset_flight_form(${flight_ID}) ===`)
         },
 
-        check_for_errors() {
-            console.log(`=== check_for_errors() ===`)
+        update_flight_IDs() {
+            console.log(`=== update_flight_IDs() ===`)
 
-            this.error_message = ""
+            //changes flight ids to be from 1 - N
+            let curr_id = 1
 
-            if (this.depart_country.trim()=="") {
-                this.error_message = "Please fill in Departure Country"
-            } else if (this.arrive_country.trim()=="") {
-                this.error_message = "Please fill in Arrival Country"
-            } else if (this.depart_datetime.trim() == "") {
-                this.error_message = "Please fill in Departure Date & Time"
-            } else if (this.arrive_datetime.trim()=="") {
-                this.error_message = "Please fill in Arrival Date & Time"
-            } else if (this.price=="") {
-                this.error_message = "Please fill in Cost"
+            for(var e_flight_obj of this.flight_obj_arr) {
+                e_flight_obj.ID = curr_id
+                curr_id++
             }
 
-            console.log(`=== END check_for_errors() ===`)
+            console.log(`=== END update_flight_IDs() ===`)
+        },
+
+        sort_flight_obj() {
+            let list_to_sort = []
+
+            for (var e_obj of this.flight_obj_arr) {
+                let e_id = e_obj.ID - 1
+                let e_depart = e_obj.depart_datetime
+                let e_arrive = e_obj.arrive_datetime
+
+                let new_entry = [e_depart, e_arrive, e_id]
+                list_to_sort.push(new_entry)
+            }
+
+            list_to_sort.sort()
+
+            let edited_obj_arr = []
+
+            for (var e_entry of list_to_sort) {
+                let e_id = e_entry[e_entry.length - 1]
+
+                edited_obj_arr.push(this.flight_obj_arr[e_id])
+            }
+
+            this.flight_obj_arr = edited_obj_arr
+
+            this.update_flight_IDs()
+        },
+
+            //CREATE NEW
+        initialize_create_flight() {
+            console.log("=== initialize_create_flight() ===")
+
+            this.create_new_flight = true
+            this.edit_existing_flight = false
+            this.updating_calendars = true
+
+            console.log("=== END initialize_create_flight() ===")
         },
 
         push_flight_obj() {
@@ -549,8 +593,8 @@ var flight_app = Vue.createApp({
             this.reset_flight_form()
 
             console.log(`=== END push_flight_obj() ===`)
-        },
-
+        },       
+        
         save_new_flight() {
             console.log(`=== save_new_flight() ===`)
 
@@ -559,12 +603,29 @@ var flight_app = Vue.createApp({
             //update based on whether there are errors
             if (this.error_message.trim() == "") {
                 this.push_flight_obj()
+                this.sort_flight_obj()
             
                 this.write_flight_obj_to_database()
             }
 
 
             console.log(`=== END save_new_flight() ===`)
+        },        
+
+            //EDIT CURRENT
+        enable_edit_flight(flight_ID) {
+            console.log(`=== enable_edit_flight(${flight_ID}) ===`)
+
+            flight_ID = flight_ID-1
+
+            this.flight_obj_arr[flight_ID].edit_mode = true
+            this.edit_existing_flight = true
+            this.create_new_flight = false
+            this.updating_calendars = true
+
+            this.load_flight_obj_to_form(flight_ID)
+
+            console.log(`=== END enable_edit_flight(${flight_ID}) ===`)
         },
 
         load_flight_obj_to_form(flight_ID) {
@@ -594,39 +655,6 @@ var flight_app = Vue.createApp({
 
             console.log(`=== END load_flight_obj_to_form(${flight_ID}) ===`)
         },
-        
-        enable_edit_flight(flight_ID) {
-            console.log(`=== enable_edit_flight(${flight_ID}) ===`)
-
-            flight_ID = flight_ID-1
-
-            this.flight_obj_arr[flight_ID].edit_mode = true
-            this.edit_existing_flight = true
-            this.create_new_flight = false
-            this.updating_calendars = true
-
-            this.load_flight_obj_to_form(flight_ID)
-
-            console.log(`=== END enable_edit_flight(${flight_ID}) ===`)
-        },
-
-        save_edit_existing_flight(flight_ID) {
-            console.log(`=== save_edit_existing_flight(${flight_ID}) ===`)
-
-            this.check_for_errors()
-
-            console.log("ERROR MESSAGE: ", this.error_message)
-
-            if (this.error_message.trim() == "") {
-                this.push_to_existing_flight(flight_ID)
-                this.reset_flight_form(flight_ID)
-                
-                this.write_flight_obj_to_database()
-            }
-
-
-            console.log(`=== END save_edit_existing_flight(${flight_ID}) ===`)
-        },
 
         push_to_existing_flight(flight_ID) {
             console.log(`=== push_to_existing_flight(${flight_ID}) ===`)
@@ -654,22 +682,28 @@ var flight_app = Vue.createApp({
             this.flight_obj_arr[flight_ID-1] = new_flight_obj
 
             console.log(`=== END push_to_existing_flight(${flight_ID}) ===`)
-        },
+        }, 
+        
+        save_edit_existing_flight(flight_ID) {
+            console.log(`=== save_edit_existing_flight(${flight_ID}) ===`)
 
-        update_flight_IDs() {
-            console.log(`=== update_flight_IDs() ===`)
+            this.check_for_errors()
 
-            //changes flight ids to be from 1 - N
-            let curr_id = 1
+            console.log("ERROR MESSAGE: ", this.error_message)
 
-            for(var e_flight_obj of this.flight_obj_arr) {
-                e_flight_obj.ID = curr_id
-                curr_id++
+            if (this.error_message.trim() == "") {
+                this.push_to_existing_flight(flight_ID)
+                this.reset_flight_form(flight_ID)
+                this.sort_flight_obj()
+                
+                this.write_flight_obj_to_database()
             }
 
-            console.log(`=== END update_flight_IDs() ===`)
-        },
 
+            console.log(`=== END save_edit_existing_flight(${flight_ID}) ===`)
+        },        
+
+            //DELETE
         delete_flight(flight_ID) {
             console.log(`=== delete_flight(${flight_ID}) ===`)
 
@@ -812,10 +846,9 @@ var flight_app = Vue.createApp({
             // e.g. users/junsui/friends
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}`), {
-                // DATA YOU WANT TO WRITE GOES HERE,
-                flights: this.flight_obj_arr
-              })
+            set(ref(db, `trips/${this.trip_id}/flights`), 
+                // DATA YOU WANT TO WRITE GOES HERE
+                this.flight_obj_arr)
             .then(
                 function write_success() {
                     // display "Success" message
@@ -837,7 +870,9 @@ var flight_app = Vue.createApp({
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
 
-                this.flight_obj_arr = data
+                if (data) {
+                    this.flight_obj_arr = data
+                }
             });
         },
     },

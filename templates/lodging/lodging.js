@@ -278,7 +278,9 @@ var accommodation_app = Vue.createApp({
             }
         },
 
-        //create & edit flight methods
+        //CREATE AND EDIT ACCOM
+
+            //MISC
         check_for_errors() {
             console.log(`=== check_for_errors() ===`)
 
@@ -321,18 +323,48 @@ var accommodation_app = Vue.createApp({
             }
         },
 
+        update_accom_IDs() {
+            let curr_id = 1
+
+            for (var e_accom_obj of this.accom_obj_arr) {
+                e_accom_obj.ID = curr_id
+                curr_id++
+            }
+        },
+
+        sort_accom_obj() {
+            let list_to_sort = []
+
+            for (var e_obj of this.accom_obj_arr) {
+                let e_id = e_obj.ID - 1
+                let e_checkin = e_obj.checkin_datetime
+                let e_checkout = e_obj.checkout_datetime
+                let e_name = e_obj.accom_name
+
+                let new_entry = [e_checkin, e_checkout, e_name, e_id]
+                list_to_sort.push(new_entry)
+            }
+
+            list_to_sort.sort()
+
+            let edited_obj_arr = []
+
+            for (var e_entry of list_to_sort) {
+                let e_id = e_entry[e_entry.length - 1]
+
+                edited_obj_arr.push(this.accom_obj_arr[e_id])
+            }
+
+            this.accom_obj_arr = edited_obj_arr
+
+            this.update_accom_IDs()
+        },
+
+            //CREATE NEW
         enable_create_mode() {
             this.create_new_accom = true
             this.updating_calendars = true
-        },
-
-        enable_edit_mode(accom_id) {
-            this.accom_obj_arr[accom_id-1].edit_mode = true
-            this.updating_calendars = true
-            this.create_new_accom = false
-            this.edit_existing_accom = true
-
-            this.load_accom_obj_to_form(accom_id)
+            this.edit_existing_accom = false
         },
 
         push_accom_obj() {
@@ -364,12 +396,22 @@ var accommodation_app = Vue.createApp({
 
             if (this.error_message.trim() == "") {
                 this.push_accom_obj()
+                this.sort_accom_obj()
                 
-                this.write_flight_obj_to_database()
+                this.write_accom_obj_to_database()
             }
 
-
             console.log("=== END save_new_accom() ===")
+        },
+
+            //EDIT CURRENT
+        enable_edit_mode(accom_id) {
+            this.accom_obj_arr[accom_id-1].edit_mode = true
+            this.updating_calendars = true
+            this.create_new_accom = false
+            this.edit_existing_accom = true
+
+            this.load_accom_obj_to_form(accom_id)
         },
 
         load_accom_obj_to_form(accom_id) {
@@ -409,28 +451,22 @@ var accommodation_app = Vue.createApp({
                 this.update_local_vmodel()
                 this.push_to_existing_accom(accom_id)
                 this.clear_form(accom_id)
+                this.sort_accom_obj()
 
-                this.write_flight_obj_to_database()
+                this.write_accom_obj_to_database()
             }
         },
 
-        update_accom_IDs() {
-            let curr_id = 1
-
-            for (var e_accom_obj of this.accom_obj_arr) {
-                e_accom_obj.ID = curr_id
-                curr_id++
-            }
-        },
-
+            //DELETE
         delete_accom(accom_id) {
             this.accom_obj_arr.splice(accom_id-1, 1)
 
             this.clear_form()
             this.update_accom_IDs()
 
-            this.write_flight_obj_to_database()
+            this.write_accom_obj_to_database()
         },
+        
 
         //currency methods
         calculate_to_from() {
@@ -553,7 +589,7 @@ var accommodation_app = Vue.createApp({
         },
 
         //CUSTOM DATABASE METHODS
-        write_flight_obj_to_database() {
+        write_accom_obj_to_database() {
             console.log("Writing data into database...")
             // the console can be open, 
 
@@ -561,10 +597,10 @@ var accommodation_app = Vue.createApp({
             // e.g. users/junsui/friends
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}`), {
+            set(ref(db, `trips/${this.trip_id}/lodging`),
                 // DATA YOU WANT TO WRITE GOES HERE,
-                lodging: this.accom_obj_arr
-              })
+                this.accom_obj_arr
+            )
             .then(
                 function write_success() {
                     // display "Success" message
@@ -586,7 +622,9 @@ var accommodation_app = Vue.createApp({
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
 
-                this.accom_obj_arr = data
+                if (data) {
+                    this.accom_obj_arr = data
+                }
             });
         },
     },
