@@ -846,7 +846,7 @@ var flight_app = Vue.createApp({
             // e.g. users/junsui/friends
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/flights`), 
+            set(ref(db, `trips/${this.trip_id}/flights`),  
                 // DATA YOU WANT TO WRITE GOES HERE
                 this.flight_obj_arr)
             .then(

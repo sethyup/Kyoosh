@@ -320,7 +320,7 @@ const app = Vue.createApp({
             await onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 this.existing_locations = data
-                
+                console.log(data)
                 window.initMap = initMap(this.existing_locations);
                 })   
             },
