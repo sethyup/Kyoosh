@@ -24,89 +24,100 @@
     <div id="main">
     <div class="container-fluid">
         <div class="row flex-nowrap" >
-            <!-- sidebar -->
-            <!-- <sidebar-phase2></sidebar-phase2> -->
+            <div id="nav" class="col-auto sidebar-css">
+                <!-- SIDEBAR  -->
+               <sidebar-phase2></sidebar-phase2>
+           </div>
 
             <!-- rest of site -->
             <div class="col p-4">
                 <div class="row">
+                    <div class="col">
+
                     <!-- HEADER -->
                     <div class="col ps-5 pt-5 bg-mild">
                         <h1> Trip to Seoul, Korea </h1>
                         <h5 style="font-style:italic;"> 1 December 2022 - 10 December 2022</h5>
                         <p>Trip leader, please select the activities </p>
+                    
 
-                <!-- Table  -->
-                <div class="content">
-                    <div class="container">
-                        <div class="table-responsive custom-table-responsive">
-                        <table class="table custom-table">
-                            <thead>
-                                <!-- TABLE HEADER -->
-                                <tr>  
-                                    <th scope="col">
-                                        <label class="">
-                                        <input type="checkbox" @change="select_all()"/>
-                                        <div class=""></div>
-                                        </label>
-                                    </th>
-                                    
-                                    <th scope="col">Activity</th>
-                                    <th scope="col" style="text-align: center;">#Tag</th>
-                                    <th scope="col" style="text-align: center;">Voted Yes</th>
-                                    <th scope="col" style="text-align: center;">Cost/person</th>
-                                </tr>
-                            </thead>
-                                <!-- TABLE BODY -->
-                            <tbody>
-                                <template v-for="location in locations">
-                                    <tr scope="row">
-                                        <th scope="row">
-                                        <input type="checkbox" name="atv" :value="location.price.sgd" v-model="total_price_list" @change="calculate_spending()" />
-                                        </th>
-                                        <td>
-                                            {{ location.name }}
-                                        </td>
-                                        <td style="text-align: center;"> 
-                                            {{ location.tag }}
-                                        </td>
-                                        <td style="text-align: center;">
-                                            {{ location.votes_percentage.yes }}%
-                                        </td>
-                                        <td style="text-align: center;">
-                                            ${{ location.price.sgd }}
-                                        </td>
-                                    </tr>
+                        <!-- Table  -->
+                        <div class="content">
+                            <div class="container">
+                                <div class="table-responsive custom-table-responsive">
+                                <table class="table custom-table">
+                                    <thead>
+                                        <!-- TABLE HEADER -->
+                                        <tr>  
+                                            <th scope="col">
+                                                <label class="">
+                                                <input type="checkbox" @change="select_all()"/>
+                                                <div class=""></div>
+                                                </label>
+                                            </th>
+                                            
+                                            <th scope="col">Activity</th>
+                                            <th scope="col" style="text-align: center;">#Tag</th>
+                                            <th scope="col" style="text-align: center;">Voted Yes</th>
+                                            <th scope="col" style="text-align: center;">Cost/person</th>
+                                        </tr>
+                                    </thead>
+                                        <!-- TABLE BODY -->
+                                    <tbody>
+                                        <template v-for="location in locations">
+                                            <tr scope="row">
+                                                <th scope="row">
+                                                <input type="checkbox" name="atv" :value="location.price.sgd" v-model="total_price_list" @change="calculate_spending()" />
+                                                </th>
+                                                <td>
+                                                    {{ location.name }}
+                                                </td>
+                                                <td style="text-align: center;"> 
+                                                    {{ location.tag }}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    {{ location.votes_percentage.yes }}%
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    ${{ location.price.sgd }}
+                                                </td>
+                                            </tr>
 
-                                            <!-- SPACE -->
-                                            <tr class="spacer"><td colspan="100"></td></tr>
-                                        </template>
+                                                    <!-- SPACE -->
+                                                    <tr class="spacer"><td colspan="100"></td></tr>
+                                                </template>
 
-                                </tbody>
-                                </table>
+                                        </tbody>
+                                        </table>
+                                    </div>
+
+                            <div class="m-5">
                             </div>
 
-                    <div class="m-5">
-                    </div>
+                                <div class="row footer bg-mild py-3">
+                                    <div class="col-4">
+                                        <h3>Total Spending: {{ spending }} SGD</h3>
+                                    </div>
+                                    <div class="col-7"></div>
 
-                        <div class="row footer bg-mild py-3">
-                            <div class="col-4">
-                                <h3>Total Spending: {{ spending }} SGD</h3>
-                            </div>
-                            <div class="col-7"></div>
-
-                            <!-- need firebase function CREATE -->
-                            <div class="col-1">
-                                <button type="button" class="btn btn-main-fixed">Confirm</button>
+                                    <!-- need firebase function CREATE -->
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-main-fixed">Confirm</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                    </div>
+
+
                     </div>
                 </div>
-
+            </div>
         </div>
     </div>
     </div>
-    </div>
+    
 
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
