@@ -114,7 +114,7 @@
                                 </div>
                                 <!-- DESCRIPTION -->
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
                                     <label for="input_description">Add a Description</label>
                                 </div>
                 
@@ -195,7 +195,7 @@
                                     <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
                                     <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
                                     <!-- should write data to db and update InfoWindow -->
-                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false ">Create</button>
+                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false , create_update_data()">Create</button>
     
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(marker_id), autocomplete.set('place', null);">Confirm</button>
+                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, back_from_create_activity(current_id), autocomplete.set('place', null);">Confirm</button>
                                             </div>
                                         </div>
                                         </div>
@@ -222,6 +222,7 @@
                             </form>
                         </div>
                     </div>
+                    
                     <!-- pop up if edit activity -->
                     <div :style="{display: d_edit()}" class="col py-3">
                         <div class="container text-dark">
@@ -252,20 +253,19 @@
                                             <datalist id="list_all_tags">
                                                 <option v-for="tag of tags" :value="tag"></option>
                 
-                                            </datalist>
-                                            
+                                            </datalist>                                          
                                         </div>
                                     </div>
                                 </div>
     
                                 <!-- DESCRIPTION -->
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
                                     <label for="input_description">Add a Description</label>
                                 </div>
                 
                                 <!-- Currency converter -->
-                                <div id="main">
+                                <div>
                                         <!--  ENTER COST   -->
                                     <div class="row">
                                         <div class="col-5">
@@ -355,7 +355,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="edit_true=false, delete_marker(marker_id)">Confirm</button>
+                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="edit_true=false, delete_marker(current_id)">Confirm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -406,13 +406,15 @@
         // access vm from module script and open up edit view
         async function set_edit(obj) {
             var vm_vue = await import("./map_js.js")
-            
+            console.log(obj)
             if (vm_vue.vm.$data.edit_true == false) {
                 
                 vm_vue.vm.$data.edit_true = true
                 vm_vue.vm.$data.create_true = false
-                vm_vue.vm.$data.marker_id = obj.querySelector("div[id='get_marker_id']").innerText
-                
+                vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
+                console.log(obj.querySelector("div[id='get_marker_id']").innerText)
+                console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+                vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
             } else {
                 vm_vue.vm.$data.edit_true = false
                 vm_vue.vm.$data.create_true = true

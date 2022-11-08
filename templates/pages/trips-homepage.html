@@ -13,17 +13,34 @@
 
     <title>WAD Travels Project</title>
 
+    <style>
+      .cardstyle{
+        border-color: #badeee;
+        text-align: center;
+        margin: 7px 12px;
+        padding: 4px 4px;
+        width: 18rem;
+      }
+    </style>
 </head>
-<body>
+<body class="bg-dark">
 
-    <div id="nav">
-        <homepage-navbar></homepage-navbar>
-    </div>
+      <div id="nav" class="row sticky-top">
+          <homepage-navbar></homepage-navbar>
+      </div>
 
-    <div class="p-3 row d-flex flex-wrap justify-content-center">
-        
-        <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="images/seoul.jpg" class="card-img-top" height="200px">
+      <!-- header -->
+      <div class="row position-relative image_container_homepage">
+        <img src="../../images/home_page/main_images/main_page_bg_5.jpg" class="homepage-main-img px-0">
+        <div class="text-center mt-md-4 mt-3 position-absolute text-light" id="animated-text">Plan a trip</div>
+      </div>
+
+      <!-- body -->
+      <div class="container-fluid">
+        <div class="row p-3 d-flex justify-content-center">
+          
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/seoul.jpg" class="card-img-top" height="200px">
             <div class="card-body">
               <h5 class="card-title">Dec22 Seoul Trip!</h5>
               <button href="#" class="btn btn-main-bold">Edit Trip</a>
@@ -33,8 +50,8 @@
             </div>
           </div>
 
-          <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="images/NYC.jpg" class="card-img-top" height="200px">
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/NYC.jpg" class="card-img-top" height="200px">
             <div class="card-body">
               <h5 class="card-title">June23 New York City</h5>
               <button href="#" class="btn btn-main-bold">Edit Trip</a>
@@ -43,11 +60,33 @@
                 Last edited: 3 weeks ago
             </div>
           </div>
-
-          <div class="card border-info text-center mx-2 my-2 col-md-6 col-sm-6 p-1" style="width: 18rem">
-            <img src="images/interlaken.jpg" class="card-img-top" height="200px">
+    
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/interlaken.jpg" class="card-img-top" height="200px">
             <div class="card-body">
-              <h5 class="card-title">June19 Interlaken</h5>
+              <h5 class="card-title">June21 Interlaken</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 1 year ago
+            </div>
+          </div>
+
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/kyoto.jpeg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Dec20 Kyoto</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 2 years ago
+            </div>
+          </div>
+
+          <div class="card cardstyle " >
+            <img src="../../images/home_page/trips_imgs/edinburgh.jpg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Aug19 Edinburgh</h5>
               <button href="#" class="btn btn-fade">View Trip</a>
             </div>
             <div class="card-footer text-muted">
@@ -55,10 +94,52 @@
             </div>
           </div>
 
-        
-        </div>
-    </div>
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/budapest.jpg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Jan19 Budapest</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 3 years ago
+            </div>
+          </div>
 
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/chang_mai.jpeg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Sep18 Chiang Mai</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 4 years ago
+            </div>
+          </div>
+
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/bergen.jpg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Feb18 Bergen</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 4 years ago
+            </div>
+          </div>
+
+          <div class="card cardstyle" >
+            <img src="../../images/home_page/trips_imgs/venice.jpg" class="card-img-top" height="200px">
+            <div class="card-body">
+              <h5 class="card-title">Dec17 Venice</h5>
+              <button href="#" class="btn btn-fade">View Trip</a>
+            </div>
+            <div class="card-footer text-muted">
+                Last edited: 5 years ago
+            </div>
+          </div>
+
+        </div>
+      </div>
 
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
@@ -73,5 +154,8 @@
 
     <!-- Refer to my own external JS -->
     <script src="homepageNavBar.js"></script>
+
+    <!-- js import -->
+    <script src="./trips-homepage.js"></script>
 </body>
 </html>

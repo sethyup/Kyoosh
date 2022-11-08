@@ -1,0 +1,60 @@
+//custom colors
+
+// INITIAL =======================
+// $primary:       #F55B29;
+// $secondary:     #F2C57C;
+// $success:       #37b9a1;
+// $info:          #9ACFE6;
+// $warning:       #dfc939;
+// $danger:        #9D2D08;
+// $light:         #FFFFFF;
+// $dark:          #405559;
+
+//NEW ===========================
+$primary:       #24A19D;
+$secondary:     #6fd1cd;
+$success:       #37b9a1;
+$info:          #9ACFE6;
+$warning:       #dfc939;
+$danger:        #9D2D08;
+$light:         #ffffff;
+$dark:          #405559;
+
+//customer buttons
+$btn-hover-bg-shade-amount:       25%;
+$btn-hover-bg-tint-amount:        20%;
+$btn-hover-border-shade-amount:   20%;
+$btn-hover-border-tint-amount:    10%;
+$btn-active-bg-shade-amount:      20%;
+$btn-active-bg-tint-amount:       20%;
+$btn-active-border-shade-amount:  25%;
+$btn-active-border-tint-amount:   10%;
+
+$btn-border-radius:           1.5rem;
+$btn-border-radius-sm:        1rem;
+$btn-border-radius-lg:        2rem;
+
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+// Create your own map
+$custom-colors: (
+  "mild2": #cee1ea,
+  "mild": #DFEEF5,
+  "bold": #58788C
+);
+
+$position-values: (
+  0: 0,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+//import
+@import '../node_modules/bootstrap/scss/bootstrap';

@@ -12,20 +12,24 @@ button.btn-expand:hover, button.btn-main:hover, button.btn-main-bold:hover, butt
 
 /* btn main */
 button.btn-main, button.btn-main-fixed {
-    background-color: #F55B29;
+    background-color: #24A19D;
     color: #FFFFFF;
 }
 
 button.btn-main:active:focus, button.btn-main:active, button.btn-main:hover,
 button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-main-fixed:hover {
-    background-color: #cb481c !important;
-    border: #cb481c solid 1px !important;
+    background-color: #127b78 !important;
+    border: #127b78 solid 1px !important;
     color: #FFFFFF !important;
 }
 
 button.btn-main:disabled, button.btn-main-fixed:disabled {
-    background-color: #eda289;
+    background-color: #56d3cf;
     color: #FFFFFF;
+}
+
+button.dropshadow-btn-main{
+    filter: drop-shadow(0px 0px 15px #063937);
 }
 
 /* btn main bold */
@@ -102,4 +106,78 @@ button.dropdown[aria-expanded = true] .fa-chevron-down{
 
 button.dropdown[aria-expanded = false] .fa-chevron-up{
     display: none;
+}
+
+
+/* Homepage elements */
+img.homepage-main-img{
+    object-fit: cover ;
+    object-position: center;
+    width: 100%;
+    max-height: calc(5vw + 75px);
+    filter: brightness(40%);
+}
+
+div#animated-text{
+    font-size: calc(1.8vw + 30px);
+    font-weight: 500;
+}
+
+.blurred{
+    backdrop-filter: blur(12px) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.blurred-minor{
+    backdrop-filter: blur(1px) !important;
+    background:  rgba(255, 255, 255, 0.5) !important;
+    border: 0 !important;
+}
+
+.blurred-minor-2{
+    backdrop-filter: blur(25px) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.blurred-minor-gradient{
+    backdrop-filter: blur(1px) !important;
+    background: linear-gradient(90deg, rgba(36, 161, 157, 0.7), rgba(36, 161, 157, 0.15)) !important;
+    border: 0 !important;
+}
+
+.blurred-minor-gradient-login{
+    backdrop-filter: blur(1px) !important;
+    background: linear-gradient(90deg, rgba(36, 161, 157, 1), rgba(36, 161, 157, 0.15)) !important;
+    border: 0 !important;
+}
+
+.blurred-btn{
+    backdrop-filter: blur(1px) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    border: 0 !important;
+    color: #405559 !important;
+}
+
+.blurred-btn:hover{
+    backdrop-filter: blur(1px) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 0 !important;
+}
+
+
+/* Create trip */
+img.create-trip-main-img{
+    object-fit: cover ;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    filter: brightness(50%);
+}
+
+/* login page */
+.login-page-carousel-img .carousel-item img{
+    object-fit: cover;
+    object-position: center;
+    height: 100vh;
+    overflow: hidden;
 }

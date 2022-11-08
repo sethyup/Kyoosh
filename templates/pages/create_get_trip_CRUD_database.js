@@ -42,9 +42,19 @@ const root = Vue.createApp({
 
             sDate: "",
 
-            eDate: ""
-            
+            eDate: "",
 
+            all_countries:[
+                "Afghanistan", "Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"
+            ],
+
+            nameList: [],
+        }
+    },
+
+    computed: {
+        friendCollaborators(){
+            return this.nameList.length > 0 ? "You have added " + this.nameList.join(", ") : ''
         }
     },
 
@@ -56,38 +66,70 @@ const root = Vue.createApp({
             // Database path must be set by you
             // e.g. users/junsui/friends
             // EDIT HERE
-            var url = "images/" + this.destination + ".jpg"
+            if (this.trip_name && this.destination && this.sDate && this.eDate){
+                this.show_field_modal = false
+                var url = "images/" + this.destination + ".jpg"
 
-            set(ref(db, 'trips/' + this.trip_name + '_' + this.myUsername + '/trip_details'), {
-                // DATA YOU WANT TO WRITE GOES HERE,
-                
-                    g_member: this.g_member,
-                    destination: [this.destination, url],
-                    start_date: this.sDate,
-                    end_Date: this.eDate
+                set(ref(db, 'trips/' + this.trip_name + '$#&$^%&@()!#*&$^^' + this.myUsername + '/trip_details'), {
+                    // DATA YOU WANT TO WRITE GOES HERE,
                     
-            })
-            .then(
-                function write_success() {
-                    // display "Success" message
-                    alert("Write Operation Successful")
-                    console.log("Entry Created")
+                        g_member: this.g_member,
+                        destination: [this.destination, url],
+                        start_date: this.sDate,
+                        end_Date: this.eDate
+                        
+                })
+                .then(
+                    function write_success() {
+                        // display "Success" message
+                        // alert("Write Operation Successful")
+                        console.log("Entry Created")
 
-            })
-            .catch((error) => {
-                // for us to debug, tells us what error there is,
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                })
+                .catch((error) => {
+                    // for us to debug, tells us what error there is,
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-                // display "Error" message
-                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
-                console.log(failed_message);
-            })
-            alert("Create Trip Successful")
-            location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
+                    // display "Error" message
+                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                    // alert(failed_message)
+                    console.log(failed_message);
+                })
+                // alert("Create Trip Successful")
+                location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
+            }
+            
+            else{
+                
+                let msg = "Please fill in your "
+                let empty_fields = []
+                if(!this.trip_name){
+                    empty_fields.push('Trip Name')
+                }if(!this.destination){
+                    empty_fields.push('Destination')
+                }if(!this.sDate){
+                    empty_fields.push('Start Date')
+                }if(!this.eDate){
+                    empty_fields.push('End Date')
+                }
+
+                if (empty_fields.length == 1){
+                    msg += empty_fields[0] + '!'
+                }else if (empty_fields.length == 2){
+                    msg += empty_fields[0] + ' and ' + empty_fields[1] + '!'
+                }else{
+                    for (let i = 0; i < empty_fields.length - 2 ; i++) {
+                        msg += empty_fields[i] + ", ";
+                      }
+                    msg += empty_fields[empty_fields.length - 2] + ' and ' + empty_fields[empty_fields.length - 1] + '!'
+                }
+                alert(msg)
+            }
+                
         },
 
+        
         get_my_trips(username) {
             const data_to_be_read = ref(db, "users/" + username + "/trips");
             onValue(data_to_be_read, (snapshot) => {
@@ -120,8 +162,23 @@ const root = Vue.createApp({
         //     })
 
         // }
+    },
+
+    mounted() {
+        console.log("VUE INSTANCE INITIALIZED")
+
+        let date_config = {
+            altInput: true,
+            altFormat: "J M y",
+            disableMobile: "true"
+        }
+
+        console.log("FLATPICKR INITIALIZED")
+        // date only
+        let date_fp_obj = flatpickr("input[type=date]", date_config)
     }
 })
+
 
 
 // Mount your HTML document
