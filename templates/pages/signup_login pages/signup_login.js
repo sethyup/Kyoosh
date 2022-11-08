@@ -117,7 +117,7 @@ const root = Vue.createApp({
                     const email = user.email.split(".")[0]
                     console.log(email)
                     localStorage.set("user", email)
-                    // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     
                     
                 })
