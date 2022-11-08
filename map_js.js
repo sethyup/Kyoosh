@@ -35,7 +35,7 @@ function initMap(location) {
     // });
     for (var place in location) {
         // create_marker(place, map)
-        create_marker(location[place], map)
+        create_marker(location[place], map, place)
     }
     
     initAutocomplete();
@@ -127,7 +127,7 @@ function initAutocomplete() {
 }
 
 // create existing marker
-function create_marker(place, map) {
+function create_marker(place, map, id) {
     const icon = {
             url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
             scaledSize: new google.maps.Size(40, 40), // scaled size
@@ -144,9 +144,11 @@ function create_marker(place, map) {
             disableAutoPan: true,
             });
         // Set unique id
-        marker.id = uniqueId;
-        vm.$data.current_id = uniqueId;
-        console.log(`this is the unique Id from  creating the marker: ${uniqueId}`)     
+        console.log(place)
+        console.log(id)
+        marker.id = id;
+        vm.$data.current_id = id;
+        console.log(`this is the unique Id from  creating the marker: ${id}`)     
         
         // set infoWindow
         var contentString = 
@@ -219,22 +221,21 @@ function DeleteMarker(id) {
 // vue app
 const app = Vue.createApp({ 
     data() { 
-        return { 
+        return {
             trip_id: "grad trip_adambft",
             create_true: false,
             edit_true: false,
             // map stuff
             map_width: '90%',
-            
             existing_locations: "",
-            // main stuff
+            // create activity stuff
             amount: "", 
             from: "SGD", 
             to: "KRW", 
             converted_amount: "",
             api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
             home_country: "SGD",
-            // main2 stuff
+            // create activity 2nd part
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
             // marker stuff
@@ -253,9 +254,9 @@ const app = Vue.createApp({
     methods: {
         // delete marker
         delete_marker(id) {
-            console.log(`${id} this is from delete marker`)
-            DeleteMarker(id-1);
-            this.delete_data(id-1)
+            // console.log(`${id} this is from delete marker`)
+            DeleteMarker(id);
+            this.delete_data(id)
         },
         // toggle display for create activity
         d_create() {
@@ -408,6 +409,20 @@ const app = Vue.createApp({
             }
 
         },
+        // retrieve location details for edit activity page
+        retrieve_edit_activity_info(id) {
+            var details = this.existing_locations[id]
+            console.log(details)
+            this.selected_address = details.selected_address
+            this.selected_description = details.selected_description
+            this.selected_latlng = details.selected_latlng
+            this.selected_name = details.selected_name
+            this.converted_amount = details.price.krw
+            this.amount = details.price.sgd
+            this.tag_input = details.tag
+            this.votes_num = details.votes_num
+            
+        }
     },
     async created() {
         // get recommended locations from database
