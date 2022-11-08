@@ -98,6 +98,36 @@
     }
   ],
   "trips": {
+    "Adams Find wife + honey moon + wedding _adambft": {
+      "trip_details": {
+        "destination": [
+          "Afghanistan",
+          "images/Afghanistan.jpg"
+        ],
+        "end_Date": "2023-01-02",
+        "start_date": "2022-12-22"
+      }
+    },
+    "Winter Trip_adambft": {
+      "trip_details": {
+        "destination": [
+          "Seoul",
+          "images/Seoul.jpg"
+        ],
+        "end_Date": "2022-11-15",
+        "start_date": "2022-11-10"
+      }
+    },
+    "_adambft": {
+      "trip_details": {
+        "destination": [
+          "",
+          "images/.jpg"
+        ],
+        "end_Date": "",
+        "start_date": ""
+      }
+    },
     "grad trip_adambft": {
       "activities": [
         {
@@ -222,7 +252,7 @@
           "edit_mode": false,
           "flight_no": "KO405",
           "gate": "A1",
-          "price": "200",
+          "price": 250,
           "terminal": "3"
         },
         {
@@ -263,7 +293,7 @@
         {
           "ID": 2,
           "accom_address": "Jisan Forest Resort, Haewol-ri, Majang-myeon, Icheon-si, Gyeonggi-do, South Korea",
-          "accom_name": "Jisan Forest Ski Resort ❄️",
+          "accom_name": "Jisan Ski Resort ❄️⛰️",
           "checkin_datetime": "2022-12-05 17:00",
           "checkout_datetime": "2022-12-10 13:30",
           "currency": "SGD",
@@ -275,6 +305,10 @@
     }
   },
   "users": {
+    "SETH YAP ZIQI _": {
+      "email": "sethyap.2021@smu.edu.sg",
+      "fullname": "SETH YAP ZIQI _"
+    },
     "adambft": {
       "email": "adambft@gmail.com",
       "name": "Adam",
