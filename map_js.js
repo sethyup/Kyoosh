@@ -72,6 +72,11 @@ function initAutocomplete() {
         marker.setVisible(false);
 
         const place = autocomplete.getPlace();
+        // console.log(place)
+        vm.$data.selected_name = place.name;
+        vm.$data.selected_address = place.formatted_address;
+        vm.$data.selected_latlng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+        // vm.console_all()
         
         if (!place.geometry || !place.geometry.location) {
         window.alert(`No details available for the place: "${place.name}"`
@@ -88,6 +93,7 @@ function initAutocomplete() {
         marker.setVisible(true);
 
         marker.id = uniqueId;
+        vm.$data.current_id = uniqueId;
         // vm.$data.marker_id = uniqueId
         uniqueId++;
         
@@ -95,42 +101,18 @@ function initAutocomplete() {
         const contentString = 
         `
         <div id="content" name="${marker.id}">
-        <div id="siteNotice"></div>
+            <div id="siteNotice"></div>
 
-        <div class="container">
-        
-        <div class="row">
-            <div class = "col-8">
-            <span class="badge rounded-pill text-bg-warning">#Shopping</span>
-            <h3>${place.name}</h3>
-            <p class="address">${place.formatted_address}<p>
-            <hr>
-            <h6>$100/person</h6>
-            <p class="description">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+            <div class="container">
+                <div class="row">
+                    <div class = "col-8">
+                    <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                    <h3>${place.name}</h3>
+                    <p class="address">${place.formatted_address}<p>
+                    <hr>
+                </div>  
             </div>
-
-
-            <div class="col-4" style:"position:relative">
-            <p class="pt-3">Current Votes: </p>
-                <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="voting_buttons pt-3">
-                <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
-                <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
-                </div>
-                
-            </div>
-
-        </div>  
         </div>
-    </div>
-    </div>
         `
     // line for deleting marker by clicking in InfoWindow
     // <input type = 'button' va;ue = 'Delete' onclick = 'DeleteMarker( ${marker.id});' value = 'Delete Activity' />
@@ -141,6 +123,7 @@ function initAutocomplete() {
         infowindow.open(map, marker);})
     })
     window.autocomplete = autocomplete
+    
     // autocomplete.addListener("", () => {
     //     autocomplete.set("place", null)
     // })
@@ -232,8 +215,8 @@ function DeleteMarker(id) {
             return;
         }
     }
+    
 };
-
 
 // vue app
 const app = Vue.createApp({ 
@@ -255,14 +238,27 @@ const app = Vue.createApp({
             // main2 stuff
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
-            
+            // marker stuff
+            current_id: "",
+            selected_address: "",
+            // selected_tags: "", is under tag_input
+            selected_description: "",
+            selected_name: "",
+            selected_latlng: "",
+            group_size: '',
+            // amount, converted amount from main stuff
+            votes_num: { no: 0, yes: 0, yet_to_vote: 5},
+
         };
     }, 
     methods: {
+        // delete marker
         delete_marker(id) {
+            console.log(id)
             DeleteMarker(id);
+            this.delete_data(id)
         },
-
+        // toggle display for create activity
         d_create() {
             if (this.create_true == false) {
                 return "none"
@@ -270,7 +266,7 @@ const app = Vue.createApp({
                 return ""
             }
         },
-        
+        // toggle display for edit activity
         d_edit() {
             if (this.edit_true == false) {
                 return "none"
@@ -278,7 +274,7 @@ const app = Vue.createApp({
                 return ""
             }
         },
-        
+        // calculate value from
         calculate_to_from() {
             if (this.from != "SGD"){
                 this.to = "SGD"
@@ -298,7 +294,7 @@ const app = Vue.createApp({
                 console.log(error.message)
             })
         },
-        
+        // calculate value to
         calculate_from_to() {
             let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.from}&from=${this.to}&amount=${this.converted_amount}&apikey=${this.api_key}`
             
@@ -314,15 +310,15 @@ const app = Vue.createApp({
                 console.log(error.message)
             })
         },
-
-        write_to_existing() {
+        // read location data from database
+        read_from_existing() {
             const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
-                    console.log(data)
+                    
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
@@ -332,19 +328,93 @@ const app = Vue.createApp({
                         const data2 = snapshot.val();
                         if (data2) {
                             this.existing_locations = data2
-                            console.log(data2)
+                            
                             window.initMap = initMap(this.existing_locations);
                         }
                     })
                 }
                 })   
             },
-        
+        // read group size
+        read_group_size() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/group_member`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    this.group_size = data.length}})
+        },
+        // write activity detail to database
+        create_update_data() {
+            // create new object
+            var new_obj = {
+                address: this.selected_address,
+                description: this.selected_description,
+                latlng: this.selected_latlng,
+                name: this.selected_name,
+                price: {
+                    krw: this.converted_amount,
+                    sgd: this.amount,
+                },
+                tag: this.tag_input,
+                votes_num: this.votes_num,
+            }
+            // push to existing places under current id
+            this.existing_locations[this.current_id] = new_obj
+            // push data to database
+            console.log("Writing data into database...")
+            
+            set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
+        },
+        // delete activity from database
+        delete_data(id) {
+            // remove location from existing locations
+            delete this.existing_locations[id] 
+            // write to database
+            console.log("Writing data into database...")
+            
+            set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
+        },
+        // clog all details
+        console_all() {
+            for (var key in vm.$data) {
+                console.log(`${key} : ${vm.$data[key]}`)
+            }
+
+        },
     },
     async created() {
         // get recommended locations from database
-        await this.write_to_existing()
-                
+        await this.read_from_existing()
+        // get group size from database
+        await this.read_group_size()
     }
     
 });
