@@ -52,8 +52,9 @@ const root = Vue.createApp({
                     // save user account details to database
                     console.log("starting to write user data...")
                     console.log(userCredential)
-                    set(ref(db, "users/" + this.username), {
+                    set(ref(db, "users/" + this.email.split(".")[0]), {
                         email: this.email,
+                        username: this.username,
                         fullname: this.first_name + " " + this.last_name,
                         trips: []
                       })
@@ -113,7 +114,7 @@ const root = Vue.createApp({
                     console.log("user login successful")
                     // redirects to home page
                     const user = userCredential.user;
-                    console.log(user)
+                    console.log(user.email)
                     // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     
                     
