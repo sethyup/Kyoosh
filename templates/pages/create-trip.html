@@ -41,7 +41,7 @@
                 <!-- Trip Name -->
                 <div class="row justify-content-center mt-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control blurred-minor" v-model="trip_name" name="trip_name"  placeholder="Trip Name">
+                        <input type="text" class="form-control blurred-minor-gradient" v-model="trip_name" name="trip_name"  placeholder="Trip Name">
                         <label for="trip_name"><i class="fa-solid fa-suitcase-rolling mx-2"></i> Trip Name</label>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <!-- where to? -->
                 <div class="row justify-content-center mt-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control blurred-minor" v-model="destination" name="destination_country"  placeholder="country" list="list_all_countries">
+                        <input type="text" class="form-control blurred-minor-gradient" v-model="destination" name="destination_country"  placeholder="country" list="list_all_countries">
                         <label for="destination_country"><i class="fa-solid fa-plane-departure mx-2"></i> Where to?</label>
                     </div>
                 </div>
@@ -62,13 +62,13 @@
                 <!-- trip-from date -->         
                 <div class="row justify-content-center">       
                     <div class="form-floating mt-4 col-sm-6">
-                        <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" class="blurred-minor">
+                        <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" class="blurred-minor-gradient">
                         <label for="start_date"><i class="fa-regular fa-calendar mx-2"></i> Start Date</label>
                     </div>
                 
                     <!-- trip-to date -->                
                     <div class="form-floating mt-4 col-sm-6">
-                        <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" class="blurred-minor">
+                        <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" class="blurred-minor-gradient">
                         <label for="end_date"><i class="fa-regular fa-calendar mx-2"></i> End Date</label>
                     </div>
                 </div>
