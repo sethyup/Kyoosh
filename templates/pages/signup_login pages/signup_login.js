@@ -52,7 +52,7 @@ const root = Vue.createApp({
                     // save user account details to database
                     console.log("starting to write user data...")
                     console.log(userCredential)
-                    set(ref(db, "users/" + this.email.split(".")[0]), {
+                    set(ref(db, "users/" + this.email.replace(".","")), {
                         email: this.email,
                         username: this.username,
                         fullname: this.first_name + " " + this.last_name,
@@ -79,7 +79,7 @@ const root = Vue.createApp({
 
                     // redirects to Log In page
                     // find a way to use await and wait for the update to database, if not this will cancel the update
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html")
+                    location.replace("./login_page.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -114,10 +114,10 @@ const root = Vue.createApp({
                     console.log("user login successful")
                     // redirects to home page
                     const user = userCredential.user;
-                    const email = user.email.split(".")[0]
+                    const email = user.email.replace(".","")
                     console.log(email)
-                    localStorage.set("user", email)
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    localStorage.setItem("user", email)
+                    location.replace("../trips-homepage.html")
                     
                     
                 })
