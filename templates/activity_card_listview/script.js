@@ -86,6 +86,12 @@ const main = Vue.createApp({
       }
     },
     methods:{
+        get_total_users(){
+          all_votes = this.locations["1"].votes
+          total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
+          console.log(this.get_total_users)
+          return total_users
+        },
         get_yes_num(votes){
           console.log(typeof String(votes.yes.length))
           return String(votes.yes.length)
@@ -100,15 +106,15 @@ const main = Vue.createApp({
         },
         get_yes_percentage(votes){
           // console.log(votes.yes.length)
-          return (votes.yes.length)*100/5
+          return (votes.yes.length)*100/this.get_total_users()
         },
         get_no_percentage(votes){
           // console.log(votes.no.length)
-          return (votes.no.length)*100/5
+          return (votes.no.length)*100/this.get_total_users()
         },
         get_yet_to_vote_percentage(votes){
           // console.log(votes.yet_to_vote.length)
-          return (votes.yet_to_vote.length)*100/5
+          return (votes.yet_to_vote.length)*100/this.get_total_users()
         },
       user_reject(votes, idx){
             // number of members = 5
