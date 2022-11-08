@@ -78,7 +78,7 @@
                     <div>
                         <button type="button" class="btn blurred-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user-group fa-xs"></i> Add Collaborators</button>
                         
-                        <p class="text-muted" v-if="nameList.length>0">You have added {{nameList}} </p>
+                        <p class="text-muted">{{friendCollaborators}}</p>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="height: 500px;">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -152,7 +152,6 @@
                             </div>
                             </div>
                         </div>
-
 
 
                     </div>
