@@ -114,7 +114,9 @@ const root = Vue.createApp({
                     console.log("user login successful")
                     // redirects to home page
                     const user = userCredential.user;
-                    console.log(user.email)
+                    const email = user.email.split(".")[0]
+                    console.log(email)
+                    localStorage.set("user", email)
                     // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     
                     
