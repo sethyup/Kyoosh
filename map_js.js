@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set, remove } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 
 // Our Firebase Project Configuration
@@ -345,27 +345,28 @@ const app = Vue.createApp({
         },
         // write activity detail to database
         create_update_data() {
+            // create new object
+            var new_obj = {
+                address: this.selected_address,
+                description: this.selected_description,
+                latlng: this.selected_latlng,
+                name: this.selected_name,
+                price: {
+                    krw: this.converted_amount,
+                    sgd: this.amount,
+                },
+                tag: this.tag_input,
+                votes_num: this.votes_num,
+            }
+            // push to existing places under current id
+            this.existing_locations[this.current_id] = new_obj
+            // push data to database
             console.log("Writing data into database...")
-
-            // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/activities/${this.current_id}`), {
-                
-                    address: this.selected_address,
-                    description: this.selected_description,
-                    latlng: this.selected_latlng,
-                    name: this.selected_name,
-                    price: {
-                        krw: this.converted_amount,
-                        sgd: this.amount,
-                    },
-                    tag: this.tag_input,
-                    votes_num: this.votes_num,
-                
-              })
+            
+            set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
             .then(
                 function write_success() {
                     // display "Success" message
-                    // alert("Write Operation Successful")
                     console.log("Entry Created")
             })
             .catch((error) => {
@@ -375,33 +376,31 @@ const app = Vue.createApp({
 
                 // display "Error" message
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                // alert(failed_message)
                 console.log(failed_message);
             })
         },
         // delete activity from database
         delete_data(id) {
-            remove(`trips/${this.trip_id}/activities/${id}/tag`)
+            // remove location from existing locations
+            delete this.existing_locations[id] 
+            // write to database
+            console.log("Writing data into database...")
+            
+            set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
             .then(
-                function delete_success() {
-                    // alert("Delete operation is a success!")
-                    console.log("Delete operation is a success!")
-                }
-            )
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
             .catch((error) => {
-                // for admin, tells you what error there is
+                // for us to debug, tells us what error there is,
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
-                console.log(errorCode)
 
                 // display "Error" message
-                // stays on the same page
-                var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
-                // alert(failed_message)
-                console.log("Delete Unsuccessful");
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
             })
-
         },
         // clog all details
         console_all() {
@@ -409,7 +408,7 @@ const app = Vue.createApp({
                 console.log(`${key} : ${vm.$data[key]}`)
             }
 
-        }
+        },
     },
     async created() {
         // get recommended locations from database
