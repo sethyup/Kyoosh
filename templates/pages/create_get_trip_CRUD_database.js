@@ -82,7 +82,7 @@ const root = Vue.createApp({
                 .then(
                     function write_success() {
                         // display "Success" message
-                        alert("Write Operation Successful")
+                        // alert("Write Operation Successful")
                         console.log("Entry Created")
 
                 })
@@ -93,10 +93,10 @@ const root = Vue.createApp({
 
                     // display "Error" message
                     var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                    alert(failed_message)
+                    // alert(failed_message)
                     console.log(failed_message);
                 })
-                alert("Create Trip Successful")
+                // alert("Create Trip Successful")
                 location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
             }
             
