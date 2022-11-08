@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(marker_id), autocomplete.set('place', null);">Confirm</button>
+                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id), autocomplete.set('place', null);">Confirm</button>
                                             </div>
                                         </div>
                                         </div>
@@ -354,7 +354,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="edit_true=false, delete_marker(marker_id)">Confirm</button>
+                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="edit_true=false, delete_marker(current_id)">Confirm</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -410,8 +410,8 @@
                 
                 vm_vue.vm.$data.edit_true = true
                 vm_vue.vm.$data.create_true = false
-                vm_vue.vm.$data.marker_id = obj.querySelector("div[id='get_marker_id']").innerText
-                
+                vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
+                console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
             } else {
                 vm_vue.vm.$data.edit_true = false
                 vm_vue.vm.$data.create_true = true

@@ -93,10 +93,7 @@ function initAutocomplete() {
         marker.setVisible(true);
 
         marker.id = uniqueId;
-        vm.$data.current_id = uniqueId;
-        // vm.$data.marker_id = uniqueId
-        uniqueId++;
-        
+        vm.$data.current_id = uniqueId
         
         const contentString = 
         `
@@ -148,10 +145,9 @@ function create_marker(place, map) {
             });
         // Set unique id
         marker.id = uniqueId;
-        // vm.$data.marker_id = uniqueId
-        uniqueId++;
+        vm.$data.current_id = uniqueId;
+        console.log(`this is the unique Id from  creating the marker: ${uniqueId}`)     
         
-
         // set infoWindow
         var contentString = 
             `
@@ -162,12 +158,12 @@ function create_marker(place, map) {
             
             <div class="row">
                 <div class = "col-8">
-                <span class="badge rounded-pill text-bg-warning">#Shopping</span>
+                <span class="badge rounded-pill text-bg-warning">#${place.tag}</span>
                 <h3>${place.name}</h3>
                 <p class="address">${place.address}<p>
                 <hr>
                 <h6>SGD ${place.price.sgd} / KRW ${place.price.krw} per person</h6>
-                <p class="description">Top picks that the fam wants to visit while in Korea</p>
+                <p class="description">${place.description}</p>
                 </div>
                 
 
@@ -199,12 +195,13 @@ function create_marker(place, map) {
             infoWindow.setContent(contentString);
             infoWindow.open(map, marker);});
         markers.push(marker)
+        
 }
 
 // delete markers
 function DeleteMarker(id) {
     //Find and remove the marker from the Array
-    
+    console.log(id)
     for (var i = 0; i < markers.length; i++) {
         if (markers[i].id == id) {
             //Remove the marker from Map                  
@@ -212,6 +209,7 @@ function DeleteMarker(id) {
 
             //Remove the marker from array.
             markers.splice(i, 1);
+            
             return;
         }
     }
@@ -227,6 +225,7 @@ const app = Vue.createApp({
             edit_true: false,
             // map stuff
             map_width: '90%',
+            
             existing_locations: "",
             // main stuff
             amount: "", 
@@ -254,9 +253,9 @@ const app = Vue.createApp({
     methods: {
         // delete marker
         delete_marker(id) {
-            console.log(id)
-            DeleteMarker(id);
-            this.delete_data(id)
+            console.log(`${id} this is from delete marker`)
+            DeleteMarker(id-1);
+            this.delete_data(id-1)
         },
         // toggle display for create activity
         d_create() {
@@ -318,7 +317,7 @@ const app = Vue.createApp({
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
-                    
+                    uniqueId = data.length
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
