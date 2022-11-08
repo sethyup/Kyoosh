@@ -118,8 +118,12 @@ const root = Vue.createApp({
 
                     // display "Error" message
                     // stays on the same page
-                    var failed_message = `Sign Up Unsuccessful. Error: ${errorMessage}`
-                    alert(failed_message)
+                    var failed_message = `Log In Unsuccessful. ${errorMessage}`
+                    document.getElementById("error").attributes[2].nodeValue = ""
+                    document.getElementById("error").innerHTML = `
+                    ${failed_message}
+                    `
+                    // alert(failed_message)
                     console.log("user not created")
                 })
         },
