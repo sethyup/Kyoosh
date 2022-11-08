@@ -120,6 +120,21 @@ div#animated-text{
 }
 
 .blurred{
-    backdrop-filter: blur(12px);
-    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.blurred-minor{
+    backdrop-filter: blur(1px) !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border: 0 !important;
+}
+
+/* Create trip */
+img.create-trip-main-img{
+    object-fit: cover ;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    filter: brightness(50%);
 }
