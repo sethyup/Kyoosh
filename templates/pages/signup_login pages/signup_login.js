@@ -110,11 +110,13 @@ const root = Vue.createApp({
                     //signed in
 
                     // display Success message
-                    alert("Login Successful")
                     console.log("user login successful")
                     // redirects to home page
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                     const user = userCredential.user;
+                    console.log(user)
+                    // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    
+                    
                 })
                 .catch((error) => {
                     // for admin, tells you what error there is
