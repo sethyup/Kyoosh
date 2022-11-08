@@ -49,7 +49,6 @@ const root = Vue.createApp({
             ],
 
             nameList: [],
-            
         }
     },
 
@@ -67,38 +66,70 @@ const root = Vue.createApp({
             // Database path must be set by you
             // e.g. users/junsui/friends
             // EDIT HERE
-            var url = "images/" + this.destination + ".jpg"
+            if (this.trip_name && this.destination && this.sDate && this.eDate){
+                this.show_field_modal = false
+                var url = "images/" + this.destination + ".jpg"
 
-            set(ref(db, 'trips/' + this.trip_name + '_' + this.myUsername + '/trip_details'), {
-                // DATA YOU WANT TO WRITE GOES HERE,
-                
-                    g_member: this.g_member,
-                    destination: [this.destination, url],
-                    start_date: this.sDate,
-                    end_Date: this.eDate
+                set(ref(db, 'trips/' + this.trip_name + '_' + this.myUsername + '/trip_details'), {
+                    // DATA YOU WANT TO WRITE GOES HERE,
                     
-            })
-            .then(
-                function write_success() {
-                    // display "Success" message
-                    alert("Write Operation Successful")
-                    console.log("Entry Created")
+                        g_member: this.g_member,
+                        destination: [this.destination, url],
+                        start_date: this.sDate,
+                        end_Date: this.eDate
+                        
+                })
+                .then(
+                    function write_success() {
+                        // display "Success" message
+                        alert("Write Operation Successful")
+                        console.log("Entry Created")
 
-            })
-            .catch((error) => {
-                // for us to debug, tells us what error there is,
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                })
+                .catch((error) => {
+                    // for us to debug, tells us what error there is,
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
 
-                // display "Error" message
-                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
-                console.log(failed_message);
-            })
-            alert("Create Trip Successful")
-            location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
+                    // display "Error" message
+                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                    alert(failed_message)
+                    console.log(failed_message);
+                })
+                alert("Create Trip Successful")
+                location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
+            }
+            
+            else{
+                
+                let msg = "Please fill in your "
+                let empty_fields = []
+                if(!this.trip_name){
+                    empty_fields.push('Trip Name')
+                }if(!this.destination){
+                    empty_fields.push('Destination')
+                }if(!this.sDate){
+                    empty_fields.push('Start Date')
+                }if(!this.eDate){
+                    empty_fields.push('End Date')
+                }
+
+                if (empty_fields.length == 1){
+                    msg += empty_fields[0] + '!'
+                }else if (empty_fields.length == 2){
+                    msg += empty_fields[0] + ' and ' + empty_fields[1] + '!'
+                }else{
+                    for (let i = 0; i < empty_fields.length - 2 ; i++) {
+                        msg += empty_fields[i] + ", ";
+                      }
+                    msg += empty_fields[empty_fields.length - 2] + ' and ' + empty_fields[empty_fields.length - 1] + '!'
+                }
+                alert(msg)
+            }
+                
         },
 
+        
         get_my_trips(username) {
             const data_to_be_read = ref(db, "users/" + username + "/trips");
             onValue(data_to_be_read, (snapshot) => {
@@ -147,6 +178,7 @@ const root = Vue.createApp({
         let date_fp_obj = flatpickr("input[type=date]", date_config)
     }
 })
+
 
 
 // Mount your HTML document
