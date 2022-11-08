@@ -12,19 +12,19 @@ button.btn-expand:hover, button.btn-main:hover, button.btn-main-bold:hover, butt
 
 /* btn main */
 button.btn-main, button.btn-main-fixed {
-    background-color: #24A19D;
+    background-color: #F55B29;
     color: #FFFFFF;
 }
 
 button.btn-main:active:focus, button.btn-main:active, button.btn-main:hover,
 button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-main-fixed:hover {
-    background-color: #127b78 !important;
-    border: #127b78 solid 1px !important;
+    background-color: #cb481c !important;
+    border: #cb481c solid 1px !important;
     color: #FFFFFF !important;
 }
 
 button.btn-main:disabled, button.btn-main-fixed:disabled {
-    background-color: #56d3cf;
+    background-color: #eda289;
     color: #FFFFFF;
 }
 
@@ -132,7 +132,7 @@ div#animated-text{
 
 .blurred-minor-gradient{
     backdrop-filter: blur(1px) !important;
-    background: linear-gradient(90deg, rgba(36, 161, 157, 0.7), rgba(36, 161, 157, 0.15)) !important;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.15)) !important;
     border: 0 !important;
 }
 
