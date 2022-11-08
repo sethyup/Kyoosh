@@ -12,19 +12,20 @@ button.btn-expand:hover, button.btn-main:hover, button.btn-main-bold:hover, butt
 
 /* btn main */
 button.btn-main, button.btn-main-fixed {
-    background-color: #F55B29;
-    color: #FFFFFF;
+    background-color: #2181BC;
+    color: #ffffff;
 }
 
 button.btn-main:active:focus, button.btn-main:active, button.btn-main:hover,
 button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-main-fixed:hover {
-    background-color: #cb481c !important;
-    border: #cb481c solid 1px !important;
+    background-color: #0f5987 !important;
+    border: #0f5987 solid 1px !important;
     color: #FFFFFF !important;
+    /* INITIAL: cb481c */
 }
 
 button.btn-main:disabled, button.btn-main-fixed:disabled {
-    background-color: #eda289;
+    background-color: #73a8c8;
     color: #FFFFFF;
 }
 
@@ -125,6 +126,12 @@ div#animated-text{
 }
 
 .blurred-minor{
+    backdrop-filter: blur(1px) !important;
+    background:  rgba(255, 255, 255, 0.5) !important;
+    border: 0 !important;
+}
+
+.blurred-minor-gradient{
     backdrop-filter: blur(1px) !important;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.15)) !important;
     border: 0 !important;
