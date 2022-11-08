@@ -53,6 +53,12 @@ const root = Vue.createApp({
         }
     },
 
+    computed: {
+        friendCollaborators(){
+            return this.nameList.length > 0 ? "You have added " + this.nameList.join(", ") : ''
+        }
+    },
+
     methods: {
         create_new_trip() {
             console.log("Writing data into database...")
