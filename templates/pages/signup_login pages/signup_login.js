@@ -212,6 +212,7 @@ const root = Vue.createApp({
         },
         
         reset_password() {
+
         },
     }
 
