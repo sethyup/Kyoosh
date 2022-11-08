@@ -198,7 +198,7 @@ const root = Vue.createApp({
             .then(function(){
                 console.log("email sent")
                 document.getElementById("sent_status").attributes[2].nodeValue = "display:block;"
-                location.replace("./reset_password_page.html")
+                // location.replace("./reset_password_page.html")
             })
             .catch(function(){
 
