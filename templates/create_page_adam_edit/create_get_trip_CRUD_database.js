@@ -31,8 +31,8 @@ const root = Vue.createApp({
 
             // ...
 
-            myUsername: 'adambft',
-            // assume that i'm adam right now
+            myUsername: 'trip-leader-username',
+            // hardcoded for now
 
             trip_name: "",
 
