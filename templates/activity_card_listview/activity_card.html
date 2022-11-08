@@ -32,44 +32,49 @@
                         <h1>Card Sample</h1>
                         <!-- COPY FROM HERE -->
 
-                        <div class="card">
+                        <div id="main">
+
+                        <div class="card mb-3" v-for="(location, index) in locations">
                             <!-- LOCATION/PLACE -->
                             <div class="card-header">
                                 <span class="fs-3 fw-semibold">
-                                Hongdae Shopping Street
+                                {{location.name}}
                                 </span>
-                                <span class="badge rounded-pill text-bg-warning ms-1" >#Shopping</span>
+                                <span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span>
                             </div>
 
                             <!-- BADGE & DESCRIPTION -->
-                            <div class="card-body">
+                            <div class="card-body" >
                                 <div class="container p-0">
                                 <div class="row">
                                     <div class = "col-8">
-                                        <p style="font-style: italic"> 365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea</p>
-                                        <h6>100 SGD/100976.93 KRW per person</h6>
-                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
+                                        <p style="font-style: italic">{{ location.address }}</p>
+                                        <h6>{{ location.price.sgd }} SGD/{{ location.price.krw }} KRW per person</h6>
+                                        <p class="description" style="text-align: justify;">{{ location.description }}</p>
                                     </div>
                                     
                                     <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                    <div class="col-4" id="main">
+                                    <div class="col-4">
                                         <p class="pt-3">Current Votes: </p>
                                         
                                             <div class="progress">
                                                     <!-- VOTED YES -->
-                                                <div id="progress_yes" class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: voted_yes_percentage + '%' }" v-bind:aria-valuenow="voted_yes_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="voted_yes_people"></div>
+                                                <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="get_yes_num(location.votes)"></div>
                                                     <!-- VOTED NO -->
-                                                <div id="progress_no" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: voted_no_percentage + '%' }" v-bind:aria-valuenow="voted_no_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="voted_no_people"> </div>
+                                                <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="get_no_num(location.votes)"> </div>
                                                 
                                                     <!--  VOTED MAYBE   -->
-                                                <div id="progress_maybe" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: yet_to_vote_percentage + '%' }" v-bind:aria-valuenow="yet_to_vote_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="yet_to_vote_people"></div>
+                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="get_yet_to_vote_num(location.votes)"></div>
                                                 
                                             </div>
 
                                         <div class="pt-3" style="display: flex; justify-content: center;">
-                                        <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject()">Reject</button>
-                                        <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept()"> Vote </button>
+                                            <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject(location.votes, index)">Reject</button>
+                                            <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept(location.votes, index)"> Vote </button>
                                         </div>
+
+
+                                        
                                         
                                         
                                         <!-- Voted NO: {{ voted_no_people }}
@@ -91,6 +96,8 @@
                             </div>
                         </div>
 
+
+                    </div>
 
 
                     </div>
