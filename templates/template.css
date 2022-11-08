@@ -126,10 +126,23 @@ div#animated-text{
 
 .blurred-minor{
     backdrop-filter: blur(1px) !important;
-    /* background-color: rgba(255, 255, 255, 0.7) !important; */
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.15)) !important;
     border: 0 !important;
 }
+
+.blurred-btn{
+    backdrop-filter: blur(1px) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    border: 0 !important;
+    color: #405559 !important;
+}
+
+.blurred-btn:hover{
+    backdrop-filter: blur(1px) !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 0 !important;
+}
+
 
 /* Create trip */
 img.create-trip-main-img{

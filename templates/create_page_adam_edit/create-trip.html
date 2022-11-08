@@ -61,22 +61,22 @@
             
                 <!-- trip-from date -->         
                 <div class="row justify-content-center">       
-                    <div class="form-floating my-3 col">
+                    <div class="form-floating mt-4 col-sm-6">
                         <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" class="blurred-minor">
                         <label for="start_date"><i class="fa-regular fa-calendar mx-2"></i> Start Date</label>
                     </div>
                 
                     <!-- trip-to date -->                
-                    <div class="form-floating my-3 col">
+                    <div class="form-floating mt-4 col-sm-6">
                         <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" class="blurred-minor">
                         <label for="end_date"><i class="fa-regular fa-calendar mx-2"></i> End Date</label>
                     </div>
                 </div>
             
                 <!-- collab & submit -->
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-4">
                     <div>
-                        <button type="button" class="btn btn-fade" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add Collaborators</button>
+                        <button type="button" class="btn blurred-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user-group fa-xs"></i> Add Collaborators</button>
                         
                         <p class="text-muted" v-if="nameList.length>0">You have added {{nameList}} </p>
                         <!-- Modal -->
@@ -157,7 +157,7 @@
 
                     </div>
                     <div class="mt-3 text-center">
-                        <button type="button" @click="create_new_trip()" class="btn btn-main">Start Planning</button>
+                        <button type="button" @click="create_new_trip()" class="btn btn-main mt-sm-0 mt-4">Start Planning</button>
                     </div>
                 </div>
             
