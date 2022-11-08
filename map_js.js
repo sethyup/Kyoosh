@@ -144,8 +144,8 @@ function create_marker(place, map, id) {
             disableAutoPan: true,
             });
         // Set unique id
-        console.log(place)
-        console.log(id)
+        // console.log(place)
+        // console.log(id)
         marker.id = id;
         vm.$data.current_id = id;
         console.log(`this is the unique Id from  creating the marker: ${id}`)     
@@ -252,6 +252,10 @@ const app = Vue.createApp({
         };
     }, 
     methods: {
+        // back button on create activity
+        back_from_create_activity() {
+            DeleteMarker(id);
+        },
         // delete marker
         delete_marker(id) {
             // console.log(`${id} this is from delete marker`)
@@ -413,10 +417,10 @@ const app = Vue.createApp({
         retrieve_edit_activity_info(id) {
             var details = this.existing_locations[id]
             console.log(details)
-            this.selected_address = details.selected_address
-            this.selected_description = details.selected_description
-            this.selected_latlng = details.selected_latlng
-            this.selected_name = details.selected_name
+            this.selected_address = details.address
+            this.selected_description = details.description
+            this.selected_latlng = details.latlng
+            this.selected_name = details.name
             this.converted_amount = details.price.krw
             this.amount = details.price.sgd
             this.tag_input = details.tag

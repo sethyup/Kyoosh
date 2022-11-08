@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id), autocomplete.set('place', null);">Confirm</button>
+                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, back_from_create_activity(current_id), autocomplete.set('place', null);">Confirm</button>
                                             </div>
                                         </div>
                                         </div>
@@ -260,7 +260,7 @@
     
                                 <!-- DESCRIPTION -->
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
                                     <label for="input_description">Add a Description</label>
                                 </div>
                 
