@@ -32,7 +32,11 @@ const root = Vue.createApp({
 
             last_name: "",
             
-            reset_code: ""
+            reset_code: "",
+
+            new_password_1: "",
+
+            new_password_2: "",
         }
     },
     
@@ -56,7 +60,7 @@ const root = Vue.createApp({
                     .then(
                         function write_success() {
                             // display "Success" message
-                            alert("Write Operation Successful")
+                            console.log("Write Operation Successful")
                             console.log("Entry Created")
                     })
                     .catch((error) => {
@@ -66,11 +70,9 @@ const root = Vue.createApp({
         
                         // display "Error" message
                         var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                        alert(failed_message)
                         console.log(failed_message);
                     })
                     // display "Success" message
-                    alert("Sign Up Successful")
                     console.log("user created")
 
 
@@ -233,29 +235,36 @@ const root = Vue.createApp({
         },
         
         reset_password() {
-            confirmPasswordReset(auth, this.reset_code, this.password)
-            .then(function(){
-                console.log("password reset")
-                document.getElementById("sent_status").attributes[2].nodeValue = "display:block;"
-                location.replace("./login_page.html")
-            })
-            .catch(function(){
-                // for admin, tells you what error there is
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage)
-                console.log(errorCode)
+            if(this.new_password_2 == this.new_password_1){
+                confirmPasswordReset(auth, this.reset_code, this.password)
+                .then(function(){
+                    console.log("password reset")
+                    var success_message = "Password Successfully Reset!"
+                    document.getElementById("reset_status").innerText = success_message
+                    // location.replace("./login_page.html")
+                })
+                .catch(function(){
+                    // for admin, tells you what error there is
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage)
+                    console.log(errorCode)
 
-                // display "Error" message
-                // stays on the same page
-                var failed_message = `Reset Unsuccessful. ${errorMessage}`
-                document.getElementById("error").attributes[2].nodeValue = ""
-                document.getElementById("error").innerHTML = `
-                ${failed_message}
-                `
-                // alert(failed_message)
-                console.log("password not reset")
-            })
+                    // display "Error" message
+                    // stays on the same page
+                    var failed_message = `Reset Unsuccessful. ${errorMessage}`
+                    document.getElementById("error").attributes[2].nodeValue = ""
+                    document.getElementById("error").innerHTML = `
+                    ${failed_message}
+                    `
+                    // alert(failed_message)
+                    console.log("password not reset")
+                })
+            }
+            else{
+                var different_new_passwords = "The two passwords typed do not match!"
+                document.getElementById("reset_status").innerText = different_new_passwords
+            }
 
         },
     }
