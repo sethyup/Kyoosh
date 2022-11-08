@@ -31,7 +31,7 @@
 
         <!-- new trip form -->
     <div id="create_get_trip">
-        <div class="container-md text-dark py-3 position-relative">
+        <div class="container-md text-light py-3 position-relative">
             <form action="#">
                 <!-- title -->
                 <div class="row text-center">
@@ -41,7 +41,7 @@
                 <!-- Trip Name -->
                 <div class="row justify-content-center mt-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control blurred-minor" v-model="trip_name" name="trip_name"  placeholder="Trip Name">
+                        <input type="text" class="form-control blurred-minor-gradient" v-model="trip_name" name="trip_name"  placeholder="Trip Name">
                         <label for="trip_name"><i class="fa-solid fa-suitcase-rolling mx-2"></i> Trip Name</label>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <!-- where to? -->
                 <div class="row justify-content-center mt-4">
                     <div class="form-floating">
-                        <input type="text" class="form-control blurred-minor" v-model="destination" name="destination_country"  placeholder="country" list="list_all_countries">
+                        <input type="text" class="form-control blurred-minor-gradient" v-model="destination" name="destination_country"  placeholder="country" list="list_all_countries">
                         <label for="destination_country"><i class="fa-solid fa-plane-departure mx-2"></i> Where to?</label>
                     </div>
                 </div>
@@ -62,13 +62,13 @@
                 <!-- trip-from date -->         
                 <div class="row justify-content-center">       
                     <div class="form-floating mt-4 col-sm-6">
-                        <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" class="blurred-minor">
+                        <input type="date" v-model="sDate" name="start_date" placeholder="Select Date" class="blurred-minor-gradient">
                         <label for="start_date"><i class="fa-regular fa-calendar mx-2"></i> Start Date</label>
                     </div>
                 
                     <!-- trip-to date -->                
                     <div class="form-floating mt-4 col-sm-6">
-                        <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" class="blurred-minor">
+                        <input type="date" v-model="eDate" name="end_date" placeholder="Select Date" class="blurred-minor-gradient">
                         <label for="end_date"><i class="fa-regular fa-calendar mx-2"></i> End Date</label>
                     </div>
                 </div>
@@ -76,15 +76,15 @@
                 <!-- collab & submit -->
                 <div class="row justify-content-center mt-4">
                     <div>
-                        <button type="button" class="btn blurred-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user-group fa-xs"></i> Add Collaborators</button>
+                        <button type="button" class="btn blurred-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-user-group fa-xs"></i>+ Add Collaborators</button>
                         
-                        <p class="text-muted" v-if="nameList.length>0">You have added {{nameList}} </p>
+                        <p class="text-muted">{{friendCollaborators}}</p>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="height: 500px;">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add your Friends!</h1>
+                                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Add your Friends!</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -152,7 +152,6 @@
                             </div>
                             </div>
                         </div>
-
 
 
                     </div>
