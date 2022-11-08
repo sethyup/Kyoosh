@@ -86,8 +86,11 @@ const root = Vue.createApp({
 
                     // display "Error" message
                     // stays on the same page
-                    var failed_message = `Sign Up Unsuccessful. Error: ${errorMessage}`
-                    alert(failed_message)
+                    var failed_message = `Sign Up Unsuccessful. ${errorMessage}`
+                    document.getElementById("error").attributes[2].nodeValue = ""
+                    document.getElementById("error").innerHTML = `
+                    ${failed_message}
+                    `
                     console.log("user not created")
                 });
         },
@@ -151,8 +154,7 @@ const root = Vue.createApp({
                 .then(
                     function write_success() {
                         // display "Success" message
-                        alert("Write Operation Successful")
-                        console.log("Entry Created")
+                        console.log("Write Operation Successful")
                 })
                 .catch((error) => {
                     // for us to debug, tells us what error there is,
@@ -161,12 +163,11 @@ const root = Vue.createApp({
     
                     // display "Error" message
                     var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                    alert(failed_message)
                     console.log(failed_message);
                 })
 
-                console.log(`Log In Successful`)                
-                alert(`Login Successful`)
+                console.log(`Log In Successful`)    
+                location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")            
 
             }).catch((error) => {
                 // Handle Errors here.
@@ -178,6 +179,13 @@ const root = Vue.createApp({
                 // const credential = GoogleAuthProvider.credentialFromError(error);
                 
                 console.log(errorCode + ': ' + errorMessage)
+                var failed_message = `Log In Unsuccessful. ${errorMessage}`
+                document.getElementById("error").attributes[2].nodeValue = ""
+                document.getElementById("error").innerHTML = `
+                ${failed_message}
+                `
+                // alert(failed_message)
+                console.log("user not created")
             });
         },
 
