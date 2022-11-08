@@ -130,9 +130,20 @@ div#animated-text{
     border: 0 !important;
 }
 
+.blurred-minor-2{
+    backdrop-filter: blur(25px) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
 .blurred-minor-gradient{
     backdrop-filter: blur(1px) !important;
     background: linear-gradient(90deg, rgba(36, 161, 157, 0.7), rgba(36, 161, 157, 0.15)) !important;
+    border: 0 !important;
+}
+
+.blurred-minor-gradient-login{
+    backdrop-filter: blur(1px) !important;
+    background: linear-gradient(90deg, rgba(36, 161, 157, 1), rgba(36, 161, 157, 0.15)) !important;
     border: 0 !important;
 }
 
@@ -157,4 +168,12 @@ img.create-trip-main-img{
     width: 100%;
     height: 100%;
     filter: brightness(50%);
+}
+
+/* login page */
+.login-page-carousel-img .carousel-item img{
+    object-fit: cover;
+    object-position: center;
+    height: 100vh;
+    overflow: hidden;
 }
