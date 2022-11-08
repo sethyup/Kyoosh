@@ -47,7 +47,7 @@ main.component('homepage-navbar', {
 
 main.component('createtrip-navbar', {
     template: 
-            `<nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom border-secondary sticky-top">
+            `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
                 <div class="container">
                     <a class="navbar-brand" href="#"><b>The JAWKS-7</b></a>
                         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
