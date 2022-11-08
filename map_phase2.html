@@ -222,6 +222,7 @@
                             </form>
                         </div>
                     </div>
+                    
                     <!-- pop up if edit activity -->
                     <div :style="{display: d_edit()}" class="col py-3">
                         <div class="container text-dark">
@@ -264,7 +265,7 @@
                                 </div>
                 
                                 <!-- Currency converter -->
-                                <div id="main">
+                                <div>
                                         <!--  ENTER COST   -->
                                     <div class="row">
                                         <div class="col-5">
@@ -405,13 +406,15 @@
         // access vm from module script and open up edit view
         async function set_edit(obj) {
             var vm_vue = await import("./map_js.js")
-            
+            console.log(obj)
             if (vm_vue.vm.$data.edit_true == false) {
                 
                 vm_vue.vm.$data.edit_true = true
                 vm_vue.vm.$data.create_true = false
                 vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
+                console.log(obj.querySelector("div[id='get_marker_id']").innerText)
                 console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+                vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
             } else {
                 vm_vue.vm.$data.edit_true = false
                 vm_vue.vm.$data.create_true = true
