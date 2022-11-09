@@ -1,3 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+// Our Firebase Project Configuration
+const WADTravel = initializeApp({
+  apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+  authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+  databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "wad-brothers-travel-ltd",
+  storageBucket: "wad-brothers-travel-ltd.appspot.com",
+  messagingSenderId: "305280551700",
+  appId: "1:305280551700:web:434cc190d57eabe14d1001",
+  measurementId: "G-3XQT4098KL"
+})
+
+// const auth = getAuth(WADTravel)
+const db = getDatabase(WADTravel)
+
 const main = Vue.createApp({
     data(){
       return{
@@ -81,14 +99,17 @@ const main = Vue.createApp({
           }, 
           
       },
-      //HARD-CODED
-      user_name: "kbang",
-      }
+        //HARD-CODED
+        user_name: "kbang",
+        trip_id: "grad trip_adambft",
+        existing_locations: ""
+        }
     },
     methods:{
         get_total_users(){
-          all_votes = this.locations["1"].votes
-          total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
+          var all_votes = this.locations["1"].votes
+          console.log(`${all_votes} this from get total users`)
+          var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
           console.log(this.get_total_users)
           return total_users
         },
@@ -116,7 +137,7 @@ const main = Vue.createApp({
           // console.log(votes.yet_to_vote.length)
           return (votes.yet_to_vote.length)*100/this.get_total_users()
         },
-      user_reject(votes, idx){
+        user_reject(votes, idx){
             // number of members = 5
             // if voted yes before
             if(!votes.no.includes(this.user_name)){
@@ -166,6 +187,31 @@ const main = Vue.createApp({
             var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe'+ idx);
             tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length)});
         }, 
+        // read existing locations from the database
+        read_from_existing_locations() {
+          const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+          onValue(data_to_be_read, (snapshot) => {
+              const data = snapshot.val();
+              // check if there is existing data on db
+              if (data) {
+                  this.existing_locations = data
+                  console.log(data)
+              }
+              // retrieve recommended places for new trips
+              else {
+                  const data_to_be_read = ref(db, `locations`);
+                  onValue(data_to_be_read, (snapshot) => {
+                      const data2 = snapshot.val();
+                      if (data2) {
+                          this.existing_locations = data2
+                      }
+                  })
+              }
+              })
+        },
+    },
+    async created() {
+      await this.read_from_existing_locations()
     }
   })
 
