@@ -80,7 +80,7 @@
                         <p class="text-light mt-2">{{friendCollaborators}}</p>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="height: 500px;">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Add your Friends!</h1>
@@ -88,21 +88,30 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-
-                                        <div class="col-6 text-center">
-                                            <input id="collab_email" type="text" name="collab_email" placeholder="Your Friend's Email">
+                                        <div class="col text-center">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" name="collab_email" placeholder=" " v-model="collaborator_input" list="arr_user_emails" id="collab_email">
+                                                <label for="collab_email"><i class="fa-solid fa-plane-arrival"></i> collab_email</label>
+                                            </div>
                                         </div>
-                                        <div class="col-6 text-center">
-                                            <button type="button" class="btn btn-dark">Add Collaborators</button>
+                                        <div class="col-4 text-center">
+                                            <button type="button" @click="add_collaborator()" class="btn btn-dark">Add Collaborators</button>
                                         </div>
-                                            
                                     </div>
+
+                                    <br>
+        
+
+                                    <datalist id="arr_user_emails">
+                                        <option v-for="email of user_emails" :value="email"></option>
+                                    </datalist>
+
                                     <div class="row">
 
                                         <ul class="list-group">
-                                            <li class="list-group-item">
-                                              <input class="form-check-input me-1" type="checkbox" value="Adam" id="A" v-model="nameList">
-                                              <label class="form-check-label" for="firstCheckbox"> Adam</label>
+                                            <li class="list-group-item" v-for="collaborator in collaborators">
+                                              <input class="form-check-input me-1" type="checkbox" :value="collaborator" :id="collaborator" v-model="nameList">
+                                              <label class="form-check-label" for="firstCheckbox"> {{collaborator}}</label>
                                             </li>
                                         </ul>
 
@@ -110,8 +119,15 @@
                                     
                                 </div>
                                 <div class="modal-footer">
+                                    <div class="col">
+                                    <p class="text-danger text-start" id="error">
+                                        
+                                    </p>
+                                    </div>
+                                    <div class="col-2">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="button" :click="" class="btn btn-info" data-bs-dismiss="modal">Add</button>
+                                    </div>  
                                 </div>
                             </div>
                             </div>
