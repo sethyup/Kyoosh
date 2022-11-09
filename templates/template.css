@@ -24,8 +24,9 @@ button.btn-main-fixed:active:focus, button.btn-main-fixed:active, button.btn-mai
 }
 
 button.btn-main:disabled, button.btn-main-fixed:disabled {
-    background-color: #56d3cf;
-    color: #FFFFFF;
+    background-color: #56d3cf !important;
+    border: #56d3cf solid 1px !important;
+    color: #FFFFFF !important;
 }
 
 button.dropshadow-btn-main{
@@ -46,8 +47,9 @@ button.btn-main-bold-fixed:active:focus, button.btn-main-bold-fixed:active, butt
 }
 
 button.btn-main-bold:disabled, button.btn-main-bold-fixed:disabled {
-    background-color: #6b8799;
-    color: #FFFFFF;
+    background-color: #6b8799 !important;
+    border: #6b8799 solid 1px !important;
+    color: #FFFFFF !important;
 }
 
 /* btn main mild */
@@ -108,6 +110,11 @@ button.dropdown[aria-expanded = false] .fa-chevron-up{
     display: none;
 }
 
+/* nav items */
+.nav-pills span{
+    color: #0a4a48;
+}
+
 
 /* Homepage elements */
 img.homepage-main-img{
@@ -126,6 +133,7 @@ div#animated-text{
 .blurred{
     backdrop-filter: blur(12px) !important;
     background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 0 !important;
 }
 
 .blurred-minor{
@@ -137,6 +145,12 @@ div#animated-text{
 .blurred-minor-2{
     backdrop-filter: blur(25px) !important;
     background-color: rgba(255, 255, 255, 0.6) !important;
+    border: 0 !important;
+}
+
+.blurred-minor-no-bd-filter{
+    background:  rgba(255, 255, 255, 0.5) !important;
+    border: 0 !important;
 }
 
 .blurred-minor-gradient{

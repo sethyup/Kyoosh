@@ -21,11 +21,19 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <title>Accomodations</title>
+
+    <style>
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid" id="accommodation_app">
         <div class="row sidebar-parent flex-nowrap" @click="update_local_vmodel()" @keydown="update_local_vmodel()">
-            <div id="nav" class="col-auto sidebar-css">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                 <!-- SIDEBAR -->
                 <sidebar-phase3></sidebar-phase3>
             </div>
@@ -35,12 +43,12 @@
                 <!-- CREATE NEW ACCOMMODATION BUTTON -->
                 <div class="row justify-content-end mb-3">
                     <div class="col-md-3 col-lg-2 d-flex justify-content-center">
-                        <button type="button" class="btn btn-main" @click="enable_create_mode()" :disabled="create_new_accom || edit_existing_accom">Create New</button>
+                        <button type="button" class="btn btn-main dropshadow-btn-main" @click="enable_create_mode()" :disabled="create_new_accom || edit_existing_accom">Create New</button>
                     </div>
                 </div>
 
                 <!-- CREATE NEW ACCOM FORM -->
-                <div class="container-md text-dark bg-mild rounded-4 py-3 px-5 mb-3 position-relative" v-if="create_new_accom">
+                <div class="container-md text-dark rounded-4 py-3 px-5 mb-3 position-relative blurred-minor-no-bd-filter" v-if="create_new_accom">
                     <form action="#">
                         <!-- title -->
                         <div class="row justify-content-center text-center">
@@ -158,7 +166,7 @@
                 <!-- EACH LOADED ACCOM -->
                 <div v-for="e_accom_obj of accom_obj_arr">
                     <!-- DISPLAY STATIC -->
-                    <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative" v-if="!e_accom_obj.edit_mode">
+                    <div class="container-md text-dark rounded-4 py-3 mb-3 position-relative blurred-minor-no-bd-filter" v-if="!e_accom_obj.edit_mode">
                         <form action="#">
                             <!-- title & address + check in & out -->
                             <div class="row justify-content-center">
@@ -226,7 +234,7 @@
                     </div>
 
                     <!-- DISPLAY EDIT ACCOM -->
-                    <div class="container-md text-dark bg-mild rounded-4 py-3 px-5 mb-3 position-relative" v-else>
+                    <div class="container-md text-dark rounded-4 py-3 px-5 mb-3 position-relative blurred-minor-no-bd-filter" v-else>
                         <form action="#">
                             <!-- title -->
                             <div class="row justify-content-center text-center">
@@ -352,7 +360,7 @@
                                 <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="ModalLabel">Delete Flight</h1>
+                                    <h1 class="modal-title fs-5" id="ModalLabel">Delete Lodging</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
