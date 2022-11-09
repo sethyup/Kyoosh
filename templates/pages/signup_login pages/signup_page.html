@@ -20,16 +20,6 @@
     <title>Sign Up Page</title>
 
     <style>
-        .cascading-right {
-            margin-right: -50px;
-        }
-    
-        @media (max-width: 992px) {
-            .cascading-right {
-            margin-right: 0;
-            }
-        }
-
         #firebaseui-auth-container {
             position:absolute;
             top:70%
@@ -38,77 +28,107 @@
 </head>
 <body id="signuplogin">
 
-<div class="container py-4">
-    <div class="d-flex justify-content-center p-3">
-			<p class="fs-1 fw-bold text-primary text-center">The JAWKS-7 LOGO</p>
-    </div>
-    <div class="row g-0 align-items-center">
-      <div class="col-lg-6 mb-5 mb-lg-0">
-        <div class="card cascading-right " style="
-            background: hsla(20, 10%, 94%, 0.11);
-            backdrop-filter: blur(30px);
-            ">
-            <div class="card-body p-5 shadow-5 text-center">
-            <h2 class="fw-bold mb-5 text-primary">Sign up now</h2>
-            <form>
-                <!-- 2 column grid layout for the first & last names -->
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                        <label for="first_name"><b>First name</b></label>
-                        <input type="text" v-model="first_name" name="first_name" class="form-control" id="first_name" placeholder="First name"/>
-                    </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                        <label for="last_name"><b>Last name</b></label>
-                        <input type="text" v-model="last_name" name="last_name" class="form-control" id="last_name" placeholder="Last name"/>
-                    </div>
+    <div class="container-fluid">
+        <div class="row vh-100 position-relative">
+            <!-- RIGHT COLUMN (IMG) -->
+            <div class="col-12 p-0 position-absolute" style="z-index: -1;">
+                <div id="carouselExampleInterval" class="carousel slide carousel-fade d-flex justify-content-center align-items-center vh-100" data-bs-ride="carousel">
+                    <div class="carousel-inner login-page-carousel-img">
+                        <div class="carousel-item active" data-bs-interval="5000">
+                            <img src="../../../images/home_page/main_images/main_page_bg_1.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="5000">
+                            <img src="../../../images/home_page/main_images/main_page_bg_2.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="5000">
+                            <img src="../../../images/home_page/main_images/main_page_bg_3.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="5000">
+                            <img src="../../../images/home_page/main_images/main_page_bg_4.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item" data-bs-interval="5000">
+                            <img src="../../../images/home_page/main_images/main_page_bg_5.jpg" class="d-block w-100">
+                        </div>
                     </div>
                 </div>
-
-                <!-- Username input -->
-                <div class="form-outline mb-4">
-                    <label for="username"><b>Username</b></label>
-                    <input type="username" v-model="username" name="username" class="form-control" id="username" placeholder="Username">
+            </div>
+            
+            <!-- LEFT COLUMN (FORM) -->
+            <div class="col-sm-8 col-md-6 col-lg-5 px-4 blurred-minor-2 pb-5" style="overflow-y: scroll; height: 100%;">
+                <!-- LOGO GOES HERE -->
+                <div class="mt-3">
+                    LOGO
                 </div>
 
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                    <label for="email"><b>Email address</b></label>
-                    <input type="email" v-model="email" name="email" class="form-control" id="email" placeholder="iloveWAD@mail.com">
+                <h1 class="fw-bold text-primary mt-4">Sign Up Now</h1>
+
+                <!-- SIGN UP FORM -->
+                <form class="mt-5 px-2">
+                    <div class="row gy-3">
+                        <!-- first name -->
+                        <div class="form-floating text-light col-md-6 ms-auto gx-1">
+                            <input type="text" class="form-control blurred-minor-gradient-login text-light" v-model="first_name" name="first_name" placeholder=" " id="first_name">
+                            <label for="first_name">First name</label>
+                        </div>
+
+                        <!-- last name -->
+                        <div class="form-floating text-light col-md-6 ms-auto gx-1">
+                            <input type="text" class="form-control blurred-minor-gradient-login text-light" v-model="last_name" name="last_name" placeholder=" " id="last_name">
+                            <label for="last_name">Last name</label>
+                        </div>
+
+                        <!-- username -->
+                        <div class="form-floating text-light col-12 ms-auto gx-1">
+                            <input type="username" class="form-control blurred-minor-gradient-login text-light" v-model="username" name="username" placeholder=" " id="username">
+                            <label for="username">Username</label>
+                        </div>
+
+                        <!-- email -->
+                        <div class="form-floating text-light col-12 ms-auto gx-1">
+                            <input type="email" class="form-control blurred-minor-gradient-login text-light" v-model="email" name="email" placeholder=" " id="email">
+                            <label for="username"><i class="fa-solid fa-envelope fa-sm"></i> Email</label>
+                        </div>
+
+                        <!-- password -->
+                        <div class="form-floating text-light col-12 ms-auto gx-1">
+                            <input type="password" class="form-control blurred-minor-gradient-login text-light" v-model="password" name="password" placeholder=" " id="pwd">
+                            <label for="password"><i class="fas fa-key fa-sm"></i> Password</label>
+                            <small id="passwordHelpInline" class="text-muted">
+                                Must be 6-20 characters long
+                            </small>
+                        </div>
+
+
+                        <!-- error message -->
+                        <div class="text-danger" id="error" style="display:none">
+                        </div>
+
+                        <br>
+
+                        <!-- redirect to login page if alr have an account -->
+                        <div class="d-flex justify-content-center links">
+                            Already have an account?&nbsp<a href="login_page.html">Log In</a>
+                        </div>
+
+                        <br>
+
+                        <!-- submit button -->
+                        <div class="d-grid">
+                            <button type="button" @click="sign_up()" class="btn btn-main mt-4">Sign Up</button>
+                        </div>
+
+                        <div class="text-danger" id="error" style="display:none;">
+                        </div>
+                    </div>
+                </form>
+
+                <!-- NEW ACCOUNT SIGN UP -->
+                <div class="card-footer text-muted mt-4">
+                    <div class="d-flex justify-content-center">
+                        <a href="reset_password_email_page.html" class="mt-2">Forgot your password?</a>
+                    </div>
                 </div>
-
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                    <label for="pwd"><b>Password</b></label>
-                    <input type="password" v-model="password" name="password" class="form-control" id="pwd" placeholder="Password">
-                    <small id="passwordHelpInline" class="text-muted">
-                        Must be 6-20 characters long
-                    </small>
-                </div>
-
-                <div class="text-danger" id="error" style="display:none">
-
-                </div> 
-
-                <div class="d-flex justify-content-center links">
-					Already have an account?&nbsp<a href="login_page.html">Log In</a>
-				</div>
-                <br>
-                <!-- Submit button -->
-                <div class="d-grid">
-                    <button type="button" @click="sign_up()" class="btn btn-primary mb-4">Sign Up</button>
-                </div>
-            </form>
-        </div>
-        </div>
-        </div>
-
-        <div class="col-lg-6 d-none d-lg-block">
-            <img src="../images/signup-img.jpg" class="w-100 rounded-4 shadow-4"
-            alt="" />
-        </div>
+            </div>
         </div>
     </div>
 
