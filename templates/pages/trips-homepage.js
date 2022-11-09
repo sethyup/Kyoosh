@@ -1,3 +1,7 @@
+
+console.log(localStorage.getItem("user"))
+console.log("hello fucker")
+
 // List of sentences
 var _CONTENT = [ "Plan a trip.", "Find yourself.", "Get away.", "Live your dream." ];
 

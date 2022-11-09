@@ -88,62 +88,30 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-2">
-                                            <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end ">
-                                                <nav class="nav nav-pills flex-column sticky-top">
-                                                <a class="nav-link" href="#A">A</a>
-                                                <a class="nav-link" href="#J">J</a>
-                                                <a class="nav-link" href="#K">K</a>
-                                                <a class="nav-link" href="#P">P</a>
-                                                <a class="nav-link" href="#S">S</a>
-                                                <a class="nav-link" href="#W">W</a>
-                                                </nav>
-                                            </nav>
-                                        </div>
 
-                                        <div class="col-10">
-                                         <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
-                                            <ul class="list-group">
-                                                <li class="list-group-item">
-                                                  <input class="form-check-input me-1" type="checkbox" value="Adam" id="A" v-model="nameList">
-                                                  <label class="form-check-label" for="firstCheckbox">Adam</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="Aliali" v-model="nameList">
-                                                    <label class="form-check-label" for="firstCheckbox">Aliali</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                  <input class="form-check-input me-1" type="checkbox" value="Jun Sui" id="J" v-model="nameList">
-                                                  <label class="form-check-label" for="secondCheckbox">Jun Sui</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="Joker" v-model="nameList">
-                                                    <label class="form-check-label" for="firstCheckbox">Joker</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                  <input class="form-check-input me-1" type="checkbox" value="Keng Boon" id="K" v-model="nameList">
-                                                  <label class="form-check-label" for="thirdCheckbox">Keng Boon</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="Prof" id="P" v-model="nameList">
-                                                    <label class="form-check-label" for="thirdCheckbox">Prof</label>
-                                                  </li>
-                                                <li class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="Seth" id="S" v-model="nameList">
-                                                    <label class="form-check-label" for="thirdCheckbox">Seth</label>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="Wei Xuan" id="W" v-model="nameList">
-                                                    <label class="form-check-label" for="thirdCheckbox">Wei Xuan</label>
-                                                </li>
-                                            </ul>
-                                          </div>
+                                        <div class="col-6 text-center">
+                                            <input id="collab_email" type="text" name="collab_email" placeholder="Your Friend's Email">
                                         </div>
+                                        <div class="col-6 text-center">
+                                            <button type="button" class="btn btn-dark">Add Collaborators</button>
+                                        </div>
+                                            
                                     </div>
+                                    <div class="row">
+
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                              <input class="form-check-input me-1" type="checkbox" value="Adam" id="A" v-model="nameList">
+                                              <label class="form-check-label" for="firstCheckbox"> Adam</label>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Add</button>
+                                    <button type="button" :click="" class="btn btn-info" data-bs-dismiss="modal">Add</button>
                                 </div>
                             </div>
                             </div>
