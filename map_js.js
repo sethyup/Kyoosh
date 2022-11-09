@@ -203,7 +203,7 @@ function create_marker(place, map, id) {
 // delete markers
 function DeleteMarker(id) {
     //Find and remove the marker from the Array
-    console.log(id)
+    console.log(`${id} from DeleteMarker`)
     for (var i = 0; i < markers.length; i++) {
         if (markers[i].id == id) {
             //Remove the marker from Map                  
@@ -252,15 +252,26 @@ const app = Vue.createApp({
         };
     }, 
     methods: {
-        // back button on create activity
-        back_from_create_activity() {
-            DeleteMarker(id);
-        },
-        // delete marker
-        delete_marker(id) {
+        // delete marker in edit_activity
+        delete_marker_edit(id) {
+            console.log(`this is the curernt marker id: ${this.current_id}`)
+            console.log(`and this is the current markers length: ${markers.length}`)
+            console.log(markers)
             // console.log(`${id} this is from delete marker`)
             DeleteMarker(id);
             this.delete_data(id)
+            
+        },
+        // delete marker in create activity
+        delete_marker(id) {
+            // console.log(`${id} this is from delete marker`)
+            if (this.current_id == markers.length - 1) {
+                return
+            } else if (this.current_id != markers.length - 1    ) {
+                DeleteMarker(id);
+                this.delete_data(id)
+            }
+            
         },
         // toggle display for create activity
         d_create() {
@@ -323,6 +334,7 @@ const app = Vue.createApp({
                 if (data) {
                     this.existing_locations = data
                     uniqueId = data.length
+                    markers = []
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
