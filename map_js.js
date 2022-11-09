@@ -222,7 +222,10 @@ function DeleteMarker(id) {
 const app = Vue.createApp({ 
     data() { 
         return {
+            // trip details
             trip_id: "grad trip_adambft",
+            user_id: "",
+            // display details
             create_true: false,
             edit_true: false,
             // map stuff
@@ -491,7 +494,12 @@ const app = Vue.createApp({
             this.no = details.votes.no;
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
-        }
+        },
+        // retrieve and edit user and trip id
+        // retrieve_from_cache() {
+        //     this.trip_id = localStorage.getItem('user')
+        //     this.user_id = localStorage.getItem('trip')
+        // }
     },
     // load data from database before initialising map and mounting vue
     async created() {
