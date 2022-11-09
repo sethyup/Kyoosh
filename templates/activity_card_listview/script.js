@@ -37,7 +37,7 @@ const main = Vue.createApp({
               "tag": "Attraction",
               "votes": {
                 yes: ["SETH YAP ZIQI_"],
-                no: ["adamft", "kbang", ],
+                no: ["adamft", "kbang" ],
                 yet_to_vote: ["name4", "name5"]
               }
               },
