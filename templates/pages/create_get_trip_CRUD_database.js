@@ -35,7 +35,11 @@ const root = Vue.createApp({
             // assume that i'm adam right now
             // no need friend, its all dynamic
 
+            collaborator_input: "",
+            
             collaborators: [],
+
+            user_emails: [],
 
             trip_name: "",
 
@@ -61,6 +65,24 @@ const root = Vue.createApp({
         friendCollaborators(){
             return this.nameList.length > 0 ? "You have added " + this.nameList.join(", ") : ''
         }
+    },
+
+    created() {
+        const users_path = ref(db, "users/")
+        onValue(users_path, (snapshot) => {
+            const data = snapshot.val()
+            // console.log(data)
+            for(var user in data){
+                // console.log(user)
+                // console.log(data[user].email)
+                this.user_emails.push(data[user].email)
+
+            }
+        });
+
+        
+        console.log(this.user_emails)
+    
     },
 
     methods: {
@@ -144,6 +166,21 @@ const root = Vue.createApp({
             });
         },
 
+        add_collaborator() {
+            // console.log("adding")
+            var collaborator_to_add = this.collaborator_input
+            console.log(collaborator_to_add)
+            console.log(this.user_emails)
+            if(this.user_emails.includes(collaborator_to_add)){
+                this.collaborators.push(collaborator_to_add)
+            }
+            else{
+                var error_message = "Email entered is not registered on Whoosh!"
+                document.getElementById("error").innerText = error_message
+            }  
+            
+        }
+
         // delete_data() {
         //     remove(/* path location goes here*/)
         //     .then(
@@ -181,7 +218,9 @@ const root = Vue.createApp({
         console.log("FLATPICKR INITIALIZED")
         // date only
         let date_fp_obj = flatpickr("input[type=date]", date_config)
-    }
+    },
+
+    
 })
 
 
