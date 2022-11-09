@@ -13,15 +13,10 @@
         "sgd": 0
       },
       "tag": "Attraction",
-      "votes_num": {
-        "no": 1,
-        "yes": 3,
-        "yet_to_vote": 1
-      },
-      "votes_percentage": {
-        "no": 20,
-        "yes": 60,
-        "yet_to_vote": 20
+      "votes": {
+        "yes": ["SETH YAP ZIQI_", "kbang"],
+        "no": ["adamft"],
+        "yet_to_vote": ["name4", "name5"]
       }
     },
     {
@@ -37,15 +32,10 @@
         "sgd": 12
       },
       "tag": "Attraction",
-      "votes_num": {
-        "no": 1,
-        "yes": 1,
-        "yet_to_vote": 3
-      },
-      "votes_percentage": {
-        "no": 20,
-        "yes": 20,
-        "yet_to_vote": 60
+      "votes": {
+        "yes": ["SETH YAP ZIQI_"],
+        "no": ["adamft", "kbang" ],
+        "yet_to_vote": ["name4", "name5"]
       }
     },
     {
@@ -61,15 +51,10 @@
         "sgd": 3
       },
       "tag": "Food",
-      "votes_num": {
-        "no": 0,
-        "yes": 4,
-        "yet_to_vote": 1
-      },
-      "votes_percentage": {
-        "no": 0,
-        "yes": 80,
-        "yet_to_vote": 20
+      "votes": {
+        "yes": ["SETH YAP ZIQI_"],
+        "no": ["adamft"],
+        "yet_to_vote": ["kbang", "name4", "name5"]
       }
     },
     {
@@ -85,15 +70,10 @@
         "sgd": 25
       },
       "tag": "Shopping",
-      "votes_num": {
-        "no": 0,
-        "yes": 5,
-        "yet_to_vote": 0
-      },
-      "votes_percentage": {
-        "no": 0,
-        "yes": 100,
-        "yet_to_vote": 0
+      "votes": {
+        "yes": ["SETH YAP ZIQI_"],
+        "no": ["adamft", "name4"],
+        "yet_to_vote": ["kbang", "name5"]
       }
     }
   ],
@@ -143,15 +123,10 @@
             "sgd": 0
           },
           "tag": "Attraction",
-          "votes_num": {
-            "no": 1,
-            "yes": 3,
-            "yet_to_vote": 1
-          },
-          "votes_percentage": {
-            "no": 20,
-            "yes": 60,
-            "yet_to_vote": 20
+          "votes": {
+            "yes": ["SETH YAP ZIQI_", "kbang"],
+            "no": ["adamft"],
+            "yet_to_vote": ["name4", "name5"]
           }
         },
         {
@@ -167,15 +142,10 @@
             "sgd": 12
           },
           "tag": "Attraction",
-          "votes_num": {
-            "no": 1,
-            "yes": 1,
-            "yet_to_vote": 3
-          },
-          "votes_percentage": {
-            "no": 20,
-            "yes": 20,
-            "yet_to_vote": 60
+          "votes": {
+            "yes": ["SETH YAP ZIQI_"],
+            "no": ["adamft", "kbang" ],
+            "yet_to_vote": ["name4", "name5"]
           }
         },
         {
@@ -191,15 +161,10 @@
             "sgd": 3
           },
           "tag": "Food",
-          "votes_num": {
-            "no": 0,
-            "yes": 4,
-            "yet_to_vote": 1
-          },
-          "votes_percentage": {
-            "no": 0,
-            "yes": 80,
-            "yet_to_vote": 20
+          "votes": {
+            "yes": ["SETH YAP ZIQI_"],
+            "no": ["adamft"],
+            "yet_to_vote": ["kbang", "name4", "name5"]
           }
         },
         {
@@ -215,15 +180,10 @@
             "sgd": 25
           },
           "tag": "Shopping",
-          "votes_num": {
-            "no": 0,
-            "yes": 5,
-            "yet_to_vote": 0
-          },
-          "votes_percentage": {
-            "no": 0,
-            "yes": 100,
-            "yet_to_vote": 0
+          "votes": {
+            "yes": ["SETH YAP ZIQI_"],
+            "no": ["adamft", "name4"],
+            "yet_to_vote": ["kbang", "name5"]
           }
         }
       ],
@@ -276,7 +236,11 @@
         }
       ],
       "group_member": [
-        "kbang"
+        "kbang",
+        "SETH YAP ZIQI_",
+        "adamft",
+        "name4",
+        "name5"
       ],
       "lodging": [
         {

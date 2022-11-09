@@ -28,6 +28,10 @@ button.btn-main:disabled, button.btn-main-fixed:disabled {
     color: #FFFFFF;
 }
 
+button.dropshadow-btn-main{
+    filter: drop-shadow(0px 0px 15px #063937);
+}
+
 /* btn main bold */
 button.btn-main-bold, button.btn-main-bold-fixed {
     background-color: #58788C;

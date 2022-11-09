@@ -125,7 +125,7 @@ const root = Vue.createApp({
                     localStorage.setItem("user", email)
                     location.replace("../trips-homepage.html")
                     
-                    
+                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                 })
                 .catch((error) => {
                     // for admin, tells you what error there is

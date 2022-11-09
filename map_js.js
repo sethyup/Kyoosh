@@ -35,7 +35,7 @@ function initMap(location) {
     // });
     for (var place in location) {
         // create_marker(place, map)
-        create_marker(location[place], map)
+        create_marker(location[place], map, place)
     }
     
     initAutocomplete();
@@ -127,7 +127,7 @@ function initAutocomplete() {
 }
 
 // create existing marker
-function create_marker(place, map) {
+function create_marker(place, map, id) {
     const icon = {
             url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // url
             scaledSize: new google.maps.Size(40, 40), // scaled size
@@ -144,9 +144,11 @@ function create_marker(place, map) {
             disableAutoPan: true,
             });
         // Set unique id
-        marker.id = uniqueId;
-        vm.$data.current_id = uniqueId;
-        console.log(`this is the unique Id from  creating the marker: ${uniqueId}`)     
+        // console.log(place)
+        // console.log(id)
+        marker.id = id;
+        vm.$data.current_id = id;
+        console.log(`this is the unique Id from  creating the marker: ${id}`)     
         
         // set infoWindow
         var contentString = 
@@ -201,7 +203,7 @@ function create_marker(place, map) {
 // delete markers
 function DeleteMarker(id) {
     //Find and remove the marker from the Array
-    console.log(id)
+    console.log(`${id} from DeleteMarker`)
     for (var i = 0; i < markers.length; i++) {
         if (markers[i].id == id) {
             //Remove the marker from Map                  
@@ -219,22 +221,21 @@ function DeleteMarker(id) {
 // vue app
 const app = Vue.createApp({ 
     data() { 
-        return { 
+        return {
             trip_id: "grad trip_adambft",
             create_true: false,
             edit_true: false,
             // map stuff
             map_width: '90%',
-            
             existing_locations: "",
-            // main stuff
+            // create activity stuff
             amount: "", 
             from: "SGD", 
             to: "KRW", 
             converted_amount: "",
             api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
             home_country: "SGD",
-            // main2 stuff
+            // create activity 2nd part
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
             // marker stuff
@@ -244,18 +245,36 @@ const app = Vue.createApp({
             selected_description: "",
             selected_name: "",
             selected_latlng: "",
-            group_size: '',
+            group_members: '',
             // amount, converted amount from main stuff
-            votes_num: { no: 0, yes: 0, yet_to_vote: 5},
+            // vote details
+            no: [],
+            yes: [],
+            yet_to_vote: [],
 
         };
     }, 
     methods: {
-        // delete marker
+        // delete marker in edit_activity
+        delete_marker_edit(id) {
+            console.log(`this is the curernt marker id: ${this.current_id}`)
+            console.log(`and this is the current markers length: ${markers.length}`)
+            console.log(markers)
+            // console.log(`${id} this is from delete marker`)
+            DeleteMarker(id);
+            this.delete_data(id)
+            
+        },
+        // delete marker in create activity
         delete_marker(id) {
-            console.log(`${id} this is from delete marker`)
-            DeleteMarker(id-1);
-            this.delete_data(id-1)
+            // console.log(`${id} this is from delete marker`)
+            if (this.current_id == markers.length - 1) {
+                return
+            } else if (this.current_id != markers.length - 1    ) {
+                DeleteMarker(id);
+                this.delete_data(id)
+            }
+            
         },
         // toggle display for create activity
         d_create() {
@@ -318,6 +337,7 @@ const app = Vue.createApp({
                 if (data) {
                     this.existing_locations = data
                     uniqueId = data.length
+                    markers = []
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
@@ -334,13 +354,15 @@ const app = Vue.createApp({
                 }
                 })   
             },
-        // read group size
-        read_group_size() {
+        // read group members for voting
+        read_group_members() {
             const data_to_be_read = ref(db, `trips/${this.trip_id}/group_member`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    this.group_size = data.length}})
+                    this.group_members = data
+                    // console.log(data)
+                }})
         },
         // write activity detail to database
         create_update_data() {
@@ -355,7 +377,11 @@ const app = Vue.createApp({
                     sgd: this.amount,
                 },
                 tag: this.tag_input,
-                votes_num: this.votes_num,
+                votes: { 
+                    no: this.no, 
+                    yes: this.yes, 
+                    yet_to_vote: this.yet_to_vote
+                }
             }
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
@@ -377,6 +403,49 @@ const app = Vue.createApp({
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                 console.log(failed_message);
             })
+            this.yet_to_vote = [];
+        },
+        // write activity for new activities
+        create_new_data() {
+            // create new object
+            var new_obj = {
+                address: this.selected_address,
+                description: this.selected_description,
+                latlng: this.selected_latlng,
+                name: this.selected_name,
+                price: {
+                    krw: this.converted_amount,
+                    sgd: this.amount,
+                },
+                tag: this.tag_input,
+                votes: { 
+                    no: [], 
+                    yes: [], 
+                    yet_to_vote: this.group_members
+                }
+            }
+            console.log(new_obj)
+            // push to existing places under current id
+            this.existing_locations[this.current_id] = new_obj
+            // push data to database
+            console.log("Writing data into database...")
+            
+            set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
+            this.yet_to_vote = [];
         },
         // delete activity from database
         delete_data(id) {
@@ -408,12 +477,28 @@ const app = Vue.createApp({
             }
 
         },
+        // retrieve location details for edit activity page
+        retrieve_edit_activity_info(id) {
+            var details = this.existing_locations[id];
+            console.log(details);
+            this.selected_address = details.address;
+            this.selected_description = details.description;
+            this.selected_latlng = details.latlng;
+            this.selected_name = details.name;
+            this.converted_amount = details.price.krw;
+            this.amount = details.price.sgd;
+            this.tag_input = details.tag;
+            this.no = details.votes.no;
+            this.yes = details.votes.yes;
+            this.yet_to_vote = details.votes.yet_to_vote;
+        }
     },
+    // load data from database before initialising map and mounting vue
     async created() {
         // get recommended locations from database
         await this.read_from_existing()
         // get group size from database
-        await this.read_group_size()
+        await this.read_group_members()
     }
     
 });

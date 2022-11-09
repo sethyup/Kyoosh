@@ -52,6 +52,8 @@ const root = Vue.createApp({
             ],
 
             nameList: [],
+
+            trip_delimiter: "urjfjwowskdorrofkckshecoejfnek"
         }
     },
 
@@ -73,7 +75,7 @@ const root = Vue.createApp({
                 this.show_field_modal = false
                 var url = "images/" + this.destination + ".jpg"
 
-                set(ref(db, 'trips/' + this.trip_name + '_' + this.myUsername + '/trip_details'), {
+                set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
                         g_member: this.g_member,
@@ -85,7 +87,7 @@ const root = Vue.createApp({
                 .then(
                     function write_success() {
                         // display "Success" message
-                        alert("Write Operation Successful")
+                        // alert("Write Operation Successful")
                         console.log("Entry Created")
 
                 })
@@ -96,10 +98,10 @@ const root = Vue.createApp({
 
                     // display "Error" message
                     var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                    alert(failed_message)
+                    // alert(failed_message)
                     console.log(failed_message);
                 })
-                alert("Create Trip Successful")
+                // alert("Create Trip Successful")
                 location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
             }
             
