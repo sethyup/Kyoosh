@@ -42,6 +42,12 @@ const root = Vue.createApp({
     
     methods: {
         sign_up() {
+            const usernames = ref(db, "users/");
+            onValue(usernames, (snapshot) => {
+                const data = snapshot.val();
+                console.log(data)
+            return data
+            });
             var email = this.email
             var password = this.password
             console.log("starting to create user...")

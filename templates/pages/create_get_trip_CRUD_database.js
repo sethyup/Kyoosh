@@ -31,8 +31,11 @@ const root = Vue.createApp({
 
             // ...
 
-            myUsername: 'adambft',
+            myUsername: sessionStorage.getItem("user"),
             // assume that i'm adam right now
+            // no need friend, its all dynamic
+
+            collaborators: [],
 
             trip_name: "",
 
