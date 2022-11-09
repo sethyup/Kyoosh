@@ -1,3 +1,22 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+// Our Firebase Project Configuration
+const WADTravel = initializeApp({
+  apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+  authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+  databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "wad-brothers-travel-ltd",
+  storageBucket: "wad-brothers-travel-ltd.appspot.com",
+  messagingSenderId: "305280551700",
+  appId: "1:305280551700:web:434cc190d57eabe14d1001",
+  measurementId: "G-3XQT4098KL"
+})
+
+// const auth = getAuth(WADTravel)
+const db = getDatabase(WADTravel)
+
+
 const main = Vue.createApp({
     data(){
         return{
@@ -84,7 +103,8 @@ const main = Vue.createApp({
             spending: 0,
             selected_all: false,
             filter_tag: "",
-
+            existing_locations: "",
+            trip_id: "grad trip_adambft",
 
             // push selected activities into DB
             selected_activities: [],
@@ -138,8 +158,8 @@ const main = Vue.createApp({
     // },
     methods:{
         calculate_votes_percentage(location){
-            num_yes = location.votes.yes.length
-            total_num = location.votes.yes.length + location.votes.no.length + location.votes.yet_to_vote.length
+            var num_yes = location.votes.yes.length
+            var total_num = location.votes.yes.length + location.votes.no.length + location.votes.yet_to_vote.length
             return num_yes/total_num * 100
         },
 
@@ -192,6 +212,28 @@ const main = Vue.createApp({
                 // this.spending += Number(this.selected_activities[i])
             };
         }, 
+        // read existing locations from the database
+        read_from_existing_locations() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+                // check if there is existing data on db
+                if (data) {
+                    this.existing_locations = data
+                    console.log(data)
+                }
+                // retrieve recommended places for new trips
+                else {
+                    const data_to_be_read = ref(db, `locations`);
+                    onValue(data_to_be_read, (snapshot) => {
+                        const data2 = snapshot.val();
+                        if (data2) {
+                            this.existing_locations = data2
+                        }
+                    })
+                }
+                })
+          },
         // compareValues(key, order = 'asc') {
         //     return function innerSort(a, b) {
         //       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
@@ -217,6 +259,10 @@ const main = Vue.createApp({
         //     // console.log(this.calculate_list[1])
         // }
         
+    },
+    // retrieve data from database onload
+    async created() {
+      await this.read_from_existing_locations()
     }
 })
 
