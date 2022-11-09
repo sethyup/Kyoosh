@@ -643,6 +643,7 @@ var accommodation_app = Vue.createApp({
 
             initAutocomplete()
         }
+
         console.log("=== DONE updated() ===")
     },
 

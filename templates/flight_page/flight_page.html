@@ -17,12 +17,20 @@
     <!-- Vue js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+    <style>
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+
     <title>Flights</title>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row sidebar-parent flex-nowrap">
-            <div id="nav" class="col-auto sidebar-css">
+            <div id="nav" class="col-auto sidebar-css blurred-minor-2 p-0">
                  <!-- SIDEBAR  -->
                  <sidebar-phase3></sidebar-phase3>
             </div>
@@ -32,13 +40,13 @@
                 <!-- CREATE NEW FLIGHT BUTTON -->
                 <div class="row justify-content-end mb-3">
                     <div class="col-md-3 col-lg-2 d-flex justify-content-center">
-                        <button type="button" class="btn btn-main" @click="initialize_create_flight()" :disabled="create_new_flight || edit_existing_flight">Create New</button>
+                        <button type="button" class="btn btn-main dropshadow-btn-main" @click="initialize_create_flight()" :disabled="create_new_flight || edit_existing_flight">Create New</button>
                         <!-- <button type="button" class="btn btn-main-bold" @click="log_everything()">LOG EVERYTHING</button> -->
                     </div>
                 </div>
 
                 <!-- CREATE NEW FLIGHT FORM -->
-                <div class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative" v-if="create_new_flight">
+                <div class="container-md text-dark rounded-4 py-3 mb-3 position-relative blurred-minor-no-bd-filter" v-if="create_new_flight">
                     <form action="#">
                         <!-- flight title -->
                         <div class="row justify-content-center text-center">
@@ -227,7 +235,7 @@
                 <!-- EACH LOADED FLIGHT -->
                 <div v-for="e_flightObj of flight_obj_arr">
                     <!-- EACH STATIC FLIGHT ITEM -->
-                    <div v-if="!e_flightObj.edit_mode" class="container-md text-dark bg-mild rounded-4 py-1 position-relative mb-3">
+                    <div v-if="!e_flightObj.edit_mode" class="container-md text-dark rounded-4 py-1 position-relative mb-3 blurred-minor-no-bd-filter">
                         <form action="#">
                             <!-- flight title & departure & arrival country -->
                             <div class="row justify-content-center align-items-center mt-3 mb-5">
@@ -336,7 +344,7 @@
                     </div>
 
                     <!-- EDIT EXISTING FLIGHT FORM -->
-                    <div v-else class="container-md text-dark bg-mild rounded-4 py-3 mb-3 position-relative">
+                    <div v-else class="container-md text-dark rounded-4 py-3 mb-3 position-relative blurred-minor-no-bd-filter">
                         <form action="#">
                             <!-- flight title -->
                             <div class="row justify-content-center text-center">
