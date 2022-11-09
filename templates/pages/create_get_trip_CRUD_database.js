@@ -49,6 +49,8 @@ const root = Vue.createApp({
             ],
 
             nameList: [],
+
+            trip_delimiter: "urjfjwowskdorrofkckshecoejfnek"
         }
     },
 
@@ -70,7 +72,7 @@ const root = Vue.createApp({
                 this.show_field_modal = false
                 var url = "images/" + this.destination + ".jpg"
 
-                set(ref(db, 'trips/' + this.trip_name + '$#&$^%&@()!#*&$^^' + this.myUsername + '/trip_details'), {
+                set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
                         g_member: this.g_member,
