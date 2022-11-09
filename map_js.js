@@ -240,7 +240,7 @@ function create_marker(place, map, id) {
                         <div id=${id}  class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" style="width: ${get_no_percentage(place.votes,place)}%" aria-valuenow="${get_no_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100" >NO</div>
                         
                         <!--  VOTED MAYBE   -->
-                        <div id=${id} class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" style="width: ${get_yet_to_vote_percentage(place.votes,place)}%" aria-valuenow="${get_yet_to_vote_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100">MAYBE</div>
+                        <div id=${id} class="progress-bar bg-mild text-dark" role="progressbar" aria-label="yet_to_vote_percentage" style="width: ${get_yet_to_vote_percentage(place.votes,place)}%" aria-valuenow="${get_yet_to_vote_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100">NA</div>
                     </div>
                     <div style="margin-top: 5px;">
                         <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
