@@ -42,6 +42,12 @@ const root = Vue.createApp({
     
     methods: {
         sign_up() {
+            const usernames = ref(db, "users/");
+            onValue(usernames, (snapshot) => {
+                const data = snapshot.val();
+                console.log(data)
+            return data
+            });
             var email = this.email
             var password = this.password
             console.log("starting to create user...")
@@ -52,8 +58,9 @@ const root = Vue.createApp({
                     // save user account details to database
                     console.log("starting to write user data...")
                     console.log(userCredential)
-                    set(ref(db, "users/" + this.username), {
+                    set(ref(db, "users/" + this.email.replace(".","")), {
                         email: this.email,
+                        username: this.username,
                         fullname: this.first_name + " " + this.last_name,
                         trips: []
                       })
@@ -78,7 +85,7 @@ const root = Vue.createApp({
 
                     // redirects to Log In page
                     // find a way to use await and wait for the update to database, if not this will cancel the update
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html")
+                    location.replace("./login_page.html")
                     const user = userCredential.user;
                 })
                 .catch((error) => {
@@ -113,7 +120,10 @@ const root = Vue.createApp({
                     console.log("user login successful")
                     // redirects to home page
                     const user = userCredential.user;
-                    console.log(user)
+                    const email = user.email.replace(".","")
+                    console.log(email)
+                    localStorage.setItem("user", email)
+                    location.replace("../trips-homepage.html")
                     
                     location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                 })
