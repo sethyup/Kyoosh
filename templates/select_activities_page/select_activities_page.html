@@ -74,7 +74,7 @@
                                     </thead>
                                         <!-- TABLE BODY -->
                                     <tbody>
-                                        <template v-for="(location,index) in locations">
+                                        <template v-for="(location,index) in existing_locations">
                                             <tr scope="row">
                                                 <th scope="row">
                                                 <input type="checkbox" name="atv" :value=index v-model="selected_activities" @change="calculate_spending()"/>
@@ -87,7 +87,7 @@
                                                     {{ location.tag }}
                                                 </td>
                                                 <td style="text-align: center;">
-                                                    {{ calculate_votes_percentage(location) }}%
+                                                    {{ calculate_votes_percentage(location.votes) }}%
                                                 </td>
                                                 <td style="text-align: center;">
                                                     ${{ location.price.sgd }}

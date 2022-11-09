@@ -20,85 +20,85 @@ const db = getDatabase(WADTravel)
 const main = Vue.createApp({
     data(){
         return{
-            locations  : { 
-                "0": {
-                    "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-                    "description": "",
-                    "latlng": {
-                        "lat": 37.5444,
-                        "lng": 127.0374
-                    },
-                    "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-                    "price": {
-                        "krw": 0,
-                        "sgd": 0
-                    },
-                    "tag": "Attraction",
-                    "votes": {
-                        yes: ["SETH YAP ZIQI_", "kbang"],
-                        no: ["adamft"],
-                        yet_to_vote: ["name4", "name5"]
-                    }
-                    },
-                    "1":{
-                    "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-                    "description": "",
-                    "latlng": {
-                        "lat": 37.5512,
-                        "lng": 126.9882
-                    },
-                    "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-                    "price": {
-                        "krw": 12000,
-                        "sgd": 12
-                    },
-                    "tag": "Attraction",
-                    "votes": {
-                      yes: ["SETH YAP ZIQI_"],
-                      no: ["adamft", "kbang", ],
-                      yet_to_vote: ["name4", "name5"]
-                    }
-                    },
-                    "2":{
-                    "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
-                    "description": "",
-                    "latlng": {
-                        "lat": 37.5561,
-                        "lng": 126.9719
-                    },
-                    "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
-                    "price": {
-                        "krw": 3000,
-                        "sgd": 3
-                    },
-                    "tag": "Food",
-                    "votes": {
-                      yes: ["SETH YAP ZIQI_"],
-                      no: ["adamft"],
-                      yet_to_vote: ["kbang", "name4", "name5"]
-                    }
-                    },
-                    "3":{
-                    "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
-                    "description": "",
-                    "latlng": {
-                        "lat": 37.5532,
-                        "lng": 126.9219
-                    },
-                    "name": "Hongdae Shopping Street",
-                    "price": {
-                        "krw": 25244.25,
-                        "sgd": 25
-                    },
-                    "tag": "Shopping",
-                    "votes": {
-                      yes: ["SETH YAP ZIQI_"],
-                      no: ["adamft", "name4"],
-                      yet_to_vote: ["kbang", "name5"]
-                    }
-                }, 
+            // locations  : { 
+            //     "0": {
+            //         "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+            //         "description": "",
+            //         "latlng": {
+            //             "lat": 37.5444,
+            //             "lng": 127.0374
+            //         },
+            //         "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+            //         "price": {
+            //             "krw": 0,
+            //             "sgd": 0
+            //         },
+            //         "tag": "Attraction",
+            //         "votes": {
+            //             yes: ["SETH YAP ZIQI_", "kbang"],
+            //             no: ["adamft"],
+            //             yet_to_vote: ["name4", "name5"]
+            //         }
+            //         },
+            //         "1":{
+            //         "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+            //         "description": "",
+            //         "latlng": {
+            //             "lat": 37.5512,
+            //             "lng": 126.9882
+            //         },
+            //         "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+            //         "price": {
+            //             "krw": 12000,
+            //             "sgd": 12
+            //         },
+            //         "tag": "Attraction",
+            //         "votes": {
+            //           yes: ["SETH YAP ZIQI_"],
+            //           no: ["adamft", "kbang", ],
+            //           yet_to_vote: ["name4", "name5"]
+            //         }
+            //         },
+            //         "2":{
+            //         "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+            //         "description": "",
+            //         "latlng": {
+            //             "lat": 37.5561,
+            //             "lng": 126.9719
+            //         },
+            //         "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+            //         "price": {
+            //             "krw": 3000,
+            //             "sgd": 3
+            //         },
+            //         "tag": "Food",
+            //         "votes": {
+            //           yes: ["SETH YAP ZIQI_"],
+            //           no: ["adamft"],
+            //           yet_to_vote: ["kbang", "name4", "name5"]
+            //         }
+            //         },
+            //         "3":{
+            //         "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+            //         "description": "",
+            //         "latlng": {
+            //             "lat": 37.5532,
+            //             "lng": 126.9219
+            //         },
+            //         "name": "Hongdae Shopping Street",
+            //         "price": {
+            //             "krw": 25244.25,
+            //             "sgd": 25
+            //         },
+            //         "tag": "Shopping",
+            //         "votes": {
+            //           yes: ["SETH YAP ZIQI_"],
+            //           no: ["adamft", "name4"],
+            //           yet_to_vote: ["kbang", "name5"]
+            //         }
+            //     }, 
                 
-            },
+            // },
 
             spending: 0,
             selected_all: false,
@@ -157,17 +157,34 @@ const main = Vue.createApp({
     //     }
     // },
     methods:{
-        calculate_votes_percentage(location){
-            var num_yes = location.votes.yes.length
-            var total_num = location.votes.yes.length + location.votes.no.length + location.votes.yet_to_vote.length
-            return num_yes/total_num * 100
+        calculate_votes_percentage(votes){
+            var yes_votes = 0
+            var total_users = 0
+            if(votes.yes){
+                yes_votes += votes.yes.length
+                total_users += votes.yes.length
+            }
+
+
+            if(votes.no){
+                total_users += votes.no.length
+            }
+            if(votes.yet_to_vote){
+                total_users += votes.yet_to_vote.length
+            }
+
+            return yes_votes/total_users * 100
         },
 
         select_all(){
             // haven't select all
             console.log("====START selectall ===")
             if(this.selected_all == false){
-                this.selected_activities = Object.keys(this.locations)
+                var total_num = this.existing_locations.length
+                for (let i=0; i<total_num; i++) {
+                    this.selected_activities.push(i)
+                }
+                // this.selected_activities = Object.keys(this.locations)
                 this.selected_all = true
                 this.calculate_spending()
                 // var items = document.getElementsByName('atv');
@@ -206,9 +223,9 @@ const main = Vue.createApp({
             console.log("==== START FUNCTION +++++")
             this.spending = 0
             for (let i=0; i< this.selected_activities.length; i++) {
-                index = this.selected_activities[i]
-                this.spending += this.locations[index].price.sgd
-                console.log(this.locations[index].price.sgd)
+                var index = this.selected_activities[i]
+                this.spending += Number(this.existing_locations[index].price.sgd)
+                console.log(this.existing_locations[index].price.sgd)
                 // this.spending += Number(this.selected_activities[i])
             };
         }, 
