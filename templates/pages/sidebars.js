@@ -73,7 +73,7 @@ sidebar.component('sidebar-general', {
                     </ul>
                     <hr>
                     <div>
-                        <button class="btn btn-secondary d-none d-sm-inline" href="#">Confirm Activities</button>
+                        <button class="btn btn-main-fixed d-none d-sm-inline" href="#">Confirm Activities</button>
                     </div>
                     <hr>
 
@@ -151,7 +151,7 @@ sidebar.component('sidebar-phase2', {
                     </ul>
                     <hr>
                     <div>
-                        <button class="btn btn-secondary d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/select_activities_page/select_activities_page.html'">Confirm Activities</button>
+                        <button class="btn btn-main-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/select_activities_page/select_activities_page.html'">Confirm Activities</button>
                     </div>
                     <hr>
 
