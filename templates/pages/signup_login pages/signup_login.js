@@ -117,9 +117,9 @@ const root = Vue.createApp({
                     const email = user.email.replace(".","")
                     console.log(email)
                     localStorage.setItem("user", email)
-                    location.replace("../trips-homepage.html")
+                    // location.replace("../trips-homepage.html")
                     
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                 })
                 .catch((error) => {
                     // for admin, tells you what error there is
@@ -154,8 +154,11 @@ const root = Vue.createApp({
 
                 console.log(user.displayName)
                 console.log(user.email)
+                const userID = user.email.replace(".","")
+                console.log(userID)
+                localStorage.setItem("user", userID)
 
-                set(ref(db, "users/" + user.displayName), {
+                set(ref(db, "users/" + userID), {
                     email: user.email,
                     fullname: user.displayName,
                     trips: []
@@ -176,7 +179,7 @@ const root = Vue.createApp({
                 })
 
                 console.log(`Log In Successful`)    
-                location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")            
+                // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")            
 
             }).catch((error) => {
                 // Handle Errors here.

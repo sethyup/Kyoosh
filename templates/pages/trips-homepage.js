@@ -1,6 +1,4 @@
 
-console.log(localStorage.getItem("user"))
-console.log("hello fucker")
 
 // List of sentences
 var _CONTENT = [ "Plan a trip.", "Find yourself.", "Get away.", "Live your dream." ];
@@ -67,3 +65,82 @@ function Delete() {
 
 // Start the typing effect on load
 _INTERVAL_VAL = setInterval(Type, 100);
+
+//======================================= DYNAMIC GETTING OF INFO ==========================================
+// Importing Firebase API
+// DO NOT EDIT
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+// Our Firebase Project Configuration
+const WADTravel = initializeApp({
+    apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+    authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+    databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "wad-brothers-travel-ltd",
+    storageBucket: "wad-brothers-travel-ltd.appspot.com",
+    messagingSenderId: "305280551700",
+    appId: "1:305280551700:web:434cc190d57eabe14d1001",
+    measurementId: "G-3XQT4098KL"
+})
+const db = getDatabase(WADTravel)
+
+const app = Vue.createApp( {
+
+	//=========== DATA PROPERTIES ===========
+	data() {
+		return {
+			user_trips: [],
+
+		}
+	},
+
+	//=========== METHODS ===========
+	methods: {
+		edit_trip(tripID) {
+			localStorage.setItem("trip", tripID)
+		}
+
+	},
+
+	created() {
+		console.log(localStorage.getItem("user"))
+		console.log("hello fucker")
+		const user_ID = localStorage.getItem("user")
+		const path_location = ref(db, "users/" + user_ID + "/trips")
+		onValue(path_location, (snapshot) => {
+			var trips = snapshot.val()
+			console.log(trips)
+			// for(var tripID of trips){
+			// 	console.log(tripID)
+			// 	this.user_trips.push(tripID)
+			// 	document.getElementById("").innerHTML = `
+			// 	<div class="card cardstyle" >
+			// 		<img src="../../images/home_page/trips_imgs/seoul.jpg" class="card-img-top" height="200px">
+
+			// 		<div class="card-body">
+			// 			<h5 class="card-title">${tripID}</h5>
+			// 			<button href="#" @click="edit_trip("${tripID}")" class="btn btn-main-bold">Edit Trip</a>
+			// 		</div>
+
+			// 		<div class="card-footer text-muted">
+			// 		Last edited: 2 days ago
+			// 		</div>
+			// 	</div>
+			// 	`
+			// }
+
+
+		})
+
+		console.log(this.user_trips)
+		
+	}
+})
+
+
+
+
+// DO NOT MODIFY THIS
+// ASSOCIATING the current Vue app to an HTML element with id='app'
+app.mount('#homepage')
