@@ -105,7 +105,6 @@ const main = Vue.createApp({
         existing_locations: "",
         current_id: "",
         // display details
-        create_true: false,
         edit_true: false,
         // create activity stuff
         amount: "", 
@@ -251,7 +250,7 @@ const main = Vue.createApp({
               //check if there is existing data on db
               if (data) {
                   this.existing_locations = data
-                  console.log(data)
+                  // console.log(data)
               }
               //retrieve recommended places for new trips
               else {
@@ -382,16 +381,14 @@ const main = Vue.createApp({
       },
         set_edit(id) {
             if (this.edit_true == false) {
-              console.log(id)
+              // console.log(id)
               this.edit_true = true
-              this.create_true = false
               this.current_id = id
               // console.log(obj.querySelector(`div id="get_marker_id"`).innerText)
               // console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
               this.retrieve_edit_activity_info(this.current_id)
           } else {
               this.edit_true = false
-              this.create_true = true
           }
         }
     },

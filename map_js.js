@@ -221,7 +221,7 @@ function create_marker(place, map, id) {
             <div class="row">
                 <div class = "col-8">
                 <span class="badge rounded-pill text-bg-warning">#${place.tag}</span>
-                {{data}}
+                
                 <h3>${place.name}</h3>
                 <p class="address">${place.address}<p>
                 <hr>
@@ -518,7 +518,7 @@ const app = Vue.createApp({
                 krw: this.converted_amount,
                 sgd: this.amount,
             }
-            console.log(new_obj)
+            // console.log(new_obj)
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
             // push data to database
@@ -539,7 +539,12 @@ const app = Vue.createApp({
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                 console.log(failed_message);
             })
+            // clear yet_to_vote for next activity
             this.yet_to_vote = [];
+            // clear autocomplete input field for next activity
+            // console.log(document.getElementById('autocomplete').value )
+            document.getElementById('autocomplete').value = ""
+
         },
         // delete activity from database
         delete_data(id) {
