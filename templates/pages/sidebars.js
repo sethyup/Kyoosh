@@ -48,7 +48,7 @@ sidebar.component('sidebar-general', {
                         </li>
                     </ul>
                     <hr>
-                    <div>
+                    <div style="width:100%;" class="d-flex justify-content-center">
                         <button class="btn btn-main-fixed d-none d-sm-inline" href="#">Confirm Activities</button>
                     </div>
                     <hr>
@@ -110,7 +110,7 @@ sidebar.component('sidebar-phase2', {
                         </li>
                     </ul>
                     <hr>
-                    <div>
+                    <div style="width:100%;" class="d-flex justify-content-center">
                         <button class="btn btn-main-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/select_activities_page/select_activities_page.html'">Confirm Activities</button>
                     </div>
                     <hr>
@@ -230,8 +230,8 @@ sidebar.component('select-activity-sidebar', {
                         </li>
                     </ul>
                     <hr>
-                    <div>
-                        <button class="btn btn-outline-secondary d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html'">< Back</button>
+                    <div style="width:100%;" class="d-flex justify-content-center">
+                        <button class="btn btn-main-bold-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html'">< Back</button>
                     </div>
                     <hr>
 

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- table css -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- bootstrap css -->
+    <link href="../../css/main.min.css" rel="stylesheet">
+
+    <!-- local css -->
+    <link rel="stylesheet" href="../template.css">
+
+    <!-- VUE -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- need firebase function READ -->
+
+    <style>
+
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+
+    <title>Select Activities Page</title>
+</head>
+<body>
+    <div id="main">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
+                <!-- SIDEBAR  -->
+               <select-activity-sidebar></select-activity-sidebar>
+           </div>
+
+           <!-- TRIP INFO -->
+           <div class="trip-title-top-md d-none d-md-block">
+                <h6>Name of Trip (Trip to Seoul, Korea)</h6>
+                <p>1 December 2022 - 10 December 2022</p>
+           </div>
+
+            <!-- rest of site -->
+            <div class="col text-light" style="overflow: hidden;">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h3 class="ms-md-3 mt-4 text-md-start text-center">Trip leader, please select the confirmed activities </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- <div class="col"> -->
+
+                    <div class="pt-5">
+
+
+                        <!-- TABLE  -->
+                        <div class="content">
+                            <div class="container">
+                                <div class="table-responsive custom-table-responsive">
+                                <table class="table custom-table">
+                                    <thead>
+                                        <!-- TABLE HEADER -->
+                                        <tr>  
+                                            <th scope="col">
+                                                <label class="">
+                                                <input type="checkbox" @change="select_all()"/>
+                                                <div class=""></div>
+                                                </label>
+                                            </th>
+                                            
+                                            <th scope="col">Activity</th>
+                                            <th scope="col" style="text-align: center;">#Tag</th>
+                                            <th scope="col" style="text-align: center;">Voted Yes</th>
+                                            <th scope="col" style="text-align: center;">Cost/person</th>
+                                        </tr>
+                                    </thead>
+                                        <!-- TABLE BODY -->
+                                    <tbody>
+                                        <template v-for="location in locations">
+                                            <tr scope="row" class="blurred-minor-no-bd-filter">
+                                                <th scope="row">
+                                                <input type="checkbox" name="atv" :value="location.price.sgd" v-model="total_price_list" @change="calculate_spending()" />
+                                                </th>
+                                                <td>
+                                                    {{ location.name }}
+                                                </td>
+                                                <td style="text-align: center;"> 
+                                                    {{ location.tag }}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    {{ location.votes_percentage.yes }}%
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    ${{ location.price.sgd }}
+                                                </td>
+                                            </tr>
+
+                                            <!-- SPACE -->
+                                            <tr class="spacer"><td colspan="100"></td></tr>
+                                        </template>
+
+                                        </tbody>
+                                        </table>
+                                    </div>
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- SPENDING -->
+            <div class="spending-bottom-md">
+                <h5><i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD</h5>
+            </div>
+
+            <!-- <div class="d-flex justify-content-between py-3 blurred-minor-no-bd-filter" style="position: fixed; bottom: 0px; right: 0px; width: 100%;">
+                <h3>Total Spending: {{ spending }} SGD</h3>
+    
+                <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'">Confirm</button>
+            </div> -->
+        </div>
+
+    </div>
+    </div>
+    
+
+
+    <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
+
+    <!-- Refer to sidebar JS -->
+    <script src="../pages/sidebars.js"></script>
+
+</body>
+</html>
