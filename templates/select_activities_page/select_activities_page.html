@@ -74,10 +74,10 @@
                                     </thead>
                                         <!-- TABLE BODY -->
                                     <tbody>
-                                        <template v-for="(location,index) in existing_locations">
+                                        <template v-for="(location,index) in existing_locations" v-if="filter_tag == '' ">
                                             <tr scope="row">
                                                 <th scope="row">
-                                                <input type="checkbox" name="atv" :value=index v-model="selected_activities" @change="calculate_spending()"/>
+                                                <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
                                                 <!-- @change="calculate_spending()"  -->
                                                 </th>
                                                 <td>
@@ -93,10 +93,35 @@
                                                     ${{ location.price.sgd }}
                                                 </td>
                                             </tr>
-
                                                     <!-- SPACE -->
-                                                    <tr class="spacer"><td colspan="100"></td></tr>
+                                                <tr class="spacer"><td colspan="100"></td></tr>
                                         </template>
+
+
+
+                                        <template v-for="(location,index) in filtered_locations" v-else>
+                                            <tr scope="row">
+                                                <th scope="row">
+                                                <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
+                                                <!-- @change="calculate_spending()"  -->
+                                                </th>
+                                                <td>
+                                                    {{ location.name }}
+                                                </td>
+                                                <td style="text-align: center;"> 
+                                                    {{ location.tag }}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    {{ calculate_votes_percentage(location.votes) }}%
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    ${{ location.price.sgd }}
+                                                </td>
+                                            </tr>
+                                                    <!-- SPACE -->
+                                                <tr class="spacer"><td colspan="100"></td></tr>
+                                        </template>
+
 
                                         </tbody>
                                         </table>
@@ -117,8 +142,8 @@
                         <h3>Total Spending: {{ spending }} SGD</h3>
                         
  
-                        <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'">Confirm</button>
-
+                        <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button>
+                        <!--  -->
                 </footer>
             </div>
             </div>
