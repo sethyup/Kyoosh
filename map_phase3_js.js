@@ -132,6 +132,9 @@ function DeleteMarker(id) {
 const app = Vue.createApp({ 
     data() { 
         return { 
+            // trip details
+            trip_id: "grad trip_adambft",
+            user_id: "",
             map_view: false,
             map: "",
             marker_id: uniqueId,
@@ -219,7 +222,6 @@ const app = Vue.createApp({
                 },
                     ],
             existing_locations: "",
-            trip_id: "grad trip_adambft"
         };
     }, //data
     methods: {
@@ -268,7 +270,7 @@ const app = Vue.createApp({
         },
 
         write_to_existing() {
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/selected_activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
@@ -278,17 +280,17 @@ const app = Vue.createApp({
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
-                else {
-                    const data_to_be_read = ref(db, `locations`);
-                    onValue(data_to_be_read, (snapshot) => {
-                        const data2 = snapshot.val();
-                        if (data2) {
-                            this.existing_locations = data2
-                            console.log(data2)
-                            window.initMap = initMap(this.existing_locations);
-                        }
-                    })
-                }
+                // else {
+                //     const data_to_be_read = ref(db, `locations`);
+                //     onValue(data_to_be_read, (snapshot) => {
+                //         const data2 = snapshot.val();
+                //         if (data2) {
+                //             this.existing_locations = data2
+                //             console.log(data2)
+                //             window.initMap = initMap(this.existing_locations);
+                //         }
+                //     })
+                // }
                 })   
             },
         

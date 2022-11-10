@@ -77,70 +77,7 @@
                 <div class="row">
                     <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
                     <div class="col">
-                        <h1>Card Sample</h1>
-                        <!-- COPY FROM HERE -->
-
-                        <div class="card">
-                            <!-- LOCATION/PLACE -->
-                            <div class="card-header">
-                                <span class="fs-3 fw-semibold">
-                                Hongdae Shopping Street
-                                </span>
-                                <span class="badge rounded-pill text-bg-warning ms-1" >#Shopping</span>
-                            </div>
-
-                            <!-- BADGE & DESCRIPTION -->
-                            <div class="card-body">
-                                <div class="container p-0">
-                                <div class="row">
-                                    <div class = "col-8">
-                                        <p style="font-style: italic"> 365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea</p>
-                                        <h6>100 SGD/100976.93 KRW per person</h6>
-                                        <p class="description" style="text-align: justify;">Description included by user.     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod consequuntur, provident magnam nobis quis autem odit, nulla inventore cumque repudiandae facere. Nisi, itaque! Odit eos libero dolorem, reprehenderit dicta illo!</p>
-                                    </div>
-                                    
-                                    <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                    <div class="col-4" id="main">
-                                        <p class="pt-3">Current Votes: </p>
-                                        
-                                            <div class="progress">
-                                                    <!-- VOTED YES -->
-                                                <div id="progress_yes" class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: voted_yes_percentage + '%' }" v-bind:aria-valuenow="voted_yes_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="voted_yes_people"></div>
-
-                                                    <!-- VOTED NO -->
-                                                <div id="progress_no" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: voted_no_percentage + '%' }" v-bind:aria-valuenow="voted_no_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="voted_no_people"> </div>
-                                                
-
-                                                    <!--  VOTED MAYBE   -->
-                                                <div id="progress_maybe" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: yet_to_vote_percentage + '%' }" v-bind:aria-valuenow="yet_to_vote_percentage" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="yet_to_vote_people"></div>
-
-                                                
-                                            </div>
-
-                                        <div class="pt-3" style="display: flex; justify-content: center;">
-                                        <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject()">Reject</button>
-                                        <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept()"> Vote </button>
-                                        </div>
-                                        
-                                        
-                                        <!-- Voted NO: {{ voted_no_people }}
-                                        <br>
-                                        Voted: YES: {{ voted_yes_people }}
-                                        <br>
-                                        YET TO VOTE: {{ yet_to_vote_people }} -->
-                                    </div>
-                                </div> 
-                            
-                                <!-- EDIT BUTTON -->
-                                <div class="row">
-                                    <div class="col-11"></div>
-                                    <div class="col-1">
-                                        <button type="button" class="btn btn-sm rounded btn-main text-white float-end" style="position:absolute;bottom:25px; right:15px;" data-bs-toggle="button">Edit</button>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h1>HI EMPTY SPACE</h1>
                     </div>
                     
                     <!-- map interface MAP COL -->
@@ -156,57 +93,56 @@
                         <!-- FIRST ITEM (SAMPLE 1) -->
                         <!-- COPY FROM HERE -->
                         <div id="main">
-                            <div class="container mb-3" v-for="(location, index) of locations">
+                            <div class="container mb-3" v-for="(location, index) of existing_locations">
                                 <div class="accordion" id="accordionFlushExample">
                                     <div class="accordion-item" >
+                                        <!-- ACCORDION TITLE -->
+                                        <!-- NEED TO CHANGE ACCORD. -->
+                                        <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
+                                            <!-- CHECKBOX -->
+                                            <input class="form-check-input input-checkbox collapsed" type="checkbox" name="flexRadioDefault" :id="'flexRadioDefault' + index" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
+                                            <!-- PLACE + TAG -->
+                                                <!-- NEED TO CHANGE ACCORD. -->
+                                            <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">
+                                                {{ location.name}}
+                                                <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
+                                            </button>
+                                        </h6>
                                 
-                                                <!-- ACCORDION TITLE -->
-                                                    <!-- NEED TO CHANGE ACCORD. -->
-                                                <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
-                                                    <!-- CHECKBOX -->
-                                                    <input class="form-check-input input-checkbox collapsed" type="checkbox" name="flexRadioDefault" :id="'flexRadioDefault' + index" style="position: absolute; top: 14px; left: 20px; z-index: 9;">
-                                                    <!-- PLACE + TAG -->
-                                                        <!-- NEED TO CHANGE ACCORD. -->
-                                                    <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">
-                                                        {{ location.name}}
-                                                        <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
-                                                    </button>
-                                                </h6>
-                                
-                                                <!-- ACCORDION BODY -->
-                                                    <!-- NEED TO CHANGE ACCORD. -->
-                                                <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">
-                                                        <div class="container p-0">
-                                                            <div class="row">
-                                                                <div class = "col-8">
-                                                                    <h6>{{ location.price.sgd }} SGD/per person</h6>
-                                                                    <p class="description" style="text-align: justify;">
-                                                                        Description included by user. 
-                                                                        {{ location.description }}
-                                                                    </p>
-                                                                </div>
-                                                                
-                                                                <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                                                <div class="col-4" >
-                                                                    <p class="pt-3">Current Votes: </p>
-                                                                        <div class="progress">
-                                                                            <!-- VOTED YES -->
-                                                                            <div :id="'progress_yes' + index" class="progress-bar bg-success" role="progressbar" :aria-label=" 'voted_yes_percentage' + index" :style="{width: location.votes_percentage.yes + '%' }" v-bind:aria-valuenow="location.votes_percentage.yes" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="location.votes_num.yes" data-container="body"></div>
-                                
-                                                                            <!-- VOTED NO -->
-                                                                            <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" :aria-label=" 'voted_no_percentage' + index" :style="{width: location.votes_percentage.no + '%' }" v-bind:aria-valuenow="location.votes_percentage.no" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.no" data-container="body"></div>
-                                                    
-                                                                            <!--  VOTED MAYBE   -->
-                                                                            <div :id="'progress_maybe' + index" class="progress-bar bg-secondary" role="progressbar" :aria-label=" 'yet_to_vote_percentage' + index" :style="{width: location.votes_percentage.yet_to_vote + '%' }" v-bind:aria-valuenow="location.votes_percentage.yet_to_vote" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.yet_to_vote" data-container="body"></div>
-                                                                        </div>
-                                                                </div>
-
-                                                            </div> 
+                                        <!-- ACCORDION BODY -->
+                                            <!-- NEED TO CHANGE ACCORD. -->
+                                        <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <div class="container p-0">
+                                                    <div class="row">
+                                                        <div class = "col-8">
+                                                            <h6>{{ location.price.sgd }} SGD/per person</h6>
+                                                            <p class="description" style="text-align: justify;">
+                                                                Description included by user. 
+                                                                {{ location.description }}
+                                                            </p>
                                                         </div>
-                                                    </div>
+                                                        
+                                                        <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                                        <div class="col-4" >
+                                                            <p class="pt-3">Current Votes: </p>
+                                                                <div class="progress">
+                                                                    <!-- VOTED YES -->
+                                                                    <div :id="'progress_yes' + index" class="progress-bar bg-success" role="progressbar" :aria-label=" 'voted_yes_percentage' + index" :style="{width: location.votes_percentage.yes + '%' }" v-bind:aria-valuenow="location.votes_percentage.yes" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="location.votes_num.yes" data-container="body"></div>
+                        
+                                                                    <!-- VOTED NO -->
+                                                                    <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" :aria-label=" 'voted_no_percentage' + index" :style="{width: location.votes_percentage.no + '%' }" v-bind:aria-valuenow="location.votes_percentage.no" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.no" data-container="body"></div>
+                                            
+                                                                    <!--  VOTED MAYBE   -->
+                                                                    <div :id="'progress_maybe' + index" class="progress-bar bg-secondary" role="progressbar" :aria-label=" 'yet_to_vote_percentage' + index" :style="{width: location.votes_percentage.yet_to_vote + '%' }" v-bind:aria-valuenow="location.votes_percentage.yet_to_vote" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="location.votes_num.yet_to_vote" data-container="body"></div>
+                                                                </div>
+                                                        </div>
+
+                                                    </div> 
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

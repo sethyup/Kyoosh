@@ -435,16 +435,24 @@ const app = Vue.createApp({
                 description: this.selected_description,
                 latlng: this.selected_latlng,
                 name: this.selected_name,
-                price: {
-                    krw: this.converted_amount,
-                    sgd: this.amount,
-                },
                 tag: this.tag_input,
                 votes: { 
                     no: this.no, 
                     yes: this.yes, 
                     yet_to_vote: this.yet_to_vote
                 }
+            }
+            // check for empty strings
+            if (typeof this.amount === 'string') {
+                this.amount = 0
+            }
+            if (typeof this.converted_amount === 'string') {
+                this.converted_amount = 0
+            }
+            // update price
+            new_obj.price = {
+                krw: this.converted_amount,
+                sgd: this.amount,
             }
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
@@ -476,10 +484,6 @@ const app = Vue.createApp({
                 description: this.selected_description,
                 latlng: this.selected_latlng,
                 name: this.selected_name,
-                price: {
-                    krw: this.converted_amount,
-                    sgd: this.amount,
-                },
                 tag: this.tag_input,
                 votes: { 
                     no: [], 
@@ -487,7 +491,19 @@ const app = Vue.createApp({
                     yet_to_vote: this.group_members
                 }
             }
-            console.log(new_obj)
+            // check for empty strings
+            if (typeof this.amount === 'string') {
+                this.amount = 0
+            }
+            if (typeof this.converted_amount === 'string') {
+                this.converted_amount = 0
+            }
+            // update price
+            new_obj.price = {
+                krw: this.converted_amount,
+                sgd: this.amount,
+            }
+            // console.log(new_obj)
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
             // push data to database
@@ -555,6 +571,7 @@ const app = Vue.createApp({
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
         },
+
         // retrieve and edit user and trip id
         // retrieve_from_cache() {
         //     this.trip_id = localStorage.getItem('user')
