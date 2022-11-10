@@ -16,11 +16,71 @@ const WADTravel = initializeApp({
 
 // const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
-
-
 // cached variables
 var markers = [];
 var uniqueId = 0;
+
+// progress bar functions
+function get_total_users(place) {
+    var total_users = 0
+    var votes = place.votes
+    // console.log(`${all_votes} this from get total users`)
+    if(votes.yes){
+      total_users += votes.yes.length
+    }
+    if(votes.no){
+      total_users += votes.no.length
+    }
+    if(votes.yet_to_vote){
+      total_users += votes.yet_to_vote.length
+    }
+    // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
+    // console.log(this.get_total_users)
+    return total_users
+  }
+
+function get_yes_num(votes) {
+    // console.log(typeof String(votes.yes.length))
+    var yes_votes = 0 
+    if(votes.yes){
+    yes_votes += votes.yes.length
+    }
+    return yes_votes
+}
+
+function get_no_num(votes) {
+    var no_votes = 0 
+    if(votes.no){
+        no_votes += votes.no.length
+    }
+    return no_votes
+    }
+
+function get_yet_to_vote_num(votes) {
+    var yet_to_vote_votes = 0 
+    if(votes.yet_to_vote){
+        yet_to_vote_votes += votes.yet_to_vote.length
+    }
+    return yet_to_vote_votes
+    }
+
+function get_yes_percentage(votes,place) {
+    // console.log(votes.yes.length)
+    var yes_votes = get_yes_num(votes)
+    return (yes_votes)*100/get_total_users(place)
+    }
+
+function get_no_percentage(votes,place) {
+    // console.log(votes.no.length)
+    var no_votes = get_no_num(votes)
+    return (no_votes)*100/get_total_users(place)
+    }
+
+function get_yet_to_vote_percentage(votes,place) {
+    // console.log(votes.yet_to_vote.length)
+    var yet_to_vote_votes = get_yet_to_vote_num(votes)
+    return (yet_to_vote_votes)*100/get_total_users(place)
+    }
 
 // create your map
 function initMap(location) {
@@ -37,7 +97,7 @@ function initMap(location) {
         // create_marker(place, map)
         create_marker(location[place], map, place)
     }
-    
+        
     initAutocomplete();
 
 }
@@ -161,6 +221,7 @@ function create_marker(place, map, id) {
             <div class="row">
                 <div class = "col-8">
                 <span class="badge rounded-pill text-bg-warning">#${place.tag}</span>
+                {{data}}
                 <h3>${place.name}</h3>
                 <p class="address">${place.address}<p>
                 <hr>
@@ -170,23 +231,22 @@ function create_marker(place, map, id) {
                 
 
                 <div class="col-4" style:"position:relative">
-                <p class="pt-3">Current Votes: </p>
+                    <p class="pt-3">Current Votes: </p>
                     <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" aria-label="voted_yes" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" aria-label="voted_no" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <!-- VOTED YES -->
+                        <div id=${id}  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" style="width: ${get_yes_percentage(place.votes,place)}%" aria-valuenow="${get_yes_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100">YES</div>
+
+                        <!-- VOTED NO -->
+                        <div id=${id}  class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" style="width: ${get_no_percentage(place.votes,place)}%" aria-valuenow="${get_no_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100" >NO</div>
+                        
+                        <!--  VOTED MAYBE   -->
+                        <div id=${id} class="progress-bar bg-mild text-dark" role="progressbar" aria-label="yet_to_vote_percentage" style="width: ${get_yet_to_vote_percentage(place.votes,place)}%" aria-valuenow="${get_yet_to_vote_percentage(place.votes,place)}" aria-valuemin="0" aria-valuemax="100">NA</div>
                     </div>
-                    <div class="voting_buttons pt-3">
-                    <button type="button" class="btn btn-danger btn-sm reject_btn">Reject</button>
-                    <button type="button" class="btn btn-success btn-sm vote_btn"> Vote </button>
-                    </div>
-                    <div>
+                    <div style="margin-top: 5px;">
                         <button type="button" class="btn btn-sm rounded bg-primary text-white float-end" data-bs-toggle="button" onclick="set_edit(this)">Edit<div id="get_marker_id" style="display: none;">${marker.id}</div></button>
                     </div>
-                    
-                </div>
 
-            </div>  
+                </div> 
             </div>
         </div>
         </div>
@@ -222,7 +282,10 @@ function DeleteMarker(id) {
 const app = Vue.createApp({ 
     data() { 
         return {
+            // trip details
             trip_id: "grad trip_adambft",
+            user_id: "",
+            // display details
             create_true: false,
             edit_true: false,
             // map stuff
@@ -372,16 +435,24 @@ const app = Vue.createApp({
                 description: this.selected_description,
                 latlng: this.selected_latlng,
                 name: this.selected_name,
-                price: {
-                    krw: this.converted_amount,
-                    sgd: this.amount,
-                },
                 tag: this.tag_input,
                 votes: { 
                     no: this.no, 
                     yes: this.yes, 
                     yet_to_vote: this.yet_to_vote
                 }
+            }
+            // check for empty strings
+            if (typeof this.amount === 'string') {
+                this.amount = 0
+            }
+            if (typeof this.converted_amount === 'string') {
+                this.converted_amount = 0
+            }
+            // update price
+            new_obj.price = {
+                krw: this.converted_amount,
+                sgd: this.amount,
             }
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
@@ -413,10 +484,6 @@ const app = Vue.createApp({
                 description: this.selected_description,
                 latlng: this.selected_latlng,
                 name: this.selected_name,
-                price: {
-                    krw: this.converted_amount,
-                    sgd: this.amount,
-                },
                 tag: this.tag_input,
                 votes: { 
                     no: [], 
@@ -424,7 +491,19 @@ const app = Vue.createApp({
                     yet_to_vote: this.group_members
                 }
             }
-            console.log(new_obj)
+            // check for empty strings
+            if (typeof this.amount === 'string') {
+                this.amount = 0
+            }
+            if (typeof this.converted_amount === 'string') {
+                this.converted_amount = 0
+            }
+            // update price
+            new_obj.price = {
+                krw: this.converted_amount,
+                sgd: this.amount,
+            }
+            // console.log(new_obj)
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
             // push data to database
@@ -491,7 +570,13 @@ const app = Vue.createApp({
             this.no = details.votes.no;
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
-        }
+        },
+
+        // retrieve and edit user and trip id
+        // retrieve_from_cache() {
+        //     this.trip_id = localStorage.getItem('user')
+        //     this.user_id = localStorage.getItem('trip')
+        // }
     },
     // load data from database before initialising map and mounting vue
     async created() {
@@ -500,7 +585,6 @@ const app = Vue.createApp({
         // get group size from database
         await this.read_group_members()
     }
-    
 });
 const vm = app.mount('#app'); 
 
@@ -704,102 +788,3 @@ function loadFlag(element){
        
 export {vm}
 
-// var location_coded = 
-        //     { 
-        //         "1": {
-        //             "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-        //             "description": "",
-        //             "latlng": {
-        //             "lat": 37.5444,
-        //             "lng": 127.0374
-        //             },
-        //             "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-        //             "price": {
-        //             "krw": 0,
-        //             "sgd": 0
-        //             },
-        //             "tag": "Attraction",
-        //             "votes_num": {
-        //             "no": 1,
-        //             "yes": 3,
-        //             "yet_to_vote": 1
-        //             },
-        //             "votes_percentage": {
-        //             "no": 20,
-        //             "yes": 60,
-        //             "yet_to_vote": 20
-        //             }
-        //         },
-        //         "2":{
-        //             "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-        //             "description": "",
-        //             "latlng": {
-        //             "lat": 37.5512,
-        //             "lng": 126.9882
-        //             },
-        //             "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-        //             "price": {
-        //             "krw": 12000,
-        //             "sgd": 12
-        //             },
-        //             "tag": "Attraction",
-        //             "votes_num": {
-        //             "no": 1,
-        //             "yes": 1,
-        //             "yet_to_vote": 3
-        //             },
-        //             "votes_percentage": {
-        //             "no": 20,
-        //             "yes": 20,
-        //             "yet_to_vote": 60
-        //             }
-        //         },
-        //         "3":{
-        //             "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
-        //             "description": "",
-        //             "latlng": {
-        //             "lat": 37.5561,
-        //             "lng": 126.9719
-        //             },
-        //             "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
-        //             "price": {
-        //             "krw": 3000,
-        //             "sgd": 3
-        //             },
-        //             "tag": "Food",
-        //             "votes_num": {
-        //             "no": 0,
-        //             "yes": 4,
-        //             "yet_to_vote": 1
-        //             },
-        //             "votes_percentage": {
-        //             "no": 0,
-        //             "yes": 80,
-        //             "yet_to_vote": 20
-        //             }
-        //         },
-        //         "4":{
-        //             "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
-        //             "description": "",
-        //             "latlng": {
-        //             "lat": 37.5532,
-        //             "lng": 126.9219
-        //             },
-        //             "name": "Hongdae Shopping Street",
-        //             "price": {
-        //             "krw": 25244.25,
-        //             "sgd": 25
-        //             },
-        //             "tag": "Shopping",
-        //             "votes_num": {
-        //             "no": 0,
-        //             "yes": 5,
-        //             "yet_to_vote": 0
-        //             },
-        //             "votes_percentage": {
-        //             "no": 0,
-        //             "yes": 100,
-        //             "yet_to_vote": 0
-        //             }
-        //         }
-        //     };

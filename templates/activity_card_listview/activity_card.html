@@ -33,70 +33,75 @@
                         <!-- COPY FROM HERE -->
 
                         <div id="main">
-                        <div class="card mb-3" v-for="(location, index) in locations">
-                            <!-- LOCATION/PLACE -->
-                            <div class="card-header">
-                                <span class="fs-3 fw-semibold">
-                                {{location.name}}
-                                </span>
-                                <span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span>
-                            </div>
 
-                            <!-- BADGE & DESCRIPTION -->
-                            <div class="card-body" >
-                                <div class="container p-0">
-                                <div class="row">
-                                    <div class = "col-8">
-                                        <p style="font-style: italic">{{ location.address }}</p>
-                                        <h6>{{ location.price.sgd }} SGD/{{ location.price.krw }} KRW per person</h6>
-                                        <p class="description" style="text-align: justify;">{{ location.description }}</p>
-                                    </div>
-                                    
-                                    <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                    <div class="col-4">
-                                        <p class="pt-3">Current Votes: </p>
+                            <div class="card mb-3" v-for="(location, index) in existing_locations">
+                                <!-- LOCATION/PLACE -->
+                                <div class="card-header">
+                                    <span class="fs-3 fw-semibold">
+                                    {{location.name}}
+                                    </span>
+                                    <span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span>
+                                </div>
+
+                               <!-- BADGE & DESCRIPTION -->
+                                <div class="card-body" >
+                                    <div class="container p-0">
+                                    <div class="row">
+                                        <div class = "col-8">
+                                            <p style="font-style: italic">{{ location.address }}</p>
+                                            <h6>{{ location.price.sgd }} SGD/{{ location.price.krw }} KRW per person</h6>
+                                            <p class="description" style="text-align: justify;">{{ location.description }}</p>
+                                        </div>
                                         
+                                        <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                        <div class="col-4">
+                                            <p class="pt-3">Current Votes: </p>
+
                                             <div class="progress">
-                                                    <!-- VOTED YES -->
-                                                <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top"  :data-bs-title="get_yes_num(location.votes)"></div>
+                                                <!-- VOTED YES -->
+                                                <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">YES</div>
                                                     <!-- VOTED NO -->
-                                                <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="get_no_num(location.votes)"> </div>
+                                                <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
                                                 
                                                     <!--  VOTED MAYBE   -->
-                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-secondary" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" :data-bs-title="get_yet_to_vote_num(location.votes)"></div>
-                                                
+                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">MAYBE</div>
                                             </div>
+                                            
 
-                                        <div class="pt-3" style="display: flex; justify-content: center;">
-                                            <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject(location.votes, index)">Reject</button>
-                                            <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept(location.votes, index)"> Vote </button>
-                                        </div>
-
-
-                                        
-                                        
-                                        
-                                        <!-- Voted NO: {{ voted_no_people }}
-                                        <br>
-                                        Voted: YES: {{ voted_yes_people }}
-                                        <br>
-                                        YET TO VOTE: {{ yet_to_vote_people }} -->
-                                    </div>
-                                </div> 
                             
-                                <!-- EDIT BUTTON -->
-                                <div class="row">
-                                    <div class="col-11"></div>
-                                    <div class="col-1">
-                                        <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                                            <div class="pt-3" style="display: flex; justify-content: center;">
+                                                <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject(location.votes, index)">Reject</button>
+                                                <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept(location.votes, index)"> Vote </button>
+                                            </div>
+                            
+                            
+                                            
+                                            
+                                            
+                                            <!-- Voted NO: {{ voted_no_people }}
+                                            <br>
+                                            Voted: YES: {{ voted_yes_people }}
+                                            <br>
+                                            YET TO VOTE: {{ yet_to_vote_people }} -->
+                                        </div>
+                                    </div> 
+                                
+                                    <!-- EDIT BUTTON -->
+                                    <div class="row">
+                                        <div class="col-11"></div>
+                                        <div class="col-1">
+                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
-                                </div>
+                            
+                                
+                            <!-- END OF CARD -->
                             </div>
+
+
                         </div>
-
-
-                    </div>
 
 
                     </div>

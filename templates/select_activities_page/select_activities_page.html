@@ -39,6 +39,15 @@
                         <h1> Trip to Seoul, Korea </h1>
                         <h5 style="font-style:italic;"> 1 December 2022 - 10 December 2022</h5>
                         <p>Trip leader, please select the activities </p>
+                        <!-- Filter Tag -->
+                        <p>Filter by:
+                        <select v-model="filter_tag" @change="sort_by">
+                            <option>Tag</option>
+                            <option>Votes</option>
+                            <option>Cost</option>
+                        </select>
+                        {{filter_tag}}
+                        </p>
                     
 
                         <!-- Table  -->
@@ -52,6 +61,7 @@
                                             <th scope="col">
                                                 <label class="">
                                                 <input type="checkbox" @change="select_all()"/>
+                                                <!-- @change="select_all()" -->
                                                 <div class=""></div>
                                                 </label>
                                             </th>
@@ -64,10 +74,11 @@
                                     </thead>
                                         <!-- TABLE BODY -->
                                     <tbody>
-                                        <template v-for="location in locations">
+                                        <template v-for="(location,index) in existing_locations" v-if="filter_tag == '' ">
                                             <tr scope="row">
                                                 <th scope="row">
-                                                <input type="checkbox" name="atv" :value="location.price.sgd" v-model="total_price_list" @change="calculate_spending()" />
+                                                <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
+                                                <!-- @change="calculate_spending()"  -->
                                                 </th>
                                                 <td>
                                                     {{ location.name }}
@@ -76,36 +87,63 @@
                                                     {{ location.tag }}
                                                 </td>
                                                 <td style="text-align: center;">
-                                                    {{ location.votes_percentage.yes }}%
+                                                    {{ calculate_votes_percentage(location.votes) }}%
                                                 </td>
                                                 <td style="text-align: center;">
                                                     ${{ location.price.sgd }}
                                                 </td>
                                             </tr>
-
                                                     <!-- SPACE -->
-                                                    <tr class="spacer"><td colspan="100"></td></tr>
-                                                </template>
+                                                <tr class="spacer"><td colspan="100"></td></tr>
+                                        </template>
+
+
+
+                                        <template v-for="(location,index) in filtered_locations" v-else>
+                                            <tr scope="row">
+                                                <th scope="row">
+                                                <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
+                                                <!-- @change="calculate_spending()"  -->
+                                                </th>
+                                                <td>
+                                                    {{ location.name }}
+                                                </td>
+                                                <td style="text-align: center;"> 
+                                                    {{ location.tag }}
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    {{ calculate_votes_percentage(location.votes) }}%
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    ${{ location.price.sgd }}
+                                                </td>
+                                            </tr>
+                                                    <!-- SPACE -->
+                                                <tr class="spacer"><td colspan="100"></td></tr>
+                                        </template>
+
 
                                         </tbody>
                                         </table>
-                                    </div>
+                                </div>
 
 
 
 
                             </div>
+                            <!-- {{ selected_activities }} -->
                         </div>
 
                     </div>
                 </div>
                 
-                <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3" >
+                <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3 " >
 
                         <h3>Total Spending: {{ spending }} SGD</h3>
+                        
  
-                        <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'">Confirm</button>
-
+                        <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button>
+                        <!--  -->
                 </footer>
             </div>
             </div>
@@ -122,7 +160,7 @@
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
     <!-- Refer to sidebar JS -->
     <script src="../pages/sidebars.js"></script>

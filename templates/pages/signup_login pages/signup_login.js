@@ -42,12 +42,6 @@ const root = Vue.createApp({
     
     methods: {
         sign_up() {
-            const usernames = ref(db, "users/");
-            onValue(usernames, (snapshot) => {
-                const data = snapshot.val();
-                console.log(data)
-            return data
-            });
             var email = this.email
             var password = this.password
             console.log("starting to create user...")
@@ -58,7 +52,7 @@ const root = Vue.createApp({
                     // save user account details to database
                     console.log("starting to write user data...")
                     console.log(userCredential)
-                    set(ref(db, "users/" + this.email.replace(".","")), {
+                    set(ref(db, "users/" + this.email.replaceAll(".","")), {
                         email: this.email,
                         username: this.username,
                         fullname: this.first_name + " " + this.last_name,
@@ -120,12 +114,12 @@ const root = Vue.createApp({
                     console.log("user login successful")
                     // redirects to home page
                     const user = userCredential.user;
-                    const email = user.email.replace(".","")
+                    const email = user.email.replaceAll(".","")
                     console.log(email)
                     localStorage.setItem("user", email)
                     location.replace("../trips-homepage.html")
                     
-                    location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
                 })
                 .catch((error) => {
                     // for admin, tells you what error there is
@@ -160,29 +154,43 @@ const root = Vue.createApp({
 
                 console.log(user.displayName)
                 console.log(user.email)
+                const userID = user.email.replaceAll(".","")
+                console.log(userID)
+                localStorage.setItem("user", userID)
 
-                set(ref(db, "users/" + user.displayName), {
-                    email: user.email,
-                    fullname: user.displayName,
-                    trips: []
-                  })
-                .then(
-                    function write_success() {
-                        // display "Success" message
-                        console.log("Write Operation Successful")
+                // CHECK IF USER IS ALREADY REGISTERED, IF NOT CREATE NEW ENTRY
+                const arr_of_users = ref(db, "users")
+                onValue(arr_of_users, (snapshot) => {
+                    const data = snapshot.val()
+                    console.log(Object.keys(data))
+                    const all_users = Object.keys(data)
+                    if(!(all_users.includes(userID))){
+                        set(ref(db, "users/" + userID), {
+                            email: user.email,
+                            fullname: user.displayName,
+                            trips: []
+                          })
+                        .then(
+                            function write_success() {
+                                // display "Success" message
+                                console.log("Write Operation Successful")
+                        })
+                        .catch((error) => {
+                            // for us to debug, tells us what error there is,
+                            const errorCode = error.code;
+                            const errorMessage = error.message;
+            
+                            // display "Error" message
+                            var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                            console.log(failed_message);
+                        })
+                    }
                 })
-                .catch((error) => {
-                    // for us to debug, tells us what error there is,
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-    
-                    // display "Error" message
-                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                    console.log(failed_message);
-                })
+                
 
-                console.log(`Log In Successful`)    
-                location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")            
+                console.log(`Log In Successful`)
+                console.log(localStorage.getItem("user"))    
+                location.replace("../trips-homepage.html")
 
             }).catch((error) => {
                 // Handle Errors here.

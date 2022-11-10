@@ -132,94 +132,96 @@ function DeleteMarker(id) {
 const app = Vue.createApp({ 
     data() { 
         return { 
+            // trip details
+            trip_id: "grad trip_adambft",
+            user_id: "",
             map_view: false,
             map: "",
             marker_id: uniqueId,
             amount: "", 
-            // locations: [
-            //     {
-            //         name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-            //         address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5444, lng: 127.0374 },
-            //         tag: 'Attraction',
-            //         description: '',
-            //         price: {sgd: 0, krw: 0},
-            //         votes_percentage: {yes: 60, no: 20, yet_to_vote: 20}, 
-            //         votes_num: {yes: 3, no: 1, yet_to_vote:1},
-            //     },
-            //     {
-            //         name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-            //         address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5512, lng: 126.9882 },
-            //         tag: 'Attraction',
-            //         description: '',
-            //         price: {sgd: 12, krw: 12000},
-            //         votes_percentage: {yes: 20, no: 20, yet_to_vote: 60}, 
-            //         votes_num: {yes: 1, no: 1, yet_to_vote:3},
-            //     },
-            //     {
-            //         name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
-            //         address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5561, lng: 126.9719 },
-            //         tag: 'Food',
-            //         description: '',
-            //         price: {sgd: 3, krw: 3000},
-            //         votes_percentage: {yes: 80, no: 0, yet_to_vote: 20}, 
-            //         votes_num: {yes: 4, no: 0, yet_to_vote:1},
-            //     },
-            //     {
-            //         name: 'Hongdae Shopping Street',
-            //         address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5532, lng: 126.9219 },
-            //         tag: 'Shopping',
-            //         description: '',
-            //         price: {sgd: 25, krw: 25244.25}, 
-            //         votes_percentage: {yes: 100, no: 0, yet_to_vote: 0}, 
-            //         votes_num: {yes: 5, no: 0, yet_to_vote:0},
-            //     },
-            //     {
-            //         name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-            //         address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5444, lng: 127.0374 },
-            //         tag: 'Attraction',
-            //         description: '',
-            //         price: {sgd: 0, krw: 0},
-            //         votes_percentage: {yes: 60, no: 20, yet_to_vote: 20}, 
-            //         votes_num: {yes: 3, no: 1, yet_to_vote:1},
-            //     },
-            //     {
-            //         name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-            //         address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5512, lng: 126.9882 },
-            //         tag: 'Attraction',
-            //         description: '',
-            //         price: {sgd: 12, krw: 12000},
-            //         votes_percentage: {yes: 20, no: 20, yet_to_vote: 60}, 
-            //         votes_num: {yes: 1, no: 1, yet_to_vote:3},
-            //     },
-            //     {
-            //         name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
-            //         address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5561, lng: 126.9719 },
-            //         tag: 'Food',
-            //         description: '',
-            //         price: {sgd: 3, krw: 3000},
-            //         votes_percentage: {yes: 80, no: 0, yet_to_vote: 20}, 
-            //         votes_num: {yes: 4, no: 0, yet_to_vote:1},
-            //     },
-            //     {
-            //         name: 'Hongdae Shopping Street',
-            //         address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
-            //         latlng: { lat: 37.5532, lng: 126.9219 },
-            //         tag: 'Shopping',
-            //         description: '',
-            //         price: {sgd: 25, krw: 25244.25}, 
-            //         votes_percentage: {yes: 100, no: 0, yet_to_vote: 0}, 
-            //         votes_num: {yes: 5, no: 0, yet_to_vote:0},
-            //     },
-            //         ],
+            locations: [
+                {
+                    name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                    address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5444, lng: 127.0374 },
+                    tag: 'Attraction',
+                    description: '',
+                    price: {sgd: 0, krw: 0},
+                    votes_percentage: {yes: 60, no: 20, yet_to_vote: 20}, 
+                    votes_num: {yes: 3, no: 1, yet_to_vote:1},
+                },
+                {
+                    name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                    address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5512, lng: 126.9882 },
+                    tag: 'Attraction',
+                    description: '',
+                    price: {sgd: 12, krw: 12000},
+                    votes_percentage: {yes: 20, no: 20, yet_to_vote: 60}, 
+                    votes_num: {yes: 1, no: 1, yet_to_vote:3},
+                },
+                {
+                    name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
+                    address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5561, lng: 126.9719 },
+                    tag: 'Food',
+                    description: '',
+                    price: {sgd: 3, krw: 3000},
+                    votes_percentage: {yes: 80, no: 0, yet_to_vote: 20}, 
+                    votes_num: {yes: 4, no: 0, yet_to_vote:1},
+                },
+                {
+                    name: 'Hongdae Shopping Street',
+                    address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5532, lng: 126.9219 },
+                    tag: 'Shopping',
+                    description: '',
+                    price: {sgd: 25, krw: 25244.25}, 
+                    votes_percentage: {yes: 100, no: 0, yet_to_vote: 0}, 
+                    votes_num: {yes: 5, no: 0, yet_to_vote:0},
+                },
+                {
+                    name: 'Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                    address: '273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5444, lng: 127.0374 },
+                    tag: 'Attraction',
+                    description: '',
+                    price: {sgd: 0, krw: 0},
+                    votes_percentage: {yes: 60, no: 20, yet_to_vote: 20}, 
+                    votes_num: {yes: 3, no: 1, yet_to_vote:1},
+                },
+                {
+                    name: 'Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                    address: '105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5512, lng: 126.9882 },
+                    tag: 'Attraction',
+                    description: '',
+                    price: {sgd: 12, krw: 12000},
+                    votes_percentage: {yes: 20, no: 20, yet_to_vote: 60}, 
+                    votes_num: {yes: 1, no: 1, yet_to_vote:3},
+                },
+                {
+                    name: 'Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea',
+                    address: '405 Hangang-daero, Jung-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5561, lng: 126.9719 },
+                    tag: 'Food',
+                    description: '',
+                    price: {sgd: 3, krw: 3000},
+                    votes_percentage: {yes: 80, no: 0, yet_to_vote: 20}, 
+                    votes_num: {yes: 4, no: 0, yet_to_vote:1},
+                },
+                {
+                    name: 'Hongdae Shopping Street',
+                    address: '365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea',
+                    latlng: { lat: 37.5532, lng: 126.9219 },
+                    tag: 'Shopping',
+                    description: '',
+                    price: {sgd: 25, krw: 25244.25}, 
+                    votes_percentage: {yes: 100, no: 0, yet_to_vote: 0}, 
+                    votes_num: {yes: 5, no: 0, yet_to_vote:0},
+                },
+                    ],
             existing_locations: "",
-            trip_id: "grad trip_adambft"
         };
     }, //data
     methods: {
@@ -268,7 +270,7 @@ const app = Vue.createApp({
         },
 
         write_to_existing() {
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/selected_activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
@@ -278,17 +280,17 @@ const app = Vue.createApp({
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
-                else {
-                    const data_to_be_read = ref(db, `locations`);
-                    onValue(data_to_be_read, (snapshot) => {
-                        const data2 = snapshot.val();
-                        if (data2) {
-                            this.existing_locations = data2
-                            console.log(data2)
-                            window.initMap = initMap(this.existing_locations);
-                        }
-                    })
-                }
+                // else {
+                //     const data_to_be_read = ref(db, `locations`);
+                //     onValue(data_to_be_read, (snapshot) => {
+                //         const data2 = snapshot.val();
+                //         if (data2) {
+                //             this.existing_locations = data2
+                //             console.log(data2)
+                //             window.initMap = initMap(this.existing_locations);
+                //         }
+                //     })
+                // }
                 })   
             },
         
