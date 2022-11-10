@@ -102,47 +102,104 @@ const app = Vue.createApp( {
 			location.replace("../../map_phase2.html")
 		},
 
-		async get_user_trip_ids() {
-			console.log(`=== [START] get_user_trip_ids() ===`)
-
-			// Getting the userID from localStorage and creating the cards based off it.
-			const user_ID = localStorage.getItem("user")
-			//console.log("USER ID: ", user_ID)
-			const path_location = ref(db, "users/" + user_ID + "/trips")
-
-			var snapshot = await get(path_location)
-			var trips = snapshot.val()
-
-			console.log(`=== [END] get_user_trip_ids() ===`)
-
-			return trips
-		},
-
-		async get_trip_obj(trip_id) {
-			console.log(`=== [START] get_trip_obj(${trip_id}) ===`)
-			
-			const path_location = ref(db, "trips/" + trip_id)
-
-			var snapshot = await get(path_location)
-			var trip_obj = snapshot.val()
-
-			console.log(`=== [END] get_trip_obj(${trip_id}) ===`)
-
-			return trip_obj
+		test() {
+			console.log("fuck me")
 		}
+
+		// // Implements typing effect
+		// Type() { 
+		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX + 1);
+		// 	this._ELEMENT.innerHTML = text;
+		// 	this._PART_INDEX++;
+
+		// 	// If full sentence has been displayed then start to delete the sentence after some time
+		// 	if(text === this._CONTENT[this._PART]) {
+		// 		var to_hold
+		// 		if (text == this._CONTENT[0]) {
+		// 			to_hold = this.hold_main
+		// 		} else {to_hold = this.hold_sub}
+
+		// 		clearInterval(this._INTERVAL_VAL);
+		// 		setTimeout(function() {
+		// 			this._INTERVAL_VAL = setInterval(Delete, 50);
+		// 		}, to_hold);
+		// 	}
+		// },
+
+		// // Implements deleting effect
+		// Delete() {
+		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX - 1);
+		// 	this._ELEMENT.innerHTML = text;
+		// 	this._PART_INDEX--;
+
+		// 	// If sentence has been deleted then start to display the next sentence
+		// 	if(text === '') {
+		// 		clearInterval(this._INTERVAL_VAL);
+
+		// 		// If last sentence then display the first one, else move to the next
+		// 		if(this._PART == (this._CONTENT.length - 1))
+		// 			this._PART = 0;
+		// 		else
+		// 			this._PART++;
+		// 			this._PART_INDEX = 0;
+
+		// 			// Start to display the next sentence after some time
+		// 			setTimeout(function() {
+		// 				this._INTERVAL_VAL = setInterval(Type, 100);
+		// 			}, 200);
+		// 	}
+		// }
+
 
 	},
 
 	async created() {
-		var trips = await this.get_user_trip_ids()
+		// Start the typing effect on load
+		// this._INTERVAL_VAL = this.setInterval(this.Type(), 100);
 
-		for (var e_tripID of trips) {
-			var e_trip_obj = await this.get_trip_obj(e_tripID)
+		// Getting the userID from localStorage and creating the cards based off it.
+		const user_ID = localStorage.getItem("user")
+		console.log(user_ID)
+		const path_location = ref(db, "users/" + user_ID + "/trips")
+		onValue(path_location, (snapshot) => {
+			var trips = snapshot.val()
+			console.log(trips)
+			document.getElementById("cards").innerHTML = ""
+			for(var tripID of trips){
+				console.log(tripID)
+				var trip_name = tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
+				console.log(trip_name)
+				// this.user_trip[tripID] = trip_name
+				var trip_destination = ""
+				onValue(ref(db, "trips/" + tripID), (snapshot) => {
+					const trip_data = snapshot.val()
+					trip_destination = trip_data.trip_details.destination[0].toLowerCase()
+					console.log(trip_destination)
+					console.log(trip_name)
+					document.getElementById("cards").innerHTML += `
+					<div class="card cardstyle" >
+						<img src="../../images/home_page/trips_imgs/${trip_destination}.jpg" class="card-img-top" height="200px">
 
-			this.trip_obj_arr[e_tripID] = e_trip_obj
-		}
+						<div class="card-body">
+							<h5 class="card-title">${trip_name}</h5>
+							<button onclick="edit_trip('${tripID}')" class="btn btn-main-bold">Edit Trip</a>
+						</div>
 
-		console.log(this.trip_obj_arr)
+						<div class="card-footer text-muted">
+						Last edited: 2 days ago
+						</div>
+					</div>
+					`
+				})
+				
+				
+			}
+
+
+		})
+
+		console.log(this.user_trips)
+		
 	}
 })
 
