@@ -90,26 +90,7 @@ const app = Vue.createApp( {
 	//=========== DATA PROPERTIES ===========
 	data() {
 		return {
-			user_trips: {},
-
-			// List of sentences
-			// _CONTENT: [ "Plan a trip.", "Find yourself.", "Get away.", "Live your dream." ],
-
-			// // Current sentence being processed
-			// _PART: 0,
-
-			// // Character number of the current sentence being processed 
-			// _PART_INDEX: 0,
-
-			// // Holds the handle returned from setInterval
-			// _INTERVAL_VAL: "",
-
-			// // Element that holds the text
-			// _ELEMENT: document.querySelector("#animated-text"),
-
-			// // How long to hold?
-			// hold_main: 5000,
-			// hold_sub: 1500,
+			trip_obj_arr: {}
 		}
 	},
 
@@ -121,104 +102,41 @@ const app = Vue.createApp( {
 			location.replace("../../map_phase2.html")
 		},
 
-		test() {
-			console.log("fuck me")
+		async get_trips_arr() {
+			const user_ID = localStorage.getItem("user")
+
+			const path_location = ref(db, "users/" + user_ID + "/trips")
+
+			const snapshot = await get(path_location)
+			var trips = snapshot.val()
+
+			return trips
+		},
+
+		async get_trip_obj(trip_id) {
+			const path_location = ref(db, "trips/" + trip_id)
+
+			const snapshot = await get(path_location)
+			var trip_obj = snapshot.val()
+
+			return trip_obj
 		}
-
-		// // Implements typing effect
-		// Type() { 
-		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX + 1);
-		// 	this._ELEMENT.innerHTML = text;
-		// 	this._PART_INDEX++;
-
-		// 	// If full sentence has been displayed then start to delete the sentence after some time
-		// 	if(text === this._CONTENT[this._PART]) {
-		// 		var to_hold
-		// 		if (text == this._CONTENT[0]) {
-		// 			to_hold = this.hold_main
-		// 		} else {to_hold = this.hold_sub}
-
-		// 		clearInterval(this._INTERVAL_VAL);
-		// 		setTimeout(function() {
-		// 			this._INTERVAL_VAL = setInterval(Delete, 50);
-		// 		}, to_hold);
-		// 	}
-		// },
-
-		// // Implements deleting effect
-		// Delete() {
-		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX - 1);
-		// 	this._ELEMENT.innerHTML = text;
-		// 	this._PART_INDEX--;
-
-		// 	// If sentence has been deleted then start to display the next sentence
-		// 	if(text === '') {
-		// 		clearInterval(this._INTERVAL_VAL);
-
-		// 		// If last sentence then display the first one, else move to the next
-		// 		if(this._PART == (this._CONTENT.length - 1))
-		// 			this._PART = 0;
-		// 		else
-		// 			this._PART++;
-		// 			this._PART_INDEX = 0;
-
-		// 			// Start to display the next sentence after some time
-		// 			setTimeout(function() {
-		// 				this._INTERVAL_VAL = setInterval(Type, 100);
-		// 			}, 200);
-		// 	}
-		// }
-
 
 	},
 
 	async created() {
-		// Start the typing effect on load
-		// this._INTERVAL_VAL = this.setInterval(this.Type(), 100);
 
-		// Getting the userID from localStorage and creating the cards based off it.
-		const user_ID = localStorage.getItem("user")
-		console.log(user_ID)
-		const path_location = ref(db, "users/" + user_ID + "/trips")
-		onValue(path_location, (snapshot) => {
-			var trips = snapshot.val()
-			console.log(trips)
-			document.getElementById("cards").innerHTML = ""
-			for(var tripID of trips){
-				console.log(tripID)
-				var trip_name = tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
-				console.log(trip_name)
-				// this.user_trip[tripID] = trip_name
-				var trip_destination = ""
-				onValue(ref(db, "trips/" + tripID), (snapshot) => {
-					const trip_data = snapshot.val()
-					trip_destination = trip_data.trip_details.destination[0].toLowerCase()
-					console.log(trip_destination)
-					console.log(trip_name)
-					document.getElementById("cards").innerHTML += `
-					<div class="card cardstyle" >
-						<img src="../../images/home_page/trips_imgs/${trip_destination}.jpg" class="card-img-top" height="200px">
+		// POPULATES TRIP_OBJ_ARR WITH DATA FROM DTAABASE ===============
+		var trips = await this.get_trips_arr()
 
-						<div class="card-body">
-							<h5 class="card-title">${trip_name}</h5>
-							<button onclick="edit_trip('${tripID}')" class="btn btn-main-bold">Edit Trip</a>
-						</div>
+		for (var e_trip_id of trips) {
+			var e_trip_obj = await this.get_trip_obj(e_trip_id)
 
-						<div class="card-footer text-muted">
-						Last edited: 2 days ago
-						</div>
-					</div>
-					`
-				})
-				
-				
-			}
+			this.trip_obj_arr[e_trip_id] = e_trip_obj
+		}
 
-
-		})
-
-		console.log(this.user_trips)
-		
+		console.log(this.trip_obj_arr)
+		// ================================================================
 	}
 })
 
