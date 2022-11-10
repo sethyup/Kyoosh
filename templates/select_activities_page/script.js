@@ -105,57 +105,74 @@ const main = Vue.createApp({
             filter_tag: "",
             existing_locations: "",
             trip_id: "grad trip_adambft",
+            filtered_locations: [],
 
-            // push selected activities into DB
+            // selected_activities
             selected_activities: [],
         }
     },
-    // computed:{
-        // sort_by(){
-        //     tag_list = []
-        //     votes_list = []
-        //     cost_list = []
+    computed:{
+        sort_by(){
+            var tag_list = []
+            var votes_list = []
+            var cost_list = []
 
-        //     for (let i=0; i<Object.keys(this.locations).length; i++) {
-        //         tag = this.locations[i].tag
-        //         cost = this.locations[i].price.sgd
-        //         votes = this.locations[i].votes.yes.length
-        //         tag_id = [tag, i]
-        //         tag_list.push(tag_id)
+            for (let i=0; i<this.existing_locations.length; i++) {
+                var tag = this.existing_locations[i].tag
+                var cost = Number(this.existing_locations[i].price.sgd)
+                var votes = 0
+                    if(this.existing_locations[i].votes.yes){
+                    votes = this.existing_locations[i].votes.yes.length
+                    }
+                var tag_id = [tag, i]
+                tag_list.push(tag_id)
 
-        //         votes_id = [votes, i]
-        //         votes_list.push(votes_id)
+                var votes_id = [votes, i]
+                votes_list.push(votes_id)
 
-        //         cost_id = [cost, i]
-        //         cost_list.push
-
-
-                
-
-        //         if(!tag_list.includes(tag)){
-        //             tag_list.push(tag)
-        //         }
-        //         if(!votes_list.includes(votes)){
-        //             votes_list.push(votes)
-        //         }
-        //         if(!cost_list.includes(cost)){
-        //             cost_list.push(cost)
-        //         }
-        //     }
+                var cost_id = [cost, i]
+                cost_list.push(cost_id)
+            }
             // sort current tags/votes/cost
-            // tag_list = tag_list.sort()
-            // votes_list = votes_list.sort(function(a, b){return b-a})
-            // cost_list = cost_list.sort(function(a, b){return a-b})
+            tag_list = tag_list.sort()
+            votes_list = votes_list.sort(function(a, b){return b[0]-a[0]})
+            cost_list = cost_list.sort(function(a, b){return a[0]-b[0]})
 
             // console.log(this.locations)
-            // console.log(tag_list)
-            // console.log(votes_list)
-            // console.log(cost_list)
+            console.log("FILTER")
+            console.log(tag_list)
+            console.log(votes_list)
+            console.log(cost_list)
+
+            if(this.filter_tag == "Tag"){
+                this.filtered_locations = []
+                for (let i=0; i<tag_list.length; i++) {
+                    var index = tag_list[i][1]
+                    var location = this.existing_locations[index]
+                    this.filtered_locations.push(location)
+                }
+            }
+            else if(this.filter_tag == "Votes"){
+                this.filtered_locations = []
+                for (let i=0; i<votes_list.length; i++) {
+                    var index = votes_list[i][1]
+                    var location = this.existing_locations[index]
+                    this.filtered_locations.push(location)
+                }
+            }
+            else if(this.filter_tag == "Cost"){
+                this.filtered_locations = []
+                for (let i=0; i<cost_list.length; i++) {
+                    var index = cost_list[i][1]
+                    var location = this.existing_locations[index]
+                    this.filtered_locations.push(location)
+                }
+            }
 
             // new_location = (this.locations).sort((a, b) => (a.price.sgd > b.price.sgd) ? 1 : -1)
             // console.log(new_location)
-    //     }
-    // },
+        }
+    },
     methods:{
         calculate_votes_percentage(votes){
             var yes_votes = 0
@@ -182,21 +199,12 @@ const main = Vue.createApp({
             if(this.selected_all == false){
                 var total_num = this.existing_locations.length
                 for (let i=0; i<total_num; i++) {
-                    this.selected_activities.push(i)
+                    this.selected_activities.push(this.existing_locations[i])
                 }
                 // this.selected_activities = Object.keys(this.locations)
                 this.selected_all = true
                 this.calculate_spending()
-                // var items = document.getElementsByName('atv');
-                // console.log(items)
-                // this.selected_activities = []
-                // for (var i = 0; i < items.length; i++) {
-                //     if (items[i].type == 'checkbox')
-                //         items[i].checked = true;
-                //         this.selected_activities.push(items)
-                // }
-                // this.selected_all = true;
-                // return this.calculate_spending()
+
             }
             // selected all --> unselect all
             else{
@@ -205,29 +213,29 @@ const main = Vue.createApp({
                 this.spending = 0
             }
 
-            // selected all 
-            // else if (this.selected_all){
-            //     var items = document.getElementsByName('atv');
-            //     for (var i = 0; i < items.length; i++) {
-            //         if (items[i].type == 'checkbox')
-            //             items[i].checked = false;
-            //     }
-            //     this.selected_all = false;
-            //     this.selected_activities = []
-            //     return this.calculate_spending()
-            // }
+
             
 
         },
         calculate_spending(){
             console.log("==== START FUNCTION +++++")
+
             this.spending = 0
             for (let i=0; i< this.selected_activities.length; i++) {
-                var index = this.selected_activities[i]
-                this.spending += Number(this.existing_locations[index].price.sgd)
-                console.log(this.existing_locations[index].price.sgd)
+                var name = this.selected_activities[i].name
+                // console.log(name)
+                for (let j=0; j<this.existing_locations.length; j++) {
+                    if(name == this.existing_locations[j].name){
+                        console.log(this.existing_locations[j].name)
+                        var cost = Number(this.existing_locations[j].price.sgd)
+                        this.spending += cost
+                    }
+                }
+                // this.spending += Number(this.existing_locations[index].price.sgd)
+                // console.log(this.existing_locations[index].price.sgd)
                 // this.spending += Number(this.selected_activities[i])
             };
+            console.log(this.selected_activities)
         }, 
         // read existing locations from the database
         read_from_existing_locations() {
@@ -251,30 +259,37 @@ const main = Vue.createApp({
                 }
                 })
           },
-        // compareValues(key, order = 'asc') {
-        //     return function innerSort(a, b) {
-        //       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-        //         // property doesn't exist on either object
-        //         return 0;
-        //       }
-          
-        //       const varA = (typeof a[key] === 'string')
-        //         ? a[key].toUpperCase() : a[key];
-        //       const varB = (typeof b[key] === 'string')
-        //         ? b[key].toUpperCase() : b[key];
-          
-        //       let comparison = 0;
-        //       if (varA > varB) {
-        //         comparison = 1;
-        //       } else if (varA < varB) {
-        //         comparison = -1;
-        //       }
-        //       return (
-        //         (order === 'desc') ? (comparison * -1) : comparison
-        //       );
-        //     };
-        //     // console.log(this.calculate_list[1])
-        // }
+
+        // push selected_activities into database
+        create_update_data() {
+            console.log("Writing data into database...")
+
+            // EDIT HERE
+            set(ref(db, `trips/${this.trip_id}/selected_activities`), this.selected_activities) 
+                // DATA YOU WANT TO WRITE GOES HERE,
+
+                // example
+                // email: this.email
+                // ...
+
+            
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    // alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                alert(failed_message)
+                console.log(failed_message);
+            })
+        },
         
     },
     // retrieve data from database onload
