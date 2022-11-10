@@ -268,7 +268,7 @@ var flight_app = Vue.createApp({
             flight_obj_arr: [],
 
             //DATABASE HARDCODING
-            trip_id: "grad trip_adambft"
+            trip_id: "badabingbadaboourjfjwowskdorrofkckshecoejfnekadambft"
         }
     },
 

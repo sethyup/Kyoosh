@@ -237,7 +237,7 @@ var accommodation_app = Vue.createApp({
             accom_obj_arr: [],
 
             //DATABASE HARDCODING
-            trip_id: "grad trip_adambft"
+            trip_id: "badabingbadaboourjfjwowskdorrofkckshecoejfnekadambft"
         }
     },
 

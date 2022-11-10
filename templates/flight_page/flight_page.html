@@ -38,10 +38,9 @@
             <!-- ALL OTHER CONTENT -->
             <div class="col py-3" id="flight_app">
                 <!-- CREATE NEW FLIGHT BUTTON -->
-                <div class="row justify-content-end mb-3">
+                <div class="row justify-content-start mb-4 mt-3">
                     <div class="col-md-3 col-lg-2 d-flex justify-content-center">
                         <button type="button" class="btn btn-main dropshadow-btn-main" @click="initialize_create_flight()" :disabled="create_new_flight || edit_existing_flight">Create New</button>
-                        <!-- <button type="button" class="btn btn-main-bold" @click="log_everything()">LOG EVERYTHING</button> -->
                     </div>
                 </div>
 
@@ -555,6 +554,12 @@
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <!-- TRIP DETAILS -->
+                <div class="trip-title-top-md d-none d-md-block">
+                    <h5>Name of Trip (Trip to Seoul, Korea)</h5>
+                    <p>1 December 2022 - 10 December 2022</p>
                 </div>
             </div>
         </div>
