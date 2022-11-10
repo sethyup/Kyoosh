@@ -576,6 +576,8 @@ const app = Vue.createApp({
         retrieve_from_cache() {
             this.trip_id = localStorage.getItem('user')
             this.user_id = localStorage.getItem('trip')
+            console.log(this.trip_id)
+            console.log(this.user_id)
         }
     },
     // load data from database before initialising map and mounting vue
