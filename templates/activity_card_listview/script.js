@@ -101,8 +101,9 @@ const main = Vue.createApp({
       // },
         //HARD-CODED
         user_name: "kbang",
-        trip_id: "grad trip_adambft",
+        trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
         existing_locations: "",
+        current_id: "",
         // display details
         create_true: false,
         edit_true: false,
@@ -203,14 +204,14 @@ const main = Vue.createApp({
             }
           }
           //update tooltip
-            var tooltip_no = bootstrap.Tooltip.getInstance('#progress_no'+idx);
-            tooltip_no.setContent({ '.tooltip-inner': String(votes.no.length) });
-            console.log(votes.no.length)
-            var tooltip_yes = bootstrap.Tooltip.getInstance('#progress_yes' + idx);
-            tooltip_yes.setContent({ '.tooltip-inner': String(votes.yes.length) });
+            // var tooltip_no = bootstrap.Tooltip.getInstance('#progress_no'+idx);
+            // tooltip_no.setContent({ '.tooltip-inner': String(votes.no.length) });
+            // console.log(votes.no.length)
+            // var tooltip_yes = bootstrap.Tooltip.getInstance('#progress_yes' + idx);
+            // tooltip_yes.setContent({ '.tooltip-inner': String(votes.yes.length) });
 
-            var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe' + idx);
-            tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length) });
+            // var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe' + idx);
+            // tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length) });
         },
         user_accept(votes, idx){
         // if voted no before
@@ -265,26 +266,56 @@ const main = Vue.createApp({
               })
         },
         // update existing data
-        create_update_data(votes, indx) {
+        create_update_data() {
+            // create new object
+            var new_obj = {
+              address: this.selected_address,
+              description: this.selected_description,
+              latlng: this.selected_latlng,
+              name: this.selected_name,
+              tag: this.tag_input,
+              
+          }
+
+          // check for empty strings
+          
+          if (this.amount == "") {
+              this.amount = 0
+          }
+          if (this.amount == "") {
+              this.converted_amount = 0
+          }
+          // update price
+          new_obj.price = {
+              krw: this.converted_amount,
+              sgd: this.amount,
+          }
+
+          // settle voting
+          if (!this.no) {
+              this.no = []
+          }
+          if (!this.yes) {
+              this.yes = []
+          }
+          if (!this.yet_to_vote) {
+              this.yet_to_vote = []
+          }
+          // update votes
+          new_obj.votes = { 
+              no: this.no, 
+              yes: this.yes, 
+              yet_to_vote: this.yet_to_vote
+          }
+          // push to existing places under current id
+          this.existing_locations[this.current_id] = new_obj
+          // push data to database
           console.log("Writing data into database...")
-          // the console can be open, 
-
-          // Database path must be set by you
-          // e.g. users/junsui/friends
-
-          // EDIT HERE
-          set(ref(db, /* PATH GOES HERE */), {
-              // DATA YOU WANT TO WRITE GOES HERE,
-
-              // example
-              // email: this.email
-              // ...
-
-            })
+          
+          set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
           .then(
               function write_success() {
                   // display "Success" message
-                  alert("Write Operation Successful")
                   console.log("Entry Created")
           })
           .catch((error) => {
@@ -294,9 +325,9 @@ const main = Vue.createApp({
 
               // display "Error" message
               var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-              alert(failed_message)
               console.log(failed_message);
           })
+          this.yet_to_vote = [];
         },
         // calculate value from
         calculate_to_from() {
@@ -334,6 +365,35 @@ const main = Vue.createApp({
                 console.log(error.message)
             })
         },
+        // retrieve location details for edit activity page
+        retrieve_edit_activity_info(id) {
+          var details = this.existing_locations[id];
+          console.log(details);
+          this.selected_address = details.address;
+          this.selected_description = details.description;
+          this.selected_latlng = details.latlng;
+          this.selected_name = details.name;
+          this.converted_amount = details.price.krw;
+          this.amount = details.price.sgd;
+          this.tag_input = details.tag;
+          this.no = details.votes.no;
+          this.yes = details.votes.yes;
+          this.yet_to_vote = details.votes.yet_to_vote;
+      },
+        set_edit(id) {
+            if (this.edit_true == false) {
+              console.log(id)
+              this.edit_true = true
+              this.create_true = false
+              this.current_id = id
+              // console.log(obj.querySelector(`div id="get_marker_id"`).innerText)
+              // console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+              this.retrieve_edit_activity_info(this.current_id)
+          } else {
+              this.edit_true = false
+              this.create_true = true
+          }
+        }
     },
     async created() {
       await this.read_from_existing_locations()

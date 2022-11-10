@@ -283,7 +283,7 @@ const app = Vue.createApp({
     data() { 
         return {
             // trip details
-            trip_id: "grad trip_adambft",
+            trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
             // display details
             create_true: false,
@@ -427,7 +427,7 @@ const app = Vue.createApp({
                     // console.log(data)
                 }})
         },
-        // write activity detail to database
+        // write edit activity detail to database
         create_update_data() {
             // create new object
             var new_obj = {
@@ -436,23 +436,38 @@ const app = Vue.createApp({
                 latlng: this.selected_latlng,
                 name: this.selected_name,
                 tag: this.tag_input,
-                votes: { 
-                    no: this.no, 
-                    yes: this.yes, 
-                    yet_to_vote: this.yet_to_vote
-                }
+                
             }
+
             // check for empty strings
-            if (typeof this.amount === 'string') {
+            
+            if (this.amount == "") {
                 this.amount = 0
             }
-            if (typeof this.converted_amount === 'string') {
+            if (this.amount == "") {
                 this.converted_amount = 0
             }
             // update price
             new_obj.price = {
                 krw: this.converted_amount,
                 sgd: this.amount,
+            }
+
+            // settle voting
+            if (!this.no) {
+                this.no = []
+            }
+            if (!this.yes) {
+                this.yes = []
+            }
+            if (!this.yet_to_vote) {
+                this.yet_to_vote = []
+            }
+            // update votes
+            new_obj.votes = { 
+                no: this.no, 
+                yes: this.yes, 
+                yet_to_vote: this.yet_to_vote
             }
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
@@ -492,10 +507,10 @@ const app = Vue.createApp({
                 }
             }
             // check for empty strings
-            if (typeof this.amount === 'string') {
+            if (this.amount == "") {
                 this.amount = 0
             }
-            if (typeof this.converted_amount === 'string') {
+            if (this.amount == "") {
                 this.converted_amount = 0
             }
             // update price
@@ -503,7 +518,7 @@ const app = Vue.createApp({
                 krw: this.converted_amount,
                 sgd: this.amount,
             }
-            // console.log(new_obj)
+            console.log(new_obj)
             // push to existing places under current id
             this.existing_locations[this.current_id] = new_obj
             // push data to database
@@ -573,17 +588,17 @@ const app = Vue.createApp({
         },
 
         // retrieve and edit user and trip id
-        retrieve_from_cache() {
-            this.trip_id = localStorage.getItem('user')
-            this.user_id = localStorage.getItem('trip')
-            console.log(this.trip_id)
-            console.log(this.user_id)
-        }
+        // retrieve_from_cache() {
+        //     this.trip_id = localStorage.getItem('user')
+        //     this.user_id = localStorage.getItem('trip')
+        //     console.log(this.trip_id)
+        //     console.log(this.user_id)
+        // }
     },
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
-        await this.retrieve_from_cache()
+        // await this.retrieve_from_cache()
         // get recommended locations from database
         await this.read_from_existing()
         // get group size from database
