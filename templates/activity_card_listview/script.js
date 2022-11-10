@@ -102,10 +102,37 @@ const main = Vue.createApp({
         //HARD-CODED
         user_name: "kbang",
         trip_id: "grad trip_adambft",
-        existing_locations: ""
+        existing_locations: "",
+        // display details
+        create_true: false,
+        edit_true: false,
+        // create activity stuff
+        amount: "", 
+        from: "SGD", 
+        to: "KRW", 
+        converted_amount: "",
+        api_key: "wjnJhKhIK8qWrTVQ2YILd5wpxuyRGSP2",
+        home_country: "SGD",
+        // create activity 2nd part
+        tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
+        tag_input: "",
+        // marker stuff
+        current_id: "",
+        selected_address: "",
+        // selected_tags: "", is under tag_input
+        selected_description: "",
+        selected_name: "",
+        selected_latlng: "",
+        group_members: '',
+        // amount, converted amount from main stuff
+        // vote details
+        no: [],
+        yes: [],
+        yet_to_vote: [],
         }
     },
     methods:{
+        // progess bar methods
         get_total_users(){
           var total_users = 0
           var votes = this.existing_locations[0].votes
@@ -185,7 +212,6 @@ const main = Vue.createApp({
             var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe' + idx);
             tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length) });
         },
-
         user_accept(votes, idx){
         // if voted no before
         if(!votes.yes.includes(this.user_name)){
@@ -200,16 +226,22 @@ const main = Vue.createApp({
             votes.yet_to_vote.splice(votes.yes.indexOf(this.user_name),1)
           }
         }},
-        //     // update tooltip
-        //     var tooltip_no = bootstrap.Tooltip.getInstance('#progress_no'+ idx);
-        //     tooltip_no.setContent({ '.tooltip-inner': String(votes.no.length) });
-        //     console.log("#progress_no" + idx)
-        //     var tooltip_yes = bootstrap.Tooltip.getInstance('#progress_yes'+ idx);
-        //     tooltip_yes.setContent({ '.tooltip-inner': String(votes.yes.length) });
-
-        //     var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe'+ idx);
-        //     tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length)});
-        // }, 
+        // toggle display for create activity
+        d_create() {
+            if (this.create_true == false) {
+                return "none"
+            } else if (this.create_true == true) {
+                return ""
+            }
+        },
+        // toggle display for edit activity
+        d_edit() {
+            if (this.edit_true == false) {
+                return "none"
+            } else if (this.edit_true == true) {
+                return ""
+            }
+        },
         // read existing locations from the database
         read_from_existing_locations() {
           const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
@@ -232,7 +264,7 @@ const main = Vue.createApp({
               }
               })
         },
-
+        // update existing data
         create_update_data(votes, indx) {
           console.log("Writing data into database...")
           // the console can be open, 
@@ -265,14 +297,50 @@ const main = Vue.createApp({
               alert(failed_message)
               console.log(failed_message);
           })
-      },
+        },
+        // calculate value from
+        calculate_to_from() {
+            if (this.from != "SGD"){
+                this.to = "SGD"
+            }
+
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.to}&from=${this.from}&amount=${this.amount}&apikey=${this.api_key}`
+            // 250 times per month 
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.converted_amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+        },
+        // calculate value to
+        calculate_from_to() {
+            let api_endpoint_url = `https://api.apilayer.com/exchangerates_data/convert?to=${this.from}&from=${this.to}&amount=${this.converted_amount}&apikey=${this.api_key}`
+            
+            axios.get(api_endpoint_url)
+            .then(response => {
+                
+                // Inspect the response.data
+                let converted = response.data["result"]; 
+                this.amount = (Math.round(converted*100))/100
+                
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+        },
     },
     async created() {
       await this.read_from_existing_locations()
     }
   })
 
-main.mount("#main")
+const vm = main.mount("#main")
 
 
 // SCRIPT TO ALLOW TOOLTIP TO WORK
@@ -310,5 +378,5 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 // })
 
 
-
+export {vm}
 

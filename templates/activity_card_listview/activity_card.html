@@ -26,13 +26,310 @@
             </div>
 
             <!-- rest of site -->
-            <div class="col p-4">
+            <div class="col p-4" id="main">
                 <div class="row">
+                    
+                    <!-- pop up if create activity -->
+                    <div :style="{display: d_create()}" class="col py-3">
+                        <!-- create activity -->
+                        <div class="container text-dark">
+                            <h3 class="heading">Create an Activity</h3>
+                            
+                            <form>
+                                <!-- PLACE  -->
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="autocomplete" placeholder="Start by typing a location here...">
+                                            <label for="input_place">Start by typing a location here...</label>
+                                        </div>
+                                    </div>
+                                    <!-- TAG -->
+                                    <div class="col-5">
+    
+                                        <!-- vue for tag -->
+                                        <div id="main2" class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text">#</span>
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                                    <label for="input">Add a Tag</label>
+                                                </div>
+                                            </div> 
+                
+                                            <!-- LIST OF CURRENT TAGS -->
+                                            <datalist id="list_all_tags">
+                                                <option v-for="tag of tags" :value="tag"></option>
+                                                
+                                            </datalist>
+                                            
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- DESCRIPTION -->
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
+                                    <label for="input_description">Add a Description</label>
+                                </div>
+                
+                                <!-- Currency converter -->
+                                <div id="main">
+                                        <!--  ENTER COST   -->
+                                        <div class="row">
+                                            <div class="col-5">
+                                            <div class="row g-0">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                                                        <label for="input_place">Enter the Cost/person</label>
+                                                    </div>
+                                                </div>    
+                
+                
+                                            <!-- DEFAULT FROM SGD -->
+                                            <div class="col-4">
+                                                <div class="drop-list form-floating">
+                                                    <div class="from">
+                                                    <!-- <p>From</p> -->
+                                                        <div class="select-box">
+                                                            <!-- <img src="https://flagcdn.com/48x36/sg.png" alt="flag"> -->
+                                                            <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                            <!-- <label for="floatingSelect">From</label> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                
+                                    <!-- CONVERTER ICON -->
+                                    <div class="col-2">
+                                        <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                                    </div>
+                
+                                        <!-- AUTOFILLED BY API -->
+                                    <div class="col-5">
+                                        <div class="row g-0">
+                                            <div class="col-8">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="converted_amount" @change="calculate_from_to()">
+                                                    <label for="input_place">Enter the Cost/person</label>
+                                                </div>   
+                                            </div> 
+                                                <!-- DEFAULT TO KRW -->
+                                            <div class="col-4">
+                                                <div class="drop-list form-floating">
+                                                    <div class="to">
+                                                        <!-- <p>To</p> -->
+                                                        <div class="select-box">
+                                                            <!-- <img src="https://flagcdn.com/48x36/kr.png" alt="flag"> -->
+                                                        <select class="form-select" id="floatingSelect" v-model="to" @change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                
+                                    </div>
+                                </div>
+                
+                                <!-- ATTACHMENTS  -->
+                                <div class="form-floating mb-5">
+                                    <div class="input-group mb-3" style="width: 50%;">
+                                        <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
+                                        <input type="file" class="form-control" id="inputGroupFile01">
+                                    </div>
+                                </div>
+    
+                                <!-- BACK & CREATE ACTIVITY BUTTON  -->
+                                <div class="buttons">
+                                    <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
+                                    <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
+                                    <!-- should write data to db and update InfoWindow -->
+                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false , create_new_data()">Create</button>
+    
+                                    <!-- Back Button Modal -->
+                                    <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="ModalLabel">Confirm Navigation</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            Are you sure you want to leave this page? Any unsaved changes will be lost. 
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
+                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id), autocomplete.set('place', null);">Confirm</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                
+                
+                                </div>
+                
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- pop up if edit activity -->
+                    <div :style="{display: d_edit()}" class="col py-3">
+                        <div class="container text-dark">
+                            <h3 class="heading">Edit Activity</h3>
+                            <form>
+                                <!-- should read data from db -->
+                                <!-- PLACE  -->
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" v-model="selected_name" placeholder="Add a Place">
+                                            <label for="input_place">Add a Place</label>
+                                        </div>
+                                    </div>
+                                    <!-- TAG -->
+                                    <div class="col-5">
+                                        <!-- vue for tag -->
+                                        <div id="main2" class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text">#</span>
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                                    <label for="input">Add a Tag</label>
+                                                </div>
+                                            </div> 
+                
+                                            <!-- LIST OF CURRENT TAGS -->
+                                            <datalist id="list_all_tags">
+                                                <option v-for="tag of tags" :value="tag"></option>
+                
+                                            </datalist>                                          
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- DESCRIPTION -->
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
+                                    <label for="input_description">Add a Description</label>
+                                </div>
+                
+                                <!-- Currency converter -->
+                                <div>
+                                        <!--  ENTER COST   -->
+                                    <div class="row">
+                                        <div class="col-5">
+                                        <div class="row g-0">
+                                            <div class="col-8">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                                                    <label for="input_place">Enter the Cost/person</label>
+                                                </div>
+                                            </div>    
+                
+                
+                                            <!-- DEFAULT FROM SGD -->
+                                            <div class="col-4">
+                                                <div class="drop-list form-floating">
+                                                    <div class="from">
+                                                    <!-- <p>From</p> -->
+                                                        <div class="select-box">
+                                                            <!-- <img src="https://flagcdn.com/48x36/sg.png" alt="flag"> -->
+                                                            <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                            <!-- <label for="floatingSelect">From</label> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                
+                                    <!-- CONVERTER ICON -->
+                                    <div class="col-2">
+                                        <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                                    </div>
+                
+                                        <!-- AUTOFILLED BY API -->
+                                    <div class="col-5">
+                                        <div class="row g-0">
+                                            <div class="col-8">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="input_place" placeholder="Add a Place" v-model="converted_amount" @change="calculate_from_to()">
+                                                    <label for="input_place">Enter the Cost/person</label>
+                                                </div>   
+                                            </div> 
+                                                <!-- DEFAULT TO KRW -->
+                                            <div class="col-4">
+                                                <div class="drop-list form-floating">
+                                                    <div class="to">
+                                                        <!-- <p>To</p> -->
+                                                        <div class="select-box">
+                                                            <!-- <img src="https://flagcdn.com/48x36/kr.png" alt="flag"> -->
+                                                        <select class="form-select" id="floatingSelect" v-model="to" @change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                
+                                </div>
+                                </div>
+                
+                                <!-- ATTACHMENTS  -->
+                                <div class="form-floating mb-5">
+                                    <div class="input-group mb-3" style="width: 50%;">
+                                        <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
+                                        <input type="file" class="form-control" id="inputGroupFile01">
+                                    </div>
+                                </div>
+                
+                                <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
+                                <div class="buttons">                         
+                                    <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
+                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false">Cancel</button>
+                                    <!-- should write data to db and update infoWindow -->
+                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,create_update_data()">Save</button>
+    
+                                    <!-- Back Button Modal -->
+                                    <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="ModalLabel">Delete Activity</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                Are you sure you want to delete activity?
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
+                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="edit_true=false, delete_marker_edit(current_id)">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                
+                                </div>
+                                
+                            </form>
+                            
+                        </div>
+                    </div>
+                    
                     <div class="col">
                         <h1>Card Sample</h1>
                         <!-- COPY FROM HERE -->
 
-                        <div id="main">
+                        <div>
 
                             <div class="card mb-3" v-for="(location, index) in existing_locations">
                                 <!-- LOCATION/PLACE -->
@@ -64,7 +361,7 @@
                                                 <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
                                                 
                                                     <!--  VOTED MAYBE   -->
-                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">MAYBE</div>
+                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-mild text-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
                                             </div>
                                             
 
@@ -90,7 +387,7 @@
                                     <div class="row">
                                         <div class="col-11"></div>
                                         <div class="col-1">
-                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute;bottom:25; right:25;" data-bs-toggle="button">Edit</button>
+                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute; bottom:25; right:25;" data-bs-toggle="button">Edit<div id="get_marker_id" style="display: none;">{{index}}</div></button>
                                         </div>
                                     </div>
                                     </div>
@@ -123,7 +420,28 @@
         </div>
     </div>
             
+    <script>
+        
+        // changes vue.js values for editing pop up
+        // access vm from module script and open up edit view
+        async function set_edit(obj) {
+            var vm_vue = await import("./map_js.js")
+            // console.log(obj)
+            if (vm_vue.vm.$data.edit_true == false) {
+                console.log(obj)
+                vm_vue.vm.$data.edit_true = true
+                vm_vue.vm.$data.create_true = false
+                vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
+                console.log(obj.querySelector("div[id='get_marker_id']").innerText)
+                console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+                vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
+            } else {
+                vm_vue.vm.$data.edit_true = false
+                vm_vue.vm.$data.create_true = true
+            }
 
+        } 
+    </script>
 
     <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
