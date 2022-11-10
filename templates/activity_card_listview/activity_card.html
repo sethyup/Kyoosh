@@ -371,10 +371,7 @@
                                                 <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept(location.votes, index)"> Vote </button>
                                             </div>
                             
-                            
-                                            
-                                            
-                                            
+
                                             <!-- Voted NO: {{ voted_no_people }}
                                             <br>
                                             Voted: YES: {{ voted_yes_people }}
@@ -387,7 +384,7 @@
                                     <div class="row">
                                         <div class="col-11"></div>
                                         <div class="col-1">
-                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute; bottom:25; right:25;" data-bs-toggle="button">Edit<div id="get_marker_id" style="display: none;">{{index}}</div></button>
+                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute; bottom:25; right:25;" data-bs-toggle="button" @click="set_edit(index)" >Edit  </button>
                                         </div>
                                     </div>
                                     </div>
@@ -425,14 +422,15 @@
         // changes vue.js values for editing pop up
         // access vm from module script and open up edit view
         async function set_edit(obj) {
-            var vm_vue = await import("./map_js.js")
+            console.log('starting set_edit')
+            var vm_vue = await import("./script.js")
             // console.log(obj)
             if (vm_vue.vm.$data.edit_true == false) {
                 console.log(obj)
                 vm_vue.vm.$data.edit_true = true
                 vm_vue.vm.$data.create_true = false
-                vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
-                console.log(obj.querySelector("div[id='get_marker_id']").innerText)
+                vm_vue.vm.$data.current_id = obj.querySelector(`div id="get_marker_id"`).innerText
+                console.log(obj.querySelector(`div id="get_marker_id"`).innerText)
                 console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
                 vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
             } else {
@@ -445,7 +443,7 @@
 
     <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="./script.js"></script>
     <!-- sidebar js -->
     <script  src="../pages/sidebars.js"></script>
 </body>
