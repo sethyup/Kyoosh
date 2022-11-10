@@ -573,17 +573,20 @@ const app = Vue.createApp({
         },
 
         // retrieve and edit user and trip id
-        // retrieve_from_cache() {
-        //     this.trip_id = localStorage.getItem('user')
-        //     this.user_id = localStorage.getItem('trip')
-        // }
+        retrieve_from_cache() {
+            this.trip_id = localStorage.getItem('user')
+            this.user_id = localStorage.getItem('trip')
+        }
     },
     // load data from database before initialising map and mounting vue
     async created() {
+        // get cached information
+        await this.retrieve_from_cache()
         // get recommended locations from database
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
+        
     }
 });
 const vm = app.mount('#app'); 
