@@ -1,0 +1,862 @@
+{
+  "locations": [
+    {
+      "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+      "description": "",
+      "latlng": {
+        "lat": 37.5444,
+        "lng": 127.0374
+      },
+      "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+      "price": {
+        "krw": 0,
+        "sgd": 0
+      },
+      "tag": "Attraction",
+      "votes": {
+        "no": [
+          "adamft"
+        ],
+        "yes": [
+          "SETH YAP ZIQI_",
+          "kbang"
+        ],
+        "yet_to_vote": [
+          "name4",
+          "name5"
+        ]
+      }
+    },
+    {
+      "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+      "description": "",
+      "latlng": {
+        "lat": 37.5512,
+        "lng": 126.9882
+      },
+      "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+      "price": {
+        "krw": 12000,
+        "sgd": 12
+      },
+      "tag": "Attraction",
+      "votes": {
+        "no": [
+          "adamft",
+          "kbang"
+        ],
+        "yes": [
+          "SETH YAP ZIQI_"
+        ],
+        "yet_to_vote": [
+          "name4",
+          "name5"
+        ]
+      }
+    },
+    {
+      "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+      "description": "",
+      "latlng": {
+        "lat": 37.5561,
+        "lng": 126.9719
+      },
+      "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+      "price": {
+        "krw": 3000,
+        "sgd": 3
+      },
+      "tag": "Food",
+      "votes": {
+        "no": [
+          "adamft"
+        ],
+        "yes": [
+          "SETH YAP ZIQI_"
+        ],
+        "yet_to_vote": [
+          "kbang",
+          "name4",
+          "name5"
+        ]
+      }
+    },
+    {
+      "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+      "description": "",
+      "latlng": {
+        "lat": 37.5532,
+        "lng": 126.9219
+      },
+      "name": "Hongdae Shopping Street",
+      "price": {
+        "krw": 25244.25,
+        "sgd": 25
+      },
+      "tag": "Shopping",
+      "votes": {
+        "no": [
+          "adamft",
+          "name4"
+        ],
+        "yes": [
+          "SETH YAP ZIQI_"
+        ],
+        "yet_to_vote": [
+          "kbang",
+          "name5"
+        ]
+      }
+    }
+  ],
+  "trips": {
+    "AdamTESTurjfjwowskdorrofkckshecoejfneknull": {
+      "trip_details": {
+        "destination": [
+          "Afghanistan",
+          "images/Afghanistan.jpg"
+        ],
+        "end_Date": "2022-12-02",
+        "start_date": "2022-11-30"
+      }
+    },
+    "TESTTRIPurjfjwowskdorrofkckshecoejfneknull": {
+      "trip_details": {
+        "destination": [
+          "Albania",
+          "images/Albania.jpg"
+        ],
+        "end_Date": "2022-11-18",
+        "start_date": "2022-11-17"
+      }
+    },
+    "badabingbadaboourjfjwowskdorrofkckshecoejfnekadambft": {
+      "flights": [
+        {
+          "ID": 1,
+          "airline": "",
+          "airport": "",
+          "arrive_country": "Armenia",
+          "arrive_datetime": "2022-11-11 12:00",
+          "arrive_tz": "Armenia Standard Time",
+          "currency": "SGD",
+          "depart_country": "Anguilla",
+          "depart_datetime": "2022-11-04 12:00",
+          "depart_tz": "Atlantic Standard Time",
+          "duration_hours": 160,
+          "duration_minutes": 0,
+          "edit_mode": false,
+          "flight_no": "",
+          "gate": "",
+          "price": 23,
+          "terminal": ""
+        },
+        {
+          "ID": 2,
+          "airline": "",
+          "airport": "",
+          "arrive_country": "Algeria",
+          "arrive_datetime": "2022-11-11 12:00",
+          "arrive_tz": "Central European Standard Time",
+          "currency": "SGD",
+          "depart_country": "Anguilla",
+          "depart_datetime": "2022-11-08 12:00",
+          "depart_tz": "Atlantic Standard Time",
+          "duration_hours": 67,
+          "duration_minutes": 0,
+          "edit_mode": false,
+          "flight_no": "",
+          "gate": "",
+          "price": 100,
+          "terminal": ""
+        },
+        {
+          "ID": 3,
+          "airline": "",
+          "airport": "",
+          "arrive_country": "Antigua & Barbuda",
+          "arrive_datetime": "2022-11-12 12:00",
+          "arrive_tz": "Atlantic Standard Time",
+          "currency": "SGD",
+          "depart_country": "Andorra",
+          "depart_datetime": "2022-11-11 12:00",
+          "depart_tz": "Central European Standard Time",
+          "duration_hours": 29,
+          "duration_minutes": 0,
+          "edit_mode": false,
+          "flight_no": "",
+          "gate": "",
+          "price": 200,
+          "terminal": ""
+        }
+      ],
+      "lodging": [
+        {
+          "ID": 1,
+          "accom_address": "Joo Chiat Road, Hjh Maimunah Restaurant & Catering Pte Ltd, Singapore",
+          "accom_name": "Hotel Test",
+          "checkin_datetime": "2022-11-17 12:00",
+          "checkout_datetime": "2022-11-18 12:00",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": 1,
+          "price": 12
+        },
+        {
+          "ID": 2,
+          "accom_address": "Ghirardelli Chocolate Experience, North Point Street, San Francisco, CA, USA",
+          "accom_name": "Test",
+          "checkin_datetime": "2022-11-22 12:00",
+          "checkout_datetime": "2022-11-24 12:00",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": 1,
+          "price": 122
+        }
+      ],
+      "trip_details": {
+        "destination": [
+          "Barbados",
+          "images/Barbados.jpg"
+        ],
+        "end_Date": "2022-11-23",
+        "start_date": "2022-11-17"
+      }
+    },
+    "grad tripurjfjwowskdorrofkckshecoejfneksethyap2021@smuedusg": {
+      "activities": [
+        {
+          "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5444,
+            "lng": 127.0374
+          },
+          "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "price": {
+            "krw": 0,
+            "sgd": 0
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_",
+              "kbang"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5512,
+            "lng": 126.9882
+          },
+          "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "price": {
+            "krw": 12000,
+            "sgd": 12
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft",
+              "kbang"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5561,
+            "lng": 126.9719
+          },
+          "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+          "price": {
+            "krw": 3000,
+            "sgd": 3
+          },
+          "tag": "Food",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5532,
+            "lng": 126.9219
+          },
+          "name": "Hongdae Shopping Street",
+          "price": {
+            "krw": 25244.25,
+            "sgd": 25
+          },
+          "tag": "Shopping",
+          "votes": {
+            "no": [
+              "adamft",
+              "name4"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name5"
+            ]
+          }
+        }
+      ],
+      "days": [
+        {
+          "day_id": 1
+        },
+        {
+          "day_id": 2
+        }
+      ],
+      "flights": [
+        {
+          "ID": 1,
+          "airline": "Bamboo Airways",
+          "airport": "Singapore Changi Airport",
+          "arrive_country": "South Korea",
+          "arrive_datetime": "2022-12-01 15:25",
+          "arrive_tz": "Korean Standard Time",
+          "currency": "SGD",
+          "depart_country": "Singapore",
+          "depart_datetime": "2022-12-01 08:00",
+          "depart_tz": "Singapore Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "25",
+          "edit_mode": false,
+          "flight_no": "KO405",
+          "gate": "A1",
+          "price": 250,
+          "terminal": "3"
+        },
+        {
+          "ID": 2,
+          "airline": "Panda Airways",
+          "airport": "Incheon International Airport",
+          "arrive_country": "Singapore",
+          "arrive_datetime": "2022-12-10 19:10",
+          "arrive_tz": "Singapore Standard Time",
+          "currency": "SGD",
+          "depart_country": "South Korea",
+          "depart_datetime": "2022-12-10 14:00",
+          "depart_tz": "Korean Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "10",
+          "edit_mode": false,
+          "flight_no": "SG142",
+          "gate": "B2",
+          "price": "220",
+          "terminal": "1"
+        }
+      ],
+      "group_member": [
+        "kbang",
+        "SETH YAP ZIQI_",
+        "adamft",
+        "name4",
+        "name5"
+      ],
+      "lodging": [
+        {
+          "ID": 1,
+          "accom_address": "Four Seasons Hotel Seoul, Saemunan-ro, Jongno-gu, Seoul, South Korea",
+          "accom_name": "Four Seasons! 🍂",
+          "checkin_datetime": "2022-12-02 12:00",
+          "checkout_datetime": "2022-12-05 08:15",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "5",
+          "price": "54"
+        },
+        {
+          "ID": 2,
+          "accom_address": "Jisan Forest Resort, Haewol-ri, Majang-myeon, Icheon-si, Gyeonggi-do, South Korea",
+          "accom_name": "Jisan Ski Resort ❄️⛰️",
+          "checkin_datetime": "2022-12-05 17:00",
+          "checkout_datetime": "2022-12-10 13:30",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "4",
+          "price": "80"
+        }
+      ]
+    },
+    "japan weeaboo adventuresurjfjwowskdorrofkckshecoejfneksethyap2021@smuedusg": {
+      "trip_details": {
+        "destination": [
+          "Japan",
+          "images/Japan.jpg"
+        ],
+        "end_date": "\"2022/12/17\"",
+        "start_date": "2022/12/10"
+      }
+    },
+    "korean oppa grad tripurjfjwowskdorrofkckshecoejfneksethyap2021@smuedusg": {
+      "trip_details": {
+        "destination": [
+          "Seoul",
+          "images/Seoul.jpg"
+        ],
+        "end_date": "2021-12-23",
+        "start_date": "\"2021-12-10"
+      }
+    },
+    "kbang's kpop kadventureurjfjwowskdorrofkckshecoejfnekkbang@yahoocom": {
+      "activities": [
+        {
+          "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5444,
+            "lng": 127.0374
+          },
+          "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "price": {
+            "krw": 0,
+            "sgd": 0
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_",
+              "kbang"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5512,
+            "lng": 126.9882
+          },
+          "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "price": {
+            "krw": 12000,
+            "sgd": 12
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft",
+              "kbang"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5561,
+            "lng": 126.9719
+          },
+          "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+          "price": {
+            "krw": 3000,
+            "sgd": 3
+          },
+          "tag": "Food",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5532,
+            "lng": 126.9219
+          },
+          "name": "Hongdae Shopping Street",
+          "price": {
+            "krw": 25244.25,
+            "sgd": 25
+          },
+          "tag": "Shopping",
+          "votes": {
+            "no": [
+              "adamft",
+              "name4"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name5"
+            ]
+          }
+        }
+      ],
+      "days": [
+        {
+          "day_id": 1
+        },
+        {
+          "day_id": 2
+        }
+      ],
+      "flights": [
+        {
+          "ID": 1,
+          "airline": "Bamboo Airways",
+          "airport": "Singapore Changi Airport",
+          "arrive_country": "South Korea",
+          "arrive_datetime": "2022-12-01 15:25",
+          "arrive_tz": "Korean Standard Time",
+          "currency": "SGD",
+          "depart_country": "Singapore",
+          "depart_datetime": "2022-12-01 08:00",
+          "depart_tz": "Singapore Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "25",
+          "edit_mode": false,
+          "flight_no": "KO405",
+          "gate": "A1",
+          "price": 250,
+          "terminal": "3"
+        },
+        {
+          "ID": 2,
+          "airline": "Panda Airways",
+          "airport": "Incheon International Airport",
+          "arrive_country": "Singapore",
+          "arrive_datetime": "2022-12-10 19:10",
+          "arrive_tz": "Singapore Standard Time",
+          "currency": "SGD",
+          "depart_country": "South Korea",
+          "depart_datetime": "2022-12-10 14:00",
+          "depart_tz": "Korean Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "10",
+          "edit_mode": false,
+          "flight_no": "SG142",
+          "gate": "B2",
+          "price": "220",
+          "terminal": "1"
+        }
+      ],
+      "group_member": [
+        "kbang",
+        "SETH YAP ZIQI_",
+        "adamft",
+        "name4",
+        "name5"
+      ],
+      "lodging": [
+        {
+          "ID": 1,
+          "accom_address": "Four Seasons Hotel Seoul, Saemunan-ro, Jongno-gu, Seoul, South Korea",
+          "accom_name": "Four Seasons! 🍂",
+          "checkin_datetime": "2022-12-02 12:00",
+          "checkout_datetime": "2022-12-05 08:15",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "5",
+          "price": "54"
+        },
+        {
+          "ID": 2,
+          "accom_address": "Jisan Forest Resort, Haewol-ri, Majang-myeon, Icheon-si, Gyeonggi-do, South Korea",
+          "accom_name": "Jisan Ski Resort ❄️⛰️",
+          "checkin_datetime": "2022-12-05 17:00",
+          "checkout_datetime": "2022-12-10 13:30",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "4",
+          "price": "80"
+        }
+      ],
+      "trip_details": {
+        "destination": [
+          "Seoul",
+          "images/Seoul.jpg"
+        ],
+        "end_date": "2021-12-23",
+        "start_date": "\"2021-12-10"
+      }
+    },
+    "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom": {
+      "activities": [
+        {
+          "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5444,
+            "lng": 127.0374
+          },
+          "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
+          "price": {
+            "krw": 0,
+            "sgd": 0
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_",
+              "kbang"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5512,
+            "lng": 126.9882
+          },
+          "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
+          "price": {
+            "krw": 12000,
+            "sgd": 12
+          },
+          "tag": "Attraction",
+          "votes": {
+            "no": [
+              "adamft",
+              "kbang"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5561,
+            "lng": 126.9719
+          },
+          "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
+          "price": {
+            "krw": 3000,
+            "sgd": 3
+          },
+          "tag": "Food",
+          "votes": {
+            "no": [
+              "adamft"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name4",
+              "name5"
+            ]
+          }
+        },
+        {
+          "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
+          "description": "",
+          "latlng": {
+            "lat": 37.5532,
+            "lng": 126.9219
+          },
+          "name": "Hongdae Shopping Street",
+          "price": {
+            "krw": 25244.25,
+            "sgd": 25
+          },
+          "tag": "Shopping",
+          "votes": {
+            "no": [
+              "adamft",
+              "name4"
+            ],
+            "yes": [
+              "SETH YAP ZIQI_"
+            ],
+            "yet_to_vote": [
+              "kbang",
+              "name5"
+            ]
+          }
+        }
+      ],
+      "days": [
+        {
+          "day_id": 1
+        },
+        {
+          "day_id": 2
+        }
+      ],
+      "flights": [
+        {
+          "ID": 1,
+          "airline": "Bamboo Airways",
+          "airport": "Singapore Changi Airport",
+          "arrive_country": "South Korea",
+          "arrive_datetime": "2022-12-01 15:25",
+          "arrive_tz": "Korean Standard Time",
+          "currency": "SGD",
+          "depart_country": "Singapore",
+          "depart_datetime": "2022-12-01 08:00",
+          "depart_tz": "Singapore Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "25",
+          "edit_mode": false,
+          "flight_no": "KO405",
+          "gate": "A1",
+          "price": 250,
+          "terminal": "3"
+        },
+        {
+          "ID": 2,
+          "airline": "Panda Airways",
+          "airport": "Incheon International Airport",
+          "arrive_country": "Singapore",
+          "arrive_datetime": "2022-12-10 19:10",
+          "arrive_tz": "Singapore Standard Time",
+          "currency": "SGD",
+          "depart_country": "South Korea",
+          "depart_datetime": "2022-12-10 14:00",
+          "depart_tz": "Korean Standard Time",
+          "duration_hours": "6",
+          "duration_minutes": "10",
+          "edit_mode": false,
+          "flight_no": "SG142",
+          "gate": "B2",
+          "price": "220",
+          "terminal": "1"
+        }
+      ],
+      "group_member": [
+        "kbang",
+        "SETH YAP ZIQI_",
+        "adamft",
+        "name4",
+        "name5"
+      ],
+      "lodging": [
+        {
+          "ID": 1,
+          "accom_address": "Four Seasons Hotel Seoul, Saemunan-ro, Jongno-gu, Seoul, South Korea",
+          "accom_name": "Four Seasons! 🍂",
+          "checkin_datetime": "2022-12-02 12:00",
+          "checkout_datetime": "2022-12-05 08:15",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "5",
+          "price": "54"
+        },
+        {
+          "ID": 2,
+          "accom_address": "Jisan Forest Resort, Haewol-ri, Majang-myeon, Icheon-si, Gyeonggi-do, South Korea",
+          "accom_name": "Jisan Ski Resort ❄️⛰️",
+          "checkin_datetime": "2022-12-05 17:00",
+          "checkout_datetime": "2022-12-10 13:30",
+          "currency": "SGD",
+          "edit_mode": false,
+          "max_occupancy": "4",
+          "price": "80"
+        }
+      ],
+      "trip_details": {
+        "destination": [
+          "Seoul",
+          "images/Seoul.jpg"
+        ],
+        "end_date": "2021-12-23",
+        "start_date": "\"2021-12-10"
+      }
+    }
+  },
+  "users": {
+    "adambft@gmailcom": {
+      "email": "adambft@gmail.com",
+      "fullname": "adam tan",
+      "trips": [
+        "grad trip_adambft@gmailcom",
+        "Winter Trip_adambft@gmailcom"
+      ]
+    },
+    "kbang@yahoocom": {
+      "email": "kbang@yahoo.com",
+      "fullname": "keng boon",
+      "trips": [
+        "kbang's kpop kadventureurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
+        "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom"
+      ]
+    },
+    "sethyap2021@smuedusg": {
+      "email": "sethyap.2021@smu.edu.sg",
+      "fullname": "SETH YAP ZIQI _",
+      "trips": [
+        "korean oppa grad tripurjfjwowskdorrofkckshecoejfneksethyap2021@smuedusg",
+        "japan weeaboo adventuresurjfjwowskdorrofkckshecoejfneksethyap2021@smuedusg"
+      ]
+    }
+  }
+}
