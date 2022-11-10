@@ -141,7 +141,14 @@
         </div>
       </div>
 
+    <script>
 
+      function edit_trip(tripID) {
+        console.log("button working")
+        localStorage.setItem("trip", tripID)
+        location.replace("../../map_phase2.html")
+		  }
+    </script>
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>

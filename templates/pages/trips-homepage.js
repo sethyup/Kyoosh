@@ -116,9 +116,14 @@ const app = Vue.createApp( {
 	//=========== METHODS ===========
 	methods: {
 		edit_trip(tripID) {
+			console.log("button working")
 			localStorage.setItem("trip", tripID)
 			location.replace("../../map_phase2.html")
 		},
+
+		test() {
+			console.log("fuck me")
+		}
 
 		// // Implements typing effect
 		// Type() { 
@@ -196,7 +201,7 @@ const app = Vue.createApp( {
 
 						<div class="card-body">
 							<h5 class="card-title">${trip_name}</h5>
-							<button href="#" @click="edit_trip("${tripID}")" class="btn btn-main-bold">Edit Trip</a>
+							<button onclick="edit_trip('${tripID}')" class="btn btn-main-bold">Edit Trip</a>
 						</div>
 
 						<div class="card-footer text-muted">
