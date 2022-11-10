@@ -72,7 +72,12 @@
             
             <!-- whole site -->
             <!-- ALL OTHER CONTENT ACTIVITY COL-->
-            <div class="col position-relative" id="app">
+            <div class="col position-relative text-dark" id="app">
+                <div class="row d-block d-md-none text-white bg-dark text-center">
+                    <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
+                    <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
+                </div>
+
                 <div class="row">
                     <!-- pop up if create activity -->
                     <div :style="{display: d_create()}" class="col-12 col-md-auto py-3">
@@ -385,6 +390,11 @@
                     
                 </div>
                 
+                <!-- TRIP DETAILS -->
+                <div class="trip-title-top-md d-none d-md-block">
+                    <h5>Name of Trip (Trip to Seoul, Korea)</h5>
+                    <p>1 December 2022 - 10 December 2022</p>
+                </div>
             </div>
         </div>
     </div>
