@@ -90,7 +90,7 @@ const app = Vue.createApp( {
 	//=========== DATA PROPERTIES ===========
 	data() {
 		return {
-			user_trips: [],
+			user_trips: {},
 
 			// List of sentences
 			// _CONTENT: [ "Plan a trip.", "Find yourself.", "Get away.", "Live your dream." ],
@@ -117,6 +117,7 @@ const app = Vue.createApp( {
 	methods: {
 		edit_trip(tripID) {
 			localStorage.setItem("trip", tripID)
+			location.replace("../../map_phase2.html")
 		},
 
 		// // Implements typing effect
@@ -166,7 +167,7 @@ const app = Vue.createApp( {
 
 	},
 
-	created() {
+	async created() {
 		// Start the typing effect on load
 		// this._INTERVAL_VAL = this.setInterval(this.Type(), 100);
 
@@ -181,31 +182,31 @@ const app = Vue.createApp( {
 			for(var tripID of trips){
 				console.log(tripID)
 				var trip_name = tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
-				// console.log(trip_name)
+				console.log(trip_name)
+				// this.user_trip[tripID] = trip_name
 				var trip_destination = ""
 				onValue(ref(db, "trips/" + tripID), (snapshot) => {
 					const trip_data = snapshot.val()
-					// console.log(trip_data)
 					trip_destination = trip_data.trip_details.destination[0].toLowerCase()
 					console.log(trip_destination)
+					console.log(trip_name)
+					document.getElementById("cards").innerHTML += `
+					<div class="card cardstyle" >
+						<img src="../../images/home_page/trips_imgs/${trip_destination}.jpg" class="card-img-top" height="200px">
+
+						<div class="card-body">
+							<h5 class="card-title">${trip_name}</h5>
+							<button href="#" @click="edit_trip("${tripID}")" class="btn btn-main-bold">Edit Trip</a>
+						</div>
+
+						<div class="card-footer text-muted">
+						Last edited: 2 days ago
+						</div>
+					</div>
+					`
 				})
-				this.user_trips.push(tripID)
-
 				
-				document.getElementById("cards").innerHTML += `
-				<div class="card cardstyle" >
-					<img src="../../images/home_page/trips_imgs/${trip_destination}.jpg" class="card-img-top" height="200px">
-
-					<div class="card-body">
-						<h5 class="card-title">${trip_name}</h5>
-						<button href="#" @click="edit_trip("${tripID}")" class="btn btn-main-bold">Edit Trip</a>
-					</div>
-
-					<div class="card-footer text-muted">
-					Last edited: 2 days ago
-					</div>
-				</div>
-				`
+				
 			}
 
 
