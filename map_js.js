@@ -579,7 +579,7 @@ const app = Vue.createApp({
         // retrieve location details for edit activity page
         retrieve_edit_activity_info(id) {
             var details = this.existing_locations[id];
-            console.log(details);
+            // console.log(details);
             this.selected_address = details.address;
             this.selected_description = details.description;
             this.selected_latlng = details.latlng;
