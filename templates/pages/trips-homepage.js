@@ -117,7 +117,7 @@ const app = Vue.createApp( {
 	methods: {
 		edit_trip(tripID) {
 			localStorage.setItem("trip", tripID)
-			location.replace("../map_phase2")
+			location.replace("../../map_phase2.html")
 		},
 
 		// // Implements typing effect
