@@ -106,7 +106,7 @@ const app = Vue.createApp( {
 
 		async get_trips() {
 			const user_ID = localStorage.getItem("user")
-			const path_location = ref(db, "users/" + "kbang@yahoocom" + "/trips")
+			const path_location = ref(db, "users/" + user_ID + "/trips")
 
 			const snapshot = await get(path_location)
 			var trips = snapshot.val()
@@ -129,14 +129,14 @@ const app = Vue.createApp( {
 	async created() {
 		var trips = await this.get_trips()
 
-		console.log("PRE SUCCESS")
-
-		for (var e_trip_id of trips) {
-			var trip_obj = await this.get_trip_obj(e_trip_id)
-			this.user_trips[e_trip_id] = trip_obj
+		if (trips !== null) {
+			for (var e_trip_id of trips) {
+				var trip_obj = await this.get_trip_obj(e_trip_id)
+				this.user_trips[e_trip_id] = trip_obj
+			}
 		}
 
-		console.log(this.user_trips)
+		console.log("USER TRIPS: ", JSON.stringify(this.user_trips))
 
 		console.log("SUCCESS")
 	}
