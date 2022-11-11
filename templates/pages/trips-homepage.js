@@ -72,7 +72,7 @@ _INTERVAL_VAL = setInterval(Type, 100);
 // Importing Firebase API
 // DO NOT EDIT
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getDatabase, ref, onValue, get, push, set, remove } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
@@ -98,6 +98,7 @@ const app = Vue.createApp( {
 
 	//=========== METHODS ===========
 	methods: {
+
 		edit_trip(tripID) {
 			console.log("button working")
 			localStorage.setItem("trip", tripID)
@@ -138,8 +139,38 @@ const app = Vue.createApp( {
 
 		console.log("USER TRIPS: ", JSON.stringify(this.user_trips))
 
+		console.log("USER TRIPS: ", Object.keys(this.user_trips))
+
+		document.getElementById("cards").innerHTML = ""
+
+		for(var trip_ID of Object.keys(this.user_trips)) {
+			var trip_name = trip_ID.split("urjfjwowskdorrofkckshecoejfnek")[0]
+			console.log(trip_name)
+			var trip_destination = this.user_trips[trip_ID]["trip_details"]["destination"][0]
+			var trip_start = this.user_trips[trip_ID]["trip_details"]["start_date"]
+			var trip_end = this.user_trips[trip_ID]["trip_details"]["end_date"]
+			document.getElementById("cards").innerHTML += `
+			<div class="card cardstyle" >
+            	<img src="../../images/home_page/trips_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
+				<div class="card-body">
+				<h5 class="card-title">${trip_name}</h5>
+				<button @click="edit_trip(${trip_ID})" class="btn btn-main-bold">Edit Trip</a>
+				</div>
+				<div class="card-footer text-muted">
+				${trip_destination} <br>
+				${trip_start} - ${trip_end}
+				</div>
+        	</div>
+			`
+			
+		}
+
 		console.log("SUCCESS")
-	}
+
+		console.log("deleting data")
+		this.delete_data()
+	},
+
 })
 
 
