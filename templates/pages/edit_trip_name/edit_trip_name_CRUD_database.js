@@ -43,13 +43,13 @@ const root = Vue.createApp({
 
             g_member: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member'),
 
-            myUsername: this.myUsername,
+            myUsername: myUsername,
             
-            myTrip: this.myTrip,
+            myTrip: old_myTrip,
 
-            sDate: this.sDate,
+            sDate: old_sDate,
 
-            eDate: this.eDate,
+            eDate: old_eDate,
 
             trip_delimiter: "urjfjwowskdorrofkckshecoejfnek"
         }
@@ -58,13 +58,13 @@ const root = Vue.createApp({
     mounted() {
         const myUsername = localStorage.getItem("user")
             
-        var oldTrip_ID = localStorage.getItem("trip")
+        const oldTrip_ID = localStorage.getItem("trip")
 
-        var myTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
+        var old_myTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
 
-        var sDate= localStorage.getItem("trip_start_date")
+        var old_sDate= localStorage.getItem("trip_start_date")
 
-        var eDate = localStorage.getItem("trip_end_date")
+        var old_eDate = localStorage.getItem("trip_end_date")
         
     },
 
@@ -94,8 +94,39 @@ const root = Vue.createApp({
                         // alert("Write Operation Successful")
                         console.log("Entry Created")
 
-                },
+                    },
                 
+                    function delete_from_trip_list() {
+                        const trips_path = ref(db, "trips/")
+                        onValue(trips_path, (snapshot) => {
+                            const data = snapshot.val()
+                            // console.log(data)
+                            remove(oldTrip_ID)
+                            .then(
+                                function delete_success() {
+                                    alert("Delete operation is a success!")
+                                    console.log("Delete operation is a success!")
+                                }
+                            )
+                            .catch((error) => {
+                                // for admin, tells you what error there is
+                                const errorCode = error.code;
+                                const errorMessage = error.message;
+                                console.log(errorMessage)
+                                console.log(errorCode)
+
+                                // display "Error" message
+                                // stays on the same page
+                                var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
+                                alert(failed_message)
+                                console.log("Delete Unsuccessful");
+                            })
+
+                        })
+                    },
+                        
+                    
+
                     function delete_from_user_and_friends() {
                         all_members = this.g_member
                         all_members.push(localStorage.getItem("trip").split('urjfjwowskdorrofkckshecoejfnek')[1])
