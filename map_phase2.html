@@ -396,8 +396,8 @@
                 
                 <!-- TRIP DETAILS -->
                 <div class="trip-title-top-md d-none d-md-block">
-                    <h5>Name of Trip (Trip to Seoul, Korea)</h5>
-                    <p>1 December 2022 - 10 December 2022</p>
+                    <h5>Name of Trip (Trip to {{get_capital_city(get_country_code(trip_details.country)) }}, {{trip_details.country}})</h5>
+                    <p>{{trip_details.duration}}</p>
                 </div>
             </div>
         </div>
