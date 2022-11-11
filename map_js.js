@@ -1253,18 +1253,22 @@ const app = Vue.createApp({
         // },
 
         // retrieve and edit user and trip id from LocalStorage
-        // retrieve_from_cache() {
-        //     this.trip_id = localStorage.getItem('user')
-        //     this.user_id = localStorage.getItem('trip')
-        //     console.log(this.trip_id)
-        //     console.log(this.user_id)
-        //     var trip_duration = localStorage.getItem('duration')
-        //     var country = localStorage.getItem('country')
-        //     this.trip_details = {
-        //         country: country,
-        //         duration: trip_duration
-        //     }
-        // },
+        retrieve_from_cache() {
+            if (localStorage.getItem('user')) {
+                this.trip_id = localStorage.getItem('user')
+            }
+            if (localStorage.getItem('trip')) {
+                this.trip_id = localStorage.getItem('trip')
+            }
+            if (localStorage.getItem('duration')) {
+                var duration = localStorage.getItem('duration')
+                this.trip_details[duration] = duration
+            }
+            if (localStorage.getItem('country')) {
+                var country = localStorage.getItem('country')
+                this.trip_details[country] = country
+            }
+        },
     },
     // load data from database before initialising map and mounting vue
     async created() {
