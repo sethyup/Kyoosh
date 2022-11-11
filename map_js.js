@@ -285,6 +285,7 @@ const app = Vue.createApp({
             // trip details
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
+            trip_details: "",
             // display details
             create_true: false,
             edit_true: false,
@@ -391,6 +392,10 @@ const app = Vue.createApp({
                 console.log(error.message)
             })
         },
+
+
+        // database-related codes
+
         // read location data from database
         read_from_existing() {
             const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
@@ -591,8 +596,34 @@ const app = Vue.createApp({
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
         },
-
-        // retrieve and edit user and trip id
+        // retrieve_trip_name_date() {
+        //     // name of trip, trip to where, date
+        //     const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
+        //     onValue(data_to_be_read, (snapshot) => {
+        //         const data = snapshot.val();
+        //         // check if there is existing data on db
+        //         if (data) {
+        //             console.log(data)
+        //             var country = data.destination[0]
+        //             var end_date = new Date(data.end_date)
+        //             var start_date = new Date(data.start_date)
+        //             this
+        //         }
+        //         // retrieve recommended places for new trips
+        //         else {
+        //             const data_to_be_read = ref(db, `locations`);
+        //             onValue(data_to_be_read, (snapshot) => {
+        //                 const data2 = snapshot.val();
+        //                 if (data2) {
+        //                     // this.existing_locations = data2
+                            
+        //                     // window.initMap = initMap(this.existing_locations);
+        //                 }
+        //             })
+        //         }
+        //         })
+        // }
+        // retrieve and edit user and trip id from LocalStorage
         // retrieve_from_cache() {
         //     this.trip_id = localStorage.getItem('user')
         //     this.user_id = localStorage.getItem('trip')
@@ -608,6 +639,7 @@ const app = Vue.createApp({
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
+        // await this.retrieve_trip_name_date()
         
     }
 });
