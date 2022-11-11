@@ -31,7 +31,7 @@ const root = Vue.createApp({
 
             // ...
 
-            myUsername: sessionStorage.getItem("user"),
+            myUsername: localStorage.getItem("user"),
             // assume that i'm adam right now
             // no need friend, its all dynamic
 
@@ -125,13 +125,22 @@ const root = Vue.createApp({
                     var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                     // alert(failed_message)
                     console.log(failed_message);
+
+                    return
                 })
                 // alert("Create Trip Successful")
-                location.replace("https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html")
+
+                //PUSH INFORMATION TO LOCALSTORAGE ========================================================
+                localStorage.setItem("trip", this.trip_name + this.trip_delimiter + this.myUsername)
+                localStorage.setItem("trip_start_date", this.sDate)
+                localStorage.setItem("trip_end_date", this.eDate)
+                // ========================================================================================
+
+                location.href = "../../map_phase2.html"
+                // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
             else{
-                
                 let msg = "Please fill in your "
                 let empty_fields = []
                 if(!this.trip_name){
