@@ -1,86 +1,86 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+// import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
-// Our Firebase Project Configuration
-const WADTravel = initializeApp({
-  apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
-  authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
-  databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "wad-brothers-travel-ltd",
-  storageBucket: "wad-brothers-travel-ltd.appspot.com",
-  messagingSenderId: "305280551700",
-  appId: "1:305280551700:web:434cc190d57eabe14d1001",
-  measurementId: "G-3XQT4098KL"
-})
+// // Our Firebase Project Configuration
+// const WADTravel = initializeApp({
+//   apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
+//   authDomain: "wad-brothers-travel-ltd.firebaseapp.com",
+//   databaseURL: "https://wad-brothers-travel-ltd-default-rtdb.asia-southeast1.firebasedatabase.app",
+//   projectId: "wad-brothers-travel-ltd",
+//   storageBucket: "wad-brothers-travel-ltd.appspot.com",
+//   messagingSenderId: "305280551700",
+//   appId: "1:305280551700:web:434cc190d57eabe14d1001",
+//   measurementId: "G-3XQT4098KL"
+// })
 
-// const auth = getAuth(WADTravel)
-const db = getDatabase(WADTravel)
+// // const auth = getAuth(WADTravel)
+// const db = getDatabase(WADTravel)
 
 const sidebar = Vue.createApp({
-    data(){
-        return{
-            trip_details: "",
-            trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
-            s_date: "", 
-            e_date: "", 
-            date_array: [],
-        }
-    },
-    created:{
+    // data(){
+    //     return{
+    //         trip_details: "",
+    //         trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
+    //         s_date: "", 
+    //         e_date: "", 
+    //         date_array: [],
+    //     }
+    // },
+    // created:{
 
-    },
-    methods:{
-            // read existing locations from the database
-            read_from_existing_locations() {
-                const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
-                onValue(data_to_be_read, (snapshot) => {
-                    const data = snapshot.val();
-                    // check if there is existing data on db
-                    if (data) {
-                        this.trip_details = data
-                        this.s_date = this.trip_details.start_date
-                        this.e_date = this.trip_details.end_date
-                        // console.log("TRIP DETAILS", this.s_date, this.e_date)
-                        this.create_dates_array(this.s_date, this.e_date)
-                    }
-                    // retrieve recommended places for new trips
-                    // else {
-                    //     const data_to_be_read = ref(db, `locations`);
-                    //     onValue(data_to_be_read, (snapshot) => {
-                    //         const data2 = snapshot.val();
-                    //         if (data2) {
-                    //             this.existing_locations = data2
-                    //         }
-                    //     })
-                    // }
-                    })
-                },
-            convert_date_obj_to_str(date_obj) {
-                    return `${date_obj.getFullYear()}-${("0" + (date_obj.getMonth()+1)).slice(-2)}-${("0" + (date_obj.getDate())).slice(-2)}`
-                },
-            create_dates_array(s_date, e_date){
-                // console.log("function dates_array")
-                    var s_date_obj = new Date(s_date)
-                    var e_date_obj = new Date(e_date)
+    // },
+    // methods:{
+    //         // read existing locations from the database
+    //         read_from_existing_locations() {
+    //             const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
+    //             onValue(data_to_be_read, (snapshot) => {
+    //                 const data = snapshot.val();
+    //                 // check if there is existing data on db
+    //                 if (data) {
+    //                     this.trip_details = data
+    //                     this.s_date = this.trip_details.start_date
+    //                     this.e_date = this.trip_details.end_date
+    //                     // console.log("TRIP DETAILS", this.s_date, this.e_date)
+    //                     this.create_dates_array(this.s_date, this.e_date)
+    //                 }
+    //                 // retrieve recommended places for new trips
+    //                 // else {
+    //                 //     const data_to_be_read = ref(db, `locations`);
+    //                 //     onValue(data_to_be_read, (snapshot) => {
+    //                 //         const data2 = snapshot.val();
+    //                 //         if (data2) {
+    //                 //             this.existing_locations = data2
+    //                 //         }
+    //                 //     })
+    //                 // }
+    //                 })
+    //             },
+    //         convert_date_obj_to_str(date_obj) {
+    //                 return `${date_obj.getFullYear()}-${("0" + (date_obj.getMonth()+1)).slice(-2)}-${("0" + (date_obj.getDate())).slice(-2)}`
+    //             },
+    //         create_dates_array(s_date, e_date){
+    //             // console.log("function dates_array")
+    //                 var s_date_obj = new Date(s_date)
+    //                 var e_date_obj = new Date(e_date)
                 
-                    var increment_date_obj = new Date(s_date)
+    //                 var increment_date_obj = new Date(s_date)
                 
                 
-                    while (increment_date_obj <= e_date_obj) {
-                        var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
-                        this.date_array.push(date_str_to_push)
+    //                 while (increment_date_obj <= e_date_obj) {
+    //                     var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
+    //                     this.date_array.push(date_str_to_push)
                 
-                        increment_date_obj.setDate(increment_date_obj.getDate() + 1)
-                    }
-                // console.log("render", this.date_array)
+    //                     increment_date_obj.setDate(increment_date_obj.getDate() + 1)
+    //                 }
+    //             // console.log("render", this.date_array)
                 
-                    // return this.date_array
-                },
+    //                 // return this.date_array
+    //             },
 
-    }, 
-    async created() {
-        await this.read_from_existing_locations()
-    }
+    // }, 
+    // async created() {
+    //     await this.read_from_existing_locations()
+    // }
 });
 
 sidebar.component('sidebar-general', {
