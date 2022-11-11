@@ -10,7 +10,7 @@
 // Importing Firebase API
 // DO NOT EDIT
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
@@ -44,6 +44,12 @@ const root = Vue.createApp({
     },
 
     methods: {
+        delete_data() {
+			var path_location = ref(db, /*path goes here*/)
+			remove(path_location)
+			console.log("delete done")
+		},
+
         create_update_data() {
             console.log("Writing data into database...")
             // the console can be open, 

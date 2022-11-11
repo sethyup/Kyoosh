@@ -16,6 +16,515 @@ const WADTravel = initializeApp({
 
 // const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
+
+// const variables
+// ISO 3166 Alpha-2 Format: [Country Name] : [2 letter Country Code]
+const countryList = {
+    Afghanistan: 'AF',
+    'Aland Islands': 'AX',
+    Albania: 'AL',
+    Algeria: 'DZ',
+    'American Samoa': 'AS',
+    Andorra: 'AD',
+    Angola: 'AO',
+    Anguilla: 'AI',
+    Antarctica: 'AQ',
+    'Antigua And Barbuda': 'AG',
+    Argentina: 'AR',
+    Armenia: 'AM',
+    Aruba: 'AW',
+    Australia: 'AU',
+    Austria: 'AT',
+    Azerbaijan: 'AZ',
+    Bahamas: 'BS',
+    Bahrain: 'BH',
+    Bangladesh: 'BD',
+    Barbados: 'BB',
+    Belarus: 'BY',
+    Belgium: 'BE',
+    Belize: 'BZ',
+    Benin: 'BJ',
+    Bermuda: 'BM',
+    Bhutan: 'BT',
+    Bolivia: 'BO',
+    'Bosnia And Herzegovina': 'BA',
+    Botswana: 'BW',
+    'Bouvet Island': 'BV',
+    Brazil: 'BR',
+    'British Indian Ocean Territory': 'IO',
+    'Brunei Darussalam': 'BN',
+    Bulgaria: 'BG',
+    'Burkina Faso': 'BF',
+    Burundi: 'BI',
+    Cambodia: 'KH',
+    Cameroon: 'CM',
+    Canada: 'CA',
+    'Cape Verde': 'CV',
+    'Cayman Islands': 'KY',
+    'Central African Republic': 'CF',
+    Chad: 'TD',
+    Chile: 'CL',
+    China: 'CN',
+    'Christmas Island': 'CX',
+    'Cocos (Keeling) Islands': 'CC',
+    Colombia: 'CO',
+    Comoros: 'KM',
+    Congo: 'CG',
+    'Congo, Democratic Republic': 'CD',
+    'Cook Islands': 'CK',
+    'Costa Rica': 'CR',
+    "Cote D'Ivoire": 'CI',
+    Croatia: 'HR',
+    Cuba: 'CU',
+    Cyprus: 'CY',
+    'Czech Republic': 'CZ',
+    Denmark: 'DK',
+    Djibouti: 'DJ',
+    Dominica: 'DM',
+    'Dominican Republic': 'DO',
+    Ecuador: 'EC',
+    Egypt: 'EG',
+    'El Salvador': 'SV',
+    'Equatorial Guinea': 'GQ',
+    Eritrea: 'ER',
+    Estonia: 'EE',
+    Ethiopia: 'ET',
+    'Falkland Islands (Malvinas)': 'FK',
+    'Faroe Islands': 'FO',
+    Fiji: 'FJ',
+    Finland: 'FI',
+    France: 'FR',
+    'French Guiana': 'GF',
+    'French Polynesia': 'PF',
+    'French Southern Territories': 'TF',
+    Gabon: 'GA',
+    Gambia: 'GM',
+    Georgia: 'GE',
+    Germany: 'DE',
+    Ghana: 'GH',
+    Gibraltar: 'GI',
+    Greece: 'GR',
+    Greenland: 'GL',
+    Grenada: 'GD',
+    Guadeloupe: 'GP',
+    Guam: 'GU',
+    Guatemala: 'GT',
+    Guernsey: 'GG',
+    Guinea: 'GN',
+    'Guinea-Bissau': 'GW',
+    Guyana: 'GY',
+    Haiti: 'HT',
+    'Heard Island & Mcdonald Islands': 'HM',
+    'Holy See (Vatican City State)': 'VA',
+    Honduras: 'HN',
+    'Hong Kong': 'HK',
+    Hungary: 'HU',
+    Iceland: 'IS',
+    India: 'IN',
+    Indonesia: 'ID',
+    'Iran, Islamic Republic Of': 'IR',
+    Iraq: 'IQ',
+    Ireland: 'IE',
+    'Isle Of Man': 'IM',
+    Israel: 'IL',
+    Italy: 'IT',
+    Jamaica: 'JM',
+    Japan: 'JP',
+    Jersey: 'JE',
+    Jordan: 'JO',
+    Kazakhstan: 'KZ',
+    Kenya: 'KE',
+    Kiribati: 'KI',
+    Korea: 'KR',
+    Kuwait: 'KW',
+    Kyrgyzstan: 'KG',
+    "Lao People's Democratic Republic": 'LA',
+    Latvia: 'LV',
+    Lebanon: 'LB',
+    Lesotho: 'LS',
+    Liberia: 'LR',
+    'Libyan Arab Jamahiriya': 'LY',
+    Liechtenstein: 'LI',
+    Lithuania: 'LT',
+    Luxembourg: 'LU',
+    Macao: 'MO',
+    Macedonia: 'MK',
+    Madagascar: 'MG',
+    Malawi: 'MW',
+    Malaysia: 'MY',
+    Maldives: 'MV',
+    Mali: 'ML',
+    Malta: 'MT',
+    'Marshall Islands': 'MH',
+    Martinique: 'MQ',
+    Mauritania: 'MR',
+    Mauritius: 'MU',
+    Mayotte: 'YT',
+    Mexico: 'MX',
+    'Micronesia, Federated States Of': 'FM',
+    Moldova: 'MD',
+    Monaco: 'MC',
+    Mongolia: 'MN',
+    Montenegro: 'ME',
+    Montserrat: 'MS',
+    Morocco: 'MA',
+    Mozambique: 'MZ',
+    Myanmar: 'MM',
+    Namibia: 'NA',
+    Nauru: 'NR',
+    Nepal: 'NP',
+    Netherlands: 'NL',
+    'Netherlands Antilles': 'AN',
+    'New Caledonia': 'NC',
+    'New Zealand': 'NZ',
+    Nicaragua: 'NI',
+    Niger: 'NE',
+    Nigeria: 'NG',
+    Niue: 'NU',
+    'Norfolk Island': 'NF',
+    'Northern Mariana Islands': 'MP',
+    Norway: 'NO',
+    Oman: 'OM',
+    Pakistan: 'PK',
+    Palau: 'PW',
+    'Palestinian Territory, Occupied': 'PS',
+    Panama: 'PA',
+    'Papua New Guinea': 'PG',
+    Paraguay: 'PY',
+    Peru: 'PE',
+    Philippines: 'PH',
+    Pitcairn: 'PN',
+    Poland: 'PL',
+    Portugal: 'PT',
+    'Puerto Rico': 'PR',
+    Qatar: 'QA',
+    Reunion: 'RE',
+    Romania: 'RO',
+    'Russian Federation': 'RU',
+    Rwanda: 'RW',
+    'Saint Barthelemy': 'BL',
+    'Saint Helena': 'SH',
+    'Saint Kitts And Nevis': 'KN',
+    'Saint Lucia': 'LC',
+    'Saint Martin': 'MF',
+    'Saint Pierre And Miquelon': 'PM',
+    'Saint Vincent And Grenadines': 'VC',
+    Samoa: 'WS',
+    'San Marino': 'SM',
+    'Sao Tome And Principe': 'ST',
+    'Saudi Arabia': 'SA',
+    Senegal: 'SN',
+    Serbia: 'RS',
+    Seychelles: 'SC',
+    'Sierra Leone': 'SL',
+    Singapore: 'SG',
+    Slovakia: 'SK',
+    Slovenia: 'SI',
+    'Solomon Islands': 'SB',
+    Somalia: 'SO',
+    'South Africa': 'ZA',
+    'South Georgia And Sandwich Isl.': 'GS',
+    Spain: 'ES',
+    'Sri Lanka': 'LK',
+    Sudan: 'SD',
+    Suriname: 'SR',
+    'Svalbard And Jan Mayen': 'SJ',
+    Swaziland: 'SZ',
+    Sweden: 'SE',
+    Switzerland: 'CH',
+    'Syrian Arab Republic': 'SY',
+    Taiwan: 'TW',
+    Tajikistan: 'TJ',
+    Tanzania: 'TZ',
+    Thailand: 'TH',
+    'Timor-Leste': 'TL',
+    Togo: 'TG',
+    Tokelau: 'TK',
+    Tonga: 'TO',
+    'Trinidad And Tobago': 'TT',
+    Tunisia: 'TN',
+    Turkey: 'TR',
+    Turkmenistan: 'TM',
+    'Turks And Caicos Islands': 'TC',
+    Tuvalu: 'TV',
+    Uganda: 'UG',
+    Ukraine: 'UA',
+    'United Arab Emirates': 'AE',
+    'United Kingdom': 'GB',
+    'United States': 'US',
+    'United States Outlying Islands': 'UM',
+    Uruguay: 'UY',
+    Uzbekistan: 'UZ',
+    Vanuatu: 'VU',
+    Venezuela: 'VE',
+    'Viet Nam': 'VN',
+    'Virgin Islands, British': 'VG',
+    'Virgin Islands, U.S.': 'VI',
+    'Wallis And Futuna': 'WF',
+    'Western Sahara': 'EH',
+    Yemen: 'YE',
+    Zambia: 'ZM',
+    Zimbabwe: 'ZW',
+    'North Macedonia': 'MK',
+    Češka: 'CZ'
+  }
+
+// list of all 2 letter country code: capital
+const capitalList = {
+    "AF": "Kabul",
+    "AX": "Mariehamn",
+    "AL": "Tirana",
+    "DZ": "Algiers",
+    "AS": "Pago Pago",
+    "AD": "Andorra la Vella",
+    "AO": "Luanda",
+    "AI": "The Valley",
+    "AQ": "Antarctica",
+    "AG": "St. John's",
+    "AR": "Buenos Aires",
+    "AM": "Yerevan",
+    "AW": "Oranjestad",
+    "AU": "Canberra",
+    "AT": "Vienna",
+    "AZ": "Baku",
+    "BS": "Nassau",
+    "BH": "Manama",
+    "BD": "Dhaka",
+    "BB": "Bridgetown",
+    "BY": "Minsk",
+    "BE": "Brussels",
+    "BZ": "Belmopan",
+    "BJ": "Porto-Novo",
+    "BM": "Hamilton",
+    "BT": "Thimphu",
+    "BO": "Sucre",
+    "BQ": "Kralendijk",
+    "BA": "Sarajevo",
+    "BW": "Gaborone",
+    "BV": "",
+    "BR": "Brasilia",
+    "IO": "Diego Garcia",
+    "BN": "Bandar Seri Begawan",
+    "BG": "Sofia",
+    "BF": "Ouagadougou",
+    "BI": "Bujumbura",
+    "KH": "Phnom Penh",
+    "CM": "Yaounde",
+    "CA": "Ottawa",
+    "CV": "Praia",
+    "KY": "George Town",
+    "CF": "Bangui",
+    "TD": "N'Djamena",
+    "CL": "Santiago",
+    "CN": "Beijing",
+    "CX": "Flying Fish Cove",
+    "CC": "West Island",
+    "CO": "Bogota",
+    "KM": "Moroni",
+    "CG": "Brazzaville",
+    "CD": "Kinshasa",
+    "CK": "Avarua",
+    "CR": "San Jose",
+    "CI": "Yamoussoukro",
+    "HR": "Zagreb",
+    "CU": "Havana",
+    "CW": "Willemstad",
+    "CY": "Nicosia",
+    "CZ": "Prague",
+    "DK": "Copenhagen",
+    "DJ": "Djibouti",
+    "DM": "Roseau",
+    "DO": "Santo Domingo",
+    "EC": "Quito",
+    "EG": "Cairo",
+    "SV": "San Salvador",
+    "GQ": "Malabo",
+    "ER": "Asmara",
+    "EE": "Tallinn",
+    "ET": "Addis Ababa",
+    "FK": "Stanley",
+    "FO": "Torshavn",
+    "FJ": "Suva",
+    "FI": "Helsinki",
+    "FR": "Paris",
+    "GF": "Cayenne",
+    "PF": "Papeete",
+    "TF": "Port-aux-Francais",
+    "GA": "Libreville",
+    "GM": "Banjul",
+    "GE": "Tbilisi",
+    "DE": "Berlin",
+    "GH": "Accra",
+    "GI": "Gibraltar",
+    "GR": "Athens",
+    "GL": "Nuuk",
+    "GD": "St. George's",
+    "GP": "Basse-Terre",
+    "GU": "Hagatna",
+    "GT": "Guatemala City",
+    "GG": "St Peter Port",
+    "GN": "Conakry",
+    "GW": "Bissau",
+    "GY": "Georgetown",
+    "HT": "Port-au-Prince",
+    "HM": "",
+    "VA": "Vatican City",
+    "HN": "Tegucigalpa",
+    "HK": "Hong Kong",
+    "HU": "Budapest",
+    "IS": "Reykjavik",
+    "IN": "New Delhi",
+    "ID": "Jakarta",
+    "IR": "Tehran",
+    "IQ": "Baghdad",
+    "IE": "Dublin",
+    "IM": "Douglas, Isle of Man",
+    "IL": "Jerusalem",
+    "IT": "Rome",
+    "JM": "Kingston",
+    "JP": "Tokyo",
+    "JE": "Saint Helier",
+    "JO": "Amman",
+    "KZ": "Astana",
+    "KE": "Nairobi",
+    "KI": "Tarawa",
+    "KP": "Pyongyang",
+    "KR": "Seoul",
+    "XK": "Pristina",
+    "KW": "Kuwait City",
+    "KG": "Bishkek",
+    "LA": "Vientiane",
+    "LV": "Riga",
+    "LB": "Beirut",
+    "LS": "Maseru",
+    "LR": "Monrovia",
+    "LY": "Tripolis",
+    "LI": "Vaduz",
+    "LT": "Vilnius",
+    "LU": "Luxembourg",
+    "MO": "Macao",
+    "MK": "Skopje",
+    "MG": "Antananarivo",
+    "MW": "Lilongwe",
+    "MY": "Kuala Lumpur",
+    "MV": "Male",
+    "ML": "Bamako",
+    "MT": "Valletta",
+    "MH": "Majuro",
+    "MQ": "Fort-de-France",
+    "MR": "Nouakchott",
+    "MU": "Port Louis",
+    "YT": "Mamoudzou",
+    "MX": "Mexico City",
+    "FM": "Palikir",
+    "MD": "Chisinau",
+    "MC": "Monaco",
+    "MN": "Ulan Bator",
+    "ME": "Podgorica",
+    "MS": "Plymouth",
+    "MA": "Rabat",
+    "MZ": "Maputo",
+    "MM": "Nay Pyi Taw",
+    "NA": "Windhoek",
+    "NR": "Yaren",
+    "NP": "Kathmandu",
+    "NL": "Amsterdam",
+    "AN": "Willemstad",
+    "NC": "Noumea",
+    "NZ": "Wellington",
+    "NI": "Managua",
+    "NE": "Niamey",
+    "NG": "Abuja",
+    "NU": "Alofi",
+    "NF": "Kingston",
+    "MP": "Saipan",
+    "NO": "Oslo",
+    "OM": "Muscat",
+    "PK": "Islamabad",
+    "PW": "Melekeok",
+    "PS": "East Jerusalem",
+    "PA": "Panama City",
+    "PG": "Port Moresby",
+    "PY": "Asuncion",
+    "PE": "Lima",
+    "PH": "Manila",
+    "PN": "Adamstown",
+    "PL": "Warsaw",
+    "PT": "Lisbon",
+    "PR": "San Juan",
+    "QA": "Doha",
+    "RE": "Saint-Denis",
+    "RO": "Bucharest",
+    "RU": "Moscow",
+    "RW": "Kigali",
+    "BL": "Gustavia",
+    "SH": "Jamestown",
+    "KN": "Basseterre",
+    "LC": "Castries",
+    "MF": "Marigot",
+    "PM": "Saint-Pierre",
+    "VC": "Kingstown",
+    "WS": "Apia",
+    "SM": "San Marino",
+    "ST": "Sao Tome",
+    "SA": "Riyadh",
+    "SN": "Dakar",
+    "RS": "Belgrade",
+    "CS": "Belgrade",
+    "SC": "Victoria",
+    "SL": "Freetown",
+    "SG": "Singapur",
+    "SX": "Philipsburg",
+    "SK": "Bratislava",
+    "SI": "Ljubljana",
+    "SB": "Honiara",
+    "SO": "Mogadishu",
+    "ZA": "Pretoria",
+    "GS": "Grytviken",
+    "SS": "Juba",
+    "ES": "Madrid",
+    "LK": "Colombo",
+    "SD": "Khartoum",
+    "SR": "Paramaribo",
+    "SJ": "Longyearbyen",
+    "SZ": "Mbabane",
+    "SE": "Stockholm",
+    "CH": "Berne",
+    "SY": "Damascus",
+    "TW": "Taipei",
+    "TJ": "Dushanbe",
+    "TZ": "Dodoma",
+    "TH": "Bangkok",
+    "TL": "Dili",
+    "TG": "Lome",
+    "TK": "",
+    "TO": "Nuku'alofa",
+    "TT": "Port of Spain",
+    "TN": "Tunis",
+    "TR": "Ankara",
+    "TM": "Ashgabat",
+    "TC": "Cockburn Town",
+    "TV": "Funafuti",
+    "UG": "Kampala",
+    "UA": "Kiev",
+    "AE": "Abu Dhabi",
+    "GB": "London",
+    "US": "Washington",
+    "UM": "",
+    "UY": "Montevideo",
+    "UZ": "Tashkent",
+    "VU": "Port Vila",
+    "VE": "Caracas",
+    "VN": "Hanoi",
+    "VG": "Road Town",
+    "VI": "Charlotte Amalie",
+    "WF": "Mata Utu",
+    "EH": "El-Aaiun",
+    "YE": "Sanaa",
+    "ZM": "Lusaka",
+    "ZW": "Harare"
+};
+
 // cached variables
 var markers = [];
 var uniqueId = 0;
@@ -84,12 +593,15 @@ function get_yet_to_vote_percentage(votes,place) {
 
 // create your map
 function initMap(location) {
+    
     const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
-        center: {lat: 37.5665, lng:126.9780},
+        // center: {lat: 37.5665, lng:126.9780},
     }
     );
-    vm.$data.map = map;
+    // get capital from capitalList, get country code from function, get country from cache
+    var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.country))
+    vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
     //     create_marker_by_click(e.latLng,map);
     // });
@@ -107,6 +619,8 @@ function initAutocomplete() {
     let map = vm.$data.map
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
+    // get country code
+    // var country = get_country_code(this.trip_details.country)
     const options = {
         componentRestrictions: {'country':['US', 'CH', 'KR', 'SG']},
         fields: ['place_id','name','geometry','formatted_address']
@@ -285,13 +799,19 @@ const app = Vue.createApp({
             // trip details
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
-            trip_details: "",
+            // to be updated with not hard code
+            trip_details: {
+                country: 'Korea',
+                duration: '12 November 2022 - 16 November 2022'
+            },
             // display details
             create_true: false,
             edit_true: false,
+
             // map stuff
             map_width: '90%',
             existing_locations: "",
+
             // create activity stuff
             amount: "", 
             from: "SGD", 
@@ -302,10 +822,11 @@ const app = Vue.createApp({
             // create activity 2nd part
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
+
             // marker stuff
             current_id: "",
             selected_address: "",
-            // selected_tags: "", is under tag_input
+                // selected_tags: "", is under tag_input
             selected_description: "",
             selected_name: "",
             selected_latlng: "",
@@ -319,6 +840,8 @@ const app = Vue.createApp({
         };
     }, 
     methods: {
+        // map related codes
+
         // delete marker in edit_activity
         delete_marker_edit(id) {
             console.log(`this is the curernt marker id: ${this.current_id}`)
@@ -340,6 +863,30 @@ const app = Vue.createApp({
             }
             
         },
+        // get country code
+        get_country_code(country) {
+            return countryList[country]
+        },
+        get_capital_city(lettercode) {
+            return capitalList[lettercode]
+        },
+        // set center to selected country
+        set_country_center(country, map) {
+            // setCenter for map
+            var service = new google.maps.places.PlacesService(map)
+            var request = {
+                query: country,
+                fields: ['geometry'],
+              };
+            service.findPlaceFromQuery(request, function(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                }
+              });
+        },
+
+        // create/edit acitvity-related codes
+
         // toggle display for create activity
         d_create() {
             if (this.create_true == false) {
@@ -392,6 +939,7 @@ const app = Vue.createApp({
                 console.log(error.message)
             })
         },
+        
 
 
         // database-related codes
@@ -596,6 +1144,8 @@ const app = Vue.createApp({
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
         },
+        
+
         // retrieve_trip_name_date() {
         //     // name of trip, trip to where, date
         //     const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
@@ -622,14 +1172,21 @@ const app = Vue.createApp({
         //             })
         //         }
         //         })
-        // }
+        // },
+
         // retrieve and edit user and trip id from LocalStorage
         // retrieve_from_cache() {
         //     this.trip_id = localStorage.getItem('user')
         //     this.user_id = localStorage.getItem('trip')
         //     console.log(this.trip_id)
         //     console.log(this.user_id)
-        // }
+        //     var trip_duration = localStorage.getItem('duration')
+        //     var country = localStorage.getItem('country')
+        //     this.trip_details = {
+        //         country: country,
+        //         duration: trip_duration
+        //     }
+        // },
     },
     // load data from database before initialising map and mounting vue
     async created() {
@@ -840,8 +1397,6 @@ function loadFlag(element){
         }
     }
 }
-
-
        
 export {vm}
 
