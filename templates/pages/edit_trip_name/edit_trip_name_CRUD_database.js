@@ -70,6 +70,7 @@ const root = Vue.createApp({
 
         this.g_member = ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member')
         
+        
     },
 
     methods: {
