@@ -1,3 +1,8 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "signup_login pages/login_page.html"
+}
+
 // Importing Firebase API
 // DO NOT EDIT
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
@@ -134,6 +139,7 @@ const root = Vue.createApp({
                 localStorage.setItem("trip", this.trip_name + this.trip_delimiter + this.myUsername)
                 localStorage.setItem("trip_start_date", this.sDate)
                 localStorage.setItem("trip_end_date", this.eDate)
+                localStorage.setItem("destination", this.destination)
                 // ========================================================================================
 
                 location.href = "../../map_phase2.html"

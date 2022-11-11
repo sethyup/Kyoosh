@@ -1,3 +1,4 @@
+// REDIRECT IF NOT LOGGED IN YET
 if (localStorage.getItem("user") === null) {
 	window.location.href = "signup_login pages/login_page.html"
 }
