@@ -102,7 +102,6 @@ const root = Vue.createApp({
             // e.g. users/junsui/friends
             // EDIT HERE
             if (this.trip_name && this.destination && this.sDate && this.eDate){
-                this.show_field_modal = false
                 var url = "images/" + this.destination + ".jpg"
 
                 set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
