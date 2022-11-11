@@ -132,6 +132,8 @@ const app = Vue.createApp( {
 		}
 
 		console.log(this.user_trips)
+
+		console.log("SUCCESS")
 	}
 })
 
