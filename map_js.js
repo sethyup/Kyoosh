@@ -530,6 +530,7 @@ var markers = [];
 var uniqueId = 0;
 
 // progress bar functions
+
 function get_total_users(place) {
     var total_users = 0
     var votes = place.votes
@@ -546,8 +547,7 @@ function get_total_users(place) {
     // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
     // console.log(this.get_total_users)
     return total_users
-  }
-
+}
 function get_yes_num(votes) {
     // console.log(typeof String(votes.yes.length))
     var yes_votes = 0 
@@ -556,43 +556,40 @@ function get_yes_num(votes) {
     }
     return yes_votes
 }
-
 function get_no_num(votes) {
     var no_votes = 0 
     if(votes.no){
         no_votes += votes.no.length
     }
     return no_votes
-    }
-
+}
 function get_yet_to_vote_num(votes) {
     var yet_to_vote_votes = 0 
     if(votes.yet_to_vote){
         yet_to_vote_votes += votes.yet_to_vote.length
     }
     return yet_to_vote_votes
-    }
-
+}
 function get_yes_percentage(votes,place) {
     // console.log(votes.yes.length)
     var yes_votes = get_yes_num(votes)
     return (yes_votes)*100/get_total_users(place)
-    }
-
+}
 function get_no_percentage(votes,place) {
     // console.log(votes.no.length)
     var no_votes = get_no_num(votes)
     return (no_votes)*100/get_total_users(place)
-    }
-
+}
 function get_yet_to_vote_percentage(votes,place) {
     // console.log(votes.yet_to_vote.length)
     var yet_to_vote_votes = get_yet_to_vote_num(votes)
     return (yet_to_vote_votes)*100/get_total_users(place)
-    }
+}
+
+// map-related functions
 
 // create your map
-function initMap(location) {
+function initMap(location, lodging) {
     
     const map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
@@ -609,6 +606,8 @@ function initMap(location) {
         // create_marker(place, map)
         create_marker(location[place], map, place)
     }
+    // console.log(lodging)
+    create_lodging_marker(lodging, map)
         
     initAutocomplete();
 
@@ -722,7 +721,7 @@ function create_marker(place, map, id) {
         // console.log(id)
         marker.id = id;
         vm.$data.current_id = id;
-        console.log(`this is the unique Id from  creating the marker: ${id}`)     
+        console.log(`Creating location marker: ${id}`)     
         
         // set infoWindow
         var contentString = 
@@ -773,6 +772,64 @@ function create_marker(place, map, id) {
         markers.push(marker)
         
 }
+// create lodging markers
+async function create_lodging_marker(locations, map) {
+    // console.log('Creating lodging markers')
+    // create marker for each lodging location
+    for (var location of locations) {
+        console.log(`Creating lodging marker: ${locations.indexOf(location) + 1}`)
+        // set icon 
+        const icon = {
+            url: "http://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/350/hotel_1f3e8.png", // url
+            scaledSize: new google.maps.Size(40, 40), // scaled size
+            // origin: new google.maps.Point(0,0), // origin
+            // anchor: new google.maps.Point(0, 0) // anchor
+        };
+        // get location latlng to create marker
+        var service = new google.maps.places.PlacesService(map)
+        var request = {
+            query: location.accom_address,
+            fields: ['geometry','formatted_address','name'],
+        };
+
+        var latng = service.findPlaceFromQuery(request, function(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var latlng = results[0].geometry.location;
+                // create marker
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                    icon: icon
+                });
+                // set infoWindow
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "",
+                    disableAutoPan: true,
+                    });
+                var contentString = 
+                    `
+                    <div id="content">
+                    <div id="siteNotice"></div>
+        
+                    <div class="container">
+                    <span class="badge rounded-pill text-bg-success">#Lodging</span>
+                        
+                    <h3>${results[0].name}</h3>
+                    <p class="address">${results[0].formatted_address}<p>
+                    <hr>
+                </div>
+                </div>
+                    `
+                marker.addListener("click", (googleMapsEvent) => {
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, marker);});
+                }
+        });
+    
+    }
+    
+    
+}
 
 // delete markers
 function DeleteMarker(id) {
@@ -811,6 +868,7 @@ const app = Vue.createApp({
             // map stuff
             map_width: '90%',
             existing_locations: "",
+            
 
             // create activity stuff
             amount: "", 
@@ -823,7 +881,7 @@ const app = Vue.createApp({
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
 
-            // marker stuff
+            // input field details
             current_id: "",
             selected_address: "",
                 // selected_tags: "", is under tag_input
@@ -945,16 +1003,21 @@ const app = Vue.createApp({
         // database-related codes
 
         // read location data from database
-        read_from_existing() {
+        async read_from_existing() {
+            var lodging_locations = await this.retrieve_lodging_locations()
+            // console.log(lodging_locations)
             const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
+                    
                     uniqueId = data.length
                     markers = []
-                    window.initMap = initMap(this.existing_locations);
+                    // console.log(lodging_locations)
+                    window.initMap = initMap(this.existing_locations, lodging_locations);
+                    
                 }
                 // retrieve recommended places for new trips
                 else {
@@ -1144,7 +1207,22 @@ const app = Vue.createApp({
             this.yes = details.votes.yes;
             this.yet_to_vote = details.votes.yet_to_vote;
         },
-        
+        // retrieve lodging locations
+        async retrieve_lodging_locations() {
+            
+            const path_location = ref(db, `trips/${this.trip_id}/lodging`)
+
+            const snapshot = await get(path_location)
+            var locations = snapshot.val()
+            return locations
+            // // console.log(locations)
+            // var addresses = []
+            // for (var locas of locations) {
+            //     addresses.push(locas.accom_address)
+            // }
+            // // console.log(addresses)
+            // return addresses
+        },
 
         // retrieve_trip_name_date() {
         //     // name of trip, trip to where, date
@@ -1175,24 +1253,29 @@ const app = Vue.createApp({
         // },
 
         // retrieve and edit user and trip id from LocalStorage
-        // retrieve_from_cache() {
-        //     this.trip_id = localStorage.getItem('user')
-        //     this.user_id = localStorage.getItem('trip')
-        //     console.log(this.trip_id)
-        //     console.log(this.user_id)
-        //     var trip_duration = localStorage.getItem('duration')
-        //     var country = localStorage.getItem('country')
-        //     this.trip_details = {
-        //         country: country,
-        //         duration: trip_duration
-        //     }
-        // },
+        retrieve_from_cache() {
+            if (localStorage.getItem('user')) {
+                this.trip_id = localStorage.getItem('user')
+            }
+            if (localStorage.getItem('trip')) {
+                this.trip_id = localStorage.getItem('trip')
+            }
+            if (localStorage.getItem('duration')) {
+                var duration = localStorage.getItem('duration')
+                this.trip_details[duration] = duration
+            }
+            if (localStorage.getItem('country')) {
+                var country = localStorage.getItem('country')
+                this.trip_details[country] = country
+            }
+        },
     },
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
         // await this.retrieve_from_cache()
         // get recommended locations from database
+        
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
