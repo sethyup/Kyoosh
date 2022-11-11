@@ -141,7 +141,6 @@ const app = Vue.createApp( {
 
 		console.log("USER TRIPS: ", Object.keys(this.user_trips))
 
-		document.getElementById("cards").innerHTML = ""
 
 		for(var trip_ID of Object.keys(this.user_trips)) {
 			var trip_name = trip_ID.split("urjfjwowskdorrofkckshecoejfnek")[0]
@@ -154,7 +153,7 @@ const app = Vue.createApp( {
             	<img src="../../images/home_page/trips_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
 				<div class="card-body">
 				<h5 class="card-title">${trip_name}</h5>
-				<button @click="edit_trip(${trip_ID})" class="btn btn-main-bold">Edit Trip</a>
+				<button onclick="edit_trip('${trip_ID}')" class="btn btn-main-bold">Edit Trip</a>
 				</div>
 				<div class="card-footer text-muted">
 				${trip_destination} <br>
@@ -166,9 +165,6 @@ const app = Vue.createApp( {
 		}
 
 		console.log("SUCCESS")
-
-		console.log("deleting data")
-		this.delete_data()
 	},
 
 })
