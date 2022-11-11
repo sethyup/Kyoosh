@@ -1,5 +1,5 @@
 if (localStorage.getItem("user") === null) {
-	window.location.href = "signup_login pages/signup_page.html"
+	window.location.href = "signup_login pages/login_page.html"
 }
 
 // List of sentences
