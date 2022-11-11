@@ -68,6 +68,7 @@ const root = Vue.createApp({
     },
 
     created() {
+        const user_ID = localStorage.getItem("user")
         const users_path = ref(db, "users/")
         onValue(users_path, (snapshot) => {
             const data = snapshot.val()
@@ -75,7 +76,9 @@ const root = Vue.createApp({
             for(var user in data){
                 // console.log(user)
                 // console.log(data[user].email)
-                this.user_emails.push(data[user].email)
+                if(user != user_ID){
+                    this.user_emails.push(data[user].email)
+                }
 
             }
         });
@@ -100,7 +103,7 @@ const root = Vue.createApp({
                 set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
-                        g_member: this.g_member,
+                        g_member: this.collaborators,
                         destination: [this.destination, url],
                         start_date: this.sDate,
                         end_Date: this.eDate
@@ -172,7 +175,14 @@ const root = Vue.createApp({
             console.log(collaborator_to_add)
             console.log(this.user_emails)
             if(this.user_emails.includes(collaborator_to_add)){
-                this.collaborators.push(collaborator_to_add)
+                if(this.collaborators.includes(collaborator_to_add)){
+                    var error_message = "Email already added into the list, tick the checkbox instead!"
+                    document.getElementById("error").innerText = error_message
+                }
+                else{
+                    this.collaborators.push(collaborator_to_add)
+                    this.collaborator_input = ""
+                }
             }
             else{
                 var error_message = "Email entered is not registered on Whoosh!"
