@@ -1,3 +1,11 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
 const AbstractAPI_Key = "ffc998ad9ddc4166a4fcbbdb7da17aa3"
 
 async function convert_timezone(base_local, target_local, base_datetime, API_key) {
@@ -267,8 +275,8 @@ var flight_app = Vue.createApp({
             //List of flight objects
             flight_obj_arr: [],
 
-            //DATABASE HARDCODING
-            trip_id: "badabingbadaboourjfjwowskdorrofkckshecoejfnekadambft"
+            //DATABASE
+            trip_id: ""
         }
     },
 
@@ -893,6 +901,8 @@ var flight_app = Vue.createApp({
 
     created() {
         console.log("CREATING ---------------------------")
+        this.trip_id = localStorage.getItem("trip")
+        
         const time_elapsed = Date.now()
         let current_date = new Date(time_elapsed)
 
