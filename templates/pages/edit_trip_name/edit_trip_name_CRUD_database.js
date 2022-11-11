@@ -39,9 +39,9 @@ const root = Vue.createApp({
 
             // eDate: localStorage.getItem("trip_end_date"),
 
-            destination: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/destination/0'),
+            destination: "",
 
-            g_member: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member'),
+            g_member: "",
 
             myUsername: "",
             
@@ -65,6 +65,10 @@ const root = Vue.createApp({
         this.sDate = localStorage.getItem("trip_start_date")
 
         this.eDate = localStorage.getItem("trip_end_date")
+
+        this.destination = ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/destination/0')
+
+        this.g_member = ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member')
         
     },
 
