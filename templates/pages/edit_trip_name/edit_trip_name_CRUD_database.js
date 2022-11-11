@@ -43,28 +43,28 @@ const root = Vue.createApp({
 
             g_member: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member'),
 
-            myUsername: myUsername,
+            myUsername: "",
             
-            myTrip: old_myTrip,
+            myTrip: "",
 
-            sDate: old_sDate,
+            sDate: "",
 
-            eDate: old_eDate,
+            eDate: "",
 
             trip_delimiter: "urjfjwowskdorrofkckshecoejfnek"
         }
     },
 
     mounted() {
-        const myUsername = localStorage.getItem("user")
+        this.myUsername = localStorage.getItem("user")
             
         const oldTrip_ID = localStorage.getItem("trip")
 
-        var old_myTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
+        this.myTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
 
-        var old_sDate= localStorage.getItem("trip_start_date")
+        this.sDate = localStorage.getItem("trip_start_date")
 
-        var old_eDate = localStorage.getItem("trip_end_date")
+        this.eDate = localStorage.getItem("trip_end_date")
         
     },
 
