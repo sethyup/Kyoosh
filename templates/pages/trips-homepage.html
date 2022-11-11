@@ -39,7 +39,7 @@
       <div class="container-fluid" id="homepage">
         <div class="row p-3 d-flex justify-content-center" id="cards">
           
-          <div class="card cardstyle" >
+          <!-- <div class="card cardstyle" >
             <img src="../../images/home_page/trips_imgs/seoul.jpg" class="card-img-top" height="200px">
             <div class="card-body">
               <h5 class="card-title">Dec22 Seoul Trip!</h5>
@@ -136,7 +136,7 @@
             <div class="card-footer text-muted">
                 Last edited: 5 years ago
             </div>
-          </div>
+          </div> -->
 
         </div>
       </div>
@@ -145,7 +145,7 @@
       function edit_trip(tripID) {
         console.log("button working")
         localStorage.setItem("trip", tripID)
-        location.replace("../../map_phase2.html")
+        location.href("../../map_phase2.html")
 		  }
     </script>
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
