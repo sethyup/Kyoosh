@@ -206,6 +206,7 @@ img.create-trip-main-img{
     width: auto !important;
     border-radius: 0 0 0 1em !important;
     padding: 10px 10px 0px 20px !important;
+    z-index: 1;
 }
 
 .spending-bottom-md{
