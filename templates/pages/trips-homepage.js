@@ -127,6 +127,8 @@ const app = Vue.createApp( {
 	async created() {
 		var trips = await this.get_trips()
 
+		console.log("PRE SUCCESS")
+
 		for (var e_trip_id of trips) {
 			this.user_trips[e_trip_id] = this.get_trip_obj(e_trip_id)
 		}
