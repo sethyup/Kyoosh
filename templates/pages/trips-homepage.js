@@ -130,7 +130,7 @@ const app = Vue.createApp( {
 		console.log("PRE SUCCESS")
 
 		for (var e_trip_id of trips) {
-			this.user_trips[e_trip_id] = this.get_trip_obj(e_trip_id)
+			this.user_trips[e_trip_id] = await this.get_trip_obj(e_trip_id)
 		}
 
 		console.log(this.user_trips)
