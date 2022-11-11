@@ -91,25 +91,6 @@ const app = Vue.createApp( {
 	data() {
 		return {
 			user_trips: {},
-
-			// List of sentences
-			// _CONTENT: [ "Plan a trip.", "Find yourself.", "Get away.", "Live your dream." ],
-
-			// // Current sentence being processed
-			// _PART: 0,
-
-			// // Character number of the current sentence being processed 
-			// _PART_INDEX: 0,
-
-			// // Holds the handle returned from setInterval
-			// _INTERVAL_VAL: "",
-
-			// // Element that holds the text
-			// _ELEMENT: document.querySelector("#animated-text"),
-
-			// // How long to hold?
-			// hold_main: 5000,
-			// hold_sub: 1500,
 		}
 	},
 
@@ -121,60 +102,10 @@ const app = Vue.createApp( {
 			location.replace("../../map_phase2.html")
 		},
 
-		test() {
-			console.log("fuck me")
-		}
-
-		// // Implements typing effect
-		// Type() { 
-		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX + 1);
-		// 	this._ELEMENT.innerHTML = text;
-		// 	this._PART_INDEX++;
-
-		// 	// If full sentence has been displayed then start to delete the sentence after some time
-		// 	if(text === this._CONTENT[this._PART]) {
-		// 		var to_hold
-		// 		if (text == this._CONTENT[0]) {
-		// 			to_hold = this.hold_main
-		// 		} else {to_hold = this.hold_sub}
-
-		// 		clearInterval(this._INTERVAL_VAL);
-		// 		setTimeout(function() {
-		// 			this._INTERVAL_VAL = setInterval(Delete, 50);
-		// 		}, to_hold);
-		// 	}
-		// },
-
-		// // Implements deleting effect
-		// Delete() {
-		// 	var text =  this._CONTENT[this._PART].substring(0, this._PART_INDEX - 1);
-		// 	this._ELEMENT.innerHTML = text;
-		// 	this._PART_INDEX--;
-
-		// 	// If sentence has been deleted then start to display the next sentence
-		// 	if(text === '') {
-		// 		clearInterval(this._INTERVAL_VAL);
-
-		// 		// If last sentence then display the first one, else move to the next
-		// 		if(this._PART == (this._CONTENT.length - 1))
-		// 			this._PART = 0;
-		// 		else
-		// 			this._PART++;
-		// 			this._PART_INDEX = 0;
-
-		// 			// Start to display the next sentence after some time
-		// 			setTimeout(function() {
-		// 				this._INTERVAL_VAL = setInterval(Type, 100);
-		// 			}, 200);
-		// 	}
-		// }
-
 
 	},
 
 	async created() {
-		// Start the typing effect on load
-		// this._INTERVAL_VAL = this.setInterval(this.Type(), 100);
 
 		// Getting the userID from localStorage and creating the cards based off it.
 		const user_ID = localStorage.getItem("user")
