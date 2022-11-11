@@ -108,6 +108,14 @@ sidebar.component('sidebar-phase2', {
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page.html" class="nav-link px-0 align-middle">
+                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-plane fa-xs"></i> Flight</span></a>
+                        </li>
+                        <li>
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/lodging/lodging.html" class="nav-link px-0 align-middle">
+                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-hotel fa-xs"></i> Lodging</span></a>
+                        </li>
                     </ul>
                     <hr>
                     <div style="width:100%;" class="d-flex justify-content-center">
@@ -169,6 +177,15 @@ sidebar.component('sidebar-member-phase2', {
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li>
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page.html" class="nav-link px-0 align-middle">
+                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-plane fa-xs"></i> Flight</span></a>
+                        </li>
+                        <li>
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/lodging/lodging.html" class="nav-link px-0 align-middle">
+                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-hotel fa-xs"></i> Lodging</span></a>
                         </li>
                     </ul>
                     <hr>
