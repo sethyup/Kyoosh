@@ -612,7 +612,6 @@ function initMap(location, lodging) {
     initAutocomplete(map);
 
 }
-
 // enable Autocomplete
 function initAutocomplete(map) {
     
@@ -698,7 +697,6 @@ function initAutocomplete(map) {
     //     autocomplete.set("place", null)
     // })
 }
-
 // create existing marker
 function create_marker(place, map, id) {
     const icon = {
@@ -830,7 +828,6 @@ async function create_lodging_marker(locations, map) {
     
     
 }
-
 // delete markers
 function DeleteMarker(id) {
     //Find and remove the marker from the Array
@@ -1253,7 +1250,8 @@ const app = Vue.createApp({
         //         })
         // },
 
-        // retrieve and edit user and trip id from LocalStorage
+        
+        // retrieve trip details from localStorage
         retrieve_from_cache() {
             if (localStorage.getItem('user')) {
                 this.trip_id = localStorage.getItem('user')
@@ -1271,12 +1269,12 @@ const app = Vue.createApp({
             }
         },
     },
+    
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
         await this.retrieve_from_cache()
-        // get recommended locations from database
-        
+        // get recommended/existing locations from database
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
@@ -1481,6 +1479,7 @@ function loadFlag(element){
         }
     }
 }
-       
+
+// export mounted instance to access it outside of module
 export {vm}
 
