@@ -110,7 +110,8 @@ const root = Vue.createApp({
                         g_member: this.collaborators,
                         destination: [this.destination, url],
                         start_date: this.sDate,
-                        end_Date: this.eDate
+                        end_Date: this.eDate,
+                        phase: 2
                         
                 })
                 .then(

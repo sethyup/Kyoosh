@@ -1,3 +1,11 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -104,7 +112,7 @@ const main = Vue.createApp({
             selected_all: false,
             filter_tag: "",
             existing_locations: "",
-            trip_id: "grad trip_adambft",
+            trip_id: "",
             filtered_locations: [],
 
             // selected_activities
@@ -217,6 +225,7 @@ const main = Vue.createApp({
             
 
         },
+
         calculate_spending(){
             console.log("==== START FUNCTION +++++")
 
@@ -237,6 +246,7 @@ const main = Vue.createApp({
             };
             console.log(this.selected_activities)
         }, 
+
         // read existing locations from the database
         read_from_existing_locations() {
             const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
@@ -264,15 +274,10 @@ const main = Vue.createApp({
         create_update_data() {
             console.log("Writing data into database...")
 
-            // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/selected_activities`), this.selected_activities) 
-                // DATA YOU WANT TO WRITE GOES HERE,
-
-                // example
-                // email: this.email
-                // ...
-
-            
+            // WRITE SELECTED_ACTIVITIES TO DB
+            set(ref(db, `trips/${this.trip_id}/selected_activities`),
+                this.selected_activities
+            )
             .then(
                 function write_success() {
                     // display "Success" message
@@ -286,7 +291,26 @@ const main = Vue.createApp({
 
                 // display "Error" message
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
+                console.log(failed_message);
+            })
+
+            // SET PHASE TO 3
+            set(ref(db, `trips/${this.trip_id}/trip_details/phase`),
+                3
+            ) 
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    // alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                 console.log(failed_message);
             })
         },
@@ -294,7 +318,9 @@ const main = Vue.createApp({
     },
     // retrieve data from database onload
     async created() {
-      await this.read_from_existing_locations()
+        this.trip_id = localStorage.getItem("trip")
+
+        await this.read_from_existing_locations()
     }
 })
 
