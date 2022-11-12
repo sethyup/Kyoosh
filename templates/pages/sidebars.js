@@ -475,5 +475,50 @@ sidebar.component('sidebar-phase3', {
             `
     })
 
+sidebar.component('sidebar-phase4', {
+    props: ['date_array'],
+    template: 
+            ` <div class="col-auto sticky-top">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                        <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        
+                        <!--Home-->
+                        <li class="nav-item">
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
+                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-house fa-xs"></i></span>
+                                <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <hr>
+                    <div style="width:100%;" class="d-flex justify-content-center">
+                        <button class="btn btn-main-bold-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'"><i class="fa-solid fa-pen fa-xs"></i> Edit Mode</button>
+                    </div>
+                    <hr>
+
+                    <div class="dropdown pb-4">
+                        <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1">Bean</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            `
+    })
+
 
 sidebar.mount('#nav')

@@ -22,7 +22,9 @@ const google_provider = new GoogleAuthProvider()
 const root = Vue.createApp({
     data() {
         return{
-            email: "",
+            login_email: "",
+
+            signup_email: "",
 
             password: "",
 
@@ -64,75 +66,85 @@ const root = Vue.createApp({
         },
 
         sign_up() {
-            var email = this.email
-            var password = this.password
-            var username = this.username
-            console.log("starting to create user...")
-            if(this.db_usernames.includes(username)){
-                var failed_message = `Username is already taken! Try a different one!`
+            if(this.first_name && this.last_name && this.email && this.password){
+                var email = this.signup_email
+                var password = this.password
+                var username = this.username
+                console.log("starting to create user...")
+                if(this.db_usernames.includes(username)){
+                    var failed_message = `Username is already taken! Try a different one!`
+                    document.getElementById("error").attributes[2].nodeValue = ""
+                    document.getElementById("error").innerHTML = `
+                    ${failed_message}
+                    `
+                    console.log("user not created")
+                }
+                else{
+                    createUserWithEmailAndPassword(auth, email, password)
+                    .then(
+                        (userCredential) => {
+                            // Signed Up 
+        
+                            // save user account details to database
+                            console.log("starting to write user data...")
+                            console.log(userCredential)
+                            set(ref(db, "users/" + this.signup_email.replaceAll(".","")), {
+                                email: this.signup_email,
+                                username: this.username,
+                                fullname: this.first_name + " " + this.last_name,
+                                trips: ['Example Trip To Seoul!']
+                              })
+                            .then(
+                                function write_success() {
+                                    // display "Success" message
+                                    console.log("Write Operation Successful")
+                                    console.log("Entry Created")
+                            })
+                            .catch((error) => {
+                                // for us to debug, tells us what error there is,
+                                const errorCode = error.code;
+                                const errorMessage = error.message;
+                
+                                // display "Error" message
+                                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                                console.log(failed_message);
+                            })
+                            // display "Success" message
+                            console.log("user created")
+        
+        
+                            // redirects to Log In page
+                            // find a way to use await and wait for the update to database, if not this will cancel the update
+                            location.replace("./login_page.html")
+                            const user = userCredential.user;
+                        })
+                        .catch((error) => {
+                            // for admin, tells you what error there is
+                            const errorCode = error.code;
+                            const errorMessage = error.message;
+                            console.log(errorMessage)
+                            console.log(errorCode)
+        
+                            // display "Error" message
+                            // stays on the same page
+                            var failed_message = `Sign Up Unsuccessful. ${errorMessage}`
+                            document.getElementById("error").attributes[2].nodeValue = ""
+                            document.getElementById("error").innerHTML = `
+                            ${failed_message}
+                            `
+                            console.log("user not created")
+                        })
+                }
+            }
+            else{
+                var failed_message = `Make sure to fill in all the input fields!`
                 document.getElementById("error").attributes[2].nodeValue = ""
                 document.getElementById("error").innerHTML = `
                 ${failed_message}
                 `
                 console.log("user not created")
             }
-            else{
-                createUserWithEmailAndPassword(auth, email, password)
-                .then(
-                    (userCredential) => {
-                        // Signed Up 
-    
-                        // save user account details to database
-                        console.log("starting to write user data...")
-                        console.log(userCredential)
-                        set(ref(db, "users/" + this.email.replaceAll(".","")), {
-                            email: this.email,
-                            username: this.username,
-                            fullname: this.first_name + " " + this.last_name,
-                            trips: []
-                          })
-                        .then(
-                            function write_success() {
-                                // display "Success" message
-                                console.log("Write Operation Successful")
-                                console.log("Entry Created")
-                        })
-                        .catch((error) => {
-                            // for us to debug, tells us what error there is,
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-            
-                            // display "Error" message
-                            var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                            console.log(failed_message);
-                        })
-                        // display "Success" message
-                        console.log("user created")
-    
-    
-                        // redirects to Log In page
-                        // find a way to use await and wait for the update to database, if not this will cancel the update
-                        location.replace("./login_page.html")
-                        const user = userCredential.user;
-                    })
-                    .catch((error) => {
-                        // for admin, tells you what error there is
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.log(errorMessage)
-                        console.log(errorCode)
-    
-                        // display "Error" message
-                        // stays on the same page
-                        var failed_message = `Sign Up Unsuccessful. ${errorMessage}`
-                        document.getElementById("error").attributes[2].nodeValue = ""
-                        document.getElementById("error").innerHTML = `
-                        ${failed_message}
-                        `
-                        console.log("user not created")
-                    })
-            }
-           ;
+           
         },
 
         login() {

@@ -95,6 +95,7 @@ const root = Vue.createApp({
     },
 
     methods: {
+        // will need trip_name, destination,start date and end data
         create_new_trip() {
             console.log("Writing data into database...")
             // the console can be open, 
@@ -105,27 +106,55 @@ const root = Vue.createApp({
             if (this.trip_name && this.destination && this.sDate && this.eDate){
                 var url = "images/" + this.destination + ".jpg"
 
+                // array of group member UserIDs
                 var arr_edited_usernames = []
+
+                // trip ID
+                var trip_ID = this.trip_name + this.trip_delimiter + this.myUsername
 
                 for (var e_username of this.collaborators) {
                     arr_edited_usernames.push(this.convert_email_to_userID(e_username))
                 }
 
-                set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
+                set(ref(db, 'trips/' + trip_ID + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
                         g_member: arr_edited_usernames,
                         destination: [this.destination, url],
                         start_date: this.sDate,
-                        end_Date: this.eDate,
+                        end_date: this.eDate,
                         phase: 2
                         
                 })
                 .then(
-                    function write_success() {
+                    // write group leader's trip into the trips_gl variable & update the database
+                    async function write_success() {
                         // display "Success" message
                         // alert("Write Operation Successful")
+                        var user_ID = localStorage.getItem("user")
                         console.log("Entry Created")
+                        const path_location_g_leader = ref(db, 'users/' + user_ID + '/trips')
+                        var snapshot_trips_gl = await get(path_location_g_leader)
+                        // console.log(snapshot_trips_gl)
+                        var trips_gl = snapshot_trips_gl.val()
+                        console.log(trips_gl)
+                        trips_gl.push(trip_ID)
+                        set(path_location_g_leader, trips_gl)
+                        .then(
+                            console.log("shit's added into g_leader's list")
+                        )
+                        // write group members new trip into the database
+                        for(var g_member of arr_edited_usernames){
+                            console.log(g_member)
+                            const path_location = ref(db, 'users/' + g_member + '/trips')
+                            var snapshot_trips = await get(path_location)
+                            var trips = snapshot_trips.val()
+                            trips.push(trip_ID)
+                            set(path_location, trips)
+                            .then(
+                                console.log("shit's added into g_member's list")
+                            )
+                        }
 
                 })
                 .catch((error) => {
@@ -194,8 +223,8 @@ const root = Vue.createApp({
         add_collaborator() {
             // console.log("adding")
             var collaborator_to_add = this.collaborator_input
-            console.log(collaborator_to_add)
-            console.log(this.user_emails)
+            // console.log(collaborator_to_add)
+            // console.log(this.user_emails)
             if(this.user_emails.includes(collaborator_to_add)){
                 if(this.collaborators.includes(collaborator_to_add)){
                     this.error_message = "Email already added into the list!"
