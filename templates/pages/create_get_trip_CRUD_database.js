@@ -117,7 +117,7 @@ const root = Vue.createApp({
                         g_member: arr_edited_usernames,
                         destination: [this.destination, url],
                         start_date: this.sDate,
-                        end_Date: this.eDate,
+                        end_date: this.eDate,
                         phase: 2
                         
                 })
