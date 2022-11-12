@@ -68,7 +68,7 @@ const root = Vue.createApp({
 
     computed: {
         friendCollaborators(){
-            return this.nameList.length > 0 ? "You have added " + this.nameList.join(", ") : ''
+            return this.collaborators.length > 0 ? "You have added " + this.collaborators.join(", ") : ''
         }
     },
 
@@ -104,10 +104,16 @@ const root = Vue.createApp({
             if (this.trip_name && this.destination && this.sDate && this.eDate){
                 var url = "images/" + this.destination + ".jpg"
 
+                var arr_edited_usernames = []
+
+                for (var e_username of this.collaborators) {
+                    arr_edited_usernames.push(this.convert_email_to_userID(e_username))
+                }
+
                 set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
-                        g_member: this.collaborators,
+                        g_member: arr_edited_usernames,
                         destination: [this.destination, url],
                         start_date: this.sDate,
                         end_Date: this.eDate,
@@ -204,6 +210,10 @@ const root = Vue.createApp({
                 document.getElementById("error").innerText = error_message
             }  
             
+        },
+
+        convert_email_to_userID(email_str) {
+            return email_str.replaceAll(".","")
         }
 
         // delete_data() {
