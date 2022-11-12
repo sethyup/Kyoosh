@@ -22,7 +22,9 @@ const google_provider = new GoogleAuthProvider()
 const root = Vue.createApp({
     data() {
         return{
-            email: "",
+            login_email: "",
+
+            signup_email: "",
 
             password: "",
 
