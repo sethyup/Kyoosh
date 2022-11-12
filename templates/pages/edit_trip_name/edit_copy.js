@@ -29,6 +29,7 @@ const root = Vue.createApp({
             eDate: "",
             trip_delimiter: "urjfjwowskdorrofkckshecoejfnek",
             my_trip_name: "",
+            user_trips: "",
         }
     },
 
@@ -36,6 +37,7 @@ const root = Vue.createApp({
         // get details from cache
         await this.get_relevant_info()
         await this.read_from_existing()
+        await this.read_from_user_trips()
 
         console.log("VUE INSTANCE INITIALIZED")
 
@@ -66,6 +68,7 @@ const root = Vue.createApp({
             this.sDate = start_date
             this.eDate = end_date
         },
+        // read trip_ids
         async read_from_existing() {
             const path_location = ref(db, `trips/${this.trip_id}`)
 
@@ -75,8 +78,19 @@ const root = Vue.createApp({
             this.trip_details = details
             // console.log(lodging_locations)
         },
+        // read user trips
+        async read_from_user_trips() {
+            const path_location = ref(db, `users/${this.trip_id}/trips`)
+
+            const snapshot = await get(path_location)
+            var details = snapshot.val()
+            // console.log(details)
+            this.user_trips = details
+            // console.log(lodging_locations)
+        },
+
         // create new trip object and delete old trip object
-        read_new_data() {
+        write_new_data() {
             if (this.trip_id == "") {
                 alert(`Trip name cannot be empty!`)
                 return
@@ -110,7 +124,7 @@ const root = Vue.createApp({
                 console.log(failed_message);
             })
 
-            //delete old data from database
+            // delete old data from database
             const path_location = ref(db, `trips/${this.trip_id}`)
             // remove(`trips/${this.trip_id}`)
             remove(path_location)
@@ -118,6 +132,7 @@ const root = Vue.createApp({
                 function delete_success() {
                     alert("Delete operation is a success!")
                     console.log("Delete operation is a success!")
+                    window.location.replace("../../map_phase2.html");
                 }
             )
             .catch((error) => {
@@ -132,6 +147,29 @@ const root = Vue.createApp({
                 var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
                 // alert(failed_message)
                 console.log("Delete Unsuccessful");
+                console.log(`${failed_message}`)
+            })
+
+            // update user list of trips
+            for (var trip in this.user_trips) {
+                if (this.user_trips[trip] == this.trip_id) {
+                    this.user_trips[trip] = new_trip_id
+                }
+            }
+            set(ref(db, `trips/${new_trip_id}/trips`), this.user_trips)
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
             })
         },
     },
