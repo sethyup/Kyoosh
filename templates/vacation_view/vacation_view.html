@@ -13,81 +13,127 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     
     <title>Vacation Mode</title>
+
+    <style>
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 <body>
-    <div id="main">
-        <div class="container">
-            <div class="accordion" id="accordionPanels">
-                <div class="accordion-item" v-for="(date, index) of date_array">
-                    <h2 class="accordion-header" :id="'panelsStayOpen-heading' +index">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#panelsStayOpen-collapse' +index" aria-expanded="true" :aria-controls="'panelsStayOpen-collapse' +index">
-                        Day {{index+1}}: {{date}}
-                        </button>
-                    </h2>
-                    <!-- {{flights_details[1].depart_datetime}} -->
-                    <div :id="'panelsStayOpen-collapse' +index" class="accordion-collapse collapse show" :aria-labelledby="'panelsStayOpen-heading' + index">
-                        <div class="accordion-body">
+    <div class="container-fluid">
+        <div class="row sidebar-parent flex-nowrap">
+            <!-- sidebar -->
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
+                <!-- SIDEBAR  -->
+               <sidebar-phase4></sidebar-phase4>
+           </div>
 
-                            <!-- IF includes flight  -->
-                            <div v-for="flight of flights_details">
-                                <div v-if="flight.depart_datetime.slice(0,10) == date">
-                                <div  class="card mb-5 p-2" class="card-body">
-                                    <!-- {{flight}} -->
+           <div id="main" class="col p-3">
+               <!-- TITLE -->
+                <div>
+                    <h2 class="text-center text-white mb-4 mt-2">Vacation Summary</h2>
+                </div>
 
-                                    <h4 class="card-title"><!-- insert icon -->{{flight.flight_no}} {{flight.airline}} {{flight.depart_datetime}}</h4>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{flight.depart_country}}, {{flight.airport}} to {{flight.arrive_country}}</h6>
-                                    <p class="card-text">Gate {{flight.gate}}, Terminal {{flight.terminal}}</p>
+                <div class="container">
+                    <div class="accordion" id="accordionPanels">
+                        <div class="accordion-item blurred-minor-no-bd-filter" v-for="(date, index) of date_array">
+                            <h2 class="accordion-header" :id="'panelsStayOpen-heading' +index">
+                                <button class="accordion-button blurred-minor-gradient-login text-white fw-semibold" type="button" data-bs-toggle="collapse" :data-bs-target="'#panelsStayOpen-collapse' +index" aria-expanded="true" :aria-controls="'panelsStayOpen-collapse' +index">
+                                Day {{index+1}}: {{date}}
+                                </button>
+                            </h2>
+                            <!-- {{flights_details[1].depart_datetime}} -->
+                            <div :id="'panelsStayOpen-collapse' +index" class="accordion-collapse collapse show" :aria-labelledby="'panelsStayOpen-heading' + index">
+                                <div class="accordion-body">
+        
+                                    <!-- IF includes flight  -->
+                                    <div v-for="flight of flights_details">
+                                        <div v-if="flight.depart_datetime.slice(0,10) == date">
+                                        <div class="card mb-4 p-2 card-body blurred-minor">
+
+                                            <div class="row">
+                                                <div class="col-auto d-flex justify-content-center align-items-center">
+                                                    <i class="fa-solid fa-plane ms-3 fa-2x"></i>
+                                                </div>
+    
+                                                <div class="col">
+                                                    <h4 class="card-title mb-3"> {{flight.flight_no}} {{flight.airline}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> {{flight.depart_datetime}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{flight.depart_country}}, {{flight.airport}} <i class="fa-solid fa-arrow-right fa-xs"></i> {{flight.arrive_country}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted">Gate {{flight.gate}}, Terminal {{flight.terminal}}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <!-- IF includes lodging (check-out) -->
+                                    <div v-for="lodge of lodging_details">
+                                        <div v-if="lodge.checkout_datetime.slice(0,10) == date">
+                                        <div class="card mb-4 p-2 card-body blurred-minor">
+                                            <div class="row">
+                                                <div class="col-auto d-flex justify-content-center align-items-center">
+                                                    <i class="fa-solid fa-door-open ms-3 fa-2x"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <!-- {{LODGiNG}} -->
+                                                    <h4 class="card-title mb-3">{{lodge.accom_name}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> Check-Out: {{lodge.checkout_datetime.split(" ")[1]}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{lodge.accom_address}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- IF includes lodging (check-in)-->
+                                    <div v-for="lodge of lodging_details">
+                                        <div v-if="lodge.checkin_datetime.slice(0,10) == date">
+                                        <div class="card mb-4 p-2 card-body blurred-minor">
+                                            <div class="row">
+                                                <div class="col-auto d-flex justify-content-center align-items-center">
+                                                    <i class="fa-solid fa-hotel ms-3 fa-2x"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <!-- {{LODGiNG}} -->
+                                                    <h4 class="card-title mb-3">{{lodge.accom_name}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> Check-In: {{lodge.checkin_datetime.split(" ")[1]}}&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-clock fa-xs"></i> Check-Out: {{lodge.checkout_datetime}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{lodge.accom_address}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+        
+
+                                    <!-- IF itinerary includes activities -->
+                                    <div class="card transparent" v-if="Object.keys(days).includes('Day ' + (index+1))">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item blurred-minor" v-for="activity in get_day(index)">
+                                                <!-- insert icon -->
+                                                <h4 class="mb-3">{{activity.name}}<span class="badge rounded-pill text-bg-warning ms-1" >{{activity.tag}}</span></h4>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{activity.address}}</p>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-money-bill fa-xs"></i> {{activity.price.krw}} KRW&nbsp;&nbsp;<i class="fa-solid fa-right-left fa-xs"></i>&nbsp;&nbsp;{{activity.price.sgd}} SGD</p>
+                                                <hr class="my-0">
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                </div>
-                            </div>
-
-
-                            <!-- IF includes lodging (check-out) -->
-                            <div v-for="lodge of lodging_details">
-                                <div v-if="lodge.checkout_datetime.slice(0,10) == date">
-                                <div  class="card mb-5 p-2" class="card-body">
-                                    <!-- {{LODGiNG}} -->
-                                    <h4 class="card-title"><!-- insert icon -->{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
-                                    <p class="card-text">Check-Out Details: {{lodge.checkout_datetime}}</p>
-                                </div>
-                                </div>
-                            </div>
-
-                            <!-- IF includes lodging (check-in)-->
-                            <div v-for="lodge of lodging_details">
-                                <div v-if="lodge.checkin_datetime.slice(0,10) == date">
-                                <div  class="card mb-5 p-2" class="card-body">
-                                    <!-- {{LODGiNG}} -->
-                                    <h4 class="card-title"><!-- insert icon -->{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
-                                    <h6 class="card-subtitle mb-2 text-muted">Check-In Time: {{lodge.checkin_datetime.slice(11,16)}}</h6>
-                                    <p class="card-text">Check-Out Details: {{lodge.checkout_datetime}}</p>
-                                </div>
-                                </div>
-                            </div>
-
-
-
-                            <!-- IF itinerary includes activities -->
-                            <div class="card" style="" v-if="Object.keys(days).includes('Day ' + (index+1))">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" v-for="activity in get_day(index)">
-                                        <!-- insert icon -->
-                                        <h4>{{activity.name}}<span class="badge rounded-pill text-bg-warning ms-1" >{{activity.tag}}</span></h4>
-                                        <br>
-                                        <h6>{{activity.address}}</h6>
-                                        <br>
-                                        <p>{{activity.price.krw}} KRW/{{activity.price.sgd}} SGD</p>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
+                            
                     </div>
+        
                 </div>
-                    
-            </div>
-
+           </div>
         </div>
     </div>
+
     
         <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- Font Awesome JS -->
@@ -97,5 +143,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
     <script type="module" src="vacation_view.js"></script>
+
+    <!-- sidebar js -->
+    <script  src="../pages/sidebars.js"></script>
 </body>
 </html>

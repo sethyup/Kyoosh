@@ -95,6 +95,7 @@ const root = Vue.createApp({
     },
 
     methods: {
+        // will need trip_name, destination,start date and end data
         create_new_trip() {
             console.log("Writing data into database...")
             // the console can be open, 
@@ -121,11 +122,12 @@ const root = Vue.createApp({
                         g_member: arr_edited_usernames,
                         destination: [this.destination, url],
                         start_date: this.sDate,
-                        end_Date: this.eDate,
+                        end_date: this.eDate,
                         phase: 2
                         
                 })
                 .then(
+                    // write group leader's trip into the trips_gl variable & update the database
                     async function write_success() {
                         // display "Success" message
                         // alert("Write Operation Successful")
@@ -141,7 +143,7 @@ const root = Vue.createApp({
                         .then(
                             console.log("shit's added into g_leader's list")
                         )
-
+                        // write group members new trip into the database
                         for(var g_member of arr_edited_usernames){
                             console.log(g_member)
                             const path_location = ref(db, 'users/' + g_member + '/trips')
