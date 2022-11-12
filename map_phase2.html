@@ -36,6 +36,13 @@
         height: 100%;
         padding: 0;
         }
+
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
         .address{
             font-style: italic;
             }
@@ -66,7 +73,7 @@
 <body>
     <div class="container-fluid">
         <div class="row sidebar-parent flex-nowrap">
-            <div id="nav" class="col-auto sidebar-css">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
                 <sidebar-phase2></sidebar-phase2>
             </div>
@@ -74,11 +81,11 @@
             <!-- whole site -->
             <!-- ALL OTHER CONTENT ACTIVITY COL-->
             <div class="col position-relative text-dark" id="app">
-                <!-- hardcoded info -->
-                <!-- <div class="row d-block d-md-none text-white bg-dark text-center">
-                    <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
-                    <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
-                </div> -->
+                <!-- TRIP DETAILS (SM) -->
+                <div class="row d-block d-md-none text-center blurred text-black">
+                    <h5 class="pt-3">{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                    <p class="m-0 pb-3">{{trip_details.duration}}</p>
+                </div>
 
                 <div class="row">
                     <!-- pop up if create activity -->
@@ -398,7 +405,7 @@
                 
                 <!-- TRIP DETAILS -->
                 <div class="trip-title-top-md d-none d-md-block text-dark text-center">
-                    <h5>Name of Trip (Trip to {{trip_details.country}})</h5>
+                    <h5>{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
                     <p>{{trip_details.duration}}</p>
                 </div>
             </div>

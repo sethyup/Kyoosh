@@ -908,9 +908,15 @@ const app = Vue.createApp({
             yes: [],
             yet_to_vote: [],
 
+            delimiter: "urjfjwowskdorrofkckshecoejfnek",
         };
     }, 
     methods: {
+        // GET TRIP NAME
+        get_trip_name(tripID) {
+            return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
+        },
+
         // map related codes
 
         // delete marker in edit_activity
@@ -1282,7 +1288,7 @@ const app = Vue.createApp({
         // retrieve trip details from localStorage
         retrieve_from_cache() {
             if (localStorage.getItem('user')) {
-                this.trip_id = localStorage.getItem('user')
+                this.user_id = localStorage.getItem('user')
             }
             if (localStorage.getItem('trip')) {
                 this.trip_id = localStorage.getItem('trip')
