@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map phase 3</title>
+    <!-- Axios -->
+    <script src='https://unpkg.com/axios/dist/axios.js'></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- BOOTSTRAP -->
+    <link href="./css/main.min.css" rel="stylesheet">
+    <!-- ICONS LIBRARY -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!-- Vue 3 -->
+    <script src='https://cdn.jsdelivr.net/npm/vue@next'></script>
+    <!-- <link rel="stylesheet" href="./templates/"> -->
+    <link rel="stylesheet" href="./templates/template.css">
+    <!-- access firebase -->
+    <!-- reference js -->
+    <script type="module" src="./map_phase3_js.js"></script>
+    <!-- jquery -->
+    <!-- <script scr="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>"
+    <script type="module" src="./map_phase3_js.js"></script> -->
+    <style>
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        /* 
+        * Always set the map height explicitly to define the size of the div element
+        * that contains the map. 
+        */
+        #map {
+        height: 95%;
+        width: 65%;
+        }
+
+        /* 
+        * Optional: Makes the sample page fill the window. 
+        */
+        html,
+        body {
+        height: 100%;
+        padding: 0;
+        }
+        .address{
+            font-style: italic;
+            }
+            .description{
+            text-align: justify;
+            }
+            .progress{
+            height: 25px; 
+            border-radius: 25px;
+            border: 2px solid black;
+            box-shadow: 0px 0px 10px lightskyblue;
+            }
+            .voting_buttons{
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+            }
+            .reject_btn{
+            margin-right: 5px;
+            }
+            .vote_btn{
+            margin-left: 5px;
+            }
+            .overflowing{
+                width: 90%;
+                height: 800px;
+                overflow: auto;
+            }
+            .overflowing2{
+                width: 80%;
+                height: 80px;
+                overflow: auto;
+            }
+            .day_style{
+                text-decoration: none;
+                font-size: large;
+            }
+            .save_btn{
+                position: fixed;
+                bottom: 0; 
+                right: 5;
+            }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid" id="app">
+        <div class="row sidebar-parent flex-nowrap">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
+                <p></p>
+                 <!-- SIDEBAR  -->
+                 <div class="col-auto sticky-top">
+                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                            <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
+                        </a>
+                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                            
+                            <!--Home-->
+                            <li class="nav-item">
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
+                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-house fa-xs"></i> Home</span>
+                                </a>
+                            </li>
+    
+                            <!--Itinerary-->
+                            <li>
+                                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i> Itinerary</span>
+                                </a>
+    
+                                <ul class="collapse show nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
+                                    <li class="w-100" v-for="(date, index) of date_array">
+                                        <a :href=" '#' + index" class="nav-link px-0"> 
+                                            <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Day {{index+1}}: {{date.slice(5,)}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page.html" class="nav-link px-0 align-middle">
+                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-plane fa-xs"></i> Flight</span></a>
+                            </li>
+                            <li>
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/lodging/lodging.html" class="nav-link px-0 align-middle">
+                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-hotel fa-xs"></i> Lodging</span></a>
+                            </li>
+                        </ul>
+                        
+                        
+                        <hr>
+    
+                        <div class="dropdown pb-4">
+                            <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1">Bean</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRIP INFO -->
+            <div class="trip-title-top-md d-none d-md-block">
+                <h6>Name of Trip (Trip to Seoul, Korea)</h6>
+                <p>1 December 2022 - 10 December 2022</p>
+            </div>
+
+            <!-- whole site -->
+            <!-- ALL OTHER CONTENT ACTIVITY COL-->
+            <div class="col pb-4 pt-0 pt-md-4" >
+                <!-- TRIP DETAILS (SM) -->
+                <div class="row d-block d-md-none text-center blurred text-black">
+                    <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
+                    <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
+                </div>
+
+                <div class="row">
+                    <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
+                    <div class="col overflowing">
+                        <h1>Seoul, South Korea</h1>
+                        <h4 class="fst-italic">01/12/2022 - 10/12/2022</h4>
+                        <br>
+                        <!-- {{ master_checked_activities }} -->
+                        <!-- {{ existing_locations[1]["name"]}} -->
+                        <div v-for="(day, id_index) in date_array" >
+                            <a href="javascript:void(0)" class="day_style" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
+                            <h6>Select activities for Day {{id_index+1}}:</h6>
+
+
+                            <!-- if at editing day, get through masterlist -->
+                                <div v-if="current_id == id_index"> 
+                                <div class="card mb-3" v-for="num in master_checked_activities"> 
+
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
+                                            <h6 class="card-subtitle mb-2 text-muted">{{existing_locations[num]["address"]}}</h6>
+                                            <h6 class="card-subtitle mb-2 ">{{existing_locations[num]["price"]["sgd"]}} SGD/per person</h6>
+                                            <p class="card-text">{{existing_locations[num]["description"]}}</p> 
+                                            
+                                        </div>
+                                </div>
+                            </div>
+
+
+                            <div v-else-if="get_list(id_index).length > 0"> 
+                                <div class="card mb-3" v-for="location of get_list(id_index)">
+                                    <!-- {{location}} -->
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{location.address}}</h6>
+                                            <h6 class="card-subtitle mb-2 ">{{location.price.sgd}} SGD/per person</h6>
+                                            <p class="card-text">{{location.description}}</p>
+                                            
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                    
+                    <!-- map interface MAP COL -->
+                    <div class="col overflowing2" style="width: 90vw; height: 90vh" :style="{display: toggle_map()}">
+                        <!-- map details -->
+                        <div id="map"></div><button style="position: absolute; bottom: 0px; right: 70px;" class="btn btn-main-fixed" @click="create_true=true,edit_true=false">Create Activity</button>
+                    </div>
+
+                    <!-- collapsible card MAP COL -->
+                    <div class="col" :style="{display: toggle_collapse()}">
+                        <h4 class="m-5">Activities </h4>
+
+
+                        <!-- FIRST ITEM (SAMPLE 1) -->
+                        <!-- COPY FROM HERE -->
+                        <div >
+                            <div class="container mb-3" v-for="(location, index) of existing_locations">
+                                    <!-- {{check_activity_for_day(index)}} -->
+                                <div class="accordion" id="accordionFlushExample">
+                                    <div class="accordion-item" >
+                                        <!-- ACCORDION TITLE -->
+                                        <!-- NEED TO CHANGE ACCORD. -->
+                                        <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
+                                            <!-- CHECKBOX -->
+                                            <input class="form-check-input input-checkbox collapsed"  type="checkbox"   style="position: absolute; top: 14px; left: 20px; z-index: 9;" v-model="master_checked_activities" :value="index">
+                                            <!-- @change="add_activity(index)"  -->
+                                            <!-- :checked="check_activity_for_day(index)" -->
+                                            <!-- PLACE + TAG -->
+                                                <!-- NEED TO CHANGE ACCORD. -->
+                                            <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">{{ location.name}}
+                                                <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
+                                            </button>
+                                        </h6>
+                                
+                                        <!-- ACCORDION BODY -->
+                                            <!-- NEED TO CHANGE ACCORD. -->
+                                        <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <div class="container p-0">
+                                                    <div class="row">
+                                                        <div class = "col-8">
+                                                            <h6 class="fst-italic">{{ location.address }} </h6>
+                                                            <h6>{{ location.price.sgd }} SGD/per person</h6>
+                                                            <p class="description" style="text-align: justify;">
+                                                                Description included by user. 
+                                                                {{ location.description }}
+                                                            </p>
+                                                        </div>
+                                                        
+                                                        <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                                        <div class="col-4" >
+                                                            <p class="pt-3">Votes: </p>
+                                                                <div class="progress">
+                                                                    <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">YES</div>
+                                                                    <!-- VOTED NO -->
+                                                                    <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
+                                                                
+                                                                    <!--  VOTED MAYBE   -->
+                                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
+                                                        </div>
+
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    <!-- toggle for map view; only MAP or collapse will show -->
+                    <div class='col'>
+                        <input type="checkbox" id="mapview_toggle" @click="change_map_view()"> Map View
+                    </div>
+                    <div> 
+                        <button type="button" class="btn btn-main-fixed save_btn" @click="create_days_data()">Save Changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- import scripts -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT5JFriHtLwMDi3C2jZUKSDiakvePwY6g&callback=initMap&libraries=places&v=weekly"
+      defer
+    ></script>
+    
+
+    <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+    <!-- sidebar js -->
+    <!-- <script type="module" src="./templates/pages/sidebars.js"></script> -->
+
+    <!-- listview js
+    <script src="./templates/activity_card_listview/script.js"></script> -->
+</body>
+</html>

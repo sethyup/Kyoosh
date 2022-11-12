@@ -23,6 +23,11 @@
     <!-- <script scr="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>"
     <script type="module" src="./map_phase3_js.js"></script> -->
     <style>
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
         /* 
         * Always set the map height explicitly to define the size of the div element
         * that contains the map. 
@@ -89,9 +94,9 @@
 <body>
     <div class="container-fluid" id="app">
         <div class="row sidebar-parent flex-nowrap">
-            <div id="nav" class="col-auto sidebar-css">
+            <!-- SIDEBAR -->
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2 hide-scrollbar" style="overflow-y: auto; height:100vh;">
                 <p></p>
-                 <!-- SIDEBAR  -->
                  <div class="col-auto sticky-top">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -150,150 +155,466 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- whole site -->
-            <!-- ALL OTHER CONTENT ACTIVITY COL-->
-            <div class="col py-4" >
+            <div class="col" style="overflow: auto; height:100vh">
                 <div class="row">
-                    <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
-                    <div class="col overflowing">
-                        <h1>Seoul, South Korea</h1>
-                        <h4 class="fst-italic">01/12/2022 - 10/12/2022</h4>
-                        <br>
-                        <!-- {{ master_checked_activities }} -->
-                        <!-- {{ existing_locations[1]["name"]}} -->
-                        <div v-for="(day, id_index) in date_array" >
-                        <a href="javascript:void(0)" class="day_style" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
-                        <h6>Select activities for Day {{id_index+1}}:</h6>
-
-
-                        <!-- if at editing day, get through masterlist -->
-                            <div v-if="current_id == id_index"> 
-                            <div class="card mb-3" v-for="num in master_checked_activities"> 
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
-                                        <h6 class="card-subtitle mb-2 text-muted">{{existing_locations[num]["address"]}}</h6>
-                                        <h6 class="card-subtitle mb-2 ">{{existing_locations[num]["price"]["sgd"]}} SGD/per person</h6>
-                                        <p class="card-text">{{existing_locations[num]["description"]}}</p> 
-                                        
-                                    </div>
-                            </div>
-                        </div>
-
-
-                        <div v-else-if="get_list(id_index).length > 0"> 
-                            <div class="card mb-3" v-for="location of get_list(id_index)">
-                                <!-- {{location}} -->
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">{{location.address}}</h6>
-                                        <h6 class="card-subtitle mb-2 ">{{location.price.sgd}} SGD/per person</h6>
-                                        <p class="card-text">{{location.description}}</p>
-                                        
-                                    </div>
-
-                            </div>
-                        </div>
+                    <!-- TRIP INFO -->
+                    <div class="trip-title-top-md d-none d-xl-block" style="z-index: 3;">
+                            <h6>Name of Trip (Trip to Seoul, Korea)</h6>
+                            <p>1 December 2022 - 10 December 2022</p>
                     </div>
-                </div>
-                    
-                    <!-- map interface MAPview COL -->
-                    <div class="col overflowing2" style="width: 100%; height: 100vh" :style="{display: toggle_map()}">
-                        <!-- toggle for map view; only MAP or collapse will show -->
-                        <h4 class="m-5">Activities <input type="radio" id="mapview_toggle" @click="change_map_view()"> Switch to List View</h4>
-                        <!-- map details -->
-                        <div id="map"></div>
-
-                        <!-- create activity buttn -->
-                        <div style="position: absolute; bottom: 5%; width: 100%;" class="d-flex justify-content-center">
-                            <button class="btn btn-main dropshadow-btn-main mx-5" @click="create_true=true,edit_true=false">
-                                <h4 class="my-auto mx-2">
-                                    Create Activity
-                                </h4>
-                            </button>
+        
+                    <!-- whole site -->
+                    <!-- ALL OTHER CONTENT ACTIVITY COL-->
+                    <div class="col">
+                        <!-- TRIP DETAILS (SM) -->
+                        <div class="row d-block d-xl-none text-center blurred text-black">
+                            <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
+                            <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
                         </div>
-                    </div>
-
-                    <!-- collapsible card listview COL -->
-                    <div class="col" :style="{display: toggle_collapse()}">
-                        <!-- toggle for map view; only MAP or collapse will show -->
-                        <h4 class="m-5">Activities <input type="radio" id="mapview_toggle" @click="change_map_view()"> Switch to Map View</h4>
-                        
-
-
-                        <!-- FIRST ITEM (SAMPLE 1) -->
-                        <!-- COPY FROM HERE -->
-                        <div >
-                            <div class="container mb-3" v-for="(location, index) of existing_locations">
-                                    <!-- {{check_activity_for_day(index)}} -->
-                                <div class="accordion" id="accordionFlushExample">
-                                    <div class="accordion-item" >
-                                        <!-- ACCORDION TITLE -->
-                                        <!-- NEED TO CHANGE ACCORD. -->
-                                        <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
-                                            <!-- CHECKBOX -->
-                                            <input class="form-check-input input-checkbox collapsed"  type="checkbox"   style="position: absolute; top: 14px; left: 20px; z-index: 9;" v-model="master_checked_activities" :value="index">
-                                            <!-- @change="add_activity(index)"  -->
-                                            <!-- :checked="check_activity_for_day(index)" -->
-                                            <!-- PLACE + TAG -->
-                                                <!-- NEED TO CHANGE ACCORD. -->
-                                            <button class="accordion-button collapsed ps-5 fs-6" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">{{ location.name}}
-                                                <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
-                                            </button>
-                                        </h6>
+        
+                        <!-- pop up if create activity -->
+                        <div :style="{display: d_create()}" class="col-12 col-md-auto py-3 my-3 blurred-minor-no-bd-filter" style="border-radius: 1vw;">
+                            <!-- create activity -->
+                            <div class="container text-dark">
+                                <h3 class="heading">Create an Activity</h3>
                                 
-                                        <!-- ACCORDION BODY -->
-                                            <!-- NEED TO CHANGE ACCORD. -->
-                                        <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                <div class="container p-0">
-                                                    <div class="row">
-                                                        <div class = "col-8">
-                                                            <h6 class="fst-italic">{{ location.address }} </h6>
-                                                            <h6>{{ location.price.sgd }} SGD/per person</h6>
-                                                            <p class="description" style="text-align: justify;">
-                                                                Description included by user. 
-                                                                {{ location.description }}
-                                                            </p>
+                                <form>
+                                    <!-- PLACE  -->
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="autocomplete">
+                                                <label for="input_place" id="autcomplete_input">Start by typing a location here...</label>
+                                            </div>
+                                        </div>
+                                        <!-- TAG -->
+                                        <div class="col-5">
+        
+                                            <!-- vue for tag -->
+                                            <div id="main2" class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">#</span>
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                                        <label for="input">Add a Tag</label>
+                                                    </div>
+                                                </div> 
+                    
+                                                <!-- LIST OF CURRENT TAGS -->
+                                                <datalist id="list_all_tags">
+                                                    <option v-for="tag of tags" :value="tag"></option>
+                                                    
+                                                </datalist>
+                                                
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- DESCRIPTION -->
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
+                                        <label for="input_description">Add a Description</label>
+                                    </div>
+                    
+                                    <!-- Currency converter -->
+                                    <div id="main">
+                                            <!--  ENTER COST   -->
+                                            <div class="row">
+                                                <div class="col-5">
+                                                <div class="row g-0">
+                                                    <div class="col-8">
+                                                        <div class="form-floating mb-3">
+                                                            <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                                                            <label for="input_place">Enter the Cost/person</label>
                                                         </div>
-                                                        
-                                                        <!-- PROGRESS BAR AND VOTING BUTTONS -->
-                                                        <div class="col-4" >
-                                                            <p class="pt-3">Votes: </p>
-                                                                <div class="progress">
-                                                                    <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">YES</div>
-                                                                    <!-- VOTED NO -->
-                                                                    <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
-                                                                
-                                                                    <!--  VOTED MAYBE   -->
-                                                                <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
+                                                    </div>    
+                    
+                    
+                                                <!-- DEFAULT FROM SGD -->
+                                                <div class="col-4">
+                                                    <div class="drop-list form-floating">
+                                                        <div class="from">
+                                                        <!-- <p>From</p> -->
+                                                            <div class="select-box">
+                                                                <!-- <img src="https://flagcdn.com/48x36/sg.png" alt="flag"> -->
+                                                                <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                                <!-- <label for="floatingSelect">From</label> -->
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                    
+                                            </div>
+                                        </div>
+                    
+                                        <!-- CONVERTER ICON -->
+                                        <div class="col-2">
+                                            <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                                        </div>
+                    
+                                            <!-- AUTOFILLED BY API -->
+                                        <div class="col-5">
+                                            <div class="row g-0">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="converted_amount" @change="calculate_from_to()">
+                                                        <label for="input_place">Enter the Cost/person</label>
+                                                    </div>   
+                                                </div> 
+                                                    <!-- DEFAULT TO KRW -->
+                                                <div class="col-4">
+                                                    <div class="drop-list form-floating">
+                                                        <div class="to">
+                                                            <!-- <p>To</p> -->
+                                                            <div class="select-box">
+                                                                <!-- <img src="https://flagcdn.com/48x36/kr.png" alt="flag"> -->
+                                                            <select class="form-select" id="floatingSelect" v-model="to" @change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                    
+                                        </div>
+                                    </div>
+                    
+                                    <!-- ATTACHMENTS  -->
+                                    <div class="form-floating mb-5">
+                                        <div class="input-group mb-3" style="width: 50%;">
+                                            <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
+                                            <input type="file" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                    </div>
+        
+                                    <!-- BACK & CREATE ACTIVITY BUTTON  -->
+                                    <div class="buttons">
+                                        <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
+                                        <button type="button" class="btn back_button btn-main-bold-fixed mx-2" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
+                                        <!-- should write data to db and update InfoWindow -->
+                                        <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false , create_new_data()">Create</button>
+        
+                                        <!-- Back Button Modal -->
+                                        <div class="modal fade mx-2" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="ModalLabel">Confirm Navigation</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                Are you sure you want to leave this page? Any unsaved changes will be lost. 
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-main-bold-fixed mx-1" data-bs-dismiss="modal" >Close</button>
+                                                <button type="button" class="btn btn-main-fixed mx-1" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id), autocomplete.set('place', null);">Confirm</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                    
+                    
+                                    </div>
+                    
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- pop up if edit activity -->
+                        <div :style="{display: d_edit()}" class="col-12 col-md-auto py-3 my-3 blurred-minor-no-bd-filter" style="border-radius: 1vw;">
+                            <div class="container text-dark">
+                                <h3 class="heading">Edit Activity</h3>
+                                <form>
+                                    <!-- should read data from db -->
+                                    <!-- PLACE  -->
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" v-model="selected_name" placeholder="Add a Place">
+                                                <label for="input_place">Add a Place</label>
+                                            </div>
+                                        </div>
+                                        <!-- TAG -->
+                                        <div class="col-5">
+                                            <!-- vue for tag -->
+                                            <div id="main2" class="mb-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">#</span>
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="input_tag" placeholder="Add a Tag" list="list_all_tags" v-model="tag_input">
+                                                        <label for="input">Add a Tag</label>
+                                                    </div>
+                                                </div> 
+                    
+                                                <!-- LIST OF CURRENT TAGS -->
+                                                <datalist id="list_all_tags">
+                                                    <option v-for="tag of tags" :value="tag"></option>
+                    
+                                                </datalist>                                          
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- DESCRIPTION -->
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Add a Description" id="input_description" style="height: 100px" v-model="selected_description"></textarea>
+                                        <label for="input_description">Add a Description</label>
+                                    </div>
+                    
+                                    <!-- Currency converter -->
+                                    <div>
+                                            <!--  ENTER COST   -->
+                                        <div class="row">
+                                            <div class="col-5">
+                                            <div class="row g-0">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="amount" v-on:change="calculate_to_from()">
+                                                        <label for="input_place">Enter the Cost/person</label>
+                                                    </div>
+                                                </div>    
+                    
+                    
+                                                <!-- DEFAULT FROM SGD -->
+                                                <div class="col-4">
+                                                    <div class="drop-list form-floating">
+                                                        <div class="from">
+                                                        <!-- <p>From</p> -->
+                                                            <div class="select-box">
+                                                                <!-- <img src="https://flagcdn.com/48x36/sg.png" alt="flag"> -->
+                                                                <select class="form-select" id="floatingSelect" v-model="from" v-on:change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                                <!-- <label for="floatingSelect">From</label> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                    
+                                            </div>
+                                        </div>
+                    
+                                        <!-- CONVERTER ICON -->
+                                        <div class="col-2">
+                                            <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                                        </div>
+                    
+                                            <!-- AUTOFILLED BY API -->
+                                        <div class="col-5">
+                                            <div class="row g-0">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" id="input_place" placeholder="Add a Place" v-model="converted_amount" @change="calculate_from_to()">
+                                                        <label for="input_place">Enter the Cost/person</label>
+                                                    </div>   
+                                                </div> 
+                                                    <!-- DEFAULT TO KRW -->
+                                                <div class="col-4">
+                                                    <div class="drop-list form-floating">
+                                                        <div class="to">
+                                                            <!-- <p>To</p> -->
+                                                            <div class="select-box">
+                                                                <!-- <img src="https://flagcdn.com/48x36/kr.png" alt="flag"> -->
+                                                            <select class="form-select" id="floatingSelect" v-model="to" @change="calculate_to_from()" style="height:57px"> <!-- Options tag are inserted from JavaScript --> </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                    
+                                    </div>
+                                    </div>
+                    
+                                    <!-- ATTACHMENTS  -->
+                                    <div class="form-floating mb-5">
+                                        <div class="input-group mb-3" style="width: 50%;">
+                                            <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
+                                            <input type="file" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                    </div>
+                    
+                                    <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
+                                    <div class="buttons">                         
+                                        <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
+                                        <button type="button" class="btn save_button btn-main-fixed mx-2" @click="edit_true=false">Cancel</button>
+                                        <!-- should write data to db and update infoWindow -->
+                                        <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,create_update_data()">Save</button>
+        
+                                        <!-- Back Button Modal -->
+                                        <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="ModalLabel">Delete Activity</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    Are you sure you want to delete activity?
+                                                    </div>
+                                                    <div class="modal-footer mx-1">
+                                                    <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
+                                                    <button type="button" class="btn btn-main-fixed mx-1" data-bs-dismiss="modal" @click="edit_true=false, delete_marker_edit(current_id)">Confirm</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                    
+                                    </div>
+                                    
+                                </form>
+                                
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
+                            <div class="col-md-6 col-12 hide-scrollbar" style="overflow: auto; height: 100vh;">
+                                <h2 class="my-3 text-lg-start text-center text-white">Sort Activities by Days</h2>
 
-                                                    </div> 
+                                <div v-for="(day, id_index) in date_array">
+        
+                                <!-- DIFFERENT COLOR DAY BADGE ACCORDING TO SLEECTED DAY -->
+                                <a href="javascript:void(0)" v-if="id_index == current_id" class="day_style badge rounded-pill bg-dark my-3 fw-bold px-4 fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
+                                <a href="javascript:void(0)" v-else class="day_style badge rounded-pill blurred-primary my-3 fw-semibold fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
+                                
+                                <!-- <h6>Select activities for Day {{id_index+1}}:</h6> -->
+        
+                                <!-- if at editing day, get through masterlist -->
+                                <div v-if="current_id == id_index">
+                                    <div class="card mb-3 blurred-minor-no-bd-filter" v-for="num in master_checked_activities"> 
+        
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
+                                                <h6 class="card-subtitle mb-2 text-muted">{{existing_locations[num]["address"]}}</h6>
+                                                <h6 class="card-subtitle mb-2 ">{{existing_locations[num]["price"]["sgd"]}} SGD/per person</h6>
+                                                <p class="card-text">{{existing_locations[num]["description"]}}</p> 
+                                                
+                                            </div>
+                                    </div>
+                                </div>
+        
+        
+                                <div v-else-if="get_list(id_index).length > 0"> 
+                                    <div class="card mb-3 blurred-minor-no-bd-filter" v-for="location of get_list(id_index)">
+                                        <!-- {{location}} -->
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
+                                                <h6 class="card-subtitle mb-2 text-muted">{{location.address}}</h6>
+                                                <h6 class="card-subtitle mb-2 ">{{location.price.sgd}} SGD/per person</h6>
+                                                <p class="card-text">{{location.description}}</p>
+                                                
+                                            </div>
+        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            <!-- MAP VIEW COL -->
+                            <div class="col-md-6 col-12 p-0 sticky-top hide-scrollbar" style="height: 100vh; z-index: 0; overflow: auto;" :style="{display: toggle_map()}">
+                                <div class="col p-0 m-0" style="width: 100%; height: 100%">
+                                    <!-- toggle for map view; only MAP or collapse will show -->
+                                    <!-- <button id="mapview_toggle" class="btn btn-main-fixed py-0 my-3" @click="change_map_view()"><i class="fa-solid fa-rectangle-list fa-xs"></i> Switch to List View</button> -->
+            
+                                    <!-- map details -->
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+        
+                            <!-- LIST VIEW COL -->
+                            <div class="col-md-6 col-12 hide-scrollbar pt-0 pb-5 pt-xl-5" style="height:100vh; overflow: auto;" :style="{display: toggle_collapse()}">
+                                <!-- toggle for map view; only MAP or collapse will show -->
+                                <!-- <button id="mapview_toggle" class="btn btn-main-fixed py-0 mt-3 mb-5" @click="change_map_view()"><i class="fa-solid fa-map fa-xs"></i> Switch to Map View</button> -->
+        
+        
+                                <!-- FIRST ITEM (SAMPLE 1) -->
+                                <!-- COPY FROM HERE -->
+                                <div class="my-5">
+                                    <div class="container mb-3" v-for="(location, index) of existing_locations">
+                                            <!-- {{check_activity_for_day(index)}} -->
+                                        <div class="accordion" id="accordionFlushExample">
+                                            <div class="accordion-item blurred-minor-no-bd-filter" >
+                                                <!-- ACCORDION TITLE -->
+                                                <!-- NEED TO CHANGE ACCORD. -->
+                                                <h6 class="accordion-header position-relative" :id=" 'flush-heading' + index">
+                                                    <!-- CHECKBOX -->
+                                                    <input class="form-check-input input-checkbox collapsed"  type="checkbox"   style="position: absolute; top: 14px; left: 20px; z-index: 9;" v-model="master_checked_activities" :value="index">
+                                                    <!-- @change="add_activity(index)"  -->
+                                                    <!-- :checked="check_activity_for_day(index)" -->
+                                                    <!-- PLACE + TAG -->
+                                                        <!-- NEED TO CHANGE ACCORD. -->
+                                                    <button class="accordion-button collapsed ps-5 fs-6 blurred-minor-no-bd-filter" type="button" data-bs-toggle="collapse" :data-bs-target=" '#flush-collapse' + index " aria-expanded="false" :aria-controls=" 'flush-collapse' + index">{{ location.name}}
+                                                        <span class="badge rounded-pill text-bg-warning ms-1 badge-sm">#{{ location.tag }}</span>
+                                                    </button>
+                                                </h6>
+                                        
+                                                <!-- ACCORDION BODY -->
+                                                    <!-- NEED TO CHANGE ACCORD. -->
+                                                <div :id=" 'flush-collapse' + index" class="accordion-collapse collapse" :aria-labelledby=" 'flush-heading' + index" data-bs-parent="#accordionFlushExample">
+                                                    <div class="accordion-body">
+                                                        <div class="container p-0">
+                                                            <div class="row">
+                                                                <div class = "col-8">
+                                                                    <h6 class="fst-italic">{{ location.address }} </h6>
+                                                                    <h6>{{ location.price.sgd }} SGD/per person</h6>
+                                                                    <p class="description" style="text-align: justify;">
+                                                                        Description included by user. 
+                                                                        {{ location.description }}
+                                                                    </p>
+                                                                </div>
+                                                                
+                                                                <!-- PROGRESS BAR AND VOTING BUTTONS -->
+                                                                <div class="col-4" >
+                                                                    <p class="pt-3">Votes: </p>
+                                                                        <div class="progress">
+                                                                            <div :id="'progress_yes' + index"  class="progress-bar bg-success" role="progressbar" aria-label="voted_yes_percentage" :style="{width: get_yes_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yes_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">YES</div>
+                                                                            <!-- VOTED NO -->
+                                                                            <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
+                                                                        
+                                                                            <!--  VOTED MAYBE   -->
+                                                                        <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
+                                                                </div>
+        
+                                                            </div> 
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </div>
                             </div>
-                        </div>
-
+        
                         
-                    </div>
-
-                    
-                    <div> 
-                        <button type="button" class="btn btn-main-fixed save_btn" @click="create_days_data()">Save Changes</button>
+                        </div>
                     </div>
                 </div>
-
-                
             </div>
-        </div>
 
+
+            <!-- SAVE BUTTON + CRATE ACTIVITY -->
+            <div class="spending-bottom-md" style="z-index: 9;">
+                <!-- MAP VIEW TOGGLE -->
+                <button v-if="map_view" id="mapview_toggle" class="btn btn-main-bold-fixed my-3 mx-1" @click="change_map_view()"><i class="fa-solid fa-rectangle-list fa-xs"></i> List</button>
+
+                <!-- LIST VIEW TOGGLE -->
+                <button v-if="!map_view" id="mapview_toggle" class="btn btn-main-bold-fixed my-3 mx-1" @click="change_map_view()"><i class="fa-solid fa-map fa-xs"></i> Map</button>
+
+                <button type="button" class="btn btn-main-bold-fixed my-3 mx-1" @click="create_true=true,edit_true=false">
+                    Create Activity
+                </button>
+
+                <button type="button" class="btn btn-main-fixed my-3 mx-1" @click="create_days_data()">
+                    Save Changes
+                </button>
+            </div>
+
+        </div>
     </div>
 
     <!-- import scripts -->
@@ -315,5 +636,28 @@
 
     <!-- listview js
     <script src="./templates/activity_card_listview/script.js"></script> -->
+
+    <script>
+        
+        // changes vue.js values for editing pop up
+        // access vm from module script and open up edit view
+        async function set_edit(obj) {
+            var vm_vue = await import("./map_phase3_js.js")
+            // console.log(obj)
+            if (vm_vue.vm.$data.edit_true == false) {
+                // console.log(obj)
+                vm_vue.vm.$data.edit_true = true
+                vm_vue.vm.$data.create_true = false
+                vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
+                // console.log(obj.querySelector("div[id='get_marker_id']").innerText)
+                // console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+                vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
+            } else {
+                vm_vue.vm.$data.edit_true = false
+                vm_vue.vm.$data.create_true = true
+            }
+
+        } 
+    </script>
 </body>
 </html>
