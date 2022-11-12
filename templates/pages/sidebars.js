@@ -107,7 +107,7 @@ sidebar.component('sidebar-general', {
 
                             <ul class="collapse nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="../../map_phase2.html" class="nav-link px-0"> 
+                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Map View</span>
                                     </a>
                                 </li>
@@ -178,7 +178,7 @@ sidebar.component('sidebar-phase2', {
 
                             <ul class="collapse nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="../../map_phase2.html" class="nav-link px-0"> 
+                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Map View</span>
                                     </a>
                                 </li>
@@ -248,7 +248,7 @@ sidebar.component('sidebar-member-phase2', {
 
                             <ul class="collapse nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="../../map_phase2.html" class="nav-link px-0"> 
+                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Map View</span>
                                     </a>
                                 </li>
@@ -315,7 +315,7 @@ sidebar.component('select-activity-sidebar', {
 
                             <ul class="collapse nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="../../map_phase2.html" class="nav-link px-0"> 
+                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
                                         <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Map View</span>
                                     </a>
                                 </li>
