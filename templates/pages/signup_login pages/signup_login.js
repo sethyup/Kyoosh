@@ -89,7 +89,7 @@ const root = Vue.createApp({
                             email: this.email,
                             username: this.username,
                             fullname: this.first_name + " " + this.last_name,
-                            trips: []
+                            trips: ['Example Trip To Seoul!']
                           })
                         .then(
                             function write_success() {

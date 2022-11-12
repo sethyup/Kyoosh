@@ -104,13 +104,17 @@ const root = Vue.createApp({
             if (this.trip_name && this.destination && this.sDate && this.eDate){
                 var url = "images/" + this.destination + ".jpg"
 
+                // array of group member UserIDs
                 var arr_edited_usernames = []
+
+                // trip ID
+                var trip_ID = this.trip_name + this.trip_delimiter + this.myUsername
 
                 for (var e_username of this.collaborators) {
                     arr_edited_usernames.push(this.convert_email_to_userID(e_username))
                 }
 
-                set(ref(db, 'trips/' + this.trip_name + this.trip_delimiter + this.myUsername + '/trip_details'), {
+                set(ref(db, 'trips/' + trip_ID + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
                         g_member: arr_edited_usernames,
@@ -121,10 +125,36 @@ const root = Vue.createApp({
                         
                 })
                 .then(
-                    function write_success() {
+                    async function write_success() {
                         // display "Success" message
                         // alert("Write Operation Successful")
+                        var user_ID = localStorage.getItem("user")
                         console.log("Entry Created")
+                        try{
+                        const path_location_g_leader = ref(db, 'users/' + user_ID + '/trips')
+                        var snapshot_trips_gl = await get(path_location_g_leader)
+                        var trips_gl = snapshot_trips.val()
+                        trips_gl.push(trip_ID)
+                        set(path_location, trips_gl)
+                        .then(
+                            console.log("shit's added into g_leader's list")
+                        )
+                        }
+                        catch(error){
+                            
+                        }
+
+
+                        for(var g_member in arr_edited_usernames){
+                            const path_location = ref(db, 'users/' + g_member + '/trips')
+                            var snapshot_trips = await get(path_location)
+                            var trips = snapshot_trips.val()
+                            trips.push(trip_ID)
+                            set(path_location, trips)
+                            .then(
+                                console.log("shit's added into g_member's list")
+                            )
+                        }
 
                 })
                 .catch((error) => {
@@ -148,7 +178,7 @@ const root = Vue.createApp({
                 localStorage.setItem("destination", this.destination)
                 // ========================================================================================
 
-                location.href = "../../map_phase2.html"
+                // location.href = "../../map_phase2.html"
                 // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
