@@ -22,7 +22,7 @@ const db = getDatabase(WADTravel)
 const root = Vue.createApp({
     data() {
         return{
-            myUserID: "",
+            myUser_ID: "",
             trip_id: "",
             trip_details: "",
             sDate: "",
@@ -84,7 +84,7 @@ const root = Vue.createApp({
 
             const snapshot = await get(path_location)
             var details = snapshot.val()
-            // console.log(details)
+            console.log(details)
             this.user_trips = details
             // console.log(lodging_locations)
         },
@@ -96,7 +96,7 @@ const root = Vue.createApp({
                 return
             }
             // get new trip_ID
-            var new_trip_id = `${this.my_trip_name}${this.trip_delimiter}${this.myUsername}`
+            var new_trip_id = `${this.my_trip_name}${this.trip_delimiter}${this.myUser}`
             // console.log(this.trip_id)
             // console.log(new_trip_id)
             // get previous trip details
