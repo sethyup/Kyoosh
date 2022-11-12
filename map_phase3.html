@@ -20,8 +20,8 @@
     <!-- reference js -->
     <script type="module" src="./map_phase3_js.js"></script>
     <!-- jquery -->
-    <!-- <script scr="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>"
-    <script type="module" src="./map_phase3_js.js"></script> -->
+    <!-- <script scr="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>" -->
+
     <style>
         body{
             background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
@@ -576,7 +576,7 @@
                                                                             <div :id="'progress_no' + index" class="progress-bar bg-danger" role="progressbar" aria-label="voted_no_percentage" :style="{width: get_no_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_no_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100" >NO</div>
                                                                         
                                                                             <!--  VOTED MAYBE   -->
-                                                                        <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
+                                                                        <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-mild text-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
                                                                 </div>
         
                                                             </div> 
@@ -599,6 +599,10 @@
 
             <!-- SAVE BUTTON + CRATE ACTIVITY -->
             <div class="spending-bottom-md" style="z-index: 9;">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+                    Tutorial
+                </button>
                 <!-- MAP VIEW TOGGLE -->
                 <button v-if="map_view" id="mapview_toggle" class="btn btn-main-bold-fixed my-3 mx-1" @click="change_map_view()"><i class="fa-solid fa-rectangle-list fa-xs"></i> List</button>
 
@@ -612,6 +616,31 @@
                 <button type="button" class="btn btn-main-fixed my-3 mx-1" @click="create_days_data()">
                     Save Changes
                 </button>
+            </div>
+
+            <!-- Tutorial Modal -->
+            <div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Plan your Itinerary!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mx-auto">
+                        <p>1. Click on the day you would like to plan.</p>
+                        <p>2. Select activities for that day.</p>
+                        <p>3. Don't forget to save!</p>
+                        
+                        <video loop muted autoplay width="854" height="480">
+                            <source src="Phase3_tutorial_video.mp4">
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    
+                    </div>
+                </div>
+                </div>
             </div>
 
         </div>
@@ -637,6 +666,16 @@
     <!-- listview js
     <script src="./templates/activity_card_listview/script.js"></script> -->
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            OpenBootstrapPopup();
+        };
+        function OpenBootstrapPopup() {
+            $("#tutorialModal").modal('show');
+        }
+    </script>
+
     <script>
         
         // changes vue.js values for editing pop up
@@ -659,5 +698,14 @@
 
         } 
     </script>
+
+<!-- <script type="text/javascript">
+    window.onload = function () {
+        OpenBootstrapPopup();
+    };
+    function OpenBootstrapPopup() {
+        $("#simpleModal").modal('show');
+    } -->
+</script>
 </body>
 </html>
