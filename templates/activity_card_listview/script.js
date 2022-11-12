@@ -1,3 +1,11 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -19,89 +27,9 @@ const db = getDatabase(WADTravel)
 const main = Vue.createApp({
     data(){
       return{
-        // retrieve from database
-      //   locations  : { 
-      //     "1": {
-      //         "address": "273 Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-      //         "description": "",
-      //         "latlng": {
-      //             "lat": 37.5444,
-      //             "lng": 127.0374
-      //         },
-      //         "name": "Seoul Forest Park, Ttukseom-ro, Seongdong-gu, Seoul, South Korea",
-      //         "price": {
-      //             "krw": 0,
-      //             "sgd": 0
-      //         },
-      //         "tag": "Attraction",
-      //         "votes": {
-      //             yes: ["SETH YAP ZIQI_", "kbang"],
-      //             no: ["adamft"],
-      //             yet_to_vote: ["name4", "name5"]
-      //         }
-      //         },
-      //         "2":{
-      //         "address": "105 Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-      //         "description": "",
-      //         "latlng": {
-      //             "lat": 37.5512,
-      //             "lng": 126.9882
-      //         },
-      //         "name": "Seoul Tower, Namsangongwon-gil, Yongsan-gu, Seoul, South Korea",
-      //         "price": {
-      //             "krw": 12000,
-      //             "sgd": 12
-      //         },
-      //         "tag": "Attraction",
-      //         "votes": {
-      //           yes: ["SETH YAP ZIQI_"],
-      //           no: ["adamft", "kbang" ],
-      //           yet_to_vote: ["name4", "name5"]
-      //         }
-      //         },
-      //         "3":{
-      //         "address": "405 Hangang-daero, Jung-gu, Seoul, South Korea",
-      //         "description": "",
-      //         "latlng": {
-      //             "lat": 37.5561,
-      //             "lng": 126.9719
-      //         },
-      //         "name": "Seoul Station Square, Hangang-daero, Jung-gu, Seoul, South Korea",
-      //         "price": {
-      //             "krw": 3000,
-      //             "sgd": 3
-      //         },
-      //         "tag": "Food",
-      //         "votes": {
-      //           yes: ["SETH YAP ZIQI_"],
-      //           no: ["adamft"],
-      //           yet_to_vote: ["kbang", "name4", "name5"]
-      //         }
-      //         },
-      //         "4":{
-      //         "address": "365-8 Seogyo-dong, Mapo-gu, Seoul, South Korea",
-      //         "description": "",
-      //         "latlng": {
-      //             "lat": 37.5532,
-      //             "lng": 126.9219
-      //         },
-      //         "name": "Hongdae Shopping Street",
-      //         "price": {
-      //             "krw": 25244.25,
-      //             "sgd": 25
-      //         },
-      //         "tag": "Shopping",
-      //         "votes": {
-      //           yes: ["SETH YAP ZIQI_"],
-      //           no: ["adamft", "name4"],
-      //           yet_to_vote: ["kbang", "name5"]
-      //         }
-      //     }, 
-          
-      // },
-        //HARD-CODED
-        user_name: "kbang",
-        trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
+
+        user_name: "",
+        trip_id: "",
         existing_locations: "",
         current_id: "",
         // display details
@@ -190,42 +118,75 @@ const main = Vue.createApp({
         user_reject(votes, idx){
             // number of members = 5
             // if voted yes before
-            if(!votes.no.includes(this.user_name)){
-            if(votes.yes.includes(this.user_name)){
-              votes.no.push(this.user_name)
+            // console.log(this.existing_locations)
+            console.log(votes)
 
-              votes.yes.splice(votes.yes.indexOf(this.user_name),1)
+            // check if voted yes before
+            if(votes.yes){
+              console.log("yes array exist")
+              
+              if(Object.values(votes.yes).includes(this.user_name)){
+                console.log("user voted yes")
+                // remove from yes_array
+                votes.yes.splice(votes.yes.indexOf(this.user_name),1)
+                if(votes.no){
+                  votes.no.push(this.user_name)
+                }
+                else{
+                  votes["no"] = [this.user_name]
+                }
+              }
+
             }
-            // never place vote before
+
+            // yet to vote before
+            if(Object.values(votes.yet_to_vote).includes(this.user_name)){
+              if(!votes.no){
+                console.log("votes no array dont exist")
+                votes["no"] = [this.user_name]
+                votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
+              }
+              else{
+                console.log("votes no array exist")
+                if(!votes.no.includes(this.user_name)){
+                  console.log("Check if voted before: ", !votes.no.includes(this.user))
+                  votes.no.push(this.user_name)
+                  votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
+                }
+              }
+            }
+            console.log(votes)
+
+        },
+        user_accept(votes, idx){
+        // check if voted no before
+        if(votes.no){
+          if(Object.values(votes.no).includes(this.user_name)){
+            // remove from yes_array
+            votes.no.splice(votes.no.indexOf(this.user_name),1)
+            if(votes.yes){
+              votes.yes.push(this.user_name)
+            }
             else{
-              votes.no.push(this.user_name)
+              votes["yes"] = [this.user_name]
+            }
+          }
+        }
+
+        // yet to vote before
+        else{
+          if(!votes.yes){
+            votes["yes"] = [this.user_name]
+            votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
+          }
+          else{
+            if(!votes.yes.includes(this.user_name)){
+              votes.yes.push(this.user_name)
               votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
             }
           }
-          //update tooltip
-            // var tooltip_no = bootstrap.Tooltip.getInstance('#progress_no'+idx);
-            // tooltip_no.setContent({ '.tooltip-inner': String(votes.no.length) });
-            // console.log(votes.no.length)
-            // var tooltip_yes = bootstrap.Tooltip.getInstance('#progress_yes' + idx);
-            // tooltip_yes.setContent({ '.tooltip-inner': String(votes.yes.length) });
-
-            // var tooltip_maybe = bootstrap.Tooltip.getInstance('#progress_maybe' + idx);
-            // tooltip_maybe.setContent({ '.tooltip-inner': String(votes.yet_to_vote.length) });
+        }
         },
-        user_accept(votes, idx){
-        // if voted no before
-        if(!votes.yes.includes(this.user_name)){
-          if(votes.no.includes(this.user_name)){
-            votes.yes.push(this.user_name)
-
-            votes.no.splice(votes.no.indexOf(this.user_name),1)
-          }
-          // never place vote before
-          else{
-            votes.yes.push(this.user_name)
-            votes.yet_to_vote.splice(votes.yes.indexOf(this.user_name),1)
-          }
-        }},
         // toggle display for create activity
         d_create() {
             if (this.create_true == false) {
@@ -264,6 +225,19 @@ const main = Vue.createApp({
               }
               })
         },
+        // read group members for voting
+        read_group_members() {
+          const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
+          onValue(data_to_be_read, (snapshot) => {
+              const data = snapshot.val();
+              if (data) {
+                  this.group_members = data.g_member
+                  var group_leader = this.trip_id.split('urjfjwowskdorrofkckshecoejfnek')[1]
+                  this.group_members.push(group_leader)
+                  
+                  console.log(this.group_members)
+              }})
+      },
         // update existing data
         create_update_data() {
             // create new object
@@ -327,6 +301,30 @@ const main = Vue.createApp({
               console.log(failed_message);
           })
           this.yet_to_vote = [];
+        },
+        // update voting data 
+        update_user_votes(){
+          console.log("Writing data into database...")
+
+            // WRITE SELECTED_ACTIVITIES TO DB
+            set(ref(db, `trips/${this.trip_id}/activities`),
+                this.existing_locations
+            )
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    // alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                console.log(failed_message);
+            })
         },
         // calculate value from
         calculate_to_from() {
@@ -393,7 +391,15 @@ const main = Vue.createApp({
         }
     },
     async created() {
+      this.user_name = localStorage.getItem("user")
+      this.trip_id = localStorage.getItem("trip")
+
+      console.log("USERNAME: ", this.user_name)
+      console.log("TRIP ID: ", this.trip_id)
+
       await this.read_from_existing_locations()
+      await this.read_group_members()
+
     }
   })
 

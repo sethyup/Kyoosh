@@ -145,8 +145,7 @@ const countryList = {
     Kazakhstan: 'KZ',
     Kenya: 'KE',
     Kiribati: 'KI',
-    'South Korea': 'KR',
-    'North Korea': 'KP',
+    Korea: 'KR',
     Kuwait: 'KW',
     Kyrgyzstan: 'KG',
     "Lao People's Democratic Republic": 'LA',
@@ -610,8 +609,7 @@ function initMap(location, lodging) {
     }
     );
     // get capital from capitalList, get country code from function, get country from cache
-    
-    var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.destination))
+    var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.country))
     vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
     //     create_marker_by_click(e.latLng,map);
@@ -621,7 +619,10 @@ function initMap(location, lodging) {
         create_marker(location[place], map, place)
     }
     // console.log(lodging)
-    create_lodging_marker(lodging, map)
+    if (lodging.length > 0) {
+        create_lodging_marker(lodging, map)
+    }
+    
         
     initAutocomplete(map);
 
@@ -868,7 +869,7 @@ const app = Vue.createApp({
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
             trip_details: {
-                destination: 'South Korea',
+                country: 'Korea',
                 duration: '12 November 2022 - 16 November 2022'
             },
             // display details

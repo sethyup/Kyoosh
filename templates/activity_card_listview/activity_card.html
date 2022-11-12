@@ -276,6 +276,29 @@
                     
                 <!-- ADD MAP DIV UNDER A COL HERE -->
                 </div>
+                <div class="spending-bottom-md">
+                    <h5><button type="button" class="btn btn-main-fixed"  @click="update_user_votes()" data-bs-toggle="modal" data-bs-target="#saveModal">Save Votes</button></h5> 
+                    <!-- onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html'" -->
+                </div>
+
+                <!-- MODAL TO TELL USERS THAT VOTE HAS UPDATED -->
+                <!-- Modal -->
+                    <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Changes Saved</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Your changes have been saved.  
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
