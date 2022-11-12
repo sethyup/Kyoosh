@@ -108,7 +108,8 @@ const app = Vue.createApp( {
 
 		async get_trips() {
 			const user_ID = localStorage.getItem("user")
-			const path_location = ref(db, "users/" + user_ID + "/trips")
+			// const path_location = ref(db, "users/" + user_ID + "/trips")
+			const path_location = ref(db, `users/${user_ID}/trips`)
 
 			const snapshot = await get(path_location)
 			var trips = snapshot.val()

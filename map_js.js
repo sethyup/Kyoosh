@@ -1,3 +1,12 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
+
 // Firebase stuff
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
