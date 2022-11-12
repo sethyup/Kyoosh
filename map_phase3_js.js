@@ -1492,6 +1492,19 @@ const app = Vue.createApp({
                 this.trip_details[country] = country
             }
         },
+
+        // DATE TIME CONVERSION
+        convert_date_to_readable_sidebar(date_str) {
+            var date_obj = new Date(date_str)
+
+            return flatpickr.formatDate(date_obj, "j M")
+        },
+
+        convert_date_to_readable_titles(date_str) {
+            var date_obj = new Date(date_str)
+
+            return flatpickr.formatDate(date_obj, "j F (D)")
+        },
         
     }, // methods
 
