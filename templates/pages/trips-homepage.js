@@ -155,7 +155,7 @@ const app = Vue.createApp( {
             	<img src="../../images/home_page/trips_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
 				<div class="card-body">
 				<h5 class="card-title">${trip_name}</h5>
-				<button onclick="edit_trip('${trip_ID}','${trip_start}','${trip_end}','${trip_destination}')" class="btn btn-main-bold">Edit Trip</a>
+				<button onclick="edit_trip(\`${trip_ID}\`,\`${trip_start}\`,\`${trip_end}\`,\`${trip_destination}\`)" class="btn btn-main-bold">Edit Trip</a>
 				</div>
 				<div class="card-footer text-muted">
 				${trip_destination} <br>
