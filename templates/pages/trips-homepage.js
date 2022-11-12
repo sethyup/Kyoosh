@@ -150,14 +150,14 @@ const app = Vue.createApp( {
 
 		for(var trip_ID of Object.keys(this.user_trips)) {
 			var trip_name = trip_ID.split("urjfjwowskdorrofkckshecoejfnek")[0]
-			// console.log(trip_name)
-			// console.log(trip_ID)
+			console.log(trip_name)
+			console.log(trip_ID)
 			var trip_destination = this.user_trips[trip_ID]["trip_details"]["destination"][0]
 			var trip_start = this.user_trips[trip_ID]["trip_details"]["start_date"]
 			var trip_end = this.user_trips[trip_ID]["trip_details"]["end_date"]
 			document.getElementById("cards").innerHTML += `
 			<div class="card cardstyle" >
-            	<img src="../../images/home_page/trips_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
+            	<img src="../../images/home_page/trip_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
 				<div class="card-body">
 				<h5 class="card-title">${trip_name}</h5>
 				<button onclick="edit_trip(\`${trip_ID}\`,\`${trip_start}\`,\`${trip_end}\`,\`${trip_destination}\`)" class="btn btn-main-bold">Edit Trip</a>
