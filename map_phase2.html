@@ -202,7 +202,7 @@
                                     <!-- important to add type="button" so that the button doesn't submit and refresh the page -->
                                     <button type="button" class="btn back_button btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#back_button_modal" >Back</button>
                                     <!-- should write data to db and update InfoWindow -->
-                                    <button type="button" class="btn create_button btn-main-fixed" @click="create_true=false , create_new_data()">Create</button>
+                                    <button type="button" class="btn create_button btn-main-fixed mx-2" @click="create_true=false , create_new_data()">Create</button>
     
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
@@ -346,7 +346,7 @@
                                 <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
                                 <div class="buttons">                         
                                     <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
-                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false">Cancel</button>
+                                    <button type="button" class="btn save_button btn-main-fixed mx-2" @click="edit_true=false">Cancel</button>
                                     <!-- should write data to db and update infoWindow -->
                                     <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,create_update_data()">Save</button>
     
