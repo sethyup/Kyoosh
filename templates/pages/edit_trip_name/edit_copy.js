@@ -22,7 +22,7 @@ const db = getDatabase(WADTravel)
 const root = Vue.createApp({
     data() {
         return{
-            myUsername: "",
+            myUserID: "",
             trip_id: "",
             trip_details: "",
             sDate: "",
@@ -55,7 +55,7 @@ const root = Vue.createApp({
     methods: {
         get_relevant_info() {
             // get user ID
-            const username = localStorage.getItem("user")
+            const userID = localStorage.getItem("user")
             // get trip ID
             const trip_id = localStorage.getItem("trip")
             // get start date
@@ -63,7 +63,7 @@ const root = Vue.createApp({
             // get end date
             const end_date = localStorage.getItem("trip_end_date")
             this.my_trip_name = trip_id.split(this.trip_delimiter)[0]
-            this.myUsername = username.replace(".","")
+            this.myUser_ID = userID.replace(".","")
             this.trip_id = trip_id
             this.sDate = start_date
             this.eDate = end_date
@@ -74,7 +74,7 @@ const root = Vue.createApp({
 
             const snapshot = await get(path_location)
             var details = snapshot.val()
-            // console.log(details)
+            console.log(details)
             this.trip_details = details
             // console.log(lodging_locations)
         },
