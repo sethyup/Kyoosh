@@ -666,7 +666,7 @@ function initAutocomplete(map) {
         marker.setVisible(true);
 
         marker.id = uniqueId;
-        vm.$data.current_id = uniqueId
+        vm.$data.map_id = uniqueId
         
         const contentString = 
         `
@@ -719,7 +719,7 @@ function create_marker(place, map, id) {
         // console.log(place)
         // console.log(id)
         marker.id = id;
-        vm.$data.current_id = id;
+        vm.$data.map_id = id;
         console.log(`Creating location marker: ${id}`)     
         
         // set infoWindow
@@ -881,7 +881,8 @@ const app = Vue.createApp({
 
             // input field details
 
-            current_id: "",
+            current_id: 0,
+            map_id: "",
             selected_address: "",
                 // selected_tags: "", is under tag_input
             selected_description: "",
@@ -906,6 +907,8 @@ const app = Vue.createApp({
         };
     }, //data
     methods: {
+
+
         // day sorting details
         
         read_dates() {
@@ -1064,6 +1067,9 @@ const app = Vue.createApp({
 
         },
 
+
+
+
         // create/edit acitvity-related codes
 
         // toggle display for create activity
@@ -1143,11 +1149,14 @@ const app = Vue.createApp({
             }
         },
 
+
+
+
         // map related codes
 
         // delete marker in edit_activity
         delete_marker_edit(id) {
-            console.log(`this is the curernt marker id: ${this.current_id}`)
+            console.log(`this is the curernt marker id: ${this.map_id}`)
             console.log(`and this is the current markers length: ${markers.length}`)
             console.log(markers)
             // console.log(`${id} this is from delete marker`)
@@ -1158,9 +1167,9 @@ const app = Vue.createApp({
         // delete marker in create activity
         delete_marker(id) {
             // console.log(`${id} this is from delete marker`)
-            if (this.current_id == markers.length - 1) {
+            if (this.map_id == markers.length - 1) {
                 return
-            } else if (this.current_id != markers.length - 1    ) {
+            } else if (this.map_id != markers.length - 1    ) {
                 DeleteMarker(id);
                 this.delete_data(id)
             }
@@ -1280,7 +1289,7 @@ const app = Vue.createApp({
                 yet_to_vote: this.yet_to_vote
             }
             // push to existing places under current id
-            this.existing_locations[this.current_id] = new_obj
+            this.existing_locations[this.map_id] = new_obj
             // push data to database
             console.log("Writing data into database...")
             
@@ -1305,9 +1314,9 @@ const app = Vue.createApp({
             this.tag_input = ""
             this.amount = ""
             this.converted_amount = ""
-            console.log(this.current_id)
-            this.current_id = this.existing_locations.length
-            console.log(this.current_id)
+            console.log(this.map_id)
+            this.map_id = this.existing_locations.length
+            console.log(this.map_id)
         },
         // write activity for new activities
         create_new_data() {
@@ -1339,7 +1348,7 @@ const app = Vue.createApp({
             }
             // console.log(new_obj)
             // push to existing places under current id
-            this.existing_locations[this.current_id] = new_obj
+            this.existing_locations[this.map_id] = new_obj
             // push data to database
             console.log("Writing data into database...")
             

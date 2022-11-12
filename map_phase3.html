@@ -202,6 +202,8 @@
                     
                     <!-- map interface MAPview COL -->
                     <div class="col overflowing2" style="width: 100%; height: 100vh" :style="{display: toggle_map()}">
+                        <!-- toggle for map view; only MAP or collapse will show -->
+                        <h4 class="m-5">Activities <input type="radio" id="mapview_toggle" @click="change_map_view()"> Switch to List View</h4>
                         <!-- map details -->
                         <div id="map"></div>
 
@@ -217,7 +219,9 @@
 
                     <!-- collapsible card listview COL -->
                     <div class="col" :style="{display: toggle_collapse()}">
-                        <h4 class="m-5">Activities </h4>
+                        <!-- toggle for map view; only MAP or collapse will show -->
+                        <h4 class="m-5">Activities <input type="radio" id="mapview_toggle" @click="change_map_view()"> Switch to Map View</h4>
+                        
 
 
                         <!-- FIRST ITEM (SAMPLE 1) -->
@@ -280,10 +284,7 @@
                         
                     </div>
 
-                    <!-- toggle for map view; only MAP or collapse will show -->
-                    <div class='col'>
-                        <input type="checkbox" id="mapview_toggle" @click="change_map_view()"> Map View
-                    </div>
+                    
                     <div> 
                         <button type="button" class="btn btn-main-fixed save_btn" @click="create_days_data()">Save Changes</button>
                     </div>
