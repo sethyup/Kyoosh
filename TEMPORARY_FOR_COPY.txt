@@ -1,5 +1,8 @@
 JAVASCRIPT
 
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 trip_id: "",
 user_id: "",
 trip_details: {},
@@ -14,7 +17,7 @@ convert_datetime_str_to_date_obj(datetime_str) {
     let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2])
 
     return new_date_obj
-}
+},
 
 // retrieve trip details from localStorage
 retrieve_from_cache() {
@@ -36,6 +39,11 @@ retrieve_from_cache() {
         var c_country = localStorage.getItem('destination')
         this.trip_details.country = c_country
     }
+},
+
+// GET TRIP NAME
+get_trip_name(tripID) {
+    return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
 },
 
 
