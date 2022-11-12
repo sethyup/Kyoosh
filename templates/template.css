@@ -230,3 +230,7 @@ img.create-trip-main-img{
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+*::-webkit-scrollbar {
+    display: none;
+}
