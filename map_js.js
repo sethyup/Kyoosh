@@ -609,13 +609,12 @@ function initMap(location, lodging) {
     // console.log(lodging)
     create_lodging_marker(lodging, map)
         
-    initAutocomplete();
+    initAutocomplete(map);
 
 }
-
 // enable Autocomplete
-function initAutocomplete() {
-    let map = vm.$data.map
+function initAutocomplete(map) {
+    
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
     // get country code
@@ -698,7 +697,6 @@ function initAutocomplete() {
     //     autocomplete.set("place", null)
     // })
 }
-
 // create existing marker
 function create_marker(place, map, id) {
     const icon = {
@@ -830,7 +828,6 @@ async function create_lodging_marker(locations, map) {
     
     
 }
-
 // delete markers
 function DeleteMarker(id) {
     //Find and remove the marker from the Array
@@ -938,6 +935,7 @@ const app = Vue.createApp({
               };
             service.findPlaceFromQuery(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    // console.log(results[0].geometry.location)
                     map.setCenter(results[0].geometry.location);
                 }
               });
@@ -1035,11 +1033,14 @@ const app = Vue.createApp({
             },
         // read group members for voting
         read_group_members() {
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/group_member`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    this.group_members = data
+                    this.group_members = data.g_member
+                    var group_leader = this.trip_id.split('urjfjwowskdorrofkckshecoejfnek')[1]
+                    this.group_members.push(group_leader)
+                    
                     // console.log(data)
                 }})
         },
@@ -1105,11 +1106,20 @@ const app = Vue.createApp({
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                 console.log(failed_message);
             })
-            this.yet_to_vote = [];
+            // reset fields
+            this.description = ""
+            this.yet_to_vote = []
+            this.tag_input = ""
+            this.amount = ""
+            this.converted_amount = ""
+            console.log(this.current_id)
+            this.current_id = this.existing_locations.length
+            console.log(this.current_id)
         },
         // write activity for new activities
         create_new_data() {
             // create new object
+            // console.log(this.group_members)
             var new_obj = {
                 address: this.selected_address,
                 description: this.selected_description,
@@ -1252,7 +1262,8 @@ const app = Vue.createApp({
         //         })
         // },
 
-        // retrieve and edit user and trip id from LocalStorage
+        
+        // retrieve trip details from localStorage
         retrieve_from_cache() {
             if (localStorage.getItem('user')) {
                 this.trip_id = localStorage.getItem('user')
@@ -1270,12 +1281,12 @@ const app = Vue.createApp({
             }
         },
     },
+    
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
-        // await this.retrieve_from_cache()
-        // get recommended locations from database
-        
+        await this.retrieve_from_cache()
+        // get recommended/existing locations from database
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
@@ -1480,6 +1491,7 @@ function loadFlag(element){
         }
     }
 }
-       
+
+// export mounted instance to access it outside of module
 export {vm}
 

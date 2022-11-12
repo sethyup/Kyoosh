@@ -1,3 +1,11 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
 // DATABASE STUFF
 // Importing Firebase API
 // DO NOT EDIT
@@ -237,7 +245,7 @@ var accommodation_app = Vue.createApp({
             accom_obj_arr: [],
 
             //DATABASE HARDCODING
-            trip_id: "badabingbadaboourjfjwowskdorrofkckshecoejfnekadambft"
+            trip_id: ""
         }
     },
 
@@ -648,6 +656,8 @@ var accommodation_app = Vue.createApp({
     },
 
     created() {
+        this.trip_id = localStorage.getItem("trip")
+        
         this.read_accom_n_set_accom_data()
     }
 })
