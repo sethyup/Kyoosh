@@ -100,15 +100,19 @@ const app = Vue.createApp( {
 	//=========== METHODS ===========
 	methods: {
 
-		edit_trip(tripID) {
+		edit_trip(tripID,trip_start,trip_end,trip_destination) {
 			console.log("button working")
 			localStorage.setItem("trip", tripID)
+			localStorage.setItem("trip_start_date", trip_start)
+			localStorage.setItem("trip_end_date", trip_end)
+			localStorage.setItem("destination", trip_destination)
 			location.replace("../../map_phase2.html")
 		},
 
 		async get_trips() {
 			const user_ID = localStorage.getItem("user")
-			const path_location = ref(db, "users/" + user_ID + "/trips")
+			// const path_location = ref(db, "users/" + user_ID + "/trips")
+			const path_location = ref(db, `users/${user_ID}/trips`)
 
 			const snapshot = await get(path_location)
 			var trips = snapshot.val()

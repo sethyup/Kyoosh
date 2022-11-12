@@ -1,3 +1,12 @@
+// REDIRECT IF NOT LOGGED IN YET
+if (localStorage.getItem("user") === null) {
+	window.location.href = "../pages/signup_login pages/login_page.html"
+} else if (localStorage.getItem("trip") === null) {
+	// REDIRECT IF LOGGED IN BUT NO TRIP ID IN CACHE
+	window.location.href = "../pages/trips-homepage.html"
+}
+
+
 // Firebase stuff
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
@@ -525,6 +534,8 @@ const capitalList = {
     "ZM": "Lusaka",
     "ZW": "Harare"
 };
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 // cached variables
 var markers = [];
@@ -588,7 +599,7 @@ function get_yet_to_vote_percentage(votes,place) {
 }
 
 // map-related functions
-
+ 
 // create your map
 function initMap(location, lodging) {
     
@@ -1271,21 +1282,39 @@ const app = Vue.createApp({
             if (localStorage.getItem('trip')) {
                 this.trip_id = localStorage.getItem('trip')
             }
-            if (localStorage.getItem('duration')) {
-                var duration = localStorage.getItem('duration')
-                this.trip_details[duration] = duration
+            if (localStorage.getItem('trip_start_date')) {
+                // format YYYY-MM-DD to "DD Month Year"
+                var start_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_start_date'))
+                var end_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_end_date'))
+                // set duration
+                var c_duration = `${start_date.getDate()} ${month[start_date.getMonth()]} ${start_date.getFullYear()} - ${end_date.getDate()} ${month[end_date.getMonth()]} ${end_date.getFullYear()}`
+                this.trip_details.duration = c_duration
+                
             }
-            if (localStorage.getItem('country')) {
-                var country = localStorage.getItem('country')
-                this.trip_details[country] = country
+            if (localStorage.getItem('destination')) {
+                var c_country = localStorage.getItem('destination')
+                this.trip_details.country = c_country
             }
+            
         },
+
+        // Datetime details
+        convert_datetime_str_to_date_obj(datetime_str) {
+            // format: 2022-10-05
+            let arr_depart_datetime = datetime_str.split(" ")
+            let datetime_date_arr = arr_depart_datetime[0].split("-")
+        
+            let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2])
+        
+            return new_date_obj
+        }
     },
     
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
         await this.retrieve_from_cache()
+        console.log(this.trip_details)
         // get recommended/existing locations from database
         await this.read_from_existing()
         // get group size from database
