@@ -1280,15 +1280,31 @@ const app = Vue.createApp({
             if (localStorage.getItem('trip')) {
                 this.trip_id = localStorage.getItem('trip')
             }
-            if (localStorage.getItem('duration')) {
-                var duration = localStorage.getItem('duration')
+            if (localStorage.getItem('trip_start_date')) {
+                // format YYYY-MM-DD to "DD Month Year"
+                var start_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_start_date'))
+                var end_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_end_date'))
+                // set duration
+                var duration = `${start_date.getDate()} ${start_date.getMonth()} ${start_date.getFullYear()} - ${end_date.getDate()} ${end_date.getMonth()} ${end_date.getFullYear()}`
                 this.trip_details[duration] = duration
+                console.log(this.trip_details)
             }
-            if (localStorage.getItem('country')) {
-                var country = localStorage.getItem('country')
+            if (localStorage.getItem('destination')) {
+                var country = localStorage.getItem('destination')
                 this.trip_details[country] = country
             }
         },
+
+        // Datetime details
+        convert_datetime_str_to_date_obj(datetime_str) {
+            // format: 2022-10-05
+            let arr_depart_datetime = datetime_str.split(" ")
+            let datetime_date_arr = arr_depart_datetime[0].split("-")
+        
+            let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2])
+        
+            return new_date_obj
+        }
     },
     
     // load data from database before initialising map and mounting vue
