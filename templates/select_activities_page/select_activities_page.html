@@ -17,38 +17,56 @@
     <!-- VUE -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-<!-- need firebase function READ -->
+    <style>
+
+        body{
+            background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
     <title>Select Activities Page</title>
 </head>
 <body>
     <div id="main">
     <div class="container-fluid">
         <div class="row flex-nowrap" >
-            <div id="nav" class="col-auto sidebar-css p-0">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                 <!-- SIDEBAR  -->
                <select-activity-sidebar></select-activity-sidebar>
            </div>
 
-            <!-- rest of site -->
-            <div class="col bg-mild" >
-                <div class="row">
-                    <!-- <div class="col"> -->
 
-                    <!-- HEADER -->
+        <!-- TRIP INFO -->
+            <div class="trip-title-top-md d-none d-md-block">
+                <h6>Name of Trip (Trip to Seoul, Korea)</h6>
+                <p>1 December 2022 - 10 December 2022</p>
+            </div>
+            <!-- rest of site -->
+            <div class="col text-light" style="overflow: hidden;">
+                <!-- TRIP DETAILS (SM) -->
+                <div class="row d-block d-md-none text-center blurred text-black">
+                    <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
+                    <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h3 class="ms-md-3 mt-4 text-md-start text-center">Trip leader, please select the confirmed activities </h3>
+                            <!-- Filter Tag -->
+                            <p class="ms-md-3">Filter by:
+                                <select v-model="filter_tag" @change="sort_by">
+                                    <option>Tag</option>
+                                    <option>Votes</option>
+                                    <option>Cost</option>
+                                </select>
+                            </p>
+                    </div>
+                </div>
+
+                
+                <div class="row">
                     <div class="pt-5">
-                        <h1> Trip to Seoul, Korea </h1>
-                        <h5 style="font-style:italic;"> 1 December 2022 - 10 December 2022</h5>
-                        <p>Trip leader, please select the activities </p>
-                        <!-- Filter Tag -->
-                        <p>Filter by:
-                        <select v-model="filter_tag" @change="sort_by">
-                            <option>Tag</option>
-                            <option>Votes</option>
-                            <option>Cost</option>
-                        </select>
-                        {{filter_tag}}
-                        </p>
-                    
 
                         <!-- Table  -->
                         <div class="content">
@@ -59,10 +77,10 @@
                                         <!-- TABLE HEADER -->
                                         <tr>  
                                             <th scope="col">
-                                                <label class="">
+                                                <!-- <label class=""> -->
                                                 <input type="checkbox" @change="select_all()"/>
                                                 <!-- @change="select_all()" -->
-                                                <div class=""></div>
+                                                <!-- <div class=""></div> -->
                                                 </label>
                                             </th>
                                             
@@ -75,7 +93,7 @@
                                         <!-- TABLE BODY -->
                                     <tbody>
                                         <template v-for="(location,index) in existing_locations" v-if="filter_tag == '' ">
-                                            <tr scope="row">
+                                            <tr scope="row" class="blurred-minor-no-bd-filter">
                                                 <th scope="row">
                                                 <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
                                                 <!-- @change="calculate_spending()"  -->
@@ -100,7 +118,7 @@
 
 
                                         <template v-for="(location,index) in filtered_locations" v-else>
-                                            <tr scope="row">
+                                            <tr scope="row" class="blurred-minor-no-bd-filter">
                                                 <th scope="row">
                                                 <input type="checkbox" name="atv" :value=location v-model="selected_activities" @change="calculate_spending()"/>
                                                 <!-- @change="calculate_spending()"  -->
@@ -123,33 +141,32 @@
                                         </template>
 
 
-                                        </tbody>
-                                        </table>
+                                    </tbody>
+                                </table>
                                 </div>
-
-
-
-
                             </div>
-                            <!-- {{ selected_activities }} -->
                         </div>
-
                     </div>
                 </div>
+
+                <!-- SPENDING -->
+                <div class="spending-bottom-md">
+                    <h5><i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD &nbsp &nbsp<button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button></h5> 
+                </div>
                 
-                <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3 " >
+                <!-- <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3 " >
 
                         <h3>Total Spending: {{ spending }} SGD</h3>
                         
  
                         <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button>
-                        <!--  -->
-                </footer>
-            </div>
+                        
+                </footer> -->
             </div>
         </div>
     </div>
     </div>
+
     
 
 
