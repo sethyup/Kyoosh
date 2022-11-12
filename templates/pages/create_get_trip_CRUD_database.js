@@ -131,22 +131,19 @@ const root = Vue.createApp({
                         // alert("Write Operation Successful")
                         var user_ID = localStorage.getItem("user")
                         console.log("Entry Created")
-                        try{
                         const path_location_g_leader = ref(db, 'users/' + user_ID + '/trips')
                         var snapshot_trips_gl = await get(path_location_g_leader)
-                        var trips_gl = snapshot_trips.val()
+                        // console.log(snapshot_trips_gl)
+                        var trips_gl = snapshot_trips_gl.val()
+                        console.log(trips_gl)
                         trips_gl.push(trip_ID)
-                        set(path_location, trips_gl)
+                        set(path_location_g_leader, trips_gl)
                         .then(
                             console.log("shit's added into g_leader's list")
                         )
-                        }
-                        catch(error){
-                            
-                        }
 
-
-                        for(var g_member in arr_edited_usernames){
+                        for(var g_member of arr_edited_usernames){
+                            console.log(g_member)
                             const path_location = ref(db, 'users/' + g_member + '/trips')
                             var snapshot_trips = await get(path_location)
                             var trips = snapshot_trips.val()
@@ -179,7 +176,7 @@ const root = Vue.createApp({
                 localStorage.setItem("destination", this.destination)
                 // ========================================================================================
 
-                // location.href = "../../map_phase2.html"
+                location.href = "../../map_phase2.html"
                 // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
@@ -224,8 +221,8 @@ const root = Vue.createApp({
         add_collaborator() {
             // console.log("adding")
             var collaborator_to_add = this.collaborator_input
-            console.log(collaborator_to_add)
-            console.log(this.user_emails)
+            // console.log(collaborator_to_add)
+            // console.log(this.user_emails)
             if(this.user_emails.includes(collaborator_to_add)){
                 if(this.collaborators.includes(collaborator_to_add)){
                     this.error_message = "Email already added into the list!"
