@@ -7,7 +7,7 @@ if (localStorage.getItem("user") === null) {
 }
 
 
-// Firebase stuff
+// Firebase stuff ======================================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -27,7 +27,7 @@ const WADTravel = initializeApp({
 // const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
 
-// const variables
+// const variables ======================================================================
 // ISO 3166 Alpha-2 Format: [Country Name] : [2 letter Country Code]
 const countryList = {
     Afghanistan: 'AF',
@@ -279,7 +279,6 @@ const countryList = {
     'North Macedonia': 'MK',
     Češka: 'CZ'
   }
-
 // list of all 2 letter country code: capital
 const capitalList = {
     "AF": "Kabul",
@@ -538,11 +537,11 @@ const capitalList = {
 // list of months
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-// cached variables
+// cached variables ======================================================================
 var markers = [];
 var uniqueId = 0;
 
-// progress bar functions
+// progress bar functions ================================================================
 
 function get_total_users(place) {
     var total_users = 0
@@ -599,7 +598,7 @@ function get_yet_to_vote_percentage(votes,place) {
     return (yet_to_vote_votes)*100/get_total_users(place)
 }
 
-// map-related functions
+// map-related functions ===================================================================
  
 // create your map
 function initMap(location, lodging) {
@@ -610,7 +609,6 @@ function initMap(location, lodging) {
     }
     );
     // get capital from capitalList, get country code from function, get country from cache
-    
     var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.destination))
     vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
@@ -635,9 +633,9 @@ function initAutocomplete(map) {
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
     // get country code
-    // var country = get_country_code(this.trip_details.country)
+    var country = vm.get_country_code(this.trip_details.destination)
     const options = {
-        componentRestrictions: {'country':['US', 'CH', 'KR', 'SG']},
+        componentRestrictions: {'country':country},
         fields: ['place_id','name','geometry','formatted_address']
     };
     const autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -863,27 +861,27 @@ function DeleteMarker(id) {
     
 };
 
-// vue app
+// vue app ==================================================================================
 const app = Vue.createApp({ 
     data() { 
         return {
-            // trip details
+            // trip details =================================================================
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
             trip_details: {
                 destination: 'South Korea',
                 duration: '12 November 2022 - 16 November 2022'
             },
-            // display details
+            // display details =============================================================
             create_true: false,
             edit_true: false,
 
-            // map details
+            // map details ==================================================================
             map_width: '90%',
             existing_locations: "",
             
 
-            // create activity details
+            // create activity details ======================================================
             amount: "", 
             from: "SGD", 
             to: "KRW", 
@@ -894,7 +892,7 @@ const app = Vue.createApp({
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
 
-            // input field details
+            // input field details ==========================================================
             current_id: "",
             selected_address: "",
                 // selected_tags: "", is under tag_input
@@ -963,7 +961,7 @@ const app = Vue.createApp({
               });
         },
 
-        // create/edit acitvity-related codes
+        // create/edit acitvity-related codes =================================================
 
         // toggle display for create activity
         d_create() {
@@ -1020,7 +1018,7 @@ const app = Vue.createApp({
         
 
 
-        // database-related codes
+        // database-related codes ============================================================
 
         // read location data from database
         async read_from_existing() {
@@ -1047,7 +1045,7 @@ const app = Vue.createApp({
                         if (data2) {
                             this.existing_locations = data2
                             
-                            window.initMap = initMap(this.existing_locations);
+                            window.initMap = initMap(this.existing_locations, lodging_locations);
                         }
                     })
                 }
@@ -1304,12 +1302,12 @@ const app = Vue.createApp({
             }
             if (localStorage.getItem('destination')) {
                 var c_country = localStorage.getItem('destination')
-                this.trip_details.country = c_country
+                this.trip_details.destination = c_country
             }
             
         },
 
-        // Datetime details
+        // Datetime details =================================================================
         convert_datetime_str_to_date_obj(datetime_str) {
             // format: 2022-10-05
             let arr_depart_datetime = datetime_str.split(" ")
@@ -1336,7 +1334,7 @@ const app = Vue.createApp({
 });
 const vm = app.mount('#app'); 
 
-// main js variables
+// main js variables ========================================================================
 let country_list = {
     "AED" : "AE",
     "AFN" : "AF",
