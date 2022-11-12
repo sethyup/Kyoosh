@@ -62,7 +62,8 @@ const root = Vue.createApp({
 
             nameList: [],
 
-            trip_delimiter: "urjfjwowskdorrofkckshecoejfnek"
+            trip_delimiter: "urjfjwowskdorrofkckshecoejfnek",
+            error_message: "",
         }
     },
 
@@ -227,19 +228,20 @@ const root = Vue.createApp({
             console.log(this.user_emails)
             if(this.user_emails.includes(collaborator_to_add)){
                 if(this.collaborators.includes(collaborator_to_add)){
-                    var error_message = "Email already added into the list, tick the checkbox instead!"
-                    document.getElementById("error").innerText = error_message
+                    this.error_message = "Email already added into the list!"
                 }
                 else{
                     this.collaborators.push(collaborator_to_add)
                     this.collaborator_input = ""
+
+                    this.error_message = ""
                 }
             }
             else{
-                var error_message = "Email entered is not registered on Whoosh!"
-                document.getElementById("error").innerText = error_message
-            }  
+                this.error_message = "Email entered is not registered on Whoosh!"
+            }
             
+            document.getElementById("error").innerText = this.error_message
         },
 
         convert_email_to_userID(email_str) {
