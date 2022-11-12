@@ -119,8 +119,8 @@
     
                                 <ul class="collapse show nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
                                     <li class="w-100" v-for="(date, index) of date_array">
-                                        <a :href=" '#' + index" class="nav-link px-0"> 
-                                            <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i>Day {{index+1}}: {{date.slice(5,)}}</span>
+                                        <a :href=" '#' + index" class="nav-link px-0">
+                                            <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Day {{index+1}}: <span class="fw-semibold">{{convert_date_to_readable_sidebar(date)}}</span></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -478,8 +478,8 @@
                                 <div v-for="(day, id_index) in date_array">
         
                                 <!-- DIFFERENT COLOR DAY BADGE ACCORDING TO SLEECTED DAY -->
-                                <a href="javascript:void(0)" v-if="id_index == current_id" class="day_style badge rounded-pill bg-dark my-3 fw-bold px-4 fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
-                                <a href="javascript:void(0)" v-else class="day_style badge rounded-pill blurred-primary my-3 fw-semibold fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}} {{day}}</a>
+                                <a href="javascript:void(0)" v-if="id_index == current_id" class="day_style badge rounded-pill bg-dark my-3 fw-bold px-4 fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}}:&nbsp;{{convert_date_to_readable_titles(day)}}</a>
+                                <a href="javascript:void(0)" v-else class="day_style badge rounded-pill blurred-primary my-3 fw-semibold fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}}:&nbsp;{{convert_date_to_readable_titles(day)}}</a>
                                 
                                 <!-- <h6>Select activities for Day {{id_index+1}}:</h6> -->
         
@@ -488,11 +488,10 @@
                                     <div class="card mb-3 blurred-minor-no-bd-filter" v-for="num in master_checked_activities"> 
         
                                             <div class="card-body">
-                                                <h5 class="card-title">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
-                                                <h6 class="card-subtitle mb-2 text-muted">{{existing_locations[num]["address"]}}</h6>
-                                                <h6 class="card-subtitle mb-2 ">{{existing_locations[num]["price"]["sgd"]}} SGD/per person</h6>
+                                                <h5 class="card-title mb-3">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-location-dot fa-xs"></i> {{existing_locations[num]["address"]}}</p>
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-money-bill fa-xs"></i> {{existing_locations[num]["price"]["sgd"]}} SGD/per person</p>
                                                 <p class="card-text">{{existing_locations[num]["description"]}}</p> 
-                                                
                                             </div>
                                     </div>
                                 </div>
@@ -502,9 +501,9 @@
                                     <div class="card mb-3 blurred-minor-no-bd-filter" v-for="location of get_list(id_index)">
                                         <!-- {{location}} -->
                                             <div class="card-body">
-                                                <h5 class="card-title">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">{{location.address}}</h6>
-                                                <h6 class="card-subtitle mb-2 ">{{location.price.sgd}} SGD/per person</h6>
+                                                <h5 class="card-title mb-3">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{location.address}}</p>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-money-bill fa-xs"></i> {{location.price.sgd}} SGD/per person</p>
                                                 <p class="card-text">{{location.description}}</p>
                                                 
                                             </div>
@@ -600,8 +599,8 @@
             <!-- SAVE BUTTON + CRATE ACTIVITY -->
             <div class="spending-bottom-md" style="z-index: 9;">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorialModal">
-                    Tutorial
+                <button type="button" class="btn btn-main-mild-fixed my-3 mx-1" data-bs-toggle="modal" data-bs-target="#tutorialModal">
+                    <i class="fa-regular fa-circle-question"></i>
                 </button>
                 <!-- MAP VIEW TOGGLE -->
                 <button v-if="map_view" id="mapview_toggle" class="btn btn-main-bold-fixed my-3 mx-1" @click="change_map_view()"><i class="fa-solid fa-rectangle-list fa-xs"></i> List</button>
@@ -636,7 +635,7 @@
                         </video>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Close</button>
                     
                     </div>
                 </div>
@@ -651,6 +650,9 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT5JFriHtLwMDi3C2jZUKSDiakvePwY6g&callback=initMap&libraries=places&v=weekly"
       defer
     ></script>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->

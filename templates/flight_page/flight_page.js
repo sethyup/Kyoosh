@@ -6,6 +6,9 @@ if (localStorage.getItem("user") === null) {
 	window.location.href = "../pages/trips-homepage.html"
 }
 
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 const AbstractAPI_Key = "ffc998ad9ddc4166a4fcbbdb7da17aa3"
 
 async function convert_timezone(base_local, target_local, base_datetime, API_key) {
@@ -276,7 +279,9 @@ var flight_app = Vue.createApp({
             flight_obj_arr: [],
 
             //DATABASE
-            trip_id: ""
+            trip_id: "",
+            user_id: "",
+            trip_details: {},
         }
     },
 
@@ -883,6 +888,45 @@ var flight_app = Vue.createApp({
                 }
             });
         },
+
+        // DISPLAY TRIP DETAILS
+            // Datetime details
+        convert_datetime_str_to_date_obj(datetime_str) {
+            // format: 2022-10-05
+            let arr_depart_datetime = datetime_str.split(" ")
+            let datetime_date_arr = arr_depart_datetime[0].split("-")
+
+            let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2])
+
+            return new_date_obj
+        },
+
+            // retrieve trip details from localStorage
+        retrieve_from_cache() {
+            if (localStorage.getItem('user')) {
+                this.user_id = localStorage.getItem('user')
+            }
+            if (localStorage.getItem('trip')) {
+                this.trip_id = localStorage.getItem('trip')
+            }
+            if (localStorage.getItem('trip_start_date')) {
+                // format YYYY-MM-DD to "DD Month Year"
+                var start_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_start_date'))
+                var end_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_end_date'))
+                // set duration
+                var c_duration = `${start_date.getDate()} ${month[start_date.getMonth()]} ${start_date.getFullYear()} - ${end_date.getDate()} ${month[end_date.getMonth()]} ${end_date.getFullYear()}`
+                this.trip_details.duration = c_duration
+            }
+            if (localStorage.getItem('destination')) {
+                var c_country = localStorage.getItem('destination')
+                this.trip_details.country = c_country
+            }
+        },
+
+            // GET TRIP NAME
+        get_trip_name(tripID) {
+            return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
+        },
     },
 
     updated() {
@@ -901,7 +945,7 @@ var flight_app = Vue.createApp({
 
     created() {
         console.log("CREATING ---------------------------")
-        this.trip_id = localStorage.getItem("trip")
+        this.retrieve_from_cache()
         
         const time_elapsed = Date.now()
         let current_date = new Date(time_elapsed)
