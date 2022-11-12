@@ -133,6 +133,7 @@ const app = Vue.createApp( {
 	},
 
 	async created() {
+		console.log(localStorage.getItem("user"))
 		var trips = await this.get_trips()
 
 		if (trips !== null) {
