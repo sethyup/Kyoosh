@@ -40,7 +40,7 @@
                         <!-- Trip Name -->
                         <div class="row justify-content-center mt-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control blurred-minor-gradient text-light" v-model="myTrip" name="trip_name" required>
+                                <input type="text" class="form-control blurred-minor-gradient text-light" v-model="my_trip_name" name="trip_name" required>
                                 <label for="trip_name"><i class="fa-solid fa-suitcase-rolling mx-2"></i> Trip Name</label>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                         <!-- submit -->
                         <div class="row justify-content-center mt-4">
                             <div class="mt-3 text-center">
-                                <button type="button" @click="edit_trip_details()" class="btn btn-main mt-sm-0 mt-4">Update Details</button>
+                                <button type="button" @click="read_new_data()" class="btn btn-main mt-sm-0 mt-4">Update Details</button>
                             </div>
                         </div>
 
@@ -94,7 +94,7 @@
     <script type="module" src="../sidebars.js"></script>
 
     <!-- access firebase -->
-    <script type="module" src="edit_trip_name_CRUD_database.js"></script>
+    <script type="module" src="edit_copy.js"></script>
 
 </body>
 </html>
