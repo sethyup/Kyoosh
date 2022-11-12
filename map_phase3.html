@@ -63,20 +63,25 @@
             .vote_btn{
             margin-left: 5px;
             }
-    .overflowing{
-        width: 90%;
-        height: 800px;
-        overflow: auto;
-    }
-    .overflowing2{
-        width: 80%;
-        height: 80px;
-        overflow: auto;
-    }
-    .day_style{
-        text-decoration: none;
-        font-size: large;
-    }
+            .overflowing{
+                width: 90%;
+                height: 800px;
+                overflow: auto;
+            }
+            .overflowing2{
+                width: 80%;
+                height: 80px;
+                overflow: auto;
+            }
+            .day_style{
+                text-decoration: none;
+                font-size: large;
+            }
+            .save_btn{
+                position: fixed;
+                bottom: 0; 
+                right: 5;
+            }
 
     </style>
 </head>
@@ -269,9 +274,13 @@
                     <div class='col'>
                         <input type="checkbox" id="mapview_toggle" @click="change_map_view()"> Map View
                     </div>
+                    <div> 
+                        <button type="button" class="btn btn-main-fixed save_btn" @click="create_days_data()">Save Changes</button>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- import scripts -->

@@ -494,19 +494,48 @@ const app = Vue.createApp({
                     window.initMap = initMap(this.existing_locations);
                 }
                 // retrieve recommended places for new trips
-                // else {
-                //     const data_to_be_read = ref(db, `locations`);
-                //     onValue(data_to_be_read, (snapshot) => {
-                //         const data2 = snapshot.val();
-                //         if (data2) {
-                //             this.existing_locations = data2
-                //             console.log(data2)
-                //             window.initMap = initMap(this.existing_locations);
-                //         }
-                //     })
-                // }
+                else {
+                    const data_to_be_read = ref(db, `locations`);
+                    onValue(data_to_be_read, (snapshot) => {
+                        const data2 = snapshot.val();
+                        if (data2) {
+                            this.existing_locations = data2
+                            console.log(data2)
+                            window.initMap = initMap(this.existing_locations);
+                        }
+                    })
+                }
                 })   
             },
+        create_days_data() {
+            console.log("Writing data into database...")
+
+            // EDIT HERE
+            set(ref(db, `trips/${this.trip_id}/days`), this.days) 
+                // DATA YOU WANT TO WRITE GOES HERE,
+
+                // example
+                // email: this.email
+                // ...
+
+            
+            .then(
+                function write_success() {
+                    // display "Success" message
+                    // alert("Write Operation Successful")
+                    console.log("Entry Created")
+            })
+            .catch((error) => {
+                // for us to debug, tells us what error there is,
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                // display "Error" message
+                var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                alert(failed_message)
+                console.log(failed_message);
+            })
+        },
         
     }, // methods
     async created() {
