@@ -935,7 +935,7 @@ const app = Vue.createApp({
               };
             service.findPlaceFromQuery(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    console.log(results[0].geometry.location)
+                    // console.log(results[0].geometry.location)
                     map.setCenter(results[0].geometry.location);
                 }
               });
@@ -1033,11 +1033,14 @@ const app = Vue.createApp({
             },
         // read group members for voting
         read_group_members() {
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/group_member`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
-                    this.group_members = data
+                    this.group_members = data.g_member
+                    var group_leader = this.trip_id.split('urjfjwowskdorrofkckshecoejfnek')[1]
+                    this.group_members.push(group_leader)
+                    
                     // console.log(data)
                 }})
         },
@@ -1103,11 +1106,20 @@ const app = Vue.createApp({
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
                 console.log(failed_message);
             })
-            this.yet_to_vote = [];
+            // reset fields
+            this.description = ""
+            this.yet_to_vote = []
+            this.tag_input = ""
+            this.amount = ""
+            this.converted_amount = ""
+            console.log(this.current_id)
+            this.current_id = this.existing_locations.length
+            console.log(this.current_id)
         },
         // write activity for new activities
         create_new_data() {
             // create new object
+            // console.log(this.group_members)
             var new_obj = {
                 address: this.selected_address,
                 description: this.selected_description,
