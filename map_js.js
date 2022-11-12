@@ -1,3 +1,4 @@
+// Firebase stuff
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -853,7 +854,6 @@ const app = Vue.createApp({
             // trip details
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
-            // to be updated with not hard code
             trip_details: {
                 country: 'Korea',
                 duration: '12 November 2022 - 16 November 2022'
@@ -862,12 +862,12 @@ const app = Vue.createApp({
             create_true: false,
             edit_true: false,
 
-            // map stuff
+            // map details
             map_width: '90%',
             existing_locations: "",
             
 
-            // create activity stuff
+            // create activity details
             amount: "", 
             from: "SGD", 
             to: "KRW", 
