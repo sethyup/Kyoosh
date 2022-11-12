@@ -599,7 +599,7 @@ function get_yet_to_vote_percentage(votes,place) {
 }
 
 // map-related functions
-
+ 
 // create your map
 function initMap(location, lodging) {
     
