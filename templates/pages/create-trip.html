@@ -88,14 +88,14 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col text-center">
-                                            <div class="form-floating mb-3">
+                                        <div class="col">
+                                            <div class="form-floating mb-3 text-dark my-3">
                                                 <input type="text" class="form-control" name="collab_email" placeholder=" " v-model="collaborator_input" list="arr_user_emails" id="collab_email">
-                                                <label for="collab_email"><i class="fa-solid fa-plane-arrival"></i> collab_email</label>
+                                                <label for="collab_email"><i class="fa-solid fa-envelope"></i> Search user by email</label>
                                             </div>
                                         </div>
-                                        <div class="col-4 text-center">
-                                            <button type="button" @click="add_collaborator()" class="btn btn-dark">Add Collaborators</button>
+                                        <div class="col-4 text-center d-flex align-items-center">
+                                            <button type="button" @click="add_collaborator()" class="btn btn-dark">Add Collaborator</button>
                                         </div>
                                     </div>
 
@@ -118,15 +118,12 @@
                                     </div>
                                     
                                 </div>
-                                <div class="modal-footer">
-                                    <div class="col">
-                                    <p class="text-danger text-start" id="error">
-                                        
-                                    </p>
+                                <div class="modal-footer d-flex justify-content-between">
+                                    <div>
+                                        <p class="text-danger text-start" id="error"></p>
                                     </div>
-                                    <div class="col-2">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" :click="" class="btn btn-info" data-bs-dismiss="modal">Add</button>
+                                    <div>
+                                        <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Close</button>
                                     </div>  
                                 </div>
                             </div>

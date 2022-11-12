@@ -37,67 +37,102 @@ const root = Vue.createApp({
             new_password_1: "",
 
             new_password_2: "",
+
+            db_usernames: []
         }
+    },
+
+    async created() {
+        var users = await this.get_database_usernames()
+        console.log(users)
+        for (var user in users) {
+            let username = users[user].username
+            // console.log(username)
+            this.db_usernames.push(username)
+        }
+
+        console.log(this.db_usernames)
     },
     
     methods: {
+        async get_database_usernames () {
+            const path_location = ref(db,"users")
+            const snapshot = await get(path_location)
+            var users = snapshot.val()
+            
+            return users
+        },
+
         sign_up() {
             var email = this.email
             var password = this.password
+            var username = this.username
             console.log("starting to create user...")
-            createUserWithEmailAndPassword(auth, email, password).then(
-                (userCredential) => {
-                    // Signed Up 
-
-                    // save user account details to database
-                    console.log("starting to write user data...")
-                    console.log(userCredential)
-                    set(ref(db, "users/" + this.email.replaceAll(".","")), {
-                        email: this.email,
-                        username: this.username,
-                        fullname: this.first_name + " " + this.last_name,
-                        trips: []
-                      })
-                    .then(
-                        function write_success() {
-                            // display "Success" message
-                            console.log("Write Operation Successful")
-                            console.log("Entry Created")
+            if(this.db_usernames.includes(username)){
+                var failed_message = `Username is already taken! Try a different one!`
+                document.getElementById("error").attributes[2].nodeValue = ""
+                document.getElementById("error").innerHTML = `
+                ${failed_message}
+                `
+                console.log("user not created")
+            }
+            else{
+                createUserWithEmailAndPassword(auth, email, password)
+                .then(
+                    (userCredential) => {
+                        // Signed Up 
+    
+                        // save user account details to database
+                        console.log("starting to write user data...")
+                        console.log(userCredential)
+                        set(ref(db, "users/" + this.email.replaceAll(".","")), {
+                            email: this.email,
+                            username: this.username,
+                            fullname: this.first_name + " " + this.last_name,
+                            trips: []
+                          })
+                        .then(
+                            function write_success() {
+                                // display "Success" message
+                                console.log("Write Operation Successful")
+                                console.log("Entry Created")
+                        })
+                        .catch((error) => {
+                            // for us to debug, tells us what error there is,
+                            const errorCode = error.code;
+                            const errorMessage = error.message;
+            
+                            // display "Error" message
+                            var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                            console.log(failed_message);
+                        })
+                        // display "Success" message
+                        console.log("user created")
+    
+    
+                        // redirects to Log In page
+                        // find a way to use await and wait for the update to database, if not this will cancel the update
+                        location.replace("./login_page.html")
+                        const user = userCredential.user;
                     })
                     .catch((error) => {
-                        // for us to debug, tells us what error there is,
+                        // for admin, tells you what error there is
                         const errorCode = error.code;
                         const errorMessage = error.message;
-        
+                        console.log(errorMessage)
+                        console.log(errorCode)
+    
                         // display "Error" message
-                        var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                        console.log(failed_message);
+                        // stays on the same page
+                        var failed_message = `Sign Up Unsuccessful. ${errorMessage}`
+                        document.getElementById("error").attributes[2].nodeValue = ""
+                        document.getElementById("error").innerHTML = `
+                        ${failed_message}
+                        `
+                        console.log("user not created")
                     })
-                    // display "Success" message
-                    console.log("user created")
-
-
-                    // redirects to Log In page
-                    // find a way to use await and wait for the update to database, if not this will cancel the update
-                    location.replace("./login_page.html")
-                    const user = userCredential.user;
-                })
-                .catch((error) => {
-                    // for admin, tells you what error there is
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorMessage)
-                    console.log(errorCode)
-
-                    // display "Error" message
-                    // stays on the same page
-                    var failed_message = `Sign Up Unsuccessful. ${errorMessage}`
-                    document.getElementById("error").attributes[2].nodeValue = ""
-                    document.getElementById("error").innerHTML = `
-                    ${failed_message}
-                    `
-                    console.log("user not created")
-                });
+            }
+           ;
         },
 
         login() {
