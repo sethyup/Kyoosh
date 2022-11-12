@@ -562,6 +562,13 @@
                     </div>
                 </div>
 
+                <!-- IF YOU HAVE NO FLIGHTS -->
+                <div v-if="flight_obj_arr.length == 0" style="height: 70vh;" class="d-flex align-items-center">
+                    <h3 class="text-center text-white" style="width: 100%;">
+                        You have no flights planned yet.<br><br>Click "Create New" to add a new flight!
+                    </h3>
+                </div>
+
                 <!-- TRIP DETAILS -->
                 <div class="trip-title-top-md d-none d-md-block">
                     <h5>Name of Trip (Trip to Seoul, Korea)</h5>
