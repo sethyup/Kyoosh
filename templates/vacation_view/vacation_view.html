@@ -60,10 +60,10 @@
                                                 </div>
     
                                                 <div class="col">
-                                                    <h4 class="card-title"> {{flight.flight_no}} {{flight.airline}}</h4>
-                                                    <h6 class="card-subtitle mb-3 text-muted"><i class="fa-solid fa-clock fa-xs"></i> {{flight.depart_datetime}}</h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">{{flight.depart_country}}, {{flight.airport}} <i class="fa-solid fa-arrow-right fa-xs"></i> {{flight.arrive_country}}</h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Gate {{flight.gate}}, Terminal {{flight.terminal}}</h6>
+                                                    <h4 class="card-title mb-3"> {{flight.flight_no}} {{flight.airline}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> {{flight.depart_datetime}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{flight.depart_country}}, {{flight.airport}} <i class="fa-solid fa-arrow-right fa-xs"></i> {{flight.arrive_country}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted">Gate {{flight.gate}}, Terminal {{flight.terminal}}</p>
                                                 </div>
                                             </div>
 
@@ -82,8 +82,9 @@
                                                 </div>
                                                 <div class="col">
                                                     <!-- {{LODGiNG}} -->
-                                                    <h4 class="card-title">{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
-                                                    <h6 class="card-subtitle mb-3 text-muted">Check-Out Details: {{lodge.checkout_datetime}}</h6>
+                                                    <h4 class="card-title mb-3">{{lodge.accom_name}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> Check-Out: {{lodge.checkout_datetime.split(" ")[1]}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{lodge.accom_address}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,9 +101,9 @@
                                                 </div>
                                                 <div class="col">
                                                     <!-- {{LODGiNG}} -->
-                                                    <h4 class="card-title">{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
-                                                    <h6 class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> Check-In Time: {{lodge.checkin_datetime.split(" ")[1]}}</h6>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Check-Out Details: {{lodge.checkout_datetime}}</h6>
+                                                    <h4 class="card-title mb-3">{{lodge.accom_name}}</h4>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-clock fa-xs"></i> Check-In: {{lodge.checkin_datetime.split(" ")[1]}}&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-clock fa-xs"></i> Check-Out: {{lodge.checkout_datetime}}</p>
+                                                    <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{lodge.accom_address}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,11 +116,9 @@
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item blurred-minor" v-for="activity in get_day(index)">
                                                 <!-- insert icon -->
-                                                <h4>{{activity.name}}<span class="badge rounded-pill text-bg-warning ms-1" >{{activity.tag}}</span></h4>
-                                                <br>
-                                                <h6>{{activity.address}}</h6>
-                                                <br>
-                                                <p>{{activity.price.krw}} KRW/{{activity.price.sgd}} SGD</p>
+                                                <h4 class="mb-3">{{activity.name}}<span class="badge rounded-pill text-bg-warning ms-1" >{{activity.tag}}</span></h4>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{activity.address}}</p>
+                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-money-bill fa-xs"></i> {{activity.price.krw}} KRW&nbsp;&nbsp;<i class="fa-solid fa-right-left fa-xs"></i>&nbsp;&nbsp;{{activity.price.sgd}} SGD</p>
                                                 <hr class="my-0">
                                             </li>
                                         </ul>
