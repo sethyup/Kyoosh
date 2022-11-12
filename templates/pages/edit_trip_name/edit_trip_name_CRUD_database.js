@@ -39,9 +39,9 @@ const root = Vue.createApp({
 
             // eDate: localStorage.getItem("trip_end_date"),
 
-            destination: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/destination/0'),
+            destination: "",
 
-            g_member: ref(db, 'trips/' + this.myTrip + 'urjfjwowskdorrofkckshecoejfnek' + this.myUsername + '/trip_details/g_member'),
+            g_member: "",
 
             myUsername: "",
             
@@ -56,19 +56,38 @@ const root = Vue.createApp({
     },
 
     mounted() {
-        this.myUsername = localStorage.getItem("user")
+        const username = localStorage.getItem("user")
+        this.myUsername = username
             
         const oldTrip_ID = localStorage.getItem("trip")
 
-        this.myTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
+        const oldTrip = oldTrip_ID.split('urjfjwowskdorrofkckshecoejfnek')[0]
+        this.myTrip = oldTrip
 
-        this.sDate = localStorage.getItem("trip_start_date")
+        const oldStartDate  = localStorage.getItem("trip_start_date")
+        this.sDate = oldStartDate
 
-        this.eDate = localStorage.getItem("trip_end_date")
-        
+        const oldEndDate = localStorage.getItem("trip_end_date")
+        this.eDate = oldEndDate
+
+        const oldDestination = localStorage.getItem("destination")
+        this.destination = oldDestination
+
+        this.g_member = get_collaborators(oldTrip_ID)
+
+        console.log(this.destination)
     },
 
     methods: {
+        get_collaborators(TID) {
+            const data_to_be_read = ref(db, 'trips/' + TID + '/trip_details/g_member');
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+                console.log(data)
+            return data
+            });
+        },
+
         edit_trip_details() {
             console.log("Writing data into database...")
             // the console can be open, 
@@ -86,6 +105,8 @@ const root = Vue.createApp({
                         destination: [this.destination, url],
                         start_date: this.sDate,
                         end_Date: this.eDate
+
+                        
                         
                 })
                 .then(
@@ -95,7 +116,7 @@ const root = Vue.createApp({
                         console.log("Entry Created")
 
                     },
-                
+                    
                     function delete_from_trip_list() {
                         const trips_path = ref(db, "trips/")
                         onValue(trips_path, (snapshot) => {
@@ -128,8 +149,8 @@ const root = Vue.createApp({
                     
 
                     function delete_from_user_and_friends() {
-                        all_members = this.g_member
-                        all_members.push(localStorage.getItem("trip").split('urjfjwowskdorrofkckshecoejfnek')[1])
+                        var all_members = this.g_member
+                        all_members.push(oldTrip.split('urjfjwowskdorrofkckshecoejfnek')[1])
                         console.log(all_members)
 
                         const users_path = ref(db, "users/")
@@ -188,7 +209,7 @@ const root = Vue.createApp({
                 localStorage.setItem("destination", this.destination)
                 // ========================================================================================
 
-                location.href = "../../map_phase2.html"
+                location.href = "../../../map_phase2.html"
             }
             
             // show alert

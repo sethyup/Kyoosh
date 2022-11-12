@@ -609,13 +609,13 @@ function initMap(location, lodging) {
     // console.log(lodging)
     create_lodging_marker(lodging, map)
         
-    initAutocomplete();
+    initAutocomplete(map);
 
 }
 
 // enable Autocomplete
-function initAutocomplete() {
-    let map = vm.$data.map
+function initAutocomplete(map) {
+    
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
     // get country code
@@ -938,6 +938,7 @@ const app = Vue.createApp({
               };
             service.findPlaceFromQuery(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    console.log(results[0].geometry.location)
                     map.setCenter(results[0].geometry.location);
                 }
               });
@@ -1273,7 +1274,7 @@ const app = Vue.createApp({
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
-        // await this.retrieve_from_cache()
+        await this.retrieve_from_cache()
         // get recommended locations from database
         
         await this.read_from_existing()
