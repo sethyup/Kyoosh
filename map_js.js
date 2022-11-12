@@ -534,6 +534,8 @@ const capitalList = {
     "ZM": "Lusaka",
     "ZW": "Harare"
 };
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 // cached variables
 var markers = [];
@@ -1285,14 +1287,15 @@ const app = Vue.createApp({
                 var start_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_start_date'))
                 var end_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_end_date'))
                 // set duration
-                var duration = `${start_date.getDate()} ${start_date.getMonth()} ${start_date.getFullYear()} - ${end_date.getDate()} ${end_date.getMonth()} ${end_date.getFullYear()}`
-                this.trip_details[duration] = duration
-                console.log(this.trip_details)
+                var c_duration = `${start_date.getDate()} ${month[start_date.getMonth()]} ${start_date.getFullYear()} - ${end_date.getDate()} ${month[end_date.getMonth()]} ${end_date.getFullYear()}`
+                this.trip_details.duration = c_duration
+                
             }
             if (localStorage.getItem('destination')) {
-                var country = localStorage.getItem('destination')
-                this.trip_details[country] = country
+                var c_country = localStorage.getItem('destination')
+                this.trip_details.country = c_country
             }
+            
         },
 
         // Datetime details
@@ -1311,6 +1314,7 @@ const app = Vue.createApp({
     async created() {
         // get cached information
         await this.retrieve_from_cache()
+        console.log(this.trip_details)
         // get recommended/existing locations from database
         await this.read_from_existing()
         // get group size from database
