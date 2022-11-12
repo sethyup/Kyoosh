@@ -621,7 +621,10 @@ function initMap(location, lodging) {
         create_marker(location[place], map, place)
     }
     // console.log(lodging)
-    create_lodging_marker(lodging, map)
+    if (lodging != null) {
+        create_lodging_marker(lodging, map)
+    }
+    
         
     initAutocomplete(map);
 

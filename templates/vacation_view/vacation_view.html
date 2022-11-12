@@ -52,7 +52,7 @@
                                     <!-- IF includes flight  -->
                                     <div v-for="flight of flights_details">
                                         <div v-if="flight.depart_datetime.slice(0,10) == date">
-                                        <div class="card mb-4 p-2 card-body blurred-minor">
+                                        <div class="card p-2 mb-3 card-body blurred-minor">
 
                                             <div class="row">
                                                 <div class="col-auto d-flex justify-content-center align-items-center">
@@ -75,7 +75,7 @@
                                     <!-- IF includes lodging (check-out) -->
                                     <div v-for="lodge of lodging_details">
                                         <div v-if="lodge.checkout_datetime.slice(0,10) == date">
-                                        <div class="card mb-4 p-2 card-body blurred-minor">
+                                        <div class="card p-2 mb-3 card-body blurred-minor">
                                             <div class="row">
                                                 <div class="col-auto d-flex justify-content-center align-items-center">
                                                     <i class="fa-solid fa-door-open ms-3 fa-2x"></i>
@@ -94,7 +94,7 @@
                                     <!-- IF includes lodging (check-in)-->
                                     <div v-for="lodge of lodging_details">
                                         <div v-if="lodge.checkin_datetime.slice(0,10) == date">
-                                        <div class="card mb-4 p-2 card-body blurred-minor">
+                                        <div class="card p-2 mb-3 card-body blurred-minor">
                                             <div class="row">
                                                 <div class="col-auto d-flex justify-content-center align-items-center">
                                                     <i class="fa-solid fa-hotel ms-3 fa-2x"></i>
