@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- local css -->
+    <link rel="stylesheet" href="../template.css">
+
+    <!-- bootstrap css -->
+    <link href="../../css/main.min.css" rel="stylesheet">
+    
+    <!-- VUE -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <title>Vacation Mode</title>
+</head>
+<body>
+    <div id="main">
+        <div class="container">
+            <div class="accordion" id="accordionPanels">
+                <div class="accordion-item" v-for="(date, index) of date_array">
+                    <h2 class="accordion-header" :id="'panelsStayOpen-heading' +index">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#panelsStayOpen-collapse' +index" aria-expanded="true" :aria-controls="'panelsStayOpen-collapse' +index">
+                        Day {{index+1}}: {{date}}
+                        </button>
+                    </h2>
+                    <!-- {{flights_details[1].depart_datetime}} -->
+                    <div :id="'panelsStayOpen-collapse' +index" class="accordion-collapse collapse show" :aria-labelledby="'panelsStayOpen-heading' + index">
+                        <div class="accordion-body">
+
+                            <!-- IF includes flight  -->
+                            <div v-for="flight of flights_details">
+                                <div v-if="flight.depart_datetime.slice(0,10) == date">
+                                <div  class="card mb-5 p-2" class="card-body">
+                                    <!-- {{flight}} -->
+
+                                    <h4 class="card-title"><!-- insert icon -->{{flight.flight_no}} {{flight.airline}} {{flight.depart_datetime}}</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{flight.depart_country}}, {{flight.airport}} to {{flight.arrive_country}}</h6>
+                                    <p class="card-text">Gate {{flight.gate}}, Terminal {{flight.terminal}}</p>
+                                </div>
+                                </div>
+                            </div>
+
+
+                            <!-- IF includes lodging (check-out) -->
+                            <div v-for="lodge of lodging_details">
+                                <div v-if="lodge.checkout_datetime.slice(0,10) == date">
+                                <div  class="card mb-5 p-2" class="card-body">
+                                    <!-- {{LODGiNG}} -->
+                                    <h4 class="card-title"><!-- insert icon -->{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
+                                    <p class="card-text">Check-Out Details: {{lodge.checkout_datetime}}</p>
+                                </div>
+                                </div>
+                            </div>
+
+                            <!-- IF includes lodging (check-in)-->
+                            <div v-for="lodge of lodging_details">
+                                <div v-if="lodge.checkin_datetime.slice(0,10) == date">
+                                <div  class="card mb-5 p-2" class="card-body">
+                                    <!-- {{LODGiNG}} -->
+                                    <h4 class="card-title"><!-- insert icon -->{{lodge.accom_name}}, {{lodge.accom_address}}</h4>
+                                    <h6 class="card-subtitle mb-2 text-muted">Check-In Time: {{lodge.checkin_datetime.slice(11,16)}}</h6>
+                                    <p class="card-text">Check-Out Details: {{lodge.checkout_datetime}}</p>
+                                </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- IF itinerary includes activities -->
+                            <div class="card" style="" v-if="Object.keys(days).includes('Day ' + (index+1))">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" v-for="activity in get_day(index)">
+                                        <!-- insert icon -->
+                                        <h4>{{activity.name}}<span class="badge rounded-pill text-bg-warning ms-1" >{{activity.tag}}</span></h4>
+                                        <br>
+                                        <h6>{{activity.address}}</h6>
+                                        <br>
+                                        <p>{{activity.price.krw}} KRW/{{activity.price.sgd}} SGD</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+
+        </div>
+    </div>
+    
+        <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/c7ddd7a650.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <script type="module" src="vacation_view.js"></script>
+</body>
+</html>
