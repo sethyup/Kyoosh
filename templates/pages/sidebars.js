@@ -462,7 +462,7 @@ sidebar.component('select-activity-sidebar', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img :src="comp_user_pic" alt="pic" width="30" height="30" class="rounded-circle">
+                            <img src="https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/kbang.jpg" alt="pic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
