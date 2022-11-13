@@ -95,26 +95,29 @@
     <div class="container-fluid" id="app">
         <div class="row sidebar-parent flex-nowrap">
             <!-- SIDEBAR -->
-            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2 hide-scrollbar" style="overflow-y: auto; height:100vh;">
+            <div id="app" class="col-auto sidebar-css p-0 blurred-minor-2 hide-scrollbar" style="overflow-y: auto; height:100vh;">
                 <p></p>
-                 <div class="col-auto sticky-top">
+
+                <div class="col-auto sticky-top">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                            <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
+                            <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             
                             <!--Home-->
                             <li class="nav-item">
                                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
-                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-house fa-xs"></i> Home</span>
+                                    <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-house fa-xs"></i></span>
+                                    <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
                                 </a>
                             </li>
     
                             <!--Itinerary-->
                             <li>
-                                <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i> Itinerary</span>
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" class="nav-link px-0 align-middle ">
+                                    <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
+                                    <span class="fs-5 ms-1 d-none d-sm-inline">Itinerary</span>
                                 </a>
     
                                 <ul class="collapse show nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
@@ -125,23 +128,25 @@
                                     </li>
                                 </ul>
                             </li>
+
                             <li>
                                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page_phase3.html" class="nav-link px-0 align-middle">
-                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-plane fa-xs"></i> Flight</span></a>
+                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-plane fa-xs"></i></span>
+                                <span class="fs-5 ms-1 d-none d-sm-inline">Flight</span>
                             </li>
                             <li>
                                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/lodging/lodging_phase3.html" class="nav-link px-0 align-middle">
-                                    <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-hotel fa-xs"></i> Lodging</span></a>
+                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-hotel fa-xs"></i></span>
+                                <span class="fs-5 ms-1 d-none d-sm-inline">Lodging</span>
                             </li>
                         </ul>
                         
                         
                         <hr>
-    
                         <div class="dropdown pb-4">
                             <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">Bean</span>
+                                <img :src="user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1 text-dark">{{username}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
@@ -149,9 +154,12 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
                             </ul>
                         </div>
+
+
+                          
                     </div>
                 </div>
             </div>

@@ -9,6 +9,7 @@ if (localStorage.getItem("user") === null) {
 // Firebase stuff
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, confirmPasswordReset } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 
 // list of months
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -26,7 +27,9 @@ const WADTravel = initializeApp({
 })
 
 // const auth = getAuth(WADTravel)
+const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
+const google_provider = new GoogleAuthProvider()
 
 // const variables
 // ISO 3166 Alpha-2 Format: [Country Name] : [2 letter Country Code]
@@ -862,6 +865,11 @@ function DeleteMarker(id) {
 const app = Vue.createApp({ 
     data() { 
         return { 
+
+            // get user deets
+            username: "",
+            user_pic: "",
+
             // trip details
             trip_id: "",
             user_id: "",
@@ -915,6 +923,40 @@ const app = Vue.createApp({
         };
     }, //data
     methods: {
+        // get user deets
+        get_username(){
+            // get username
+            if (localStorage.getItem('username')) {
+                this.username = localStorage.getItem('username')
+            } else {
+                this.username = "Login Chap"
+            }
+        },
+
+        get_user_pic(){
+            if (this.username){
+                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
+            } else {
+                this.user_pic = "https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
+            }
+        },
+
+        sign_out() {
+            console.log("starting to log out user...")
+            signOut(auth).then(
+            function success_sign_out() {
+                alert("sign out successful")
+                console.log("sign out successful")
+                localStorage.clear()
+            },
+            function failed_sign_out() {
+                alert("sign out failed")
+                console.log("sign out failed")
+            }
+            )
+        },
+
+        /////////////////
 
 
         // day sorting details
@@ -1543,6 +1585,9 @@ const app = Vue.createApp({
         await this.read_group_members()
         // await this.retrieve_trip_name_date()
         await this.read_dates()
+
+        await this.get_username()
+        await this.get_user_pic()
                 
     }
 });
