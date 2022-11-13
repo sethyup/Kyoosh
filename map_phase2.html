@@ -78,7 +78,7 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
-                <sidebar-phase2 :comp_username="username"></sidebar-phase2>
+                <sidebar-phase2 :comp_username="username" :comp_user_pic="user_pic"></sidebar-phase2>
             </div>
             
             <!-- whole site -->
@@ -356,7 +356,11 @@
                                 <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
                                 <div class="buttons">                         
                                     <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
-                                    <button type="button" class="btn save_button btn-main-fixed mx-2" @click="edit_true=false">Cancel</button>
+                                    <button type="button" class="btn save_button btn-main-fixed mx-2" @click="edit_true=false,              selected_address ='',
+                                    tag_input = '',
+                                    selected_description = '',
+                                    amount = '',
+                                    converted_amount = ''">Cancel</button>
                                     <!-- should write data to db and update infoWindow -->
                                     <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,create_update_data()">Save</button>
     

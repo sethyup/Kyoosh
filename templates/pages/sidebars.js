@@ -26,7 +26,8 @@ const sidebar = Vue.createApp({
     //         date_array: [],
     //     }
         return{    
-            username: ""
+            username: "",
+            user_pic: ""
         }
     },
 
@@ -35,6 +36,16 @@ const sidebar = Vue.createApp({
             // get username
             if (localStorage.getItem('username')) {
                 this.username = localStorage.getItem('username')
+            } else {
+                this.username = "Login Chap"
+            }
+        },
+
+        get_user_pic(){
+            if (this.username){
+                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
+            } else {
+                this.user_pic = "https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
             }
         },
 
@@ -89,6 +100,8 @@ const sidebar = Vue.createApp({
     async created() {
         // get cached information
         await this.get_username()
+
+        await this.get_user_pic()
     }
     // async created() {
     //     await this.read_from_existing_locations()
@@ -96,7 +109,7 @@ const sidebar = Vue.createApp({
 });
 
 sidebar.component('sidebar-general', {
-    props: ["comp_username"],
+    props: ["comp_username", "comp_user_pic"],
     template: 
         `
         <div class="col-auto sticky-top">
@@ -168,7 +181,7 @@ sidebar.component('sidebar-general', {
 
                 <div class="dropdown pb-4">
                     <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                        <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
                         <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -186,7 +199,7 @@ sidebar.component('sidebar-general', {
     })
 
 sidebar.component('sidebar-phase2', {
-    props: ["comp_username"],
+    props: ["comp_username", "comp_user_pic"],
     template: 
            `
            <div class="col-auto sticky-top">
@@ -258,7 +271,7 @@ sidebar.component('sidebar-phase2', {
     
                         <div class="dropdown pb-4">
                             <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                                <img :src="comp_user_pic" alt="pic" width="30" height="30" class="rounded-circle">
                                 <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -276,7 +289,7 @@ sidebar.component('sidebar-phase2', {
     })
 
 sidebar.component('sidebar-member-phase2', {
-    props: ["comp_username"],
+    props: ["comp_username", "comp_user_pic"],
     template: 
     `
     <div class="col-auto sticky-top">
@@ -344,7 +357,7 @@ sidebar.component('sidebar-member-phase2', {
 
             <div class="dropdown pb-4">
                 <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                    <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
                     <span class="d-none d-sm-inline mx-1">{{comp_username}}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -362,7 +375,7 @@ sidebar.component('sidebar-member-phase2', {
     })
 
 sidebar.component('select-activity-sidebar', {
-    props: ["comp_username"],
+    props: ["comp_username", "comp_user_pic"],
     template: 
             `<div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -408,7 +421,7 @@ sidebar.component('select-activity-sidebar', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -426,7 +439,7 @@ sidebar.component('select-activity-sidebar', {
     })
 
 sidebar.component('sidebar-phase3', {
-    props: ['date_array', 'comp_username'],
+    props: ['date_array', 'comp_username', 'comp_user_pic'],
     template: 
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -467,7 +480,7 @@ sidebar.component('sidebar-phase3', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -485,7 +498,7 @@ sidebar.component('sidebar-phase3', {
     })
 
 sidebar.component('sidebar-phase4', {
-    props: ['date_array', 'comp_username'],
+    props: ['date_array', 'comp_username', 'comp_user_pic'],
     template: 
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
@@ -511,7 +524,7 @@ sidebar.component('sidebar-phase4', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">

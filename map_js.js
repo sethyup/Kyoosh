@@ -268,7 +268,7 @@ const countryList = {
     Uzbekistan: 'UZ',
     Vanuatu: 'VU',
     Venezuela: 'VE',
-    'Viet Nam': 'VN',
+    'Vietnam': 'VN',
     'Virgin Islands, British': 'VG',
     'Virgin Islands, U.S.': 'VI',
     'Wallis And Futuna': 'WF',
@@ -688,10 +688,7 @@ function initAutocomplete(map) {
 
         marker.id = uniqueId;
         vm.$data.current_id = uniqueId
-        console.log('from autocomplete')
-        console.log(uniqueId)
-        console.log(marker.id)
-        console.log(vm.$data.current_id)
+
         const contentString = 
         `
         <div id="content" name="${marker.id}">
@@ -793,6 +790,8 @@ function create_marker(place, map, id) {
             infoWindow.setContent(contentString);
             infoWindow.open(map, marker);});
         markers.push(marker)
+        console.log(markers)
+        console.log(uniqueId)
         
 }
 // create lodging markers
@@ -935,18 +934,27 @@ const app = Vue.createApp({
             // console.log(`${id} this is from delete marker`)
             DeleteMarker(id);
             this.delete_data(id)
+            document.getElementById('autocomplete').value = ""
+            this.tag_input = ""
+            this.selected_description = ""
+            this.amount = ""
+            this.converted_amount = ""
             
         },
         // delete marker in create activity
         delete_marker(id) {
             // console.log(`${id} this is from delete marker`)
-            if (this.current_id == markers.length ) {
+            if (this.current_id -1 != markers.length ) {
                 return
-            } else if (this.current_id != markers.length  ) {
+            } else if (this.current_id -1 == markers.length  ) {
                 DeleteMarker(id);
                 this.delete_data(id)
             }
-            
+            document.getElementById('autocomplete').value = ""
+            this.tag_input = ""
+            this.selected_description = ""
+            this.amount = ""
+            this.converted_amount = ""
         },
         // get country code
         get_country_code(country) {
@@ -1147,7 +1155,8 @@ const app = Vue.createApp({
                 console.log(failed_message);
             })
             // reset fields
-            this.description = ""
+            this.selected_description = ""
+            this.selected_address = ""
             this.yet_to_vote = []
             this.tag_input = ""
             this.amount = ""
@@ -1210,6 +1219,10 @@ const app = Vue.createApp({
             // clear autocomplete input field for next activity
             // console.log(document.getElementById('autocomplete').value )
             document.getElementById('autocomplete').value = ""
+            this.tag_input = ""
+            this.selected_description = ""
+            this.amount = ""
+            this.converted_amount = ""
 
         },
         // delete activity from database
