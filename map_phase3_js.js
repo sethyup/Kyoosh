@@ -919,6 +919,9 @@ const app = Vue.createApp({
             days: {
                 
             },
+            days_old_version: {
+
+            }, 
             s_date: "",
             e_date: "",
             date_array: [], 
@@ -990,19 +993,45 @@ const app = Vue.createApp({
                 var increment_date_obj = new Date(s_date)
                 var count_days = 1
             
-            
-                while (increment_date_obj <= e_date_obj) {
-                    // console.log("working")
-                    var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
-                    this.date_array.push(date_str_to_push)
-                    var day = "Day " + count_days
-                    // var new_obj = {day : []}
-                    // console.log(new_obj)
-                    this.days[day] = []
-                    count_days += 1
-                    
-                    increment_date_obj.setDate(increment_date_obj.getDate() + 1)
+                if(Object.keys(this.days_old_version).length > 0){
+                    while (increment_date_obj <= e_date_obj) {
+                        // console.log("working")
+                        var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
+                        this.date_array.push(date_str_to_push)
+                        var day = "Day " + count_days
+                        var day_exist = false
+                        for (let i=0; i<Object.keys(this.days_old_version).length; i++) {
+                            if(day == Object.keys(this.days_old_version)[i]){
+                                this.days[day] = this.days_old_version[day]
+                                day_exist = true
+                            }
+                        }
+                        // var new_obj = {day : []}
+                        // console.log(new_obj)
+                        if(!day_exist){
+                            this.days[day] = []
+                        }
+                        
+                        count_days += 1
+                        increment_date_obj.setDate(increment_date_obj.getDate() + 1)
+                    }
+
                 }
+                else{
+                    while (increment_date_obj <= e_date_obj) {
+                        // console.log("working")
+                        var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
+                        this.date_array.push(date_str_to_push)
+                        var day = "Day " + count_days
+                        // var new_obj = {day : []}
+                        // console.log(new_obj)
+                        this.days[day] = []
+                        count_days += 1
+                        
+                        increment_date_obj.setDate(increment_date_obj.getDate() + 1)
+                    }
+                }
+
             // console.log("render", this.date_array)
             // console.log("render2", this.days)
             console.log('dates_array created')
@@ -1010,20 +1039,7 @@ const app = Vue.createApp({
             },
         // progress bar functions for day sorting
         get_total_users(){
-            var total_users = 0
-            var votes = this.existing_locations[0].votes
-            // console.log(`${all_votes} this from get total users`)
-            if(votes.yes){
-              total_users += votes.yes.length
-            }
-            if(votes.no){
-              total_users += votes.no.length
-            }
-            if(votes.yet_to_vote){
-              total_users += votes.yet_to_vote.length
-            }
-            // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
-            // console.log(this.get_total_users)
+                var total_users = this.group_members.length
             return total_users
             },
         get_yes_num(votes){
@@ -1109,15 +1125,21 @@ const app = Vue.createApp({
             key = "Day " + (this.current_id +1)
             console.log("CURRENT ID:", this.current_id, "DAY:", this.current_id+1)
 
+            console.log(this.days[key])
             if(this.days[key]){
                 for (let i=0; i<this.days[key].length; i++) {
-                    var checked_activity = this.days[key][i]
-                    for (let i=0; i<this.existing_locations.length; i++) {
-                        if(checked_activity == this.existing_locations[i]){
-                            this.master_checked_activities.push(i)
+                    var checked_activity = this.days[key][i].name
+                    console.log("ACTIVITY", checked_activity)
+                    for (let j=0; j<this.existing_locations.length; j++) {
+                        console.log(this.existing_locations[j])
+                        if(checked_activity == this.existing_locations[j].name){
+                            console.log("YES")
+                            this.master_checked_activities.push(j)
                         }
                     }
             }}
+            console.log("MASTER",this.master_checked_activities)
+            console.log(this.days[key][0] == this.existing_locations[1])
 
         },
 
@@ -1288,6 +1310,16 @@ const app = Vue.createApp({
                     })
                 }
                 })   
+            },
+            // read days data for voting
+            read_days_data() {
+                const data_to_be_read = ref(db, `trips/${this.trip_id}/days`);
+                onValue(data_to_be_read, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        this.days_old_version = data 
+                        // console.log(data)
+                    }})
             },
         // read group members for voting
         read_group_members() {
@@ -1494,7 +1526,6 @@ const app = Vue.createApp({
         // write days data into database
         create_days_data() {
             this.select_new_day(0)
-
             console.log("Writing data into database...")
 
             // EDIT HERE
@@ -1587,6 +1618,8 @@ const app = Vue.createApp({
         this.retrieve_from_cache()
         // get recommended/existing locations from database
         await this.read_from_existing()
+        //read existing days data if any 
+        await this.read_days_data()
         // get group size from database
         await this.read_group_members()
         // await this.retrieve_trip_name_date()
@@ -1594,6 +1627,8 @@ const app = Vue.createApp({
 
         await this.get_username()
         await this.get_user_pic()
+
+
                 
     }
 });
