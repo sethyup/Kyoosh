@@ -431,7 +431,7 @@ sidebar.component('sidebar-phase3', {
 
                         <!--Itinerary-->
                         <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                 <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Itinerary</span>
                             </a>
