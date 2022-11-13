@@ -544,7 +544,7 @@ var uniqueId = 0;
 // progress bar functions ================================================================
 
 function get_total_users(place) {
-    var total_users = vm.$data.group_members.length
+    var total_users = place.group_members.length
 
     // var votes = place.votes
     // // console.log(`${all_votes} this from get total users`)
