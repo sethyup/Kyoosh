@@ -226,7 +226,7 @@ const root = Vue.createApp({
                 localStorage.setItem("destination", this.destination)
                 // ========================================================================================
 
-                location.href = "../../map_phase2.html"
+                location.href = "../../../map_phase2.html"
                 // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
