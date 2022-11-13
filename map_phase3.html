@@ -496,12 +496,12 @@
         
                                 <!-- if at editing day, get through masterlist -->
                                 <div v-if="current_id == id_index">
-                                    <div class="card mb-3 blurred-minor-no-bd-filter" v-for="num in master_checked_activities"> 
+                                    <div class="card mb-3 blurred-minor-no-bd-filter-2" v-for="num in master_checked_activities"> 
         
                                             <div class="card-body">
                                                 <h5 class="card-title mb-3">{{ existing_locations[num]["name"] }}<span class="badge rounded-pill text-bg-warning ms-1" >#{{existing_locations[num]["tag"]}}</span></h5> 
-                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-location-dot fa-xs"></i> {{existing_locations[num]["address"]}}</p>
-                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-money-bill fa-xs"></i> {{existing_locations[num]["price"]["sgd"]}} SGD/per person</p>
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-bold"><i class="fa-solid fa-location-dot fa-xs"></i> {{existing_locations[num]["address"]}}</p>
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-bold"><i class="fa-solid fa-money-bill fa-xs"></i> {{existing_locations[num]["price"]["sgd"]}} SGD/per person</p>
                                                 <p class="card-text">{{existing_locations[num]["description"]}}</p> 
                                             </div>
                                     </div>
@@ -513,8 +513,8 @@
                                         <!-- {{location}} -->
                                             <div class="card-body">
                                                 <h5 class="card-title mb-3">{{location.name}}<span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span></h5>
-                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-location-dot fa-xs"></i> {{location.address}}</p>
-                                                <p class="card-subtitle mb-2 text-muted"><i class="fa-solid fa-money-bill fa-xs"></i> {{location.price.sgd}} SGD/per person</p>
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-location-dot fa-xs"></i> {{location.address}}</p>
+                                                <p class="card-subtitle mb-2 text-dark-grey fw-semibold"><i class="fa-solid fa-money-bill fa-xs"></i> {{location.price.sgd}} SGD/per person</p>
                                                 <p class="card-text">{{location.description}}</p>
                                                 
                                             </div>
@@ -588,7 +588,6 @@
                                                                             <!--  VOTED MAYBE   -->
                                                                         <div :id="'progress_yet_to_vote' + index" class="progress-bar bg-mild text-dark" role="progressbar" aria-label="yet_to_vote_percentage" :style="{width: get_yet_to_vote_percentage(location.votes) + '%' }" v-bind:aria-valuenow="get_yet_to_vote_percentage(location.votes)" aria-valuemin="0" aria-valuemax="100">NA</div>
                                                                 </div>
-        
                                                             </div> 
                                                         </div>
                                                     </div>
@@ -599,8 +598,6 @@
                                 </div>
                                 </div>
                             </div>
-        
-                        
                         </div>
                     </div>
                 </div>
