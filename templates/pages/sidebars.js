@@ -431,14 +431,10 @@ sidebar.component('sidebar-phase3', {
 
                         <!--Itinerary-->
                         <li>
-                            <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" class="nav-link px-0 align-middle ">
                                 <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Itinerary</span>
                             </a>
-
-                            <ul class="collapse show nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
-                                <slot></slot>
-                            </ul>
                         </li>
                         <li>
                             <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page_phase3.html" class="nav-link px-0 align-middle">
