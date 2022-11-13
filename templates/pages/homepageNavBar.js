@@ -67,7 +67,7 @@ main.component('homepage-navbar', {
     props: ["comp_username", "comp_user_pic"],
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
-                <div class="container">
+                <div class="container-fluid px-5">
                     <a class="navbar-brand" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="60"></a>
 
                         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -106,7 +106,7 @@ main.component('createtrip-navbar', {
     props: ["comp_username", "comp_user_pic"],
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
-            <div class="container">
+            <div class="container-fluid px-5">
                 <a class="navbar-brand" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="60"></a>
                 <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                     aria-expanded="false" aria-label="Toggle navigation">

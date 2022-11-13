@@ -544,8 +544,11 @@ var uniqueId = 0;
 // progress bar functions ================================================================
 
 function get_total_users(place) {
-    var total_users = 0
+    // console.log("place", place)
+    // var total_users = place.vtes
+
     var votes = place.votes
+    var total_users = 0
     // console.log(`${all_votes} this from get total users`)
     if(votes.yes){
       total_users += votes.yes.length
@@ -556,8 +559,9 @@ function get_total_users(place) {
     if(votes.yet_to_vote){
       total_users += votes.yet_to_vote.length
     }
-    // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
+
     // console.log(this.get_total_users)
+    console.log(total_users)
     return total_users
 }
 function get_yes_num(votes) {
@@ -712,6 +716,8 @@ function initAutocomplete(map) {
     markers.push(marker)
     marker.addListener("click", (googleMapsEvent) => {
         infowindow.open(map, marker);})
+    marker.addListener("dblclick", (googleMapsEvent) => {
+        infowindow.close(map, marker);})
     })
     window.autocomplete = autocomplete
     
@@ -789,6 +795,8 @@ function create_marker(place, map, id) {
         marker.addListener("click", (googleMapsEvent) => {
             infoWindow.setContent(contentString);
             infoWindow.open(map, marker);});
+        marker.addListener("dblclick", (googleMapsEvent) => {
+            infoWindow.close();})
         markers.push(marker)
         // console.log(markers)
         // console.log(uniqueId)
