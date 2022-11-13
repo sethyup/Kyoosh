@@ -1493,6 +1493,8 @@ const app = Vue.createApp({
         },
         // write days data into database
         create_days_data() {
+            this.select_new_day(0)
+
             console.log("Writing data into database...")
 
             // EDIT HERE

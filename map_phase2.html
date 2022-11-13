@@ -217,19 +217,19 @@
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="back_button_modal" tabindex="-1" aria-labelledby="back_button_modal_label1" aria-hidden="true">
                                         <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="ModalLabel">Confirm Navigation</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="ModalLabel">Confirm Navigation</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                Are you sure you want to leave this page? Any unsaved changes will be lost. 
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
+                                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id)" onclick="document.location.reload(true)">Confirm</button>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                            Are you sure you want to leave this page? Any unsaved changes will be lost. 
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
-                                            <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_true=false, delete_marker(current_id)" onclick="document.location.reload(true)">Confirm</button>
-                                            </div>
-                                        </div>
                                         </div>
                                     </div>
                 
