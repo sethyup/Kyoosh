@@ -102,7 +102,12 @@ const app = Vue.createApp( {
 	//=========== METHODS ===========
 	methods: {
 		delete_trip(tripID) {
-			// delete the trip from
+			// if you are a group leader,
+			// lets you delete the group for everyone instead.
+			
+
+			// if you are a group member,
+			// lets you leave the group instead.
 			const path_location = ref(db, "trips/" + tripID)
 			remove(path_location)
 			.then(
