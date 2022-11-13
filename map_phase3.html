@@ -104,7 +104,7 @@
                             <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
                         </a>
                         <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-sm-none">
-                            <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png">         
+                            <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png" width="50">         
                         </a>
 
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
@@ -485,7 +485,7 @@
                             <!-- activity list MAP COL, need to find a way to make as many for each hardcoded place -->
                             <div class="col-md-6 col-12 hide-scrollbar" style="overflow: auto; height: 100vh;">
                                 <h2 class="my-3 text-lg-start text-center text-white">Sort Activities by Days</h2>
-                                <p>{{days}}</p>
+                                
 
                                 <div v-for="(day, id_index) in date_array">
         
@@ -612,6 +612,8 @@
                     <i class="fa-regular fa-circle-question"></i>
                 </button>
                 <!-- MAP VIEW TOGGLE -->
+                <button  class="btn btn-main-bold-fixed my-3 mx-1" @click="redirect()">Vacation Mode</button>
+                <!-- MAP VIEW TOGGLE -->
                 <button v-if="map_view" id="mapview_toggle" class="btn btn-main-bold-fixed my-3 mx-1" @click="change_map_view()"><i class="fa-solid fa-rectangle-list fa-xs"></i> List</button>
 
                 <!-- LIST VIEW TOGGLE -->
@@ -621,10 +623,29 @@
                     Create Activity
                 </button>
 
-                <button type="button" class="btn btn-main-fixed my-3 mx-1" @click="create_days_data()">
+                <button type="button" class="btn btn-main-fixed my-3 mx-1" @click="create_days_data()" data-bs-toggle="modal" data-bs-target="#saveModal">
                     Save Changes
                 </button>
             </div>
+
+
+                            <!-- Save Modal -->
+                <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Saved Changes</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Your edits have been saved. 
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
 
             <!-- Tutorial Modal -->
             <div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

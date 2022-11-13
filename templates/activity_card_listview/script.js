@@ -108,20 +108,21 @@ const main = Vue.createApp({
 
         // progess bar methods
         get_total_users(){
-          var total_users = 0
-          var votes = this.existing_locations[0].votes
-          // console.log(`${all_votes} this from get total users`)
-          if(votes.yes){
-            total_users += votes.yes.length
-          }
-          if(votes.no){
-            total_users += votes.no.length
-          }
-          if(votes.yet_to_vote){
-            total_users += votes.yet_to_vote.length
-          }
+          // var total_users = 0
+          // var votes = this.existing_locations[0].votes
+          // // console.log(`${all_votes} this from get total users`)
+          // if(votes.yes){
+          //   total_users += votes.yes.length
+          // }
+          // if(votes.no){
+          //   total_users += votes.no.length
+          // }
+          // if(votes.yet_to_vote){
+          //   total_users += votes.yet_to_vote.length
+          // }
           // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
           // console.log(this.get_total_users)
+          var total_users = this.group_members
           return total_users
         },
 
@@ -163,11 +164,8 @@ const main = Vue.createApp({
           return (yet_to_vote_votes)*100/this.get_total_users()
         },
         user_reject(votes, idx){
-            // number of members = 5
-            // if voted yes before
-            // console.log(this.existing_locations)
-            console.log(votes)
 
+            console.log("Check votes")
             // check if voted yes before
             if(votes.yes){
               console.log("yes array exist")
@@ -183,26 +181,41 @@ const main = Vue.createApp({
                   votes["no"] = [this.user_name]
                 }
               }
-
             }
 
-            // yet to vote before
-            if(Object.values(votes.yet_to_vote).includes(this.user_name)){
+            else{
+              console.log("CHECK 1")
               if(!votes.no){
-                console.log("votes no array dont exist")
                 votes["no"] = [this.user_name]
                 votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
               }
               else{
-                console.log("votes no array exist")
                 if(!votes.no.includes(this.user_name)){
-                  console.log("Check if voted before: ", !votes.no.includes(this.user))
                   votes.no.push(this.user_name)
                   votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
                 }
               }
             }
-            console.log(votes)
+
+
+
+            // yet to vote before
+            // if(Object.values(votes.yet_to_vote).includes(this.user_name)){
+            //   if(!votes.no){
+            //     console.log("votes no array dont exist")
+            //     votes["no"] = [this.user_name]
+            //     votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
+            //   }
+            //   else{
+            //     console.log("votes no array exist")
+            //     if(!votes.no.includes(this.user_name)){
+            //       console.log("Check if voted before: ", !votes.no.includes(this.user))
+            //       votes.no.push(this.user_name)
+            //       votes.yet_to_vote.splice(votes.yet_to_vote.indexOf(this.user_name),1)
+            //     }
+            //   }
+            // }
+            // console.log(votes)
 
         },
         user_accept(votes, idx){
