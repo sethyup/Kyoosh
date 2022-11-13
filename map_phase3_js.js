@@ -1214,13 +1214,15 @@ const app = Vue.createApp({
         async read_from_existing() {
             var lodging_locations = await this.retrieve_lodging_locations()
             // console.log(lodging_locations)
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/selected_activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
                     
+                    console.log("DATA: ",data)
+
                     uniqueId = data.length
                     markers = []
                     // console.log(lodging_locations)
