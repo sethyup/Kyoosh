@@ -209,7 +209,7 @@ sidebar.component('sidebar-general', {
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                        <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -303,7 +303,7 @@ sidebar.component('sidebar-phase2', {
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -393,7 +393,7 @@ sidebar.component('sidebar-member-phase2', {
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                    <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -405,14 +405,14 @@ sidebar.component('select-activity-sidebar', {
     props: ["comp_username", "comp_user_pic"],
     template: 
             ` <div class="col-auto sticky-top">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-none d-sm-inline">
-                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
-                </a>
-                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-sm-none">
-                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png">         
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-none d-sm-inline">
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
+                    </a>
+                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-sm-none">
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png">         
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     
                     <!--Home-->
                     <li class="nav-item">
@@ -461,7 +461,7 @@ sidebar.component('select-activity-sidebar', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <img :src="comp_user_pic" alt="pic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -470,7 +470,7 @@ sidebar.component('select-activity-sidebar', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -532,7 +532,7 @@ sidebar.component('sidebar-phase3', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -580,7 +580,7 @@ sidebar.component('sidebar-phase4', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>

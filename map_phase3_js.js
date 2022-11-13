@@ -149,7 +149,8 @@ const countryList = {
     Kazakhstan: 'KZ',
     Kenya: 'KE',
     Kiribati: 'KI',
-    Korea: 'KR',
+    'South Korea': 'KR',
+    'North Korea': 'KP',
     Kuwait: 'KW',
     Kyrgyzstan: 'KG',
     "Lao People's Democratic Republic": 'LA',
@@ -622,7 +623,10 @@ function initMap(location, lodging) {
         create_marker(location[place], map, place)
     }
     // console.log(lodging)
-    create_lodging_marker(lodging, map)
+    if (lodging) {
+        create_lodging_marker(lodging, map)
+    }
+    
         
     initAutocomplete(map);
 
