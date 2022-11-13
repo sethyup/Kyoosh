@@ -68,7 +68,7 @@ main.component('homepage-navbar', {
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
                 <div class="container">
-                    <a class="navbar-brand" href="#"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png"></a>
+                    <a class="navbar-brand" href="#"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120"></a>
 
                         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,7 @@ main.component('createtrip-navbar', {
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
             <div class="container">
-                <a class="navbar-brand" href="#"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png"></a>
+                <a class="navbar-brand" href="#"><img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120"></a>
                 <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
