@@ -133,7 +133,7 @@ sidebar.component('sidebar-general', {
                     <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
                 </a>
                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-sm-none">
-                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png">         
+                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png" width="50">         
                 </a>
 
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
@@ -549,7 +549,7 @@ sidebar.component('sidebar-phase4', {
                         <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
                     </a>
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none d-sm-none">
-                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png">         
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo-SMALL.png" width="50">         
                     </a>
 
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
