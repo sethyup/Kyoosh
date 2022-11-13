@@ -145,7 +145,8 @@ const countryList = {
     Kazakhstan: 'KZ',
     Kenya: 'KE',
     Kiribati: 'KI',
-    Korea: 'KR',
+    'South Korea': 'KR',
+    'North Korea': 'KP',
     Kuwait: 'KW',
     Kyrgyzstan: 'KG',
     "Lao People's Democratic Republic": 'LA',
@@ -608,7 +609,10 @@ function initMap(location, lodging) {
     }
     );
     // get capital from capitalList, get country code from function, get country from cache
+    
     var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.destination))
+    console.log(vm.$data.trip_details.destination)
+    console.log(vm.get_country_code(vm.$data.trip_details.destination))
     vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
     //     create_marker_by_click(e.latLng,map);
@@ -955,6 +959,7 @@ const app = Vue.createApp({
                 query: country,
                 fields: ['geometry'],
               };
+            
             service.findPlaceFromQuery(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     // console.log(results[0].geometry.location)
