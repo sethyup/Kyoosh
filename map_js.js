@@ -586,17 +586,17 @@ function get_yet_to_vote_num(votes) {
 function get_yes_percentage(votes,place) {
     // console.log(votes.yes.length)
     var yes_votes = get_yes_num(votes)
-    return (yes_votes)*100/vm.get_total_users(place)
+    return (yes_votes)*100/get_total_users(place)
 }
 function get_no_percentage(votes,place) {
     // console.log(votes.no.length)
     var no_votes = get_no_num(votes)
-    return (no_votes)*100/vm.get_total_users(place)
+    return (no_votes)*100/get_total_users(place)
 }
 function get_yet_to_vote_percentage(votes,place) {
     // console.log(votes.yet_to_vote.length)
     var yet_to_vote_votes = get_yet_to_vote_num(votes)
-    return (yet_to_vote_votes)*100/vm.get_total_users(place)
+    return (yet_to_vote_votes)*100/get_total_users(place)
 }
 
 // map-related functions ===================================================================
