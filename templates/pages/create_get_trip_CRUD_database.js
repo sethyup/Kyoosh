@@ -232,7 +232,6 @@ const root = Vue.createApp({
                 else{
                     this.collaborators.push(collaborator_to_add)
                     this.collaborator_input = ""
-
                     this.error_message = ""
                 }
             }
@@ -246,30 +245,6 @@ const root = Vue.createApp({
         convert_email_to_userID(email_str) {
             return email_str.replaceAll(".","")
         }
-
-        // delete_data() {
-        //     remove(/* path location goes here*/)
-        //     .then(
-        //         function delete_success() {
-        //             alert("Delete operation is a success!")
-        //             console.log("Delete operation is a success!")
-        //         }
-        //     )
-        //     .catch((error) => {
-        //         // for admin, tells you what error there is
-        //         const errorCode = error.code;
-        //         const errorMessage = error.message;
-        //         console.log(errorMessage)
-        //         console.log(errorCode)
-
-        //         // display "Error" message
-        //         // stays on the same page
-        //         var failed_message = `Delete Operation Unsuccessful. Error: ${errorMessage}`
-        //         alert(failed_message)
-        //         console.log("Delete Unsuccessful");
-        //     })
-
-        // }
     },
 
     mounted() {

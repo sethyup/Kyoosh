@@ -159,6 +159,11 @@ div#animated-text{
     border: 0 !important;
 }
 
+.blurred-minor-no-bd-filter-2{
+    background:  rgba(255, 255, 255, 0.744) !important;
+    border: 0 !important;
+}
+
 .blurred-minor-gradient{
     backdrop-filter: blur(1px) !important;
     background: linear-gradient(90deg, rgba(36, 161, 157, 0.7), rgba(36, 161, 157, 0.15)) !important;

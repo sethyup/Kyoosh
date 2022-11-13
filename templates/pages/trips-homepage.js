@@ -101,13 +101,69 @@ const app = Vue.createApp( {
 
 	//=========== METHODS ===========
 	methods: {
-		delete_trip(tripID) {
-			// delete the trip from
-			const path_location = ref(db, "trips/" + tripID)
-			remove(path_location)
-			.then(
-				console.log("trip deleted")
-			)
+		async delete_trip(tripID) {
+			// find out if you are a member or leader,
+			var group_leader = tripID.split("urjfjwowskdorrofkckshecoejfnek")[1]
+			console.log(group_leader)
+			var user_ID = localStorage.getItem("user")
+			console.log(user_ID)
+			if(user_ID == group_leader){
+				// you are the group leader
+				// you delete the group for everyone instead.
+				
+				// delete from the database
+				const trip_path_location = ref(db, "trips" + tripID)
+				remove(trip_path_location)
+				.then(
+					console.log("removed from database")
+				)
+
+				// delete from users
+				// delete from the group leader
+				const gl_path_location = ref(db, "users/" + group_leader + "/trips")
+				var gl_trips_snapshot = await get(gl_path_location)
+				var gl_trips = gl_trips_snapshot.val()
+				var trip_to_remove_index = gl_trips.indexof(tripID)
+				gl_trips.splice(trip_to_remove_index, 1)
+				set(gl_path_location, gl_trips)
+				.then(
+					console.log("successfully removed from group leader's trips")
+				)
+
+				// delete from group members
+				const gm_path_location = ref(db, "trips/" + tripID + "/trip_details/g_member")
+				var trip_group_members_snapshot = await get(gm_path_location)
+				var trip_group_members = trip_group_members_snapshot.val()
+				for(var g_member of trip_group_members){
+					console.log(g_member)
+					const path_location = ref(db, 'users/' + g_member + '/trips')
+					var gm_trips_snapshot = await get(path_location)
+					var gm_trips = gm_trips_snapshot.val()
+					var trip_to_remove_index = gm_trips.indexof(tripID)
+					gm_trips.splice(trip_to_remove_index, 1)
+					set(path_location, gm_trips)
+					.then(
+						console.log("shit's removed into g_member's list")
+					)
+				}
+
+			}
+			else {
+				// you are the group member
+				// lets you leave the group instead.
+
+				// delete from the the user only
+				const user_path_location = ref(db, "users/" + user_ID + "/trips")
+				var user_trips_snapshot = await get(user_path_location)
+				var user_trips = user_trips_snapshot.val()
+				var trip_to_remove_index = user_trips.indexof(tripID)
+				user_trips.splice(trip_to_remove_index, 1)
+				set(user_path_location, user_trips)
+				.then(
+					console.log("successfully removed from user's trips")
+				)
+
+			}
 		},
 
 		edit_trip(tripID,trip_start,trip_end,trip_destination) {
