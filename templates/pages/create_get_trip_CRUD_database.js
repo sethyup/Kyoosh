@@ -237,7 +237,7 @@ const root = Vue.createApp({
                 }
             }
             else{
-                this.error_message = "Email entered is not registered on Whoosh!"
+                this.error_message = "Email entered is not registered on Kyoosh!"
             }
             
             document.getElementById("error").innerText = this.error_message
