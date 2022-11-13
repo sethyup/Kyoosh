@@ -250,6 +250,7 @@ const main = Vue.createApp({
                 return ""
             }
         },
+        
         // read existing locations from the database
         read_from_existing_locations() {
           const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
@@ -423,7 +424,45 @@ const main = Vue.createApp({
           this.no = details.votes.no;
           this.yes = details.votes.yes;
           this.yet_to_vote = details.votes.yet_to_vote;
+          },
+        // delete activity from database
+        delete_data(id) {
+          // remove location from existing locations
+          delete this.existing_locations[id] 
+          // write to database
+          console.log("Writing data into database...")
+          
+          set(ref(db, `trips/${this.trip_id}/activities`), this.existing_locations)
+          .then(
+              function write_success() {
+                  // display "Success" message
+                  console.log("Entry Created")
+          })
+          .catch((error) => {
+              // for us to debug, tells us what error there is,
+              const errorCode = error.code;
+              const errorMessage = error.message;
+
+              // display "Error" message
+              var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+              console.log(failed_message);
+          })
       },
+      // delete marker in edit_activity
+      delete_marker_edit(id) {
+        // console.log(`this is the curernt marker id: ${this.current_id}`)
+        // console.log(`and this is the current markers length: ${markers.length}`)
+        // console.log(markers)
+        // console.log(`${id} this is from delete marker`)
+        // DeleteMarker(id);
+        this.delete_data(id)
+        // document.getElementById('autocomplete').value = ""
+        this.tag_input = ""
+        this.selected_description = ""
+        this.amount = ""
+        this.converted_amount = ""
+        
+    },
         set_edit(id) {
             if (this.edit_true == false) {
               // console.log(id)
