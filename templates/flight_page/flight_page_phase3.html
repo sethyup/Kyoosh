@@ -32,20 +32,20 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css blurred-minor-2 p-0">
                  <!-- SIDEBAR  -->
-                 <sidebar-phase3></sidebar-phase3>
+                 <sidebar-phase3 :comp_username="username"></sidebar-phase3>
             </div>
 
             <!-- ALL OTHER CONTENT -->
             <div class="col py-md-3 py-0" id="flight_app">
                 <!-- TRIP DETAILS (SM) -->
-                <div class="row d-block d-md-none text-center blurred">
-                    <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
-                    <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
+                <div class="row d-block d-md-none text-center blurred text-black">
+                    <h5 class="pt-3">{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                    <p class="m-0 pb-3">{{trip_details.duration}}</p>
                 </div>
 
                 <!-- TITLE -->
                 <div class="row">
-                    <h2 class=" ms-3 text-white">Flights</h2>
+                    <h2 class="ms-md-3 ms-0 mt-2 text-white text-center text-md-start">Flights</h2>
                 </div>
 
                 <!-- CREATE NEW FLIGHT BUTTON -->
@@ -575,9 +575,9 @@
                 </div>
 
                 <!-- TRIP DETAILS -->
-                <div class="trip-title-top-md d-none d-md-block">
-                    <h5>Name of Trip (Trip to Seoul, Korea)</h5>
-                    <p>1 December 2022 - 10 December 2022</p>
+                <div class="trip-title-top-md d-none d-md-block text-dark text-center">
+                    <h5>{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                    <p>{{trip_details.duration}}</p>
                 </div>
             </div>
         </div>

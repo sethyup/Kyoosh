@@ -10,6 +10,9 @@ if (localStorage.getItem("user") === null) {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -860,12 +863,9 @@ const app = Vue.createApp({
     data() { 
         return { 
             // trip details
-            trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
+            trip_id: "",
             user_id: "",
-            trip_details: {
-                country: 'Korea',
-                duration: '12 November 2022 - 16 November 2022'
-            },
+            trip_details: {},
 
             // display details
             create_true: false,
@@ -1214,13 +1214,15 @@ const app = Vue.createApp({
         async read_from_existing() {
             var lodging_locations = await this.retrieve_lodging_locations()
             // console.log(lodging_locations)
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/selected_activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
                     
+                    console.log("DATA: ",data)
+
                     uniqueId = data.length
                     markers = []
                     // console.log(lodging_locations)
@@ -1448,19 +1450,16 @@ const app = Vue.createApp({
             console.log("Writing data into database...")
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/days`), this.days) 
-                // DATA YOU WANT TO WRITE GOES HERE,
-
-                // example
-                // email: this.email
-                // ...
-
-            
+            set(ref(db, `trips/${this.trip_id}/days`),
+                this.days
+            )
             .then(
                 function write_success() {
                     // display "Success" message
                     // alert("Write Operation Successful")
                     console.log("Entry Created")
+
+                    window.location.href = "templates/vacation_view/vacation_view.html"
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
@@ -1469,28 +1468,67 @@ const app = Vue.createApp({
 
                 // display "Error" message
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
                 console.log(failed_message);
             })
         },
 
         // retrieve trip details from localStorage
-
         retrieve_from_cache() {
             if (localStorage.getItem('user')) {
-                this.trip_id = localStorage.getItem('user')
+                this.user_id = localStorage.getItem('user')
+
+                console.log("USERID: ", this.user_id)
             }
             if (localStorage.getItem('trip')) {
                 this.trip_id = localStorage.getItem('trip')
+
+                console.log("TRIPID: ", this.trip_id)
             }
-            if (localStorage.getItem('duration')) {
-                var duration = localStorage.getItem('duration')
-                this.trip_details[duration] = duration
+            if (localStorage.getItem('trip_start_date')) {
+                // format YYYY-MM-DD to "DD Month Year"
+                var start_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_start_date'))
+                var end_date = this.convert_datetime_str_to_date_obj(localStorage.getItem('trip_end_date'))
+                // set duration
+                var c_duration = `${start_date.getDate()} ${month[start_date.getMonth()]} ${start_date.getFullYear()} - ${end_date.getDate()} ${month[end_date.getMonth()]} ${end_date.getFullYear()}`
+                this.trip_details.duration = c_duration
+
+                console.log("TRIP DURATION: ", this.trip_details.duration)
             }
-            if (localStorage.getItem('country')) {
-                var country = localStorage.getItem('country')
-                this.trip_details[country] = country
+            if (localStorage.getItem('destination')) {
+                var c_country = localStorage.getItem('destination')
+                this.trip_details.country = c_country
+
+                console.log("TRIP COUNTRY: ", this.trip_details.country)
             }
+        },
+
+        // Datetime details
+        convert_datetime_str_to_date_obj(datetime_str) {
+            // format: 2022-10-05
+            let arr_depart_datetime = datetime_str.split(" ")
+            let datetime_date_arr = arr_depart_datetime[0].split("-")
+
+            let new_date_obj = new Date(datetime_date_arr[0], Number(datetime_date_arr[1])-1, datetime_date_arr[2])
+
+            return new_date_obj
+        },
+
+        // DATE TIME CONVERSION
+        convert_date_to_readable_sidebar(date_str) {
+            var date_obj = new Date(date_str)
+
+            return flatpickr.formatDate(date_obj, "j M")
+        },
+
+        convert_date_to_readable_titles(date_str) {
+            var date_obj = new Date(date_str)
+
+            return flatpickr.formatDate(date_obj, "j F (D)")
+        },
+
+        // GET TRIP NAME
+        get_trip_name(tripID) {
+            return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
         },
         
     }, // methods
@@ -1498,7 +1536,7 @@ const app = Vue.createApp({
     // load data from database before initialising map and mounting vue
     async created() {
         // get cached information
-        await this.retrieve_from_cache()
+        this.retrieve_from_cache()
         // get recommended/existing locations from database
         await this.read_from_existing()
         // get group size from database

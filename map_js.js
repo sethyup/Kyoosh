@@ -7,7 +7,7 @@ if (localStorage.getItem("user") === null) {
 }
 
 
-// Firebase stuff
+// Firebase stuff ======================================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
@@ -27,7 +27,7 @@ const WADTravel = initializeApp({
 // const auth = getAuth(WADTravel)
 const db = getDatabase(WADTravel)
 
-// const variables
+// const variables ======================================================================
 // ISO 3166 Alpha-2 Format: [Country Name] : [2 letter Country Code]
 const countryList = {
     Afghanistan: 'AF',
@@ -279,7 +279,6 @@ const countryList = {
     'North Macedonia': 'MK',
     Češka: 'CZ'
   }
-
 // list of all 2 letter country code: capital
 const capitalList = {
     "AF": "Kabul",
@@ -538,11 +537,11 @@ const capitalList = {
 // list of months
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-// cached variables
+// cached variables ======================================================================
 var markers = [];
 var uniqueId = 0;
 
-// progress bar functions
+// progress bar functions ================================================================
 
 function get_total_users(place) {
     var total_users = 0
@@ -599,7 +598,7 @@ function get_yet_to_vote_percentage(votes,place) {
     return (yet_to_vote_votes)*100/get_total_users(place)
 }
 
-// map-related functions
+// map-related functions ===================================================================
  
 // create your map
 function initMap(location, lodging) {
@@ -612,6 +611,8 @@ function initMap(location, lodging) {
     // get capital from capitalList, get country code from function, get country from cache
     
     var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.destination))
+    // console.log(vm.$data.trip_details.destination)
+    // console.log(vm.get_country_code(vm.$data.trip_details.destination))
     vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
     //     create_marker_by_click(e.latLng,map);
@@ -627,6 +628,7 @@ function initMap(location, lodging) {
     
         
     initAutocomplete(map);
+    
 
 }
 // enable Autocomplete
@@ -635,15 +637,18 @@ function initAutocomplete(map) {
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
     // get country code
-    // var country = get_country_code(this.trip_details.country)
+    
+    var country = vm.get_country_code(vm.trip_details.destination)
+    
+    // console.log(country)
     const options = {
-        componentRestrictions: {'country':['US', 'CH', 'KR', 'SG']},
+        componentRestrictions: {'country':country},
         fields: ['place_id','name','geometry','formatted_address']
     };
     const autocomplete = new google.maps.places.Autocomplete(input, options);
     // autocomplete connected to map viewport
     autocomplete.bindTo('bounds',map);
-
+    
     // create marker for searched location, go to location, save into marker list
     autocomplete.addListener('place_changed', () => {
 
@@ -659,13 +664,13 @@ function initAutocomplete(map) {
         
         infowindow.close()
         marker.setVisible(false);
-
+        
         const place = autocomplete.getPlace();
         // console.log(place)
         vm.$data.selected_name = place.name;
         vm.$data.selected_address = place.formatted_address;
         vm.$data.selected_latlng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
-        // vm.console_all()
+        
         
         if (!place.geometry || !place.geometry.location) {
         window.alert(`No details available for the place: "${place.name}"`
@@ -683,7 +688,10 @@ function initAutocomplete(map) {
 
         marker.id = uniqueId;
         vm.$data.current_id = uniqueId
-        
+        console.log('from autocomplete')
+        console.log(uniqueId)
+        console.log(marker.id)
+        console.log(vm.$data.current_id)
         const contentString = 
         `
         <div id="content" name="${marker.id}">
@@ -863,27 +871,27 @@ function DeleteMarker(id) {
     
 };
 
-// vue app
+// vue app ==================================================================================
 const app = Vue.createApp({ 
     data() { 
         return {
-            // trip details
+            // trip details =================================================================
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
             trip_details: {
                 destination: 'South Korea',
                 duration: '12 November 2022 - 16 November 2022'
             },
-            // display details
+            // display details =============================================================
             create_true: false,
             edit_true: false,
 
-            // map details
+            // map details ==================================================================
             map_width: '90%',
             existing_locations: "",
             
 
-            // create activity details
+            // create activity details ======================================================
             amount: "", 
             from: "SGD", 
             to: "KRW", 
@@ -894,7 +902,7 @@ const app = Vue.createApp({
             tags: ["Shopping", "Museum", "Food", "Attraction", "Sports", "Theme Park", "Camping", "Hiking", "Aquarium", "Zoo", "Tour", "Cruise"],     
             tag_input: "",
 
-            // input field details
+            // input field details ==========================================================
             current_id: "",
             selected_address: "",
                 // selected_tags: "", is under tag_input
@@ -908,9 +916,15 @@ const app = Vue.createApp({
             yes: [],
             yet_to_vote: [],
 
+            delimiter: "urjfjwowskdorrofkckshecoejfnek",
         };
     }, 
     methods: {
+        // GET TRIP NAME
+        get_trip_name(tripID) {
+            return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
+        },
+
         // map related codes
 
         // delete marker in edit_activity
@@ -926,9 +940,9 @@ const app = Vue.createApp({
         // delete marker in create activity
         delete_marker(id) {
             // console.log(`${id} this is from delete marker`)
-            if (this.current_id == markers.length - 1) {
+            if (this.current_id == markers.length ) {
                 return
-            } else if (this.current_id != markers.length - 1    ) {
+            } else if (this.current_id != markers.length  ) {
                 DeleteMarker(id);
                 this.delete_data(id)
             }
@@ -949,15 +963,17 @@ const app = Vue.createApp({
                 query: country,
                 fields: ['geometry'],
               };
+            
             service.findPlaceFromQuery(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     // console.log(results[0].geometry.location)
                     map.setCenter(results[0].geometry.location);
+                    
                 }
               });
         },
 
-        // create/edit acitvity-related codes
+        // create/edit acitvity-related codes =================================================
 
         // toggle display for create activity
         d_create() {
@@ -1014,7 +1030,7 @@ const app = Vue.createApp({
         
 
 
-        // database-related codes
+        // database-related codes ============================================================
 
         // read location data from database
         async read_from_existing() {
@@ -1026,9 +1042,10 @@ const app = Vue.createApp({
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
-                    
+                    // console.log(data)
                     uniqueId = data.length
                     markers = []
+                    console.log(uniqueId)
                     // console.log(lodging_locations)
                     window.initMap = initMap(this.existing_locations, lodging_locations);
                     
@@ -1040,8 +1057,10 @@ const app = Vue.createApp({
                         const data2 = snapshot.val();
                         if (data2) {
                             this.existing_locations = data2
-                            
-                            window.initMap = initMap(this.existing_locations);
+                            uniqueId = data2.length
+                            markers = []
+                            console.log(uniqueId)
+                            window.initMap = initMap(this.existing_locations, lodging_locations);
                         }
                     })
                 }
@@ -1055,7 +1074,12 @@ const app = Vue.createApp({
                 if (data) {
                     this.group_members = data.g_member
                     var group_leader = this.trip_id.split('urjfjwowskdorrofkckshecoejfnek')[1]
-                    this.group_members.push(group_leader)
+                    if (this.group_members) {
+                        this.group_members.push(group_leader)
+                    } else {
+                        this.group_members = [group_leader]
+                    }
+                    
                     
                     // console.log(data)
                 }})
@@ -1282,7 +1306,7 @@ const app = Vue.createApp({
         // retrieve trip details from localStorage
         retrieve_from_cache() {
             if (localStorage.getItem('user')) {
-                this.trip_id = localStorage.getItem('user')
+                this.user_id = localStorage.getItem('user')
             }
             if (localStorage.getItem('trip')) {
                 this.trip_id = localStorage.getItem('trip')
@@ -1298,12 +1322,12 @@ const app = Vue.createApp({
             }
             if (localStorage.getItem('destination')) {
                 var c_country = localStorage.getItem('destination')
-                this.trip_details.country = c_country
+                this.trip_details.destination = c_country
             }
             
         },
 
-        // Datetime details
+        // Datetime details =================================================================
         convert_datetime_str_to_date_obj(datetime_str) {
             // format: 2022-10-05
             let arr_depart_datetime = datetime_str.split(" ")
@@ -1330,7 +1354,7 @@ const app = Vue.createApp({
 });
 const vm = app.mount('#app'); 
 
-// main js variables
+// main js variables ========================================================================
 let country_list = {
     "AED" : "AE",
     "AFN" : "AF",

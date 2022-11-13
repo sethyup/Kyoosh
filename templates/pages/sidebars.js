@@ -17,7 +17,7 @@
 // const db = getDatabase(WADTravel)
 
 const sidebar = Vue.createApp({
-    // data(){
+    data(){
     //     return{
     //         trip_details: "",
     //         trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
@@ -25,71 +25,84 @@ const sidebar = Vue.createApp({
     //         e_date: "", 
     //         date_array: [],
     //     }
-    // },
-    // created:{
+        return{    
+            username: ""
+        }
+    },
 
-    // },
-    // methods:{
-    //         // read existing locations from the database
-    //         read_from_existing_locations() {
-    //             const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
-    //             onValue(data_to_be_read, (snapshot) => {
-    //                 const data = snapshot.val();
-    //                 // check if there is existing data on db
-    //                 if (data) {
-    //                     this.trip_details = data
-    //                     this.s_date = this.trip_details.start_date
-    //                     this.e_date = this.trip_details.end_date
-    //                     // console.log("TRIP DETAILS", this.s_date, this.e_date)
-    //                     this.create_dates_array(this.s_date, this.e_date)
-    //                 }
-    //                 // retrieve recommended places for new trips
-    //                 // else {
-    //                 //     const data_to_be_read = ref(db, `locations`);
-    //                 //     onValue(data_to_be_read, (snapshot) => {
-    //                 //         const data2 = snapshot.val();
-    //                 //         if (data2) {
-    //                 //             this.existing_locations = data2
-    //                 //         }
-    //                 //     })
-    //                 // }
-    //                 })
-    //             },
-    //         convert_date_obj_to_str(date_obj) {
-    //                 return `${date_obj.getFullYear()}-${("0" + (date_obj.getMonth()+1)).slice(-2)}-${("0" + (date_obj.getDate())).slice(-2)}`
-    //             },
-    //         create_dates_array(s_date, e_date){
-    //             // console.log("function dates_array")
-    //                 var s_date_obj = new Date(s_date)
-    //                 var e_date_obj = new Date(e_date)
-                
-    //                 var increment_date_obj = new Date(s_date)
-                
-                
-    //                 while (increment_date_obj <= e_date_obj) {
-    //                     var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
-    //                     this.date_array.push(date_str_to_push)
-                
-    //                     increment_date_obj.setDate(increment_date_obj.getDate() + 1)
-    //                 }
-    //             // console.log("render", this.date_array)
-                
-    //                 // return this.date_array
-    //             },
+    methods:{
+        get_username(){
+            // get username
+            if (localStorage.getItem('username')) {
+                this.username = localStorage.getItem('username')
+            }
+        },
 
-    // }, 
+        // read existing locations from the database
+        read_from_existing_locations() {
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/trip_details`);
+            onValue(data_to_be_read, (snapshot) => {
+                const data = snapshot.val();
+                // check if there is existing data on db
+                if (data) {
+                    this.trip_details = data
+                    this.s_date = this.trip_details.start_date
+                    this.e_date = this.trip_details.end_date
+                    // console.log("TRIP DETAILS", this.s_date, this.e_date)
+                    this.create_dates_array(this.s_date, this.e_date)
+                }
+                // retrieve recommended places for new trips
+                // else {
+                //     const data_to_be_read = ref(db, `locations`);
+                //     onValue(data_to_be_read, (snapshot) => {
+                //         const data2 = snapshot.val();
+                //         if (data2) {
+                //             this.existing_locations = data2
+                //         }
+                //     })
+                // }
+                })
+            },
+        convert_date_obj_to_str(date_obj) {
+                return `${date_obj.getFullYear()}-${("0" + (date_obj.getMonth()+1)).slice(-2)}-${("0" + (date_obj.getDate())).slice(-2)}`
+            },
+        create_dates_array(s_date, e_date){
+            // console.log("function dates_array")
+                var s_date_obj = new Date(s_date)
+                var e_date_obj = new Date(e_date)
+            
+                var increment_date_obj = new Date(s_date)
+            
+            
+                while (increment_date_obj <= e_date_obj) {
+                    var date_str_to_push = this.convert_date_obj_to_str(increment_date_obj)
+                    this.date_array.push(date_str_to_push)
+            
+                    increment_date_obj.setDate(increment_date_obj.getDate() + 1)
+                }
+            // console.log("render", this.date_array)
+            
+                // return this.date_array
+            },
+
+    }, 
+    async created() {
+        // get cached information
+        await this.get_username()
+    }
     // async created() {
     //     await this.read_from_existing_locations()
     // }
 });
 
 sidebar.component('sidebar-general', {
+    props: ["comp_username"],
     template: 
         `
         <div class="col-auto sticky-top">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">         
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     
@@ -156,12 +169,11 @@ sidebar.component('sidebar-general', {
                 <div class="dropdown pb-4">
                     <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">Bean</span>
+                        <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                         <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -174,12 +186,13 @@ sidebar.component('sidebar-general', {
     })
 
 sidebar.component('sidebar-phase2', {
+    props: ["comp_username"],
     template: 
            `
            <div class="col-auto sticky-top">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                            <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                            <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">                  
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             
@@ -246,12 +259,11 @@ sidebar.component('sidebar-phase2', {
                         <div class="dropdown pb-4">
                             <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">Bean</span>
+                                <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                                 <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -264,12 +276,13 @@ sidebar.component('sidebar-phase2', {
     })
 
 sidebar.component('sidebar-member-phase2', {
+    props: ["comp_username"],
     template: 
     `
     <div class="col-auto sticky-top">
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
             <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
             </a>
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 
@@ -332,12 +345,11 @@ sidebar.component('sidebar-member-phase2', {
             <div class="dropdown pb-4">
                 <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                    <span class="d-none d-sm-inline mx-1">Bean</span>
+                    <span class="d-none d-sm-inline mx-1">{{comp_username}}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                     <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -350,36 +362,39 @@ sidebar.component('sidebar-member-phase2', {
     })
 
 sidebar.component('select-activity-sidebar', {
+    props: ["comp_username"],
     template: 
             `<div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold">The JAWKS-7</span>
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
                         <!--Home-->
                         <li class="nav-item">
                             <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
-                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-house fa-xs"></i> Home</span>
+                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-house fa-xs"></i></span>
+                                <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
 
                         <!--Activities-->
                         <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i> Activities</span>
+                                <span class="fs-5 ms-1"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
+                                <span class="fs-5 ms-1">Activities</span>
                             </a>
 
                             <ul class="collapse nav flex-column ms-3 show" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
                                     <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
-                                        <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> Map View</span>
+                                        <i class="fa-solid fa-right-long fa-xs"></i> Map View
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html" class="nav-link px-0"> 
-                                        <span class="d-none d-sm-inline"><i class="fa-solid fa-right-long fa-xs"></i> List View</span>
+                                        <i class="fa-solid fa-right-long fa-xs"></i> List View
                                     </a>
                                 </li>
                             </ul>
@@ -394,12 +409,11 @@ sidebar.component('select-activity-sidebar', {
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">Bean</span>
+                            <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -412,12 +426,12 @@ sidebar.component('select-activity-sidebar', {
     })
 
 sidebar.component('sidebar-phase3', {
-    props: ['date_array'],
+    props: ['date_array', 'comp_username'],
     template: 
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
@@ -431,14 +445,10 @@ sidebar.component('sidebar-phase3', {
 
                         <!--Itinerary-->
                         <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" class="nav-link px-0 align-middle ">
                                 <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Itinerary</span>
                             </a>
-
-                            <ul class="collapse show nav flex-column ms-3" id="submenu1" data-bs-parent="#menu">
-                                <slot></slot>
-                            </ul>
                         </li>
                         <li>
                             <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/flight_page/flight_page_phase3.html" class="nav-link px-0 align-middle">
@@ -458,12 +468,11 @@ sidebar.component('sidebar-phase3', {
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">Bean</span>
+                            <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -476,12 +485,12 @@ sidebar.component('sidebar-phase3', {
     })
 
 sidebar.component('sidebar-phase4', {
-    props: ['date_array'],
+    props: ['date_array', 'comp_username'],
     template: 
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold">Kyoosh</span>
+                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
@@ -503,12 +512,11 @@ sidebar.component('sidebar-phase4', {
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">Bean</span>
+                            <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html">My Trips</a></li>
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/edit_trip_name/edit_trip_name.html">Edit Trip Details</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

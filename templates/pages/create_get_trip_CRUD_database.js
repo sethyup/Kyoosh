@@ -95,7 +95,7 @@ const root = Vue.createApp({
     },
 
     methods: {
-        // will need trip_name, destination,start date and end data
+        // will need trip_name, destination,start date and end date
         create_new_trip() {
             console.log("Writing data into database...")
             // the console can be open, 
