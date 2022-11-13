@@ -101,6 +101,13 @@ const app = Vue.createApp( {
 
 	//=========== METHODS ===========
 	methods: {
+		delete_trip(tripID) {
+			const path_location = ref(db, "trips/" + tripID)
+			remove(path_location)
+			.then(
+				console.log("trip deleted")
+			)
+		},
 
 		edit_trip(tripID,trip_start,trip_end,trip_destination) {
 			console.log("button working")
@@ -164,6 +171,7 @@ const app = Vue.createApp( {
 
 		console.log("USER TRIPS: ", Object.keys(this.user_trips))
 
+		var modal_counter = 1
 
 		for(var trip_ID of Object.keys(this.user_trips)) {
 			if(trip_ID == "undefined"){
@@ -182,11 +190,36 @@ const app = Vue.createApp( {
 					<img src="../../images/home_page/trip_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
 					<div class="card-body">
 					<h5 class="card-title">${trip_name}</h5>
-					<button onclick="edit_trip(\`${trip_ID}\`,\`${trip_start}\`,\`${trip_end}\`,\`${trip_destination}\`)" class="btn btn-main-bold">Edit Trip</a>
+
+					<button onclick="edit_trip(\`${trip_ID}\`,\`${trip_start}\`,\`${trip_end}\`,\`${trip_destination}\`)" class="btn btn-main-bold">Edit Trip</button>
+
+					<button type="button" class="btn btn-fade" data-bs-toggle="modal" data-bs-target="#del_button_modal_${modal_counter}">
+						<i class="fa-solid fa-trash-can fa-lg"></i>
+					</button>
 					</div>
 					<div class="card-footer text-muted">
 					${trip_destination} <br>
-					${trip_start} - ${trip_end}
+					${trip_start} - ${trip_end} <br
+					</div>
+				</div>
+				`
+
+				document.getElementById("modals").innerHTML += `
+				<div class="modal fade" id="del_button_modal_${modal_counter}" tabindex="-1" aria-labelledby="del_button_modal_label_${modal_counter}" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+							<h1 class="modal-title fs-5" id="ModalLabel">Delete Trip?</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+							Are you sure you want to delete <span class="fw-bold">${trip_name}</span>?
+							</div>
+							<div class="modal-footer">
+							<button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="delete_trip('${trip_ID}')">Confirm</button>
+							</div>
+						</div>
 					</div>
 				</div>
 				`
