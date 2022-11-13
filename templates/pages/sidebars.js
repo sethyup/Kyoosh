@@ -41,7 +41,7 @@ const sidebar = Vue.createApp({
 
         get_user_pic(){
             if (this.username){
-                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic" + this.username + ".jpg"
+                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
             }
         },
 
