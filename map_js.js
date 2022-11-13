@@ -657,7 +657,7 @@ function initAutocomplete(map) {
             url:  "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
             scaledSize: new google.maps.Size(40,40),
             };
-        const marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             map: map,
             icon: icon
         });
@@ -688,7 +688,7 @@ function initAutocomplete(map) {
 
         marker.id = uniqueId;
         vm.$data.current_id = uniqueId
-
+        // console.log(vm.$data.current_id)
         const contentString = 
         `
         <div id="content" name="${marker.id}">
@@ -790,8 +790,8 @@ function create_marker(place, map, id) {
             infoWindow.setContent(contentString);
             infoWindow.open(map, marker);});
         markers.push(marker)
-        console.log(markers)
-        console.log(uniqueId)
+        // console.log(markers)
+        // console.log(uniqueId)
         
 }
 // create lodging markers
