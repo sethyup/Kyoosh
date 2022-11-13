@@ -36,7 +36,7 @@
             <!-- sidebar -->
             <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
-                <sidebar-phase2 :comp_username="username"></sidebar-phase2>
+                <sidebar-phase2 :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></sidebar-phase2>
             </div>
 
             
@@ -209,7 +209,7 @@
                     <div class="col-12 col-lg">
                         <!-- COPY FROM HERE -->
 
-                        <div style="overflow: scroll; height: 100vh;">
+                        <div style="overflow: scroll; height: 100vh;" class="mb-5">
                             <div class="card mb-3 blurred-minor-no-bd-filter" v-for="(location, index) in existing_locations">
                                 <!-- LOCATION/PLACE -->
                                 <div class="card-header blurred-minor-no-bd-filter">

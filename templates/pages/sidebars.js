@@ -209,7 +209,7 @@ sidebar.component('sidebar-general', {
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                        <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -303,7 +303,7 @@ sidebar.component('sidebar-phase2', {
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -393,7 +393,7 @@ sidebar.component('sidebar-member-phase2', {
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                    <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -470,7 +470,7 @@ sidebar.component('select-activity-sidebar', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -532,7 +532,7 @@ sidebar.component('sidebar-phase3', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -580,7 +580,7 @@ sidebar.component('sidebar-phase4', {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click.native="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
