@@ -1450,19 +1450,16 @@ const app = Vue.createApp({
             console.log("Writing data into database...")
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/days`), this.days) 
-                // DATA YOU WANT TO WRITE GOES HERE,
-
-                // example
-                // email: this.email
-                // ...
-
-            
+            set(ref(db, `trips/${this.trip_id}/days`),
+                this.days
+            )
             .then(
                 function write_success() {
                     // display "Success" message
                     // alert("Write Operation Successful")
                     console.log("Entry Created")
+
+                    window.href = "templates/vacation_view/vacation_view.html"
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
@@ -1471,7 +1468,6 @@ const app = Vue.createApp({
 
                 // display "Error" message
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
                 console.log(failed_message);
             })
         },
