@@ -1538,7 +1538,7 @@ const app = Vue.createApp({
                     // alert("Write Operation Successful")
                     console.log("Entry Created")
 
-                    window.location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/vacation_view/vacation_view.html"
+                    // window.location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/vacation_view/vacation_view.html"
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
@@ -1609,6 +1609,11 @@ const app = Vue.createApp({
         get_trip_name(tripID) {
             return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
         },
+
+        //redirect to vacation mode
+        redirect(){
+            window.location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/vacation_view/vacation_view.html"
+        }
         
     }, // methods
 
