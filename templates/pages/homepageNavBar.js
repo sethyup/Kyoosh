@@ -92,7 +92,7 @@ main.component('homepage-navbar', {
                                 <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')>Sign out</a></li>
+                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ main.component('createtrip-navbar', {
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')>Sign out</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html" @click="$emit('btnclick')">Sign out</a></li>
                         </ul>
                     </div>
 
