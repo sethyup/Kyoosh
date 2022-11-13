@@ -153,8 +153,6 @@ const root = Vue.createApp({
 
         login() {
             var email = this.login_email
-            console.log(email)
-            console.log(typeof email)
             var password = this.login_password
             console.log("starting to log in user...")
             signInWithEmailAndPassword(auth, email, password).then(
@@ -164,7 +162,7 @@ const root = Vue.createApp({
                     // display Success message
                     console.log("user login successful")
                     // redirects to home page
-                    const user = userCredential.user;
+                    // const user = userCredential.user;
                     const email = user.email.replaceAll(".","")
                     console.log(email)
                     localStorage.setItem("user", email)
