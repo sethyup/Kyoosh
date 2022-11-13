@@ -628,6 +628,7 @@ function initMap(location, lodging) {
     
         
     initAutocomplete(map);
+    
 
 }
 // enable Autocomplete
@@ -639,7 +640,7 @@ function initAutocomplete(map) {
     
     var country = vm.get_country_code(vm.trip_details.destination)
     
-    console.log(country)
+    // console.log(country)
     const options = {
         componentRestrictions: {'country':country},
         fields: ['place_id','name','geometry','formatted_address']
@@ -663,7 +664,7 @@ function initAutocomplete(map) {
         
         infowindow.close()
         marker.setVisible(false);
-        console.log(vm.$data.current_id)
+        
         const place = autocomplete.getPlace();
         // console.log(place)
         vm.$data.selected_name = place.name;
@@ -687,7 +688,10 @@ function initAutocomplete(map) {
 
         marker.id = uniqueId;
         vm.$data.current_id = uniqueId
-        
+        console.log('from autocomplete')
+        console.log(uniqueId)
+        console.log(marker.id)
+        console.log(vm.$data.current_id)
         const contentString = 
         `
         <div id="content" name="${marker.id}">
@@ -936,9 +940,9 @@ const app = Vue.createApp({
         // delete marker in create activity
         delete_marker(id) {
             // console.log(`${id} this is from delete marker`)
-            if (this.current_id == markers.length - 1) {
+            if (this.current_id == markers.length ) {
                 return
-            } else if (this.current_id != markers.length - 1    ) {
+            } else if (this.current_id != markers.length  ) {
                 DeleteMarker(id);
                 this.delete_data(id)
             }
@@ -1038,9 +1042,10 @@ const app = Vue.createApp({
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
-                    console.log(data)
+                    // console.log(data)
                     uniqueId = data.length
                     markers = []
+                    console.log(uniqueId)
                     // console.log(lodging_locations)
                     window.initMap = initMap(this.existing_locations, lodging_locations);
                     
@@ -1054,6 +1059,7 @@ const app = Vue.createApp({
                             this.existing_locations = data2
                             uniqueId = data2.length
                             markers = []
+                            console.log(uniqueId)
                             window.initMap = initMap(this.existing_locations, lodging_locations);
                         }
                     })
