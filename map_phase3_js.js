@@ -10,6 +10,9 @@ if (localStorage.getItem("user") === null) {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 
+// list of months
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -1504,6 +1507,11 @@ const app = Vue.createApp({
             var date_obj = new Date(date_str)
 
             return flatpickr.formatDate(date_obj, "j F (D)")
+        },
+
+        // GET TRIP NAME
+        get_trip_name(tripID) {
+            return tripID.split("urjfjwowskdorrofkckshecoejfnek")[0]
         },
         
     }, // methods

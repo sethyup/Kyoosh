@@ -113,7 +113,7 @@
     
                             <!--Itinerary-->
                             <li>
-                                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase3.html" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                     <span class="fs-5 ms-1 d-none d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i> Itinerary</span>
                                 </a>
     
@@ -159,19 +159,19 @@
 
             <div class="col" style="overflow: auto; height:100vh">
                 <div class="row">
-                    <!-- TRIP INFO -->
-                    <div class="trip-title-top-md d-none d-xl-block" style="z-index: 3;">
-                            <h6>Name of Trip (Trip to Seoul, Korea)</h6>
-                            <p>1 December 2022 - 10 December 2022</p>
+                    <!-- TRIP DETAILS -->
+                    <div class="trip-title-top-md d-none d-md-block text-dark text-center">
+                        <h5>{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                        <p>{{trip_details.duration}}</p>
                     </div>
         
                     <!-- whole site -->
                     <!-- ALL OTHER CONTENT ACTIVITY COL-->
                     <div class="col">
                         <!-- TRIP DETAILS (SM) -->
-                        <div class="row d-block d-xl-none text-center blurred text-black">
-                            <h5 class="pt-3">Name of Trip (Trip to Seoul, Korea)</h5>
-                            <p class="m-0 pb-3">1 December 2022 - 10 December 2022</p>
+                        <div class="row d-block d-md-none text-center blurred text-black">
+                            <h5 class="pt-3">{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                            <p class="m-0 pb-3">{{trip_details.duration}}</p>
                         </div>
         
                         <!-- pop up if create activity -->
@@ -630,7 +630,7 @@
                         <p>2. Select activities for that day.</p>
                         <p>3. Don't forget to save!</p>
                         
-                        <video loop muted autoplay width="854" height="480">
+                        <video loop muted autoplay style="width: 100%; height: auto;">
                             <source src="Phase3_tutorial_video.mp4">
                         </video>
                     </div>
