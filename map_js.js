@@ -868,7 +868,7 @@ const app = Vue.createApp({
             trip_id: "kbang bangkok bangbongurjfjwowskdorrofkckshecoejfnekkbang@yahoocom",
             user_id: "",
             trip_details: {
-                country: 'Korea',
+                destination: 'South Korea',
                 duration: '12 November 2022 - 16 November 2022'
             },
             // display details =============================================================
@@ -1029,7 +1029,7 @@ const app = Vue.createApp({
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
-                    
+                    console.log(data)
                     uniqueId = data.length
                     markers = []
                     // console.log(lodging_locations)
@@ -1058,7 +1058,12 @@ const app = Vue.createApp({
                 if (data) {
                     this.group_members = data.g_member
                     var group_leader = this.trip_id.split('urjfjwowskdorrofkckshecoejfnek')[1]
-                    this.group_members.push(group_leader)
+                    if (this.group_members) {
+                        this.group_members.push(group_leader)
+                    } else {
+                        this.group_members = [group_leader]
+                    }
+                    
                     
                     // console.log(data)
                 }})
