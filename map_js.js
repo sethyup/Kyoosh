@@ -548,6 +548,7 @@ function get_total_users(place) {
     // var total_users = place.vtes
 
     var votes = place.votes
+    var total_users = 0
     // console.log(`${all_votes} this from get total users`)
     if(votes.yes){
       total_users += votes.yes.length
@@ -558,7 +559,7 @@ function get_total_users(place) {
     if(votes.yet_to_vote){
       total_users += votes.yet_to_vote.length
     }
-    var total_users = votes.yes.length + votes.no.length + votes.yet_to_vote.length
+
     // console.log(this.get_total_users)
     console.log(total_users)
     return total_users
