@@ -31,10 +31,22 @@
                <sidebar-phase4 :comp_username="username"></sidebar-phase4>
            </div>
 
-           <div id="main" class="col p-3">
+           <div id="main" class="col pb-3">
+                <!-- TRIP DETAILS -->
+                <div class="trip-title-top-md d-none d-md-block text-dark text-center">
+                    <h5>{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                    <p>{{trip_details.duration}}</p>
+                </div>
+
+               <!-- TRIP DETAILS (SM) -->
+               <div class="row d-block d-md-none text-center blurred text-black">
+                   <h5 class="m-0 pt-3">{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
+                   <p class="m-0 pb-3">{{trip_details.duration}}</p>
+               </div>
+
                <!-- TITLE -->
                 <div>
-                    <h2 class="text-center text-white mb-4 mt-2">Vacation Summary</h2>
+                    <h2 class="ms-0 ms-md-3 text-center text-md-start text-white mb-4 mt-2 mb-md-5 mt-md-4">Vacation Summary</h2>
                 </div>
 
                 <div class="container">
