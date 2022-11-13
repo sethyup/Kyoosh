@@ -107,7 +107,7 @@ const root = Vue.createApp({
             }
             this.create_new_trip()
 
-            // delete old data from group leader database
+            // delete old data from main database
             const path_location = ref(db, `trips/${this.trip_id}`)
             // remove(`trips/${this.trip_id}`)
             remove(path_location)
