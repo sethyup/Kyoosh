@@ -26,6 +26,13 @@
             background-size: cover;
             background-attachment: fixed;
         }
+        
+        .modal-backdrop {
+            display: none;
+        }
+        .modal-cotent {
+            z-index: 5000 !important;
+        }
     </style>
     <title>Select Activities Page</title>
 </head>
@@ -33,7 +40,7 @@
     <div id="main">
     <div class="container-fluid">
         <div class="row flex-nowrap" >
-            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
+            <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-no-bd-filter">
                 <!-- SIDEBAR  -->
                <select-activity-sidebar :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></select-activity-sidebar>
            </div>
@@ -48,7 +55,7 @@
             <!-- rest of site -->
             <div class="col text-light" style="overflow: hidden;">
                 <!-- TRIP DETAILS (SM) -->
-                <div class="row d-block d-md-none text-center blurred text-black">
+                <div class="row d-block d-md-none text-center blurred-minor-no-bd-filter text-black">
                     <h5 class="pt-3">{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
                     <p class="m-0 pb-3">{{trip_details.duration}}</p>
                 </div>
@@ -156,7 +163,27 @@
                     <h5><button type="button" class="btn btn-main-mild-fixed my-3 mx-1" data-bs-toggle="modal" data-bs-target="#tutorial2Modal">
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
-                    <i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD &nbsp &nbsp<button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button></h5> 
+                    <i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD &nbsp &nbsp<button type="button" class="btn btn-main-fixed" data-bs-toggle="modal" data-bs-target="#confirm_next_phase_modal" >Confirm</button></h5> 
+
+                    <!-- confirm next phase modal -->
+                    <div class="modal fade" id="confirm_next_phase_modal" tabindex="-1" aria-labelledby="confirm_next_phase_modal_label1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="ModalLabel">Proceeding to next phase</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure you want to confirm the selected activities?
+                                </div>
+                                <div class="modal-footer" >
+                                <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal" >Close</button>
+                                <button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="create_update_data()" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 
                 <!-- <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3 " >
