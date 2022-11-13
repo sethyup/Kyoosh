@@ -186,7 +186,7 @@ const app = Vue.createApp( {
 				var trip_start = this.user_trips[trip_ID]["trip_details"]["start_date"]
 				var trip_end = this.user_trips[trip_ID]["trip_details"]["end_date"]
 				document.getElementById("cards").innerHTML += `
-				<div class="card cardstyle" >
+				<div class="card cardstyle">
 					<img src="../../images/home_page/trip_imgs/${trip_destination.toLowerCase()}.jpg" class="card-img-top" height="200px">
 					<div class="card-body">
 					<h5 class="card-title">${trip_name}</h5>
@@ -203,6 +203,9 @@ const app = Vue.createApp( {
 					</div>
 				</div>
 				`
+				// console.log(modal_counter)
+				// console.log(trip_name)
+				// console.log(trip_ID)
 
 				document.getElementById("modals").innerHTML += `
 				<div class="modal fade" id="del_button_modal_${modal_counter}" tabindex="-1" aria-labelledby="del_button_modal_label_${modal_counter}" aria-hidden="true">
@@ -223,6 +226,8 @@ const app = Vue.createApp( {
 					</div>
 				</div>
 				`
+
+				modal_counter += 1
 			}
 			
 		}

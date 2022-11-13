@@ -173,9 +173,9 @@ const root = Vue.createApp({
                     // var username_snapshot = get(user_path_location)
                     // var username = username_snapshot.val()
                     // console.log(username)
-                    location.replace("../trips-homepage.html")
+                    // location.replace("../trips-homepage.html")
                     
-                    // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
+                    location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html"
                 })
                 .catch((error) => {
                     // for admin, tells you what error there is
