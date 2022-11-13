@@ -139,11 +139,13 @@
           </div> -->
 
         </div>
+
+        <div id="modals">
+      
+        </div>
       </div>
 
-    <div id="modals">
-      
-    </div>
+    
 
     <script>
       function edit_trip(trip_ID, trip_start_date, trip_end_data, trip_destination) {
@@ -154,7 +156,21 @@
         localStorage.setItem("destination", trip_destination)
         location.href = "../../map_phase2.html"
 		  }
+
+      
     </script>
+     <script>
+        
+      // changes vue.js values for editing pop up
+      // access vm from module script and open up edit view
+      async function set_edit(obj) {
+        var vm_vue = await import("./trips-homepage.js")
+        vm_vue.vm.delete_trip(obj)
+
+      } 
+
+      
+  </script>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- Font Awesome JS -->

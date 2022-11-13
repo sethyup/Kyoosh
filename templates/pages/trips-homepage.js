@@ -101,7 +101,17 @@ const app = Vue.createApp( {
 
 	//=========== METHODS ===========
 	methods: {
+		async delete_from_database(trip_ID) {
+
+		},
+
+		async delete_from_group_leader(trip_ID){
+
+		},
+
 		async delete_trip(tripID) {
+			console.log("deleting now")
+
 			// find out if you are a member or leader,
 			var group_leader = tripID.split("urjfjwowskdorrofkckshecoejfnek")[1]
 			console.log(group_leader)
@@ -111,41 +121,44 @@ const app = Vue.createApp( {
 				// you are the group leader
 				// you delete the group for everyone instead.
 				
+				// delete from group members
+				const gm_path_location = ref(db, "trips/" + tripID + "/trip_details/g_member")
+				var trip_group_members_snapshot = await get(gm_path_location)
+				var trip_group_members = trip_group_members_snapshot.val()
+				console.log(trip_group_members)
+				if(trip_group_members != null){
+					for(var g_member of trip_group_members){
+						console.log(g_member)
+						const path_location = ref(db, 'users/' + g_member + '/trips')
+						var gm_trips_snapshot = await get(path_location)
+						var gm_trips = gm_trips_snapshot.val()
+						var gm_trip_to_remove_index = gm_trips.indexOf(tripID)
+						gm_trips.splice(gm_trip_to_remove_index, 1)
+						set(path_location, gm_trips)
+						.then(
+							console.log("shit's removed from g_member's list")
+						)
+					}	
+				}
+
 				// delete from the database
-				const trip_path_location = ref(db, "trips" + tripID)
+				const trip_path_location = ref(db, "trips/" + tripID)
 				remove(trip_path_location)
 				.then(
 					console.log("removed from database")
 				)
 
-				// delete from users
 				// delete from the group leader
 				const gl_path_location = ref(db, "users/" + group_leader + "/trips")
 				var gl_trips_snapshot = await get(gl_path_location)
 				var gl_trips = gl_trips_snapshot.val()
-				var trip_to_remove_index = gl_trips.indexof(tripID)
-				gl_trips.splice(trip_to_remove_index, 1)
+				var gl_trip_to_remove_index = gl_trips.indexOf(tripID)
+				gl_trips.splice(gl_trip_to_remove_index, 1)
 				set(gl_path_location, gl_trips)
 				.then(
 					console.log("successfully removed from group leader's trips")
 				)
-
-				// delete from group members
-				const gm_path_location = ref(db, "trips/" + tripID + "/trip_details/g_member")
-				var trip_group_members_snapshot = await get(gm_path_location)
-				var trip_group_members = trip_group_members_snapshot.val()
-				for(var g_member of trip_group_members){
-					console.log(g_member)
-					const path_location = ref(db, 'users/' + g_member + '/trips')
-					var gm_trips_snapshot = await get(path_location)
-					var gm_trips = gm_trips_snapshot.val()
-					var trip_to_remove_index = gm_trips.indexof(tripID)
-					gm_trips.splice(trip_to_remove_index, 1)
-					set(path_location, gm_trips)
-					.then(
-						console.log("shit's removed into g_member's list")
-					)
-				}
+				
 
 			}
 			else {
@@ -156,8 +169,8 @@ const app = Vue.createApp( {
 				const user_path_location = ref(db, "users/" + user_ID + "/trips")
 				var user_trips_snapshot = await get(user_path_location)
 				var user_trips = user_trips_snapshot.val()
-				var trip_to_remove_index = user_trips.indexof(tripID)
-				user_trips.splice(trip_to_remove_index, 1)
+				var user_trip_to_remove_index = user_trips.indexOf(tripID)
+				user_trips.splice(user_trip_to_remove_index, 1)
 				set(user_path_location, user_trips)
 				.then(
 					console.log("successfully removed from user's trips")
@@ -237,8 +250,8 @@ const app = Vue.createApp( {
 			}
 			else{
 				var trip_name = trip_ID.split("urjfjwowskdorrofkckshecoejfnek")[0]
-				// console.log(trip_name)
-				// console.log(trip_ID)
+				console.log(trip_name)
+				console.log(trip_ID)
 				var trip_destination = this.user_trips[trip_ID]["trip_details"]["destination"][0]
 				var trip_start = this.user_trips[trip_ID]["trip_details"]["start_date"]
 				var trip_end = this.user_trips[trip_ID]["trip_details"]["end_date"]
@@ -260,9 +273,7 @@ const app = Vue.createApp( {
 					</div>
 				</div>
 				`
-				// console.log(modal_counter)
-				// console.log(trip_name)
-				// console.log(trip_ID)
+
 
 				document.getElementById("modals").innerHTML += `
 				<div class="modal fade" id="del_button_modal_${modal_counter}" tabindex="-1" aria-labelledby="del_button_modal_label_${modal_counter}" aria-hidden="true">
@@ -277,7 +288,7 @@ const app = Vue.createApp( {
 							</div>
 							<div class="modal-footer">
 							<button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" @click="delete_trip('${trip_ID}')">Confirm</button>
+							<button type="button" class="btn btn-main-fixed" data-bs-dismiss="modal" onClick="set_edit('${trip_ID}')">Confirm</button>
 							</div>
 						</div>
 					</div>
@@ -299,4 +310,6 @@ const app = Vue.createApp( {
 
 // DO NOT MODIFY THIS
 // ASSOCIATING the current Vue app to an HTML element with id='app'
-app.mount('#homepage')
+const vm = app.mount('#homepage')
+
+export {vm}
