@@ -17,6 +17,9 @@
     <!-- VUE -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
+    <!-- ICONS LIBRARY -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
     <style>
         body{
             background-image: url("../../images/home_page/main_images/main_page_bg_1.jpg");
@@ -150,7 +153,10 @@
 
                 <!-- SPENDING -->
                 <div class="spending-bottom-md">
-                    <h5><i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD &nbsp &nbsp<button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button></h5> 
+                    <h5><button type="button" class="btn btn-main-mild-fixed my-3 mx-1" data-bs-toggle="modal" data-bs-target="#tutorial2Modal">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </button>
+                    <i class="fa-solid fa-money-bill fa-sm"></i> Total Spending: {{ spending }} SGD &nbsp &nbsp<button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button></h5> 
                 </div>
                 
                 <!-- <footer class="bg-mild d-flex justify-content-between sticky-bottom py-3 " >
@@ -161,6 +167,31 @@
                         <button type="button" class="btn btn-main-fixed" onclick="location.href='http://kengboonang.github.io/WADBrothers.github.io/map_phase3.html'" @click="create_update_data()">Confirm</button>
                         
                 </footer> -->
+
+            <!-- Tutorial Modal -->
+            <div class="modal fade" id="tutorial2Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Plan your Itinerary!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mx-auto text-dark">
+                        <p>1. Filter your activities </p>
+                        <p>2. Select activities of your choice.</p>
+                        <p>3. Confirm activities to start planning Itinerary</p>
+                        
+                        <video loop muted autoplay style="width: 100%; height: auto;">
+                            <source src="../../Select_Activities_tutorial_video.mp4">
+                        </video>
+                    </div>
+                    <div class="modal-footer text-dark">
+                    <button type="button" class="btn btn-main-bold-fixed" data-bs-dismiss="modal">Close</button>
+                    
+                    </div>
+                </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -168,6 +199,8 @@
 
     
 
+        <!-- Flatpickr JS -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- START OF JS IMPORTS (DO NOT ADD ANYTHING BELOW THIS LINE!) ---------------------------------------------------------------------------------------------- -->
     <!-- Font Awesome JS -->
