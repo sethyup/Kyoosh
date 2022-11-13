@@ -75,7 +75,7 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
-                <sidebar-phase2></sidebar-phase2>
+                <sidebar-phase2 :comp_username="username"></sidebar-phase2>
             </div>
             
             <!-- whole site -->
@@ -443,7 +443,7 @@
                 vm_vue.vm.$data.create_true = false
                 vm_vue.vm.$data.current_id = obj.querySelector("div[id='get_marker_id']").innerText
                 // console.log(obj.querySelector("div[id='get_marker_id']").innerText)
-                // console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
+                console.log(`${vm_vue.vm.$data.current_id} this is from set_edit`)
                 vm_vue.vm.retrieve_edit_activity_info(vm_vue.vm.$data.current_id)
             } else {
                 vm_vue.vm.$data.edit_true = false
