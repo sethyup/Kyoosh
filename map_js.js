@@ -544,21 +544,23 @@ var uniqueId = 0;
 // progress bar functions ================================================================
 
 function get_total_users(place) {
-    var total_users = place.group_members.length
+    // console.log("place", place)
+    // var total_users = place.vtes
 
-    // var votes = place.votes
-    // // console.log(`${all_votes} this from get total users`)
-    // if(votes.yes){
-    //   total_users += votes.yes.length
-    // }
-    // if(votes.no){
-    //   total_users += votes.no.length
-    // }
-    // if(votes.yet_to_vote){
-    //   total_users += votes.yet_to_vote.length
-    // }
-    // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
+    var votes = place.votes
+    // console.log(`${all_votes} this from get total users`)
+    if(votes.yes){
+      total_users += votes.yes.length
+    }
+    if(votes.no){
+      total_users += votes.no.length
+    }
+    if(votes.yet_to_vote){
+      total_users += votes.yet_to_vote.length
+    }
+    var total_users = votes.yes.length + votes.no.length + votes.yet_to_vote.length
     // console.log(this.get_total_users)
+    console.log(total_users)
     return total_users
 }
 function get_yes_num(votes) {
