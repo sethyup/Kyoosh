@@ -456,7 +456,7 @@ sidebar.component('select-activity-sidebar', {
                     </ul>
                     <hr>
                         <div style="width:100%;" class="d-flex justify-content-center">
-                            <button class="btn btn-main-bold-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html'">< Back</button>
+                            <button class="btn btn-main-bold-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html'">\< Back</button>
                         </div>
                     <hr>
 
