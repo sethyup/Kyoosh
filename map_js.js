@@ -544,18 +544,19 @@ var uniqueId = 0;
 // progress bar functions ================================================================
 
 function get_total_users(place) {
-    var total_users = 0
-    var votes = place.votes
-    // console.log(`${all_votes} this from get total users`)
-    if(votes.yes){
-      total_users += votes.yes.length
-    }
-    if(votes.no){
-      total_users += votes.no.length
-    }
-    if(votes.yet_to_vote){
-      total_users += votes.yet_to_vote.length
-    }
+    var total_users = vm.$data.group_members.length
+
+    // var votes = place.votes
+    // // console.log(`${all_votes} this from get total users`)
+    // if(votes.yes){
+    //   total_users += votes.yes.length
+    // }
+    // if(votes.no){
+    //   total_users += votes.no.length
+    // }
+    // if(votes.yet_to_vote){
+    //   total_users += votes.yet_to_vote.length
+    // }
     // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
     // console.log(this.get_total_users)
     return total_users
@@ -585,17 +586,17 @@ function get_yet_to_vote_num(votes) {
 function get_yes_percentage(votes,place) {
     // console.log(votes.yes.length)
     var yes_votes = get_yes_num(votes)
-    return (yes_votes)*100/get_total_users(place)
+    return (yes_votes)*100/vm.get_total_users(place)
 }
 function get_no_percentage(votes,place) {
     // console.log(votes.no.length)
     var no_votes = get_no_num(votes)
-    return (no_votes)*100/get_total_users(place)
+    return (no_votes)*100/vm.get_total_users(place)
 }
 function get_yet_to_vote_percentage(votes,place) {
     // console.log(votes.yet_to_vote.length)
     var yet_to_vote_votes = get_yet_to_vote_num(votes)
-    return (yet_to_vote_votes)*100/get_total_users(place)
+    return (yet_to_vote_votes)*100/vm.get_total_users(place)
 }
 
 // map-related functions ===================================================================
@@ -712,6 +713,8 @@ function initAutocomplete(map) {
     markers.push(marker)
     marker.addListener("click", (googleMapsEvent) => {
         infowindow.open(map, marker);})
+    marker.addListener("dblclick", (googleMapsEvent) => {
+        infowindow.close(map, marker);})
     })
     window.autocomplete = autocomplete
     
@@ -789,6 +792,8 @@ function create_marker(place, map, id) {
         marker.addListener("click", (googleMapsEvent) => {
             infoWindow.setContent(contentString);
             infoWindow.open(map, marker);});
+        marker.addListener("dblclick", (googleMapsEvent) => {
+            infoWindow.close();})
         markers.push(marker)
         // console.log(markers)
         // console.log(uniqueId)

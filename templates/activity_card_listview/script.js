@@ -122,7 +122,8 @@ const main = Vue.createApp({
           // }
           // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
           // console.log(this.get_total_users)
-          var total_users = this.group_members
+          var total_users = Object.keys(this.group_members).length
+          console.log(total_users)
           return total_users
         },
 
@@ -151,6 +152,7 @@ const main = Vue.createApp({
         get_yes_percentage(votes){
           // console.log(votes.yes.length)
           var yes_votes = this.get_yes_num(votes)
+          // console.log(yes_votes)
           return (yes_votes)*100/this.get_total_users()
         },
         get_no_percentage(votes){
@@ -272,7 +274,7 @@ const main = Vue.createApp({
               //check if there is existing data on db
               if (data) {
                   this.existing_locations = data
-                  // console.log(data)
+                  console.log(data)
               }
               //retrieve recommended places for new trips
               else {
@@ -281,6 +283,7 @@ const main = Vue.createApp({
                       const data2 = snapshot.val();
                       if (data2) {
                           this.existing_locations = data2
+                          console.log(data2)
                       }
                   })
               }
@@ -494,6 +497,7 @@ const main = Vue.createApp({
 
       await this.read_from_existing_locations()
       await this.read_group_members()
+      console.log(this.trip_details)
 
     }
   })
