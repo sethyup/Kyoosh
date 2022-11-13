@@ -89,7 +89,7 @@ sidebar.component('sidebar-general', {
         <div class="col-auto sticky-top">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                    <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     
@@ -179,7 +179,7 @@ sidebar.component('sidebar-phase2', {
            <div class="col-auto sticky-top">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                            <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                            <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             
@@ -269,7 +269,7 @@ sidebar.component('sidebar-member-phase2', {
     <div class="col-auto sticky-top">
         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
             <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
             </a>
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                 
@@ -354,7 +354,7 @@ sidebar.component('select-activity-sidebar', {
             `<div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
@@ -417,7 +417,7 @@ sidebar.component('sidebar-phase3', {
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
@@ -481,7 +481,7 @@ sidebar.component('sidebar-phase4', {
             ` <div class="col-auto sticky-top">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="/Logo.png" width="120"></span>
+                        <span class="fs-4 d-none d-sm-inline fw-bold"><img src="../../Logo.png" width="120"></span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         
