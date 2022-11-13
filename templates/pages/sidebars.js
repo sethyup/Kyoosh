@@ -36,17 +36,21 @@ const sidebar = Vue.createApp({
             // get username
             if (localStorage.getItem('username')) {
                 this.username = localStorage.getItem('username')
+
             } else {
                 this.username = "Login Chap"
             }
+            // console.log("USERNAME: ", this.username)
         },
 
         get_user_pic(){
-            if (this.username){
+            if (this.username.length > 0){
                 this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
             } else {
                 this.user_pic = "https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
             }
+
+            // console.log("USER PIC: ", this.user_pic)
         },
 
         sign_out() {
@@ -462,7 +466,7 @@ sidebar.component('select-activity-sidebar', {
 
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/kbang.jpg" alt="pic" width="30" height="30" class="rounded-circle">
+                            <img :src="comp_user_pic" alt="pic" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
