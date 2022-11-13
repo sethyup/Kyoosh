@@ -301,7 +301,7 @@ const root = Vue.createApp({
             function success_sign_out() {
                 alert("sign out successful")
                 console.log("sign out successful")
-                localStorage.setItem("user", null)
+                localStorage.clear()
             },
             function failed_sign_out() {
                 alert("sign out failed")
