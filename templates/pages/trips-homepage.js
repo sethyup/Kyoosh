@@ -94,6 +94,8 @@ const app = Vue.createApp( {
 	data() {
 		return {
 			user_trips: {},
+
+			username: "",
 		}
 	},
 
@@ -127,6 +129,16 @@ const app = Vue.createApp( {
 			var trip_obj = snapshot.val()
 
 			return trip_obj
+		},
+
+		async get_username() {
+			var user_ID	= localStorage.getItem("user")
+			const path_location_username = ref(db, "users/" + user_ID + "/username")
+			var username_snapshot = await get(path_location_username)
+			var username = username_snapshot.val()
+			
+
+			return username
 		}
 
 
@@ -134,6 +146,11 @@ const app = Vue.createApp( {
 
 	async created() {
 		console.log(localStorage.getItem("user"))
+
+		this.username = await this.get_username()
+		localStorage.setItem("username", this.username)
+		console.log(this.username)
+
 		var trips = await this.get_trips()
 
 		if (trips !== null) {
