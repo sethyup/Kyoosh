@@ -26,7 +26,7 @@
 <body class="bg-dark">
 
       <div id="nav" class="row sticky-top">
-          <homepage-navbar :comp_username="username" :comp_user_pic="user_pic"></homepage-navbar>
+          <homepage-navbar :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></homepage-navbar>
       </div>
 
       <!-- header -->
@@ -167,7 +167,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <!-- Refer to my own external JS -->
-    <script src="homepageNavBar.js"></script>
+    <script type="module" src="homepageNavBar.js"></script>
 
     <!-- js import -->
     <script type="module" src="./trips-homepage.js"></script>

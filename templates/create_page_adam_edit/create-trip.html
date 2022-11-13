@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="nav" class="row sticky-top">
-        <createtrip-navbar :comp_username="username" :comp_user_pic="user_pic"></createtrip-navbar>
+        <createtrip-navbar :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></createtrip-navbar>
     </div>
 
     <div>

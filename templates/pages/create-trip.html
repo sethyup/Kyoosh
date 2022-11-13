@@ -22,7 +22,7 @@
 </head>
 <body class="bg-dark">
     <div id="nav" class="row sticky-top m-0">
-        <createtrip-navbar :comp_username="username" :comp_user_pic="user_pic"></createtrip-navbar>
+        <createtrip-navbar :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></createtrip-navbar>
     </div>
 
     <div>
@@ -173,7 +173,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Refer to my own external JS -->
-    <script src="../pages/homepageNavBar.js"></script>
+    <script type="module" src="../pages/homepageNavBar.js"></script>
 
     <!-- access firebase -->
     <script type="module" src="create_get_trip_CRUD_database.js"></script>

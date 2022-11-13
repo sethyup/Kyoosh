@@ -18,7 +18,7 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css">
                  <!-- SIDEBAR  -->
-                <sidebar-phase3 :comp_username="username" :comp_user_pic="user_pic"></sidebar-phase3>
+                <sidebar-phase3 :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></sidebar-phase3>
             </div>
 
             <!-- rest of site -->
@@ -65,6 +65,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <!-- Refer to my own external JS -->
-    <script src="sidebars.js"></script>
+    <script type="module" src="sidebars.js"></script>
 </body>
 </html>

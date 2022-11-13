@@ -32,7 +32,7 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css blurred-minor-2 p-0">
                  <!-- SIDEBAR  -->
-                 <sidebar-phase2 :comp_username="username" :comp_user_pic="user_pic"></sidebar-phase2>
+                 <sidebar-phase2 :comp_username="username" :comp_user_pic="user_pic" v-on:btnclick="sign_out"></sidebar-phase2>
             </div>
 
             <!-- ALL OTHER CONTENT -->
@@ -600,7 +600,7 @@
     <script src="flight_page.js" type="module"></script>
 
     <!-- Refer to sidebar JS -->
-    <script src="../pages/sidebars.js"></script>
+    <script type="module" src="../pages/sidebars.js"></script>
 
 </body>
 </body>
