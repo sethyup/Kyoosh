@@ -29,13 +29,12 @@
 <!-- ACTIVITY CARD -->
 <body>
     <div class="container-fluid">
-        <div class="row sidebar-parent flex-nowrap">
+        <div class="row flex-nowrap">
             <!-- sidebar -->
             <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
-                <sidebar-phase2 :comp_username="username"></sidebar-phase2>
+                <sidebar-phase2 :comp_username="username" :comp_user_pic="user_pic"></sidebar-phase2>
             </div>
-
             
             <!-- rest of site -->
             <div class="col" id="main">
@@ -52,10 +51,14 @@
                 </div>
 
                 <div class="row">
+                    <h1 class="my-4 text-white text-center text-md-start mb-lg-5">Activities Added</h1>
+                </div>
+
+                <div class="row">
                     <!-- pop up if edit activity -->
-                    <div :style="{display: d_edit()}" class="col py-3">
-                        <div class="container text-dark">
-                            <h3 class="heading">Edit Activity</h3>
+                    <div :style="{display: d_edit()}" class="col-12 col-lg-6 mb-4">
+                        <div class="container text-dark py-3 rounded-3 blurred-minor-no-bd-filter">
+                            <h3 class="heading mb-3">Edit Activity</h3>
                             <form>
                                 <!-- should read data from db -->
                                 <!-- PLACE  -->
@@ -158,8 +161,8 @@
                                 </div>
                 
                                 <!-- ATTACHMENTS  -->
-                                <div class="form-floating mb-5">
-                                    <div class="input-group mb-3" style="width: 50%;">
+                                <div class="form-floating mb-5 col-12 col-md-7">
+                                    <div class="input-group mb-3">
                                         <label class="input-group-text" for="inputGroupFile01">Add Attachment</label>
                                         <input type="file" class="form-control" id="inputGroupFile01">
                                     </div>
@@ -168,9 +171,9 @@
                                 <!-- DELETE AND CONFIRM ACTIVITY BUTTON  -->
                                 <div class="buttons">                         
                                     <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
-                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false">Cancel</button>
+                                    <button type="button" class="btn save_button btn-main-bold-fixed mx-2" @click="edit_true=false">Cancel</button>
                                     <!-- should write data to db and update infoWindow -->
-                                    <button type="button" class="btn save_button btn-main-fixed mx-2" @click="edit_true=false,create_update_data()">Save</button>
+                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,create_update_data()">Save</button>
     
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
@@ -199,19 +202,17 @@
                         </div>
                     </div>
                     
-                    <div class="col">
-                        <h1 class="my-4">Activities</h1>
+                    <div class="col-12 col-lg">
                         <!-- COPY FROM HERE -->
 
-                        <div>
-
-                            <div class="card mb-3" v-for="(location, index) in existing_locations">
+                        <div style="overflow: scroll; height: 100vh;">
+                            <div class="card mb-3 blurred-minor-no-bd-filter" v-for="(location, index) in existing_locations">
                                 <!-- LOCATION/PLACE -->
-                                <div class="card-header">
-                                    <span class="fs-3 fw-semibold">
-                                    {{location.name}}
-                                    </span>
-                                    <span class="badge rounded-pill text-bg-warning ms-1" >#{{location.tag}}</span>
+                                <div class="card-header blurred-minor-no-bd-filter">
+                                    <h5>
+                                        {{location.name}}
+                                        <span class="badge rounded-pill text-bg-warning m-2">#{{location.tag}}</span>
+                                    </h5>
                                 </div>
 
                                <!-- BADGE & DESCRIPTION -->
@@ -241,8 +242,8 @@
 
                             
                                             <div class="pt-3" style="display: flex; justify-content: center;">
-                                                <button type="button" class="btn btn-danger btn-sm reject_btn" style="margin-right: 5px;" v-on:click="user_reject(location.votes, index)">Reject</button>
-                                                <button type="button" class="btn btn-success btn-sm vote_btn" style="margin-left: 5px;" v-on:click="user_accept(location.votes, index)"> Vote </button>
+                                                <button type="button" class="btn btn-danger btn-sm reject_btn mx-1 py-0" v-on:click="user_reject(location.votes, index)">Reject</button>
+                                                <button type="button" class="btn btn-success btn-sm vote_btn mx-1 text-white py-0" v-on:click="user_accept(location.votes, index)"> Vote </button>
                                             </div>
                             
 
@@ -256,9 +257,8 @@
                                 
                                     <!-- EDIT BUTTON -->
                                     <div class="row">
-                                        <div class="col-11"></div>
                                         <div class="col-1">
-                                            <button type="button" class="btn btn-sm rounded btn-main-fixed text-white float-end" style="position:absolute; bottom:25; right:25;" data-bs-toggle="button" @click="set_edit(index)" >Edit  </button>
+                                            <button type="button" class="btn btn-sm btn-main-bold-fixed" :disabled="edit_true" @click="set_edit(index)" >Edit</button>
                                         </div>
                                     </div>
                                     </div>

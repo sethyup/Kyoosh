@@ -70,7 +70,7 @@ const root = Vue.createApp({
         },
 
         sign_up() {
-            if(this.first_name && this.last_name && this.signup_email && this.signup_password){
+            if(this.first_name && this.last_name && this.signup_email && this.signup_password && this.username){
                 var email = this.signup_email
                 var password = this.signup_password
                 var username = this.username
@@ -168,6 +168,11 @@ const root = Vue.createApp({
                     const email = user.email.replaceAll(".","")
                     console.log(email)
                     localStorage.setItem("user", email)
+                    // var user_ID = email.replace(".","")
+                    // const user_path_location = ref(db, "users/" + user_ID + "/username")
+                    // var username_snapshot = get(user_path_location)
+                    // var username = username_snapshot.val()
+                    // console.log(username)
                     location.replace("../trips-homepage.html")
                     
                     // location.replace("https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html")
@@ -187,7 +192,7 @@ const root = Vue.createApp({
                     ${failed_message}
                     `
                     // alert(failed_message)
-                    console.log("user not created")
+                    console.log("user not logged in")
                 })
         },
 
