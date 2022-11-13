@@ -102,6 +102,7 @@ const app = Vue.createApp( {
 	//=========== METHODS ===========
 	methods: {
 		delete_trip(tripID) {
+			// delete the trip from
 			const path_location = ref(db, "trips/" + tripID)
 			remove(path_location)
 			.then(

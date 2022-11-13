@@ -160,19 +160,13 @@ const root = Vue.createApp({
                     //signed in
 
                     // display Success message
-                    console.log("user login successful")
                     // redirects to home page
-                    // const user = userCredential.user;
+                    const user = userCredential.user;
                     const email = user.email.replaceAll(".","")
                     console.log(email)
                     localStorage.setItem("user", email)
-                    // var user_ID = email.replace(".","")
-                    // const user_path_location = ref(db, "users/" + user_ID + "/username")
-                    // var username_snapshot = get(user_path_location)
-                    // var username = username_snapshot.val()
-                    // console.log(username)
-                    // location.replace("../trips-homepage.html")
-                    
+        
+                    console.log("user login successful")
                     location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html"
                 })
                 .catch((error) => {
