@@ -377,42 +377,52 @@ sidebar.component('sidebar-member-phase2', {
 sidebar.component('select-activity-sidebar', {
     props: ["comp_username", "comp_user_pic"],
     template: 
-            `<div class="col-auto sticky-top">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">
-                    </a>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        
-                        <!--Home-->
-                        <li class="nav-item">
-                            <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
-                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-house fa-xs"></i></span>
-                                <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
-                            </a>
-                        </li>
+            ` <div class="col-auto sticky-top">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                    <img src="https://kengboonang.github.io/WADBrothers.github.io/Logo.png" width="120">                  
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    
+                    <!--Home-->
+                    <li class="nav-item">
+                        <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/trips-homepage.html" class="nav-link align-middle px-0">
+                            <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-house fa-xs"></i></span>
+                            <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
 
-                        <!--Activities-->
-                        <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <span class="fs-5 ms-1"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
-                                <span class="fs-5 ms-1">Activities</span>
-                            </a>
+                    <!--Activities-->
+                    <li class="d-none d-sm-inline">
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <span class="fs-5 ms-1"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
+                            <span class="fs-5 ms-1">Activities</span>
+                        </a>
 
-                            <ul class="collapse nav flex-column ms-3 show" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0"> 
-                                        <i class="fa-solid fa-right-long fa-xs"></i> Map View
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html" class="nav-link px-0"> 
-                                        <i class="fa-solid fa-right-long fa-xs"></i> List View
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                        <ul class="collapse nav flex-column ms-3 show" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0">
+                                    <i class="fa-solid fa-right-long fa-xs"></i> Map View
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-right-long fa-xs"></i> List View
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <div class=" pb-4 d-sm-none">
+                        <a href="#" class="text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html">Map View</a></li>
+                            <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html">List View</a></li>
+                        </ul>
+                    </div>
+                    
                     <hr>
                     <div style="width:100%;" class="d-flex justify-content-center">
                         <button class="btn btn-main-bold-fixed d-none d-sm-inline" onclick="location.href='https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html'">< Back</button>
