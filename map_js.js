@@ -632,7 +632,10 @@ function initAutocomplete(map) {
     // Init Autocomplete
     var input = document.getElementById('autocomplete');
     // get country code
-    var country = vm.get_country_code(this.trip_details.destination)
+    
+    var country = vm.get_country_code(vm.trip_details.destination)
+    
+    console.log(country)
     const options = {
         componentRestrictions: {'country':country},
         fields: ['place_id','name','geometry','formatted_address']
@@ -662,7 +665,7 @@ function initAutocomplete(map) {
         vm.$data.selected_name = place.name;
         vm.$data.selected_address = place.formatted_address;
         vm.$data.selected_latlng = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
-        // vm.console_all()
+        
         
         if (!place.geometry || !place.geometry.location) {
         window.alert(`No details available for the place: "${place.name}"`
@@ -956,6 +959,7 @@ const app = Vue.createApp({
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     // console.log(results[0].geometry.location)
                     map.setCenter(results[0].geometry.location);
+                    
                 }
               });
         },
