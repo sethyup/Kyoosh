@@ -1459,7 +1459,7 @@ const app = Vue.createApp({
                     // alert("Write Operation Successful")
                     console.log("Entry Created")
 
-                    window.href = "templates/vacation_view/vacation_view.html"
+                    window.location.href = "templates/vacation_view/vacation_view.html"
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
