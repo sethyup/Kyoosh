@@ -611,8 +611,8 @@ function initMap(location, lodging) {
     // get capital from capitalList, get country code from function, get country from cache
     
     var capital = vm.get_capital_city(vm.get_country_code(vm.$data.trip_details.destination))
-    console.log(vm.$data.trip_details.destination)
-    console.log(vm.get_country_code(vm.$data.trip_details.destination))
+    // console.log(vm.$data.trip_details.destination)
+    // console.log(vm.get_country_code(vm.$data.trip_details.destination))
     vm.set_country_center(capital,map)
     // map.addListener("click", (e) => {
     //     create_marker_by_click(e.latLng,map);
@@ -647,7 +647,7 @@ function initAutocomplete(map) {
     const autocomplete = new google.maps.places.Autocomplete(input, options);
     // autocomplete connected to map viewport
     autocomplete.bindTo('bounds',map);
-
+    
     // create marker for searched location, go to location, save into marker list
     autocomplete.addListener('place_changed', () => {
 
@@ -663,7 +663,7 @@ function initAutocomplete(map) {
         
         infowindow.close()
         marker.setVisible(false);
-
+        console.log(vm.$data.current_id)
         const place = autocomplete.getPlace();
         // console.log(place)
         vm.$data.selected_name = place.name;
@@ -1052,7 +1052,8 @@ const app = Vue.createApp({
                         const data2 = snapshot.val();
                         if (data2) {
                             this.existing_locations = data2
-                            
+                            uniqueId = data2.length
+                            markers = []
                             window.initMap = initMap(this.existing_locations, lodging_locations);
                         }
                     })
