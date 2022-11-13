@@ -28,6 +28,10 @@ const root = Vue.createApp({
 
             password: "",
 
+            login_password: "",
+
+            signup_password: "",
+
             username: "",
             
             first_name: "",
@@ -66,9 +70,9 @@ const root = Vue.createApp({
         },
 
         sign_up() {
-            if(this.first_name && this.last_name && this.email && this.password){
+            if(this.first_name && this.last_name && this.signup_email && this.signup_password){
                 var email = this.signup_email
-                var password = this.password
+                var password = this.signup_password
                 var username = this.username
                 console.log("starting to create user...")
                 if(this.db_usernames.includes(username)){
@@ -148,10 +152,10 @@ const root = Vue.createApp({
         },
 
         login() {
-            var email = this.email
+            var email = this.login_email
             console.log(email)
             console.log(typeof email)
-            var password = this.password
+            var password = this.login_password
             console.log("starting to log in user...")
             signInWithEmailAndPassword(auth, email, password).then(
                 (userCredential) => {
@@ -292,6 +296,7 @@ const root = Vue.createApp({
             function success_sign_out() {
                 alert("sign out successful")
                 console.log("sign out successful")
+                localStorage.setItem("user", null)
             },
             function failed_sign_out() {
                 alert("sign out failed")

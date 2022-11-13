@@ -1214,13 +1214,15 @@ const app = Vue.createApp({
         async read_from_existing() {
             var lodging_locations = await this.retrieve_lodging_locations()
             // console.log(lodging_locations)
-            const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
+            const data_to_be_read = ref(db, `trips/${this.trip_id}/selected_activities`);
             onValue(data_to_be_read, (snapshot) => {
                 const data = snapshot.val();
                 // check if there is existing data on db
                 if (data) {
                     this.existing_locations = data
                     
+                    console.log("DATA: ",data)
+
                     uniqueId = data.length
                     markers = []
                     // console.log(lodging_locations)
@@ -1448,19 +1450,16 @@ const app = Vue.createApp({
             console.log("Writing data into database...")
 
             // EDIT HERE
-            set(ref(db, `trips/${this.trip_id}/days`), this.days) 
-                // DATA YOU WANT TO WRITE GOES HERE,
-
-                // example
-                // email: this.email
-                // ...
-
-            
+            set(ref(db, `trips/${this.trip_id}/days`),
+                this.days
+            )
             .then(
                 function write_success() {
                     // display "Success" message
                     // alert("Write Operation Successful")
                     console.log("Entry Created")
+
+                    window.location.href = "https://kengboonang.github.io/WADBrothers.github.io/templates/vacation_view/vacation_view.html"
             })
             .catch((error) => {
                 // for us to debug, tells us what error there is,
@@ -1469,7 +1468,6 @@ const app = Vue.createApp({
 
                 // display "Error" message
                 var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
-                alert(failed_message)
                 console.log(failed_message);
             })
         },
