@@ -889,12 +889,13 @@ const app = Vue.createApp({
             // display details =============================================================
             create_true: false,
             edit_true: false,
-            refresh: "",
 
             // map details ==================================================================
             map_width: '90%',
             existing_locations: "",
-            
+
+            // STYLING =======================================================================
+            current_width: "100%",
 
             // create activity details ======================================================
             amount: "", 
@@ -1372,6 +1373,14 @@ const app = Vue.createApp({
         await this.read_group_members()
         
         
+    },
+
+    updated() {
+        if (this.create_true || this.edit_true) {
+            this.current_width = "50%"
+        } else {
+            this.current_width = "100%"
+        }
     }
 });
 const vm = app.mount('#app'); 

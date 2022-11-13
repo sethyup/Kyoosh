@@ -158,7 +158,7 @@ const app = Vue.createApp( {
 				.then(
 					console.log("successfully removed from group leader's trips")
 				)
-				
+				document.location.reload(true)
 
 			}
 			else {
@@ -175,6 +175,7 @@ const app = Vue.createApp( {
 				.then(
 					console.log("successfully removed from user's trips")
 				)
+				document.location.reload(true)
 
 			}
 		},
