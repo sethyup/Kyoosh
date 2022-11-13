@@ -33,8 +33,11 @@
         */
         html,
         body {
-        height: 100%;
-        padding: 0;
+            height: 100%;
+            padding: 0;
+            background-image: url("images/home_page/main_images/main_page_bg_1.jpg");
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         body{
@@ -75,7 +78,7 @@
         <div class="row sidebar-parent flex-nowrap">
             <div id="nav" class="col-auto sidebar-css p-0 blurred-minor-2">
                  <!-- SIDEBAR  -->
-                <sidebar-phase2></sidebar-phase2>
+                <sidebar-phase2 :comp_username="username"></sidebar-phase2>
             </div>
             
             <!-- whole site -->
