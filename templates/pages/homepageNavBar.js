@@ -1,8 +1,32 @@
 const main = Vue.createApp({
+    data(){
+        return{    
+            username: "",
+            user_pic: ""
+        }
+    },
     
+        methods:{
+            get_username(){
+                // get username
+                if (localStorage.getItem('username')) {
+                    this.username = localStorage.getItem('username')
+                }
+            },
+            get_user_pic(){
+                if (this.username){
+                    this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
+                }
+            },
+        }, 
+        async created() {
+            await this.get_username()
+            await this.get_user_pic()
+        }
 });
 
 main.component('homepage-navbar', {
+    props: ["comp_username", "comp_user_pic"],
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
                 <div class="container">
@@ -25,8 +49,8 @@ main.component('homepage-navbar', {
                         
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center text-success text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1">Bean</span>
+                                <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
@@ -40,6 +64,7 @@ main.component('homepage-navbar', {
 })
 
 main.component('createtrip-navbar', {
+    props: ["comp_username", "comp_user_pic"],
     template: 
             `<nav class="navbar navbar-expand-sm navbar-light border-bottom sticky-top blurred">
             <div class="container">
@@ -52,8 +77,8 @@ main.component('createtrip-navbar', {
                 <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
                     <div class="dropdown d-none d-sm-inline">
                         <a href="#" class="text-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Mr._Bean_2011.jpg" alt="profilepic" width="30" height="30" class="rounded-circle">
-                            <span class="d-sm-inline mx-1">Bean</span>
+                            <img :src="comp_user_pic" alt="profilepic" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1 text-dark">{{comp_username}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/pages/signup_login%20pages/login_page.html">Sign out</a></li>
