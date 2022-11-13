@@ -884,6 +884,7 @@ const app = Vue.createApp({
             // display details =============================================================
             create_true: false,
             edit_true: false,
+            refresh: "",
 
             // map details ==================================================================
             map_width: '90%',
@@ -1225,6 +1226,8 @@ const app = Vue.createApp({
             this.converted_amount = ""
 
         },
+        // write refresh to activity to re-initMap 
+        
         // delete activity from database
         delete_data(id) {
             // remove location from existing locations
@@ -1286,6 +1289,7 @@ const app = Vue.createApp({
             // // console.log(addresses)
             // return addresses
         },
+        
 
         // retrieve_trip_name_date() {
         //     // name of trip, trip to where, date
@@ -1361,7 +1365,7 @@ const app = Vue.createApp({
         await this.read_from_existing()
         // get group size from database
         await this.read_group_members()
-        // await this.retrieve_trip_name_date()
+        
         
     }
 });
