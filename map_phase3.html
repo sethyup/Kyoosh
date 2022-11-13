@@ -488,7 +488,7 @@
 
                                 <div v-for="(day, id_index) in date_array">
         
-                                <!-- DIFFERENT COLOR DAY BADGE ACCORDING TO SLEECTED DAY -->
+                                <!-- DIFFERENT COLOR DAY BADGE ACCORDING TO SELECTED DAY -->
                                 <a href="javascript:void(0)" v-if="id_index == current_id" class="day_style badge rounded-pill bg-dark my-3 fw-bold px-4 fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}}:&nbsp;{{convert_date_to_readable_titles(day)}}</a>
                                 <a href="javascript:void(0)" v-else class="day_style badge rounded-pill blurred-primary my-3 fw-semibold fs-6" :id="id_index" @click="select_new_day(id_index)">Day {{id_index+1}}:&nbsp;{{convert_date_to_readable_titles(day)}}</a>
                                 
