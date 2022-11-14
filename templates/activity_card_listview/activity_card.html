@@ -42,6 +42,7 @@
             
             <!-- rest of site -->
             <div class="col" id="main">
+
                 <!-- TRIP DETAILS -->
                 <div class="trip-title-top-md d-none d-md-block text-dark text-center">
                     <h5>{{get_trip_name(trip_id)}} ({{trip_details.country}})</h5>
@@ -177,7 +178,7 @@
                                     <button type="button" class="btn btn-main-bold-fixed" data-bs-toggle="modal" data-bs-target="#del_button_modal">Delete</button>
                                     <button type="button" class="btn save_button btn-main-bold-fixed mx-2" @click="edit_true=false">Cancel</button>
                                     <!-- should write data to db and update infoWindow -->
-                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false,update_user_votes()">Save</button>
+                                    <button type="button" class="btn save_button btn-main-fixed" @click="edit_true=false, create_update_data()">Save</button>
     
                                     <!-- Back Button Modal -->
                                     <div class="modal fade" id="del_button_modal" tabindex="-1" aria-labelledby="del_button_modal_label1" aria-hidden="true">
@@ -211,6 +212,7 @@
 
                         <div style="overflow: scroll; height: 100vh;" class="mb-5">
                             <div class="card mb-3 blurred-minor-no-bd-filter" v-for="(location, index) in existing_locations">
+
                                 <!-- LOCATION/PLACE -->
                                 <div class="card-header blurred-minor-no-bd-filter">
                                     <h5>

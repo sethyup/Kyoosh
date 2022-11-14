@@ -81,6 +81,7 @@ const main = Vue.createApp({
 
         // retrieve trip details from localStorage
         retrieve_from_cache() {
+          console.log(`=== [START] retrieve_from_cache() ===`)
           if (localStorage.getItem('user')) {
               this.user_id = localStorage.getItem('user')
           }
@@ -99,6 +100,8 @@ const main = Vue.createApp({
               var c_country = localStorage.getItem('destination')
               this.trip_details.country = c_country
           }
+                    
+          console.log(`=== [END] retrieve_from_cache() ===`)
         },
 
         // GET TRIP NAME
@@ -123,7 +126,7 @@ const main = Vue.createApp({
           // var total_users = all_votes.yes.length + all_votes.no.length + all_votes.yet_to_vote.length
           // console.log(this.get_total_users)
           var total_users = Object.keys(this.group_members).length
-          console.log(total_users)
+          //console.log(total_users)
           return total_users
         },
 
@@ -271,6 +274,7 @@ const main = Vue.createApp({
           const data_to_be_read = ref(db, `trips/${this.trip_id}/activities`);
           onValue(data_to_be_read, (snapshot) => {
               const data = snapshot.val();
+
               //check if there is existing data on db
               if (data) {
                   this.existing_locations = data
@@ -304,6 +308,7 @@ const main = Vue.createApp({
       },
         // update existing data
         create_update_data() {
+          console.log(`=== [START] create_update_data() ===`)
             // create new object
             var new_obj = {
               address: this.selected_address,
@@ -344,6 +349,9 @@ const main = Vue.createApp({
               yes: this.yes, 
               yet_to_vote: this.yet_to_vote
           }
+
+          console.log("NEW OBJ: ", new_obj )
+
           // push to existing places under current id
           this.existing_locations[this.current_id] = new_obj
           // push data to database
@@ -365,6 +373,8 @@ const main = Vue.createApp({
               console.log(failed_message);
           })
           this.yet_to_vote = [];
+
+          console.log(`=== [END] create_update_data() ===`)
         },
         // update voting data 
         update_user_votes(){
@@ -428,8 +438,12 @@ const main = Vue.createApp({
         },
         // retrieve location details for edit activity page
         retrieve_edit_activity_info(id) {
+          console.log(`=== [START] retrieve_edit_activity_info(${id}) ===`)
+
+          console.log("EXISTING LOCATIONS: ", this.existing_locations)
+
           var details = this.existing_locations[id];
-          console.log(details);
+
           this.selected_address = details.address;
           this.selected_description = details.description;
           this.selected_latlng = details.latlng;
@@ -440,11 +454,16 @@ const main = Vue.createApp({
           this.no = details.votes.no;
           this.yes = details.votes.yes;
           this.yet_to_vote = details.votes.yet_to_vote;
+                    
+          console.log(`=== [END] retrieve_edit_activity_info(${id}) ===`)
           },
         // delete activity from database
         delete_data(id) {
           // remove location from existing locations
-          delete this.existing_locations[id] 
+          this.existing_locations.splice(id,1)
+
+          console.log("FUCKONG HEREEEE: ", this.existing_locations)
+
           // write to database
           console.log("Writing data into database...")
           
@@ -480,6 +499,8 @@ const main = Vue.createApp({
         
     },
         set_edit(id) {
+          console.log(`=== [START] set_edit(${id}) ===`)
+          
             if (this.edit_true == false) {
               // console.log(id)
               this.edit_true = true
@@ -490,6 +511,7 @@ const main = Vue.createApp({
           } else {
               this.edit_true = false
           }
+          console.log(`=== [END] set_edit(${id}) ===`)
         }
     },
     async created() {

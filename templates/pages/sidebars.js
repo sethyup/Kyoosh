@@ -44,10 +44,11 @@ const sidebar = Vue.createApp({
         },
 
         get_user_pic(){
-            if (this.username.length > 0){
+            let username_array = ["adambft", "kbang", "JUNS", "mrsethbean", "weibeast", "sethy"]
+            if (username_array.includes(this.username)){
                 this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
             } else {
-                this.user_pic = "https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
+                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/placeholder.jpg"
             }
 
             // console.log("USER PIC: ", this.user_pic)
@@ -57,12 +58,11 @@ const sidebar = Vue.createApp({
             console.log("starting to log out user...")
             signOut(auth).then(
             function success_sign_out() {
-                alert("sign out successful")
                 console.log("sign out successful")
                 localStorage.clear()
             },
             function failed_sign_out() {
-                alert("sign out failed")
+                alert("Sign out failed")
                 console.log("sign out failed")
             }
             )
@@ -425,37 +425,6 @@ sidebar.component('select-activity-sidebar', {
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
-
-                        <!--Activities-->
-                        <li class="d-none d-sm-inline">
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <span class="fs-5 ms-1"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
-                                <span class="fs-5 ms-1">Activities</span>
-                            </a>
-
-                            <ul class="collapse nav flex-column ms-3 show" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0">
-                                        <i class="fa-solid fa-right-long fa-xs"></i> Map View
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html" class="nav-link px-0"> 
-                                        <i class="fa-solid fa-right-long fa-xs"></i> List View
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <div class=" pb-4 d-sm-none">
-                            <a href="#" class="text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
-                            </a>
-                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html">Map View</a></li>
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html">List View</a></li>
-                            </ul>
-                        </div>
                     
                     </ul>
                     <hr>
