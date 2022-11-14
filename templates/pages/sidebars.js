@@ -425,37 +425,6 @@ sidebar.component('select-activity-sidebar', {
                                 <span class="fs-5 ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
-
-                        <!--Activities-->
-                        <li class="d-none d-sm-inline">
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <span class="fs-5 ms-1"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
-                                <span class="fs-5 ms-1">Activities</span>
-                            </a>
-
-                            <ul class="collapse nav flex-column ms-3 show" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html" class="nav-link px-0">
-                                        <i class="fa-solid fa-right-long fa-xs"></i> Map View
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html" class="nav-link px-0"> 
-                                        <i class="fa-solid fa-right-long fa-xs"></i> List View
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <div class=" pb-4 d-sm-none">
-                            <a href="#" class="text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="fs-5 ms-1 d-sm-inline"><i class="fa-solid fa-map-location-dot fa-xs"></i></span>
-                            </a>
-                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html">Map View</a></li>
-                                <li><a class="dropdown-item" href="https://kengboonang.github.io/WADBrothers.github.io/templates/activity_card_listview/activity_card.html">List View</a></li>
-                            </ul>
-                        </div>
                     
                     </ul>
                     <hr>
