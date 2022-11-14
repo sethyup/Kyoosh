@@ -257,3 +257,11 @@ img.create-trip-main-img{
 *::-webkit-scrollbar {
     display: none;
 }
+
+#nav{
+    z-index: 1;
+}
+
+/* .bring-front{
+    z-index: 0 !important;
+} */
