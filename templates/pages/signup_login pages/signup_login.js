@@ -291,12 +291,12 @@ const root = Vue.createApp({
             console.log("starting to log out user...")
             signOut(auth).then(
             function success_sign_out() {
-                alert("sign out successful")
+                // alert("sign out successful")
                 console.log("sign out successful")
                 localStorage.clear()
             },
             function failed_sign_out() {
-                alert("sign out failed")
+                // alert("sign out failed")
                 console.log("sign out failed")
             }
             )
