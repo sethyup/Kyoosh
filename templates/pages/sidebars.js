@@ -44,10 +44,11 @@ const sidebar = Vue.createApp({
         },
 
         get_user_pic(){
-            if (this.username.length > 0){
+            let username_array = ["adambft", "kbang", "JUNS", "mrsethbean", "weibeast", "sethy"]
+            if (username_array.includes(this.username)){
                 this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/" + this.username + ".jpg"
             } else {
-                this.user_pic = "https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip"
+                this.user_pic = "https://kengboonang.github.io/WADBrothers.github.io/images/profile_pic/placeholder.jpg"
             }
 
             // console.log("USER PIC: ", this.user_pic)
