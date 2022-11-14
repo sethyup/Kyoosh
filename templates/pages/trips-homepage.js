@@ -269,9 +269,10 @@ const app = Vue.createApp( {
 
 					<button onclick="edit_trip(\`${trip_ID}\`,\`${trip_start}\`,\`${trip_end}\`,\`${trip_destination}\`)" class="btn btn-main-bold">Edit Trip</button>
 
-					<button type="button" class="btn btn-fade" data-bs-toggle="modal" data-bs-target="#del_button_modal_${modal_counter}">
+					<button type="button" class="btn btn-delete position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#del_button_modal_${modal_counter}">
 						<i class="fa-solid fa-trash-can fa-lg"></i>
 					</button>
+
 					</div>
 					<div class="card-footer text-muted">
 					<span class="fw-semibold fs-5">${trip_destination}</span> <br>
