@@ -199,6 +199,7 @@ const root = Vue.createApp({
 
                         // write group members new trip into the database
                         for(var g_member of arr_edited_usernames){
+                            alert("DELETING FOR ", g_member)
                             console.log("E_GROUP_MEMBER: ", g_member)
                             const path_location = ref(db, 'users/' + g_member + '/trips')
                             var snapshot_trips = await get(path_location)
