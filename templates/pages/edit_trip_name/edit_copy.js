@@ -4,8 +4,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebas
 import { getDatabase, ref, onValue, get, push, set, remove} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 import { vm } from "../../../map_js.js";
 
-console.log("YUP CORRECT!!!")
-
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -93,11 +91,14 @@ const root = Vue.createApp({
             this.destination = details.trip_details.destination[0]
 
             if (details.trip_details.g_member !== undefined) {
+                console.log("COLLABORATORS FOUND ====================")
+                console.log("COLLABS: ", details.trip_details.g_member)
+
                 this.collaborators = details.trip_details.g_member
             } else {
+                console.log("NO COLLABS FOUND SAD FACE ==============")
                 this.collaborators = []
             }
-            // console.log(lodging_locations)
         },
         // read all data
         read_all() {
@@ -198,7 +199,7 @@ const root = Vue.createApp({
 
                         // write group members new trip into the database
                         for(var g_member of arr_edited_usernames){
-                            console.log(g_member)
+                            console.log("E_GROUP_MEMBER: ", g_member)
                             const path_location = ref(db, 'users/' + g_member + '/trips')
                             var snapshot_trips = await get(path_location)
                             var trips = snapshot_trips.val()
@@ -210,8 +211,17 @@ const root = Vue.createApp({
                             .then(
                                 console.log("shit's added and deleted into g_member's list")
                             )
-                            
                         }
+
+                        //PUSH INFORMATION TO LOCALSTORAGE ========================================================
+                        localStorage.setItem("trip", `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`)
+                        localStorage.setItem("trip_start_date", this.sDate)
+                        localStorage.setItem("trip_end_date", this.eDate)
+                        localStorage.setItem("destination", this.destination)
+                        // ========================================================================================
+
+                        location.href = "../../../map_phase2.html"
+                        // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
 
                 })
                 .catch((error) => {
@@ -226,17 +236,6 @@ const root = Vue.createApp({
 
                     return
                 })
-                // alert("Create Trip Successful")
-
-                //PUSH INFORMATION TO LOCALSTORAGE ========================================================
-                localStorage.setItem("trip", `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`)
-                localStorage.setItem("trip_start_date", this.sDate)
-                localStorage.setItem("trip_end_date", this.eDate)
-                localStorage.setItem("destination", this.destination)
-                // ========================================================================================
-
-                location.href = "../../../map_phase2.html"
-                // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
             else{
