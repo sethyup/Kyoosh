@@ -217,9 +217,14 @@ const app = Vue.createApp( {
 			
 
 			return username
-		}
+		},
 
+		// DATE TIME CONVERSION
+		convert_date_to_readable(date_str) {
+			var date_obj = new Date(date_str)
 
+			return flatpickr.formatDate(date_obj, "j M Y")
+		},
 	},
 
 	async created() {
@@ -269,8 +274,8 @@ const app = Vue.createApp( {
 					</button>
 					</div>
 					<div class="card-footer text-muted">
-					${trip_destination} <br>
-					${trip_start} - ${trip_end} <br
+					<span class="fw-semibold fs-5">${trip_destination}</span> <br>
+					${this.convert_date_to_readable(trip_start)} - ${this.convert_date_to_readable(trip_end)} <br
 					</div>
 				</div>
 				`
