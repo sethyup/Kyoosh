@@ -159,6 +159,9 @@ const root = Vue.createApp({
 
                 // trip ID
                 var trip_ID = `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`
+                var s_date_ls = this.sDate
+                var e_date_ls = this.eDate
+                var destination_ls = this.destination
 
                 if (this.collaborators.length > 0) {
                     for (var e_username of this.collaborators) {
@@ -214,10 +217,10 @@ const root = Vue.createApp({
                         }
 
                         //PUSH INFORMATION TO LOCALSTORAGE ========================================================
-                        localStorage.setItem("trip", `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`)
-                        localStorage.setItem("trip_start_date", this.sDate)
-                        localStorage.setItem("trip_end_date", this.eDate)
-                        localStorage.setItem("destination", this.destination)
+                        localStorage.setItem("trip", trip_ID)
+                        localStorage.setItem("trip_start_date", s_date_ls)
+                        localStorage.setItem("trip_end_date", e_date_ls)
+                        localStorage.setItem("destination", destination_ls)
                         // ========================================================================================
 
                         location.href = "../../../map_phase2.html"
