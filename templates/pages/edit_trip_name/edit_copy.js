@@ -38,7 +38,6 @@ const root = Vue.createApp({
             // destination
             destination: "",
             collaborators: [],
-            
         }
     },
 
@@ -144,7 +143,7 @@ const root = Vue.createApp({
             
         },
         // will need trip_name, destination,start date and end date
-        create_new_trip() {
+        async create_new_trip() {
             console.log("Writing data into database...")
             // the console can be open, 
 
@@ -169,6 +168,31 @@ const root = Vue.createApp({
                     }
                 }
 
+                //STEP 1: COPY TRIP ENTIRE OBJECT
+                const path_location = ref(db, `trips/${this.trip_id}`)
+                const snapshot = await get(path_location)
+                var existing_trip_obj = snapshot.val()
+
+                //STEP 2: REPLACE OBJECT IN NEW TRIP ID
+                console.log("Writing data into database...")
+
+                set(ref(db, 'trips/' + trip_ID), existing_trip_obj)
+                .then(
+                    function write_success() {
+                        // display "Success" message
+                        console.log("Entry Created")
+                })
+                .catch((error) => {
+                    // for us to debug, tells us what error there is,
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    // display "Error" message
+                    var failed_message = `Write Operation Unsuccessful. Error Code ${errorCode}: ${errorMessage}`
+                    console.log(failed_message);
+                })
+
+                //STEP 3: UPDATE TRIP DEATAILS
                 set(ref(db, 'trips/' + trip_ID + '/trip_details'), {
                     // DATA YOU WANT TO WRITE GOES HERE,
                     
