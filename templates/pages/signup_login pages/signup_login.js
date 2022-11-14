@@ -178,7 +178,7 @@ const root = Vue.createApp({
 
                     // display "Error" message
                     // stays on the same page
-                    var failed_message = `Log In Unsuccessful. ${errorMessage}`
+                    var failed_message = `Log In Unsuccessful. Error: ${errorMessage}`
                     document.getElementById("error").attributes[2].nodeValue = ""
                     document.getElementById("error").innerHTML = `
                     ${failed_message}
@@ -250,7 +250,7 @@ const root = Vue.createApp({
                 // const credential = GoogleAuthProvider.credentialFromError(error);
                 
                 console.log(errorCode + ': ' + errorMessage)
-                var failed_message = `Log In Unsuccessful. ${errorMessage}`
+                var failed_message = `Log In Unsuccessful. Error: ${errorMessage}`
                 document.getElementById("error").attributes[2].nodeValue = ""
                 document.getElementById("error").innerHTML = `
                 ${failed_message}

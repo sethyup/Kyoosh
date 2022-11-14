@@ -73,11 +73,24 @@ button.btn-main-mild:disabled, button.btn-main-mild-fixed:disabled {
 
 /* btn fade */
 button.btn-fade {
-    background-color: #DFEEF5;
-    color: #71888c;
+    background-color: #DFEEF5 !important;
+    color: #71888c !important;
 }
 
 button.btn-fade:focus, button.btn-fade:active, button.btn-fade:hover {
+    background-color: #bcd0d8 !important;
+    border: #bcd0d8 solid 1px !important;
+    color: #405559 !important;
+}
+
+/* btn delete */
+button.btn-delete {
+    background-color: #ffffff00 !important;
+    border: #ffffff00 solid 1px !important;
+    color: #d4e6e9 !important;
+}
+
+button.btn-delete:focus, button.btn-delete:active, button.btn-delete:hover {
     background-color: #bcd0d8 !important;
     border: #bcd0d8 solid 1px !important;
     color: #405559 !important;

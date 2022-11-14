@@ -89,8 +89,16 @@ const root = Vue.createApp({
             // console.log(details)
             this.trip_details = details
             this.destination = details.trip_details.destination[0]
-            this.collaborators = details.trip_details.g_member
-            // console.log(lodging_locations)
+
+            if (details.trip_details.g_member !== undefined) {
+                console.log("COLLABORATORS FOUND ====================")
+                console.log("COLLABS: ", details.trip_details.g_member)
+
+                this.collaborators = details.trip_details.g_member
+            } else {
+                console.log("NO COLLABS FOUND SAD FACE ==============")
+                this.collaborators = []
+            }
         },
         // read all data
         read_all() {
@@ -151,9 +159,14 @@ const root = Vue.createApp({
 
                 // trip ID
                 var trip_ID = `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`
-                console.log(trip_ID)
-                for (var e_username of this.collaborators) {
-                    arr_edited_usernames.push(this.convert_email_to_userID(e_username))
+                var s_date_ls = this.sDate
+                var e_date_ls = this.eDate
+                var destination_ls = this.destination
+
+                if (this.collaborators.length > 0) {
+                    for (var e_username of this.collaborators) {
+                        arr_edited_usernames.push(this.convert_email_to_userID(e_username))
+                    }
                 }
 
                 set(ref(db, 'trips/' + trip_ID + '/trip_details'), {
@@ -189,7 +202,7 @@ const root = Vue.createApp({
 
                         // write group members new trip into the database
                         for(var g_member of arr_edited_usernames){
-                            console.log(g_member)
+                            console.log("E_GROUP_MEMBER: ", g_member)
                             const path_location = ref(db, 'users/' + g_member + '/trips')
                             var snapshot_trips = await get(path_location)
                             var trips = snapshot_trips.val()
@@ -201,8 +214,17 @@ const root = Vue.createApp({
                             .then(
                                 console.log("shit's added and deleted into g_member's list")
                             )
-                            
                         }
+
+                        //PUSH INFORMATION TO LOCALSTORAGE ========================================================
+                        localStorage.setItem("trip", trip_ID)
+                        localStorage.setItem("trip_start_date", s_date_ls)
+                        localStorage.setItem("trip_end_date", e_date_ls)
+                        localStorage.setItem("destination", destination_ls)
+                        // ========================================================================================
+
+                        location.href = "../../../map_phase2.html"
+                        // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
 
                 })
                 .catch((error) => {
@@ -217,17 +239,6 @@ const root = Vue.createApp({
 
                     return
                 })
-                // alert("Create Trip Successful")
-
-                //PUSH INFORMATION TO LOCALSTORAGE ========================================================
-                localStorage.setItem("trip", this.trip_name + this.trip_delimiter + this.myUsername)
-                localStorage.setItem("trip_start_date", this.sDate)
-                localStorage.setItem("trip_end_date", this.eDate)
-                localStorage.setItem("destination", this.destination)
-                // ========================================================================================
-
-                location.href = "../../../map_phase2.html"
-                // location.href = "https://kengboonang.github.io/WADBrothers.github.io/map_phase2.html"
             }
             
             else{
