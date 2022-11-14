@@ -4,6 +4,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebas
 import { getDatabase, ref, onValue, get, push, set, remove} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
 import { vm } from "../../../map_js.js";
 
+console.log("YUP CORRECT!!!")
+
 // Our Firebase Project Configuration
 const WADTravel = initializeApp({
     apiKey: "AIzaSyCR5RtPZexqY6jCbDZsaYzyUpVE_q8vzMc",
@@ -89,7 +91,12 @@ const root = Vue.createApp({
             // console.log(details)
             this.trip_details = details
             this.destination = details.trip_details.destination[0]
-            this.collaborators = details.trip_details.g_member
+
+            if (details.trip_details.g_member !== undefined) {
+                this.collaborators = details.trip_details.g_member
+            } else {
+                this.collaborators = []
+            }
             // console.log(lodging_locations)
         },
         // read all data
@@ -151,9 +158,11 @@ const root = Vue.createApp({
 
                 // trip ID
                 var trip_ID = `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`
-                console.log(trip_ID)
-                for (var e_username of this.collaborators) {
-                    arr_edited_usernames.push(this.convert_email_to_userID(e_username))
+
+                if (this.collaborators.length > 0) {
+                    for (var e_username of this.collaborators) {
+                        arr_edited_usernames.push(this.convert_email_to_userID(e_username))
+                    }
                 }
 
                 set(ref(db, 'trips/' + trip_ID + '/trip_details'), {
@@ -220,7 +229,7 @@ const root = Vue.createApp({
                 // alert("Create Trip Successful")
 
                 //PUSH INFORMATION TO LOCALSTORAGE ========================================================
-                localStorage.setItem("trip", this.trip_name + this.trip_delimiter + this.myUsername)
+                localStorage.setItem("trip", `${this.my_trip_name}${this.trip_delimiter}${this.myUserID}`)
                 localStorage.setItem("trip_start_date", this.sDate)
                 localStorage.setItem("trip_end_date", this.eDate)
                 localStorage.setItem("destination", this.destination)
