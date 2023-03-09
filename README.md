@@ -1,2 +1,2 @@
-# WADtravels.github.io
-Collaboration repo for our WAD project
+# Kyoosh
+A travel planning site done for a web application development project.
